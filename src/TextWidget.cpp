@@ -34,6 +34,11 @@ gsf::TextWidget::~TextWidget()
 
 }
 
+sf::Text& gsf::TextWidget::getText() const
+{
+    return m_text;
+}
+
 void gsf::TextWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_text, states);
