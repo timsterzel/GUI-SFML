@@ -4,8 +4,9 @@
 #include <iostream>
 
 gsf::Widget::Widget()
-: m_parent{ nullptr }
-//, m_isCollisionCheckOn{ true }
+: m_width{ 0.f }
+, m_height{ 0.f }
+, m_parent{ nullptr }
 {
 
 }
@@ -31,6 +32,26 @@ gsf::Widget::Ptr gsf::Widget::detachChild(const Widget& node)
     result->m_parent = nullptr;
     m_children.erase(found);
     return result;
+}
+
+void gsf::Widget::setWidth(const float width)
+{
+    m_width = width;
+}
+
+float gsf::Widget::getWidth() const
+{
+    return m_width;
+}
+
+void gsf::Widget::setHeight(const float height)
+{
+    m_height = height;
+}
+
+float gsf::Widget::getHeight() const
+{
+    return m_height;
 }
 
 void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const

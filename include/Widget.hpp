@@ -21,11 +21,12 @@ namespace gsf
             */
 
         protected:
-            //sf::FloatRect m_bounds;
+            float m_width;
+            float m_height;
+
         private:
             std::vector<Ptr> m_children;
             Widget *m_parent;
-
 
         public:
             Widget();
@@ -33,6 +34,11 @@ namespace gsf
 
             void attachChild(Ptr child);
             Ptr detachChild(const Widget& node);
+
+            void setWidth(const float width);
+            float getWidth() const;
+            void setHeight(const float height);
+            float getHeight() const;
 
             // dt is the delta time
             void update(float dt);

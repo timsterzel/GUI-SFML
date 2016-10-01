@@ -12,6 +12,7 @@ namespace gsf
 
         private:
             sf::Text m_text;
+            sf::Color m_bgColor;
         public:
             TextWidget();
             TextWidget(std::string text, sf::Font &font);
@@ -27,6 +28,9 @@ namespace gsf
 
             void setTextColor(const sf::Color color);
             sf::Color getTextColor() const;
+
+            void setBackgroundColor(const sf::Color color);
+            sf::Color getBackgroundColor() const;
 
             void centerOrigin();
 
