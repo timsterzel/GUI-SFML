@@ -33,7 +33,6 @@ void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize, 
 	m_text.setColor(color);
 
 	sf::FloatRect localBounds = { m_text.getLocalBounds() };
-	std::cout << "Left: " << localBounds.left << " Top: " << localBounds.top << std::endl;
     // Top and left of the bounds are not allways 0, so we add the twice amound of this,
     // So the text is centered in the widget
     setHeight(localBounds.height + localBounds.top * 2);
@@ -92,8 +91,7 @@ sf::Color gsf::TextWidget::getBackgroundColor() const
 
 void gsf::TextWidget::centerOrigin()
 {
-    sf::FloatRect localRect = m_text.getLocalBounds();
-    m_text.setOrigin(localRect.width / 2.f, localRect.height / 2.f);
+    setOrigin(getWidth() / 2.f, getHeight() / 2.f);
 }
 
 void gsf::TextWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const

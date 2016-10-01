@@ -16,9 +16,9 @@ int main()
 
     gsf::TextWidget textWidget("Im a Text", font, 12, sf::Color::White);
     //textWidget.getText().setColor(sf::Color::Red);
-    //textWidget.centerOrigin();
+    textWidget.centerOrigin();
     textWidget.setBackgroundColor(sf::Color::Red);
-
+    textWidget.setPosition(windowWidth / 2.f, windowHeight / 2.f);
     while (window.isOpen())
     {
         sf::Event event;
