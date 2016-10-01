@@ -58,6 +58,7 @@ void gsf::TextWidget::setCharacterSize(const unsigned int size)
 {
     m_text.setCharacterSize(size);
     calculateSize();
+    centerOrigin();
 }
 
 unsigned int gsf::TextWidget::getCharacterSize() const
