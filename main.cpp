@@ -18,6 +18,7 @@ int main()
     //textWidget.getText().setColor(sf::Color::Red);
     textWidget.centerOrigin();
     textWidget.setBackgroundColor(sf::Color::Red);
+    textWidget.setCharacterSize(20);
     textWidget.setPosition(windowWidth / 2.f, windowHeight / 2.f);
     while (window.isOpen())
     {

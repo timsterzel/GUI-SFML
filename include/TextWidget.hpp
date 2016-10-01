@@ -42,6 +42,9 @@ namespace gsf
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
 
             virtual void updateCurrent(float dt);
+
+            // Calculate the size of the current widget
+            virtual void calculateSize();
     };
 
 }

@@ -61,6 +61,9 @@ namespace gsf
 
             virtual void updateCurrent(float dt);
             void updateChildren(float dt);
+
+            // Calculate the size of the current widget
+            virtual void calculateSize();
     };
 
 }

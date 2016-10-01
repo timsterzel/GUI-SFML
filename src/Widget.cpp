@@ -107,3 +107,8 @@ sf::Vector2f gsf::Widget::getWorldPosition() const
 {
     return getWorldTransform() * sf::Vector2f();
 }
+
+void gsf::Widget::calculateSize()
+{
+    // Do nothing by default
+}

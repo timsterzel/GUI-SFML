@@ -31,12 +31,7 @@ void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize, 
     m_text.setFont(font);
 	m_text.setCharacterSize(characterSize);
 	m_text.setColor(color);
-
-	sf::FloatRect localBounds = { m_text.getLocalBounds() };
-    // Top and left of the bounds are not allways 0, so we add the twice amound of this,
-    // So the text is centered in the widget
-    setHeight(localBounds.height + localBounds.top * 2);
-    setWidth(localBounds.width + localBounds.left * 2);
+	calculateSize();
 }
 
 gsf::TextWidget::~TextWidget()
@@ -62,6 +57,7 @@ std::string gsf::TextWidget::getText() const
 void gsf::TextWidget::setCharacterSize(const unsigned int size)
 {
     m_text.setCharacterSize(size);
+    calculateSize();
 }
 
 unsigned int gsf::TextWidget::getCharacterSize() const
@@ -107,4 +103,13 @@ void gsf::TextWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates sta
 void gsf::TextWidget::updateCurrent(float dt)
 {
     // Do nothing by default
+}
+
+void gsf::TextWidget::calculateSize()
+{
+    sf::FloatRect localBounds = { m_text.getLocalBounds() };
+    // Top and left of the bounds are not allways 0, so we add the twice amound of this,
+    // So the text is centered in the widget
+    setHeight(localBounds.height + localBounds.top * 2);
+    setWidth(localBounds.width + localBounds.left * 2);
 }
