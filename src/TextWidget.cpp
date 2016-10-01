@@ -34,7 +34,7 @@ gsf::TextWidget::~TextWidget()
 
 }
 
-sf::Text& gsf::TextWidget::getText() const
+sf::Text& gsf::TextWidget::getText()
 {
     return m_text;
 }

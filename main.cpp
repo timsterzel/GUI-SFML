@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "TextWidget.hpp"
 
@@ -5,8 +6,13 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "GUI-SFML");
 
-    gsf::TextWidget textWidget("Im a Text", sf::F, 12, sf::Color::White);
+    sf::Font font;
+    if (!font.loadFromFile("assets/fonts/LiberationSans-Regular.ttf"))
+    {
+        std::cout << "Error by loading Font" << std::endl;
+    }
 
+    gsf::TextWidget textWidget("Im a Text", font, 12, sf::Color::White);
 
     while (window.isOpen())
     {
@@ -18,6 +24,7 @@ int main()
         }
 
         window.clear();
+        window.draw(textWidget);
         window.display();
     }
 

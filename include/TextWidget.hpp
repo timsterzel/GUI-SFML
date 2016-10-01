@@ -18,7 +18,7 @@ namespace gsf
             TextWidget(std::string text, sf::Font &font, int characterSize);
             TextWidget(std::string text, sf::Font &font, int characterSize, sf::Color color);
 
-            sf::Text& getText() const;
+            sf::Text& getText();
 
             virtual ~TextWidget();
 
