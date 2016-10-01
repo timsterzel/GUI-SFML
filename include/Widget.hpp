@@ -9,10 +9,19 @@ namespace gsf
         public:
             typedef std::unique_ptr<Widget> Ptr;
             typedef std::pair<Widget*, Widget*> Pair;
+            /*
+            enum class Orientation
+            {
+                Left,
+                Right,
+                Top,
+                Down,
+                Center
+            };
+            */
 
         protected:
-        //bool m_isCollisionCheckOn;
-
+            //sf::FloatRect m_bounds;
         private:
             std::vector<Ptr> m_children;
             Widget *m_parent;

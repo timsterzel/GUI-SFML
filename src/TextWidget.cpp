@@ -33,10 +33,46 @@ gsf::TextWidget::~TextWidget()
 {
 
 }
-
+/*
 sf::Text& gsf::TextWidget::getText()
 {
     return m_text;
+}
+*/
+void gsf::TextWidget::setText(const std::string text)
+{
+    m_text.setString(text);
+}
+
+std::string gsf::TextWidget::getText() const
+{
+    return m_text.getString();
+}
+
+void gsf::TextWidget::setCharacterSize(const unsigned int size)
+{
+    m_text.setCharacterSize(size);
+}
+
+unsigned int gsf::TextWidget::getCharacterSize() const
+{
+    return m_text.getCharacterSize();
+}
+
+void gsf::TextWidget::setTextColor(const sf::Color color)
+{
+    m_text.setColor(color);
+}
+
+sf::Color gsf::TextWidget::getTextColor() const
+{
+    return m_text.getColor();
+}
+
+void gsf::TextWidget::centerOrigin()
+{
+    sf::FloatRect localRect = m_text.getLocalBounds();
+    m_text.setOrigin(localRect.width / 2.f, localRect.height / 2.f);
 }
 
 void gsf::TextWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
