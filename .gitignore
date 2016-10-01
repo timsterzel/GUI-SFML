@@ -15,7 +15,6 @@
 
 # Fortran module files
 *.mod
-*.smod
 
 # Compiled Static libraries
 *.lai
@@ -27,3 +26,13 @@
 *.exe
 *.out
 *.app
+
+ 
+# Code::Blocks
+*.depend  
+*.layout
+bin/
+
+# Tmp files
+*.temp
+
