@@ -23,7 +23,7 @@ namespace gsf
         protected:
             float m_width;
             float m_height;
-
+            sf::Color m_bgColor;
         private:
             std::vector<Ptr> m_children;
             View *m_parent;
@@ -39,6 +39,11 @@ namespace gsf
             float getWidth() const;
             void setHeight(const float height);
             float getHeight() const;
+
+            void setBackgroundColor(const sf::Color color);
+            sf::Color getBackgroundColor() const;
+
+            void centerOrigin();
 
             // dt is the delta time
             void update(float dt);

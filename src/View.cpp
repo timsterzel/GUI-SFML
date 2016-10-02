@@ -6,6 +6,7 @@
 gsf::View::View()
 : m_width{ 0.f }
 , m_height{ 0.f }
+, m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
 {
 
@@ -52,6 +53,21 @@ void gsf::View::setHeight(const float height)
 float gsf::View::getHeight() const
 {
     return m_height;
+}
+
+void gsf::View::setBackgroundColor(const sf::Color color)
+{
+    m_bgColor = color;
+}
+
+sf::Color gsf::View::getBackgroundColor() const
+{
+    return m_bgColor;
+}
+
+void gsf::View::centerOrigin()
+{
+    setOrigin(getWidth() / 2.f, getHeight() / 2.f);
 }
 
 void gsf::View::draw(sf::RenderTarget &target, sf::RenderStates states) const

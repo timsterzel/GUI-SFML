@@ -11,15 +11,10 @@ namespace gsf
         protected:
 
         private:
-            sf::Color m_bgColor;
+
         public:
             VerticalLayout();
-            ~VerticalLayout();
-
-            void setBackgroundColor(const sf::Color color);
-            sf::Color getBackgroundColor() const;
-
-            void centerOrigin();
+            virtual ~VerticalLayout();
 
         private:
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
