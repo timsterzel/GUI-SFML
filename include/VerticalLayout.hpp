@@ -14,6 +14,7 @@ namespace gsf
 
         public:
             VerticalLayout();
+            //VerticalLayout(float width, float height);
             virtual ~VerticalLayout();
 
         private:
@@ -23,6 +24,7 @@ namespace gsf
 
             // Calculate the size of the current View
             virtual void calculateSize();
+            virtual void arrangeChildren();
     };
 
 }

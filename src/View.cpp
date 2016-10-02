@@ -21,6 +21,9 @@ void gsf::View::attachChild(Ptr child)
 {
     child->m_parent = this;
     m_children.push_back(std::move(child));
+
+    arrangeChildren();
+    calculateSize();
 }
 
 gsf::View::Ptr gsf::View::detachChild(const View& node)
@@ -32,6 +35,10 @@ gsf::View::Ptr gsf::View::detachChild(const View& node)
     Ptr result = std::move(*found);
     result->m_parent = nullptr;
     m_children.erase(found);
+
+    arrangeChildren();
+    calculateSize();
+
     return result;
 }
 
@@ -125,6 +132,11 @@ sf::Vector2f gsf::View::getWorldPosition() const
 }
 
 void gsf::View::calculateSize()
+{
+    // Do nothing by default
+}
+
+void gsf::View::arrangeChildren()
 {
     // Do nothing by default
 }

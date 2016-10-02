@@ -80,6 +80,7 @@ void gsf::TextWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates sta
     target.draw(bgShape, states);
     // Draw text
     target.draw(m_text, states);
+    std::cout << "TextWidget Text: " << static_cast<std::string>(m_text.getString()) << std::endl;
 }
 
 void gsf::TextWidget::updateCurrent(float dt)

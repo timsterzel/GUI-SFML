@@ -24,7 +24,6 @@ namespace gsf
             float m_width;
             float m_height;
             sf::Color m_bgColor;
-        private:
             std::vector<Ptr> m_children;
             View *m_parent;
 
@@ -69,6 +68,8 @@ namespace gsf
 
             // Calculate the size of the current View
             virtual void calculateSize();
+            // Place Children in this view
+            virtual void arrangeChildren();
     };
 
 }
