@@ -1,9 +1,9 @@
-#include "Widget.hpp"
+#include "View.hpp"
 #include <algorithm>
 #include <cassert>
 #include <iostream>
 
-gsf::Widget::Widget()
+gsf::View::View()
 : m_width{ 0.f }
 , m_height{ 0.f }
 , m_parent{ nullptr }
@@ -11,18 +11,18 @@ gsf::Widget::Widget()
 
 }
 
-gsf::Widget::~Widget()
+gsf::View::~View()
 {
 
 }
 
-void gsf::Widget::attachChild(Ptr child)
+void gsf::View::attachChild(Ptr child)
 {
     child->m_parent = this;
     m_children.push_back(std::move(child));
 }
 
-gsf::Widget::Ptr gsf::Widget::detachChild(const Widget& node)
+gsf::View::Ptr gsf::View::detachChild(const View& node)
 {
     auto found = std::find_if(m_children.begin(), m_children.end(), [&] (Ptr &p) -> bool { return p.get() == &node; });
     // There is an error when we try to detach a child which does not exists,so stop execution in debug mode
@@ -34,39 +34,39 @@ gsf::Widget::Ptr gsf::Widget::detachChild(const Widget& node)
     return result;
 }
 
-void gsf::Widget::setWidth(const float width)
+void gsf::View::setWidth(const float width)
 {
     m_width = width;
 }
 
-float gsf::Widget::getWidth() const
+float gsf::View::getWidth() const
 {
     return m_width;
 }
 
-void gsf::Widget::setHeight(const float height)
+void gsf::View::setHeight(const float height)
 {
     m_height = height;
 }
 
-float gsf::Widget::getHeight() const
+float gsf::View::getHeight() const
 {
     return m_height;
 }
 
-void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::View::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
         drawCurrent(target, states);
         drawChildren(target, states);
 }
 
-void gsf::Widget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::View::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     //Do nothing by default
 }
 
-void gsf::Widget::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::View::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
 {
     for (const Ptr &child : m_children)
     {
@@ -74,18 +74,18 @@ void gsf::Widget::drawChildren(sf::RenderTarget &target, sf::RenderStates states
     }
 }
 
-void gsf::Widget::update(float dt)
+void gsf::View::update(float dt)
 {
     updateCurrent(dt);
     updateChildren(dt);
 }
 
-void gsf::Widget::updateCurrent(float dt)
+void gsf::View::updateCurrent(float dt)
 {
     // Do nothing by default
 }
 
-void gsf::Widget::updateChildren(float dt)
+void gsf::View::updateChildren(float dt)
 {
     for (const Ptr &child : m_children)
     {
@@ -93,22 +93,22 @@ void gsf::Widget::updateChildren(float dt)
     }
 }
 
-sf::Transform gsf::Widget::getWorldTransform() const
+sf::Transform gsf::View::getWorldTransform() const
 {
     sf::Transform trform = { sf::Transform::Identity };
-    for (const Widget *node = this; node != nullptr; node = node->m_parent)
+    for (const View *node = this; node != nullptr; node = node->m_parent)
     {
         trform = node->getTransform() * trform;
     }
     return trform;
 }
 
-sf::Vector2f gsf::Widget::getWorldPosition() const
+sf::Vector2f gsf::View::getWorldPosition() const
 {
     return getWorldTransform() * sf::Vector2f();
 }
 
-void gsf::Widget::calculateSize()
+void gsf::View::calculateSize()
 {
     // Do nothing by default
 }

@@ -1,14 +1,14 @@
-#ifndef WIDGET_HPP
-#define WIDGET_HPP
+#ifndef VIEW_HPP
+#define VIEW_HPP
 #include <SFML/Graphics.hpp>
 
 namespace gsf
 {
-    class Widget: public sf::Transformable, public sf::Drawable
+    class View: public sf::Transformable, public sf::Drawable
     {
         public:
-            typedef std::unique_ptr<Widget> Ptr;
-            typedef std::pair<Widget*, Widget*> Pair;
+            typedef std::unique_ptr<View> Ptr;
+            typedef std::pair<View*, View*> Pair;
             /*
             enum class Orientation
             {
@@ -26,14 +26,14 @@ namespace gsf
 
         private:
             std::vector<Ptr> m_children;
-            Widget *m_parent;
+            View *m_parent;
 
         public:
-            Widget();
-            virtual ~Widget();
+            View();
+            virtual ~View();
 
             void attachChild(Ptr child);
-            Ptr detachChild(const Widget& node);
+            Ptr detachChild(const View& node);
 
             void setWidth(const float width);
             float getWidth() const;
@@ -62,10 +62,10 @@ namespace gsf
             virtual void updateCurrent(float dt);
             void updateChildren(float dt);
 
-            // Calculate the size of the current widget
+            // Calculate the size of the current View
             virtual void calculateSize();
     };
 
 }
 
-#endif // WIDGET_HPP
+#endif // VIEW_HPP
