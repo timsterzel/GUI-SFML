@@ -43,10 +43,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/TextWidget.hpp" />
-		<Unit filename="include/Widget.hpp" />
+		<Unit filename="include/VerticalLayout.hpp" />
+		<Unit filename="include/View.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/TextWidget.cpp" />
-		<Unit filename="src/Widget.cpp" />
+		<Unit filename="src/VerticalLayout.cpp" />
+		<Unit filename="src/View.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -6,17 +7,29 @@
 #include "TextWidget.hpp"
 #include "VerticalLayout.hpp"
 
+typedef std::chrono::high_resolution_clock CLOCK;
+
+
 int main()
 {
-    unsigned int windowWidth = { 1280 };
-    unsigned int windowHeight = { 720 };
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "GUI-SFML");
-
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/LiberationSans-Regular.ttf"))
     {
         std::cout << "Error by loading Font" << std::endl;
     }
+    sf::Text txtStatFPS;
+    txtStatFPS.setFont(font);
+    txtStatFPS.setCharacterSize(12);
+    txtStatFPS.setColor(sf::Color::White);
+    float fps = { 0.f };
+    float dt = { 0.f };
+    CLOCK::time_point timePoint1 = { CLOCK::now() };
+
+    unsigned int windowWidth = { 1280 };
+    unsigned int windowHeight = { 720 };
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "GUI-SFML");
+
+
     gsf::TextWidget textWidget("Im a Text", font, 12, sf::Color::White);
     //textWidget.getText().setColor(sf::Color::Red);
     textWidget.centerOrigin();
@@ -36,9 +49,17 @@ int main()
         layout.attachChild(std::move(text));
     }
 
-
     while (window.isOpen())
     {
+        // Determine deltaTime
+        CLOCK::time_point timePoint2 = { CLOCK::now() };
+        std::chrono::duration<float> timeSpan = { timePoint2 - timePoint1 };
+        timePoint1 = CLOCK::now();
+        // Get deltaTime as float in seconds
+        dt = std::chrono::duration_cast<std::chrono::duration<float,std::ratio<1>>> (timeSpan).count();
+        fps = 1.f / dt;
+        txtStatFPS.setString("FPS: " + std::to_string(fps));
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -48,7 +69,10 @@ int main()
 
         window.clear();
         window.draw(textWidget);
+
+
         window.draw(layout);
+        window.draw(txtStatFPS);
         window.display();
     }
 
