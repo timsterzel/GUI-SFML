@@ -9,9 +9,19 @@
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
+// Poll events before starting loading other things, to prevent the message that the window is not responding (A bug?).
+// http://en.sfml-dev.org/forums/index.php?topic=19768.0
+void preventNoResponseDialog(sf::RenderWindow &window);
+
+void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt, CLOCK::time_point &timePoint1);
 
 int main()
 {
+    unsigned int windowWidth = { 1280 };
+    unsigned int windowHeight = { 720 };
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "GUI-SFML");
+    preventNoResponseDialog(window);
+
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/LiberationSans-Regular.ttf"))
     {
@@ -21,13 +31,8 @@ int main()
     txtStatFPS.setFont(font);
     txtStatFPS.setCharacterSize(12);
     txtStatFPS.setColor(sf::Color::White);
-    float fps = { 0.f };
     float dt = { 0.f };
     CLOCK::time_point timePoint1 = { CLOCK::now() };
-
-    unsigned int windowWidth = { 1280 };
-    unsigned int windowHeight = { 720 };
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "GUI-SFML");
 
 
     gsf::TextWidget textWidget("Im a Text", font, 12, sf::Color::White);
@@ -49,17 +54,15 @@ int main()
         layout.attachChild(std::move(text));
     }
 
+    sf::RenderTexture texture;
+    if (!texture.create(300, 190))
+    {
+        std::cout << "Error by creating RenderTexture" << std::endl;
+    }
+
     while (window.isOpen())
     {
-        // Determine deltaTime
-        CLOCK::time_point timePoint2 = { CLOCK::now() };
-        std::chrono::duration<float> timeSpan = { timePoint2 - timePoint1 };
-        timePoint1 = CLOCK::now();
-        // Get deltaTime as float in seconds
-        dt = std::chrono::duration_cast<std::chrono::duration<float,std::ratio<1>>> (timeSpan).count();
-        fps = 1.f / dt;
-        txtStatFPS.setString("FPS: " + std::to_string(fps));
-
+        determineFpsAndDeltaTime(txtStatFPS, dt, timePoint1);
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -69,12 +72,30 @@ int main()
 
         window.clear();
         window.draw(textWidget);
-
-
         window.draw(layout);
         window.draw(txtStatFPS);
         window.display();
     }
 
     return 0;
+}
+
+void preventNoResponseDialog(sf::RenderWindow &window)
+{
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+
+    }
+}
+
+void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt, CLOCK::time_point &timePoint1)
+{
+    CLOCK::time_point timePoint2 = { CLOCK::now() };
+    std::chrono::duration<float> timeSpan = { timePoint2 - timePoint1 };
+    timePoint1 = CLOCK::now();
+    // Get deltaTime as float in seconds
+    dt = std::chrono::duration_cast<std::chrono::duration<float,std::ratio<1>>> (timeSpan).count();
+    float fps = 1.f / dt;
+    txtStatFPS.setString("FPS: " + std::to_string(fps));
 }
