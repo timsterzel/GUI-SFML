@@ -16,14 +16,21 @@ namespace gsf
             // with all children.
             float m_totalWidth;
             float m_totalHeight;
+            bool m_isVerticalScrollEnabled;
+            bool m_isHorizontalScrollEnabled;
         public:
 
             virtual ~ScrollableWidget();
 
+            void setIsVerticalScrollEnabled(bool isEnabled);
+            bool isVerticalScrollEnabled() const;
+            void setIsHorizontalScrollEnabled(bool isEnabled);
+            bool isHorizontalScrollEnabled() const;
+
         private:
 
         protected:
-            ScrollableWidget();
+            ScrollableWidget(float width, float height);
     };
 
 }
