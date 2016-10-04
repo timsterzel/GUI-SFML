@@ -44,7 +44,7 @@ int main()
 
     gsf::VerticalLayout layout(300, 200);
     layout.centerOrigin();
-    layout.setPosition(400.f , 300.f);
+    layout.setPosition(300.f , 200.f);
     layout.setBackgroundColor(sf::Color::Cyan);
 
     std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;

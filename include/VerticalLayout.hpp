@@ -1,8 +1,8 @@
 #ifndef VERTICALLAYOUT_HPP
 #define VERTICALLAYOUT_HPP
 #include <SFML/Graphics.hpp>
-#include "Widget.hpp"
 #include <string>
+#include "Widget.hpp"
 
 namespace gsf
 {

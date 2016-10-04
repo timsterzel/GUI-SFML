@@ -16,6 +16,8 @@ void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates
 {
     sf::View defaultView = target.getView();
     sf::View view;
+    // The view should have the same size as the layout, so the shown area of the widget is never bigger than the size of the widget,
+    // although when the children widgets of the layout are bigger.
     view.setSize(getWidth(), getHeight());
     view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f), getWorldPosition().y - getOrigin().y + (getHeight() / 2.f));
 
@@ -23,8 +25,8 @@ void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates
     float startY = ( getWorldPosition().y - getOrigin().y ) / target.getSize().y;
     float viewWidth = getWidth() / target.getSize().x;
     float viewHeight = getHeight() / target.getSize().y;
-    sf::FloatRect viewport(startX , startY , viewWidth, viewHeight);
-    view.setViewport(viewport);
+    // The viewport is the area where the widget is on screen
+    view.setViewport(sf::FloatRect(startX , startY , viewWidth, viewHeight));
     target.setView(view);
     // Draw background
     sf::RectangleShape bgShape({ getWidth(), getHeight() });
