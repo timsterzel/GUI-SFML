@@ -1,12 +1,12 @@
 #ifndef VERTICALLAYOUT_HPP
 #define VERTICALLAYOUT_HPP
 #include <SFML/Graphics.hpp>
-#include "View.hpp"
+#include "Widget.hpp"
 #include <string>
 
 namespace gsf
 {
-    class VerticalLayout: public gsf::View
+    class VerticalLayout: public gsf::Widget
     {
         protected:
 
@@ -14,7 +14,6 @@ namespace gsf
 
         public:
             VerticalLayout(float width, float height);
-            //VerticalLayout(float width, float height);
             virtual ~VerticalLayout();
 
         private:

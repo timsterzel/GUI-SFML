@@ -2,7 +2,7 @@
 #include <iostream>
 
 gsf::VerticalLayout::VerticalLayout(float width, float height)
-: View(width, height)
+: Widget(width, height)
 {
 
 }

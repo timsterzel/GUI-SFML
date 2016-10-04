@@ -1,12 +1,12 @@
 #ifndef TEXTWIDGET_HPP
 #define TEXTWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "View.hpp"
+#include "Widget.hpp"
 #include <string>
 
 namespace gsf
 {
-    class TextWidget: public gsf::View
+    class TextWidget: public gsf::Widget
     {
         protected:
 
