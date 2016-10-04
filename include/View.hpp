@@ -29,6 +29,7 @@ namespace gsf
 
         public:
             View();
+            View(float width, float height);
             virtual ~View();
 
             void attachChild(Ptr child);

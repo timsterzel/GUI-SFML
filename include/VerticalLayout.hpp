@@ -13,7 +13,7 @@ namespace gsf
         private:
 
         public:
-            VerticalLayout();
+            VerticalLayout(float width, float height);
             //VerticalLayout(float width, float height);
             virtual ~VerticalLayout();
 

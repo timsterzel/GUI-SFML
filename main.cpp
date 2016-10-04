@@ -42,22 +42,18 @@ int main()
     textWidget.setCharacterSize(60);
     textWidget.setPosition(windowWidth / 2.f, windowHeight / 2.f);
 
-    gsf::VerticalLayout layout;
-    layout.setPosition(200.f , 100.f);
+    gsf::VerticalLayout layout(300, 200);
+    layout.centerOrigin();
+    layout.setPosition(400.f , 300.f);
     layout.setBackgroundColor(sf::Color::Cyan);
+
     std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
     for (int i = { 0 }; i != 3; i++)
     {
         std::string textString = "Text Num " + std::to_string(i);
         std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };
-        text->setBackgroundColor(sf::Color::Red);
+        //text->setBackgroundColor(sf::Color::Red);
         layout.attachChild(std::move(text));
-    }
-
-    sf::RenderTexture texture;
-    if (!texture.create(300, 190))
-    {
-        std::cout << "Error by creating RenderTexture" << std::endl;
     }
 
     while (window.isOpen())

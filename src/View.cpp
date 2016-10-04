@@ -12,6 +12,16 @@ gsf::View::View()
 
 }
 
+
+gsf::View::View(float width, float height)
+: m_width{ width }
+, m_height{ height }
+, m_bgColor{ sf::Color::Transparent }
+, m_parent{ nullptr }
+{
+
+}
+
 gsf::View::~View()
 {
 
@@ -128,7 +138,9 @@ sf::Transform gsf::View::getWorldTransform() const
 
 sf::Vector2f gsf::View::getWorldPosition() const
 {
-    return getWorldTransform() * sf::Vector2f();
+    // Get world position ignores the real position when the origin is set ( the position is every time the one in the upper left corner)
+    // so we add the origin here.
+    return ( getWorldTransform() * sf::Vector2f() ) + getOrigin();
 }
 
 void gsf::View::calculateSize()
