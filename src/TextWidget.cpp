@@ -87,6 +87,21 @@ void gsf::TextWidget::updateCurrent(float dt)
     // Do nothing by default
 }
 
+bool gsf::TextWidget::handleEventCurrent(sf::Event &event)
+{
+    /*
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            std::cout << "Left Mouse Button Clicked" << std::endl;
+            return true;
+        }
+    }
+    */
+    return false;
+}
+
 void gsf::TextWidget::calculateSize()
 {
     sf::FloatRect localBounds = { m_text.getLocalBounds() };

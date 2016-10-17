@@ -40,6 +40,15 @@ namespace gsf
             void setHeight(const float height);
             float getHeight() const;
 
+            float getLeft() const;
+            float getRight() const;
+            float getTop() const;
+            float getBottom() const;
+            float getWorldLeft() const;
+            float getWorldRight() const;
+            float getWorldTop() const;
+            float getWorldBottom() const;
+
             void setBackgroundColor(const sf::Color color);
             sf::Color getBackgroundColor() const;
 

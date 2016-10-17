@@ -72,6 +72,46 @@ float gsf::Widget::getHeight() const
     return m_height;
 }
 
+float gsf::Widget::getLeft() const
+{
+    return getPosition().x - getOrigin().x;
+}
+
+float gsf::Widget::getRight() const
+{
+    return getPosition().x - getOrigin().x + getWidth();
+}
+
+float gsf::Widget::getTop() const
+{
+    return getPosition().y - getOrigin().y;
+}
+
+float gsf::Widget::getBottom() const
+{
+    return getWorldPosition().y - getOrigin().y + getHeight();
+}
+
+float gsf::Widget::getWorldLeft() const
+{
+    return getWorldPosition().x - getOrigin().x;
+}
+
+float gsf::Widget::getWorldRight() const
+{
+    return getWorldPosition().x - getOrigin().x + getWidth();
+}
+
+float gsf::Widget::getWorldTop() const
+{
+    return getWorldPosition().y - getOrigin().y;
+}
+
+float gsf::Widget::getWorldBottom() const
+{
+    return getWorldPosition().y - getOrigin().y + getHeight();
+}
+
 void gsf::Widget::setBackgroundColor(const sf::Color color)
 {
     m_bgColor = color;
@@ -127,11 +167,12 @@ bool gsf::Widget::handleEventChildren(sf::Event &event)
             return true;
         }
     }
+    return false;
 }
 
 bool gsf::Widget::handleEventCurrent(sf::Event &event)
 {
-
+    return false;
 }
 
 void gsf::Widget::update(float dt)
