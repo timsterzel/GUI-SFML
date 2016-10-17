@@ -33,12 +33,12 @@ namespace gsf
         private:
             void init(std::string text, sf::Font &font, int characterSize, sf::Color color);
 
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
+            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-            virtual void updateCurrent(float dt);
+            virtual void updateCurrent(float dt) override;
 
             // Calculate the size of the current widget
-            virtual void calculateSize();
+            virtual void calculateSize() override;
     };
 
 }

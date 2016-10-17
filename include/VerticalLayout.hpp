@@ -17,13 +17,13 @@ namespace gsf
             virtual ~VerticalLayout();
 
         private:
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
+            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-            virtual void updateCurrent(float dt);
+            virtual void updateCurrent(float dt) override;
 
             // Calculate the size of the current View
-            virtual void calculateSize();
-            virtual void arrangeChildren();
+            virtual void calculateSize() override;
+            virtual void arrangeChildren() override;
     };
 
 }
