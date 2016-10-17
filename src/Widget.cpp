@@ -211,6 +211,11 @@ sf::Vector2f gsf::Widget::getWorldPosition() const
     return ( getWorldTransform() * sf::Vector2f() ) + getOrigin();
 }
 
+bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
+{
+    return pos.x >= getWorldLeft() && pos.x <= getWorldRight() && pos.y >= getWorldTop() && pos.y <= getWorldBottom();
+}
+
 void gsf::Widget::calculateSize()
 {
     // Do nothing by default

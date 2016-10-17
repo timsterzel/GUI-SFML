@@ -62,8 +62,10 @@ namespace gsf
             // Get absolute position in world
             sf::Vector2f getWorldPosition() const;
 
-            bool isActive() const;
-            void setIsActive(bool isActive);
+            //bool isActive() const;
+            //void setIsActive(bool isActive);
+
+            bool isIntersecting(sf::Vector2f pos) const;
 
             // draw should not get overridden
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final override;
