@@ -12,8 +12,8 @@ namespace gsf
 
         private:
             // The total size, not the shown.
-            // A Scrollable can have a shown size and a total size
-            // with all children.
+            // A Scrollable can have a shown size (the size, the widget take on the screen)
+            // and a total size (the size with all the children widgets inside the scollable widget)
             float m_totalWidth;
             float m_totalHeight;
             bool m_isVerticalScrollEnabled;

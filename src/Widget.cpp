@@ -107,6 +107,33 @@ void gsf::Widget::drawChildren(sf::RenderTarget &target, sf::RenderStates states
     }
 }
 
+bool gsf::Widget::handleEvent(sf::Event &event)
+{
+    // If the widget return true, it has handled the event and
+    // children should not handle it.
+    if (!handleEventCurrent(event))
+    {
+        return handleEventChildren(event);
+    }
+    return true;
+}
+
+bool gsf::Widget::handleEventChildren(sf::Event &event)
+{
+    for (auto itr = m_children.rbegin(); itr != m_children.rend(); itr++)
+    {
+        if ((*itr)->handleEvent(event))
+        {
+            return true;
+        }
+    }
+}
+
+bool gsf::Widget::handleEventCurrent(sf::Event &event)
+{
+
+}
+
 void gsf::Widget::update(float dt)
 {
     updateCurrent(dt);

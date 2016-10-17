@@ -62,6 +62,7 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            layout.handleEvent(event);
             if (event.type == sf::Event::Closed)
                 window.close();
         }

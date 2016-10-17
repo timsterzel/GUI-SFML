@@ -59,6 +59,9 @@ namespace gsf
             // draw should not get overridden
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
 
+            // Returns true if widget has handled the event and children dont have to handle it
+            bool handleEvent(sf::Event &event);
+
         private:
 
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -66,6 +69,9 @@ namespace gsf
 
             virtual void updateCurrent(float dt);
             void updateChildren(float dt);
+
+            bool handleEventChildren(sf::Event &event);
+            virtual bool handleEventCurrent(sf::Event &event);
 
             // Calculate the size of the current Widget
             virtual void calculateSize();
