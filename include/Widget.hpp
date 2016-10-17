@@ -57,7 +57,7 @@ namespace gsf
             void setIsActive(bool isActive);
 
             // draw should not get overridden
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final;
+            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final override;
 
             // Returns true if widget has handled the event and children dont have to handle it
             bool handleEvent(sf::Event &event);
