@@ -21,6 +21,8 @@ namespace gsf
 
             virtual void updateCurrent(float dt) override;
 
+            virtual bool handleEventCurrent(sf::Event &event) override;
+
             // Calculate the size of the current View
             virtual void calculateSize() override;
             virtual void arrangeChildren() override;

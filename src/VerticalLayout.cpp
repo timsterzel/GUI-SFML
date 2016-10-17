@@ -40,6 +40,21 @@ void gsf::VerticalLayout::updateCurrent(float dt)
     // Do nothing by default
 }
 
+bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
+{
+
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        {
+            std::cout << "VerticalLayout: Left Mouse Button Clicked" << std::endl;
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void gsf::VerticalLayout::calculateSize()
 {
     /*
