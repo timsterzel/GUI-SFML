@@ -2,7 +2,7 @@
 #include <iostream>
 
 gsf::VerticalLayout::VerticalLayout(float width, float height)
-: Widget(width, height)
+: ScrollableWidget(width, height)
 {
 
 }
@@ -12,8 +12,19 @@ gsf::VerticalLayout::~VerticalLayout()
 
 }
 
+
 void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    // Draw background
+    sf::RectangleShape bgShape({ getWidth(), getHeight() });
+    bgShape.setFillColor(m_bgColor);
+    target.draw(bgShape, states);
+}
+
+/*
+void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    std::cout << "VerticalLayout Draw current " << std::endl;
     sf::View defaultView = target.getView();
     sf::View view;
     // The view should have the same size as the layout, so the shown area of the widget is never bigger than the size of the widget,
@@ -34,6 +45,7 @@ void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates
     target.draw(bgShape, states);
     target.setView(defaultView);
 }
+*/
 
 void gsf::VerticalLayout::updateCurrent(float dt)
 {

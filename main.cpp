@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "TextWidget.hpp"
 #include "VerticalLayout.hpp"
+#include "ScrollableWidget.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -48,7 +49,7 @@ int main()
     layout.setBackgroundColor(sf::Color::Cyan);
 
     std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
-    for (int i = { 0 }; i != 3; i++)
+    for (int i = { 0 }; i != 6; i++)
     {
         std::string textString = "Text Num " + std::to_string(i);
         std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };

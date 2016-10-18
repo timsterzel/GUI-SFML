@@ -130,6 +130,7 @@ void gsf::Widget::centerOrigin()
 void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
+
         drawCurrent(target, states);
         drawChildren(target, states);
 }
