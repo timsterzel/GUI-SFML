@@ -18,6 +18,7 @@ namespace gsf
             float m_totalHeight;
             float m_scrollOffsetX;
             float m_scrollOffsetY;
+            float m_scrollSpeed;
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;
 
@@ -30,17 +31,18 @@ namespace gsf
             void setIsHorizontalScrollEnabled(bool isEnabled);
             bool isHorizontalScrollEnabled() const;
 
+            float getTotalWidth() const;
+            float getTotalHeight() const;
+
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;
 
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-        private:
-
-            virtual bool handleEventCurrent(sf::Event &event) override;
-
         protected:
             ScrollableWidget(float width, float height);
+
+            virtual bool handleEventCurrent(sf::Event &event) override;
     };
 
 }

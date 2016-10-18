@@ -72,6 +72,10 @@ namespace gsf
             // Returns true if widget has handled the event and children dont have to handle it
             bool handleEvent(sf::Event &event);
 
+        protected:
+
+            virtual bool handleEventCurrent(sf::Event &event);
+
         private:
 
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -81,7 +85,7 @@ namespace gsf
             void updateChildren(float dt);
 
             bool handleEventChildren(sf::Event &event);
-            virtual bool handleEventCurrent(sf::Event &event);
+
 
             // Calculate the size of the current Widget
             virtual void calculateSize();

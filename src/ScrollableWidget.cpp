@@ -7,6 +7,7 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_totalHeight{ height }
 , m_scrollOffsetX{ 0.f }
 , m_scrollOffsetY{ 0.f }
+, m_scrollSpeed{ 6.0f }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ false }
 {
@@ -37,13 +38,25 @@ bool gsf::ScrollableWidget::isHorizontalScrollEnabled() const
     return m_isHorizontalScrollEnabled;
 }
 
+float gsf::ScrollableWidget::getTotalWidth() const
+{
+    return m_totalWidth;
+}
+
+float gsf::ScrollableWidget::getTotalHeight() const
+{
+    return m_totalHeight;
+}
+
 sf::View gsf::ScrollableWidget::getShownAreaView(sf::RenderTarget &target) const
 {
         sf::View view;
         // The view should have the same size as the layout, so the shown area of the widget is never bigger than the size of the widget,
         // although when the children widgets of the layout are bigger.
         view.setSize(getWidth(), getHeight());
-        view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f), getWorldPosition().y - getOrigin().y + (getHeight() / 2.f));
+        float scrollOffsetX = m_scrollOffsetX * m_scrollSpeed;
+        float scrollOffsetY = m_scrollOffsetY * m_scrollSpeed;
+        view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f) + scrollOffsetX, getWorldPosition().y - getOrigin().y + (getHeight() / 2.f) + scrollOffsetY );
 
         float startX = ( getWorldPosition().x - getOrigin().x ) / target.getSize().x;
         float startY = ( getWorldPosition().y - getOrigin().y ) / target.getSize().y;
@@ -56,7 +69,6 @@ sf::View gsf::ScrollableWidget::getShownAreaView(sf::RenderTarget &target) const
 
 void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-        std::cout << "VerticalLayout Draw current " << std::endl;
         // We change the view of the target, so that only the area of the widget and its child
         // which are in its shown area are drawn on the RenderTarget
         sf::View defaultView = target.getView();
@@ -70,5 +82,13 @@ void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates stat
 
 bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
+
+    Widget::handleEventCurrent(event);
+    if (event.type == sf::Event::MouseWheelMoved)
+    {
+        std::cout << "MouseWheel moved, delta: " << event.mouseWheel.delta << std::endl;
+        m_scrollOffsetY -= event.mouseWheel.delta;
+    }
+
     return false;
 }
