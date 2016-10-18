@@ -76,6 +76,8 @@ void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates stat
         target.setView(view);
 
         Widget::draw(target, states);
+        //drawCurrent(target, states);
+        //drawChildren(target, states);
 
         target.setView(defaultView);
 }
