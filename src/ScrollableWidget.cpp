@@ -69,15 +69,18 @@ sf::View gsf::ScrollableWidget::getShownAreaView(sf::RenderTarget &target) const
 
 void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+        states.transform *= getTransform();
+
+        drawCurrent(target, states);
+
         // We change the view of the target, so that only the area of the widget and its child
         // which are in its shown area are drawn on the RenderTarget
         sf::View defaultView = target.getView();
         sf::View view = { getShownAreaView(target) };
         target.setView(view);
 
-        Widget::draw(target, states);
-        //drawCurrent(target, states);
-        //drawChildren(target, states);
+        drawChildren(target, states);
+        //Widget::draw(target, states);
 
         target.setView(defaultView);
 }

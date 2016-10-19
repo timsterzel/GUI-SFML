@@ -74,12 +74,12 @@ namespace gsf
 
         protected:
 
+            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
+            void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
+
             virtual bool handleEventCurrent(sf::Event &event);
 
         private:
-
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
-            void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
 
             virtual void updateCurrent(float dt);
             void updateChildren(float dt);
