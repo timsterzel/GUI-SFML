@@ -2,7 +2,7 @@
 #include <iostream>
 
 gsf::ScrollableWidget::ScrollableWidget(float width, float height)
-: Widget(width, height)
+: ChildWidget(width, height)
 , m_totalWidth{ width }
 , m_totalHeight{ height }
 , m_scrollOffsetX{ 0.f }
@@ -87,8 +87,7 @@ void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates stat
 
 bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
-
-    Widget::handleEventCurrent(event);
+    Widget::handleEvent(event);
     if (event.type == sf::Event::MouseWheelMoved)
     {
         std::cout << "MouseWheel moved, delta: " << event.mouseWheel.delta << std::endl;

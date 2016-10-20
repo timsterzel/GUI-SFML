@@ -16,6 +16,7 @@ namespace gsf
             VerticalLayout(float width, float height);
             virtual ~VerticalLayout();
 
+
         private:
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
 

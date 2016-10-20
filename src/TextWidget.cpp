@@ -72,8 +72,9 @@ sf::Color gsf::TextWidget::getTextColor() const
     return m_text.getColor();
 }
 
-void gsf::TextWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::TextWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    states.transform *= getTransform();
     // Draw background
     sf::RectangleShape bgShape({ m_width, m_height });
     bgShape.setFillColor(m_bgColor);
@@ -82,14 +83,13 @@ void gsf::TextWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates sta
     target.draw(m_text, states);
 }
 
-void gsf::TextWidget::updateCurrent(float dt)
+void gsf::TextWidget::update(float dt)
 {
     // Do nothing by default
 }
 
-bool gsf::TextWidget::handleEventCurrent(sf::Event &event)
+bool gsf::TextWidget::handleEvent(sf::Event &event)
 {
-
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))

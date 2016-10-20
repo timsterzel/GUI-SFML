@@ -2,11 +2,11 @@
 #define SCROLLABLEWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "Widget.hpp"
+#include "ChildWidget.hpp"
 
 namespace gsf
 {
-    class ScrollableWidget: public gsf::Widget
+    class ScrollableWidget: public gsf::ChildWidget
     {
         protected:
 

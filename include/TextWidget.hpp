@@ -30,14 +30,12 @@ namespace gsf
 
             virtual ~TextWidget();
 
+            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void update(float dt) override;
+            virtual bool handleEvent(sf::Event &event) override;
+
         private:
             void init(std::string text, sf::Font &font, int characterSize, sf::Color color);
-
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
-
-            virtual void updateCurrent(float dt) override;
-
-            virtual bool handleEventCurrent(sf::Event &event) override;
 
             // Calculate the size of the current widget
             virtual void calculateSize() override;

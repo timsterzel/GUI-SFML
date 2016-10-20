@@ -24,16 +24,17 @@ namespace gsf
             float m_width;
             float m_height;
             sf::Color m_bgColor;
-            std::vector<Ptr> m_children;
             Widget *m_parent;
+
+            std::vector<Ptr> m_children;
 
         public:
             Widget();
             Widget(float width, float height);
             virtual ~Widget();
 
-            void attachChild(Ptr child);
-            Ptr detachChild(const Widget& node);
+            void setParent(Widget *parent);
+            Widget* getParent() const;
 
             void setWidth(const float width);
             float getWidth() const;
@@ -55,7 +56,7 @@ namespace gsf
             void centerOrigin();
 
             // dt is the delta time
-            void update(float dt);
+            virtual void update(float dt);
             //void onCommand(const Command &command, float dt);
             // Get absolute world transform
             sf::Transform getWorldTransform() const;
@@ -70,27 +71,13 @@ namespace gsf
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
             // Returns true if widget has handled the event and children dont have to handle it
-            bool handleEvent(sf::Event &event);
-
-        protected:
-
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
-            void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
-
-            virtual bool handleEventCurrent(sf::Event &event);
+            virtual bool handleEvent(sf::Event &event);
 
         private:
-
-            virtual void updateCurrent(float dt);
-            void updateChildren(float dt);
-
-            bool handleEventChildren(sf::Event &event);
-
-
-            // Calculate the size of the current Widget
+            // Calculate the size of the current widget
             virtual void calculateSize();
-            // Place Children in this Widget
-            virtual void arrangeChildren();
+
+
     };
 
 }

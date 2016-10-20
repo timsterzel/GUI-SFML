@@ -27,29 +27,14 @@ gsf::Widget::~Widget()
 
 }
 
-void gsf::Widget::attachChild(Ptr child)
+void gsf::Widget::setParent(Widget *parent)
 {
-    child->m_parent = this;
-    m_children.push_back(std::move(child));
-
-    arrangeChildren();
-    calculateSize();
+    m_parent = parent;
 }
 
-gsf::Widget::Ptr gsf::Widget::detachChild(const Widget& node)
+gsf::Widget* gsf::Widget::getParent() const
 {
-    auto found = std::find_if(m_children.begin(), m_children.end(), [&] (Ptr &p) -> bool { return p.get() == &node; });
-    // There is an error when we try to detach a child which does not exists,so stop execution in debug mode
-    assert(found != m_children.end());
-
-    Ptr result = std::move(*found);
-    result->m_parent = nullptr;
-    m_children.erase(found);
-
-    arrangeChildren();
-    calculateSize();
-
-    return result;
+    return m_parent;
 }
 
 void gsf::Widget::setWidth(const float width)
@@ -129,70 +114,18 @@ void gsf::Widget::centerOrigin()
 
 void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-        states.transform *= getTransform();
-
-        drawCurrent(target, states);
-        drawChildren(target, states);
+        // Do nothing by default
 }
 
-void gsf::Widget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    //Do nothing by default
-}
-
-void gsf::Widget::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    for (const Ptr &child : m_children)
-    {
-        child->draw(target, states);
-    }
-}
 
 bool gsf::Widget::handleEvent(sf::Event &event)
-{
-    // Only let widget handle event, when child widgets
-    // dont handle event successfully
-    if (!handleEventChildren(event))
-    {
-        return handleEventCurrent(event);
-    }
-    return true;
-}
-
-bool gsf::Widget::handleEventChildren(sf::Event &event)
-{
-    for (const Ptr &child : m_children)
-    {
-        if (child->handleEvent(event))
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool gsf::Widget::handleEventCurrent(sf::Event &event)
 {
     return false;
 }
 
 void gsf::Widget::update(float dt)
 {
-    updateCurrent(dt);
-    updateChildren(dt);
-}
-
-void gsf::Widget::updateCurrent(float dt)
-{
     // Do nothing by default
-}
-
-void gsf::Widget::updateChildren(float dt)
-{
-    for (const Ptr &child : m_children)
-    {
-        child->update(dt);
-    }
 }
 
 sf::Transform gsf::Widget::getWorldTransform() const
@@ -218,11 +151,6 @@ bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
 }
 
 void gsf::Widget::calculateSize()
-{
-    // Do nothing by default
-}
-
-void gsf::Widget::arrangeChildren()
 {
     // Do nothing by default
 }
