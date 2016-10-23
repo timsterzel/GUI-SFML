@@ -42,11 +42,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/ChildWidget.hpp" />
 		<Unit filename="include/ScrollableWidget.hpp" />
 		<Unit filename="include/TextWidget.hpp" />
 		<Unit filename="include/VerticalLayout.hpp" />
 		<Unit filename="include/Widget.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/ChildWidget.cpp" />
 		<Unit filename="src/ScrollableWidget.cpp" />
 		<Unit filename="src/TextWidget.cpp" />
 		<Unit filename="src/VerticalLayout.cpp" />

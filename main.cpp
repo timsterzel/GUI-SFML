@@ -43,6 +43,8 @@ int main()
     textWidget.setCharacterSize(60);
     textWidget.setPosition(windowWidth / 2.f, windowHeight / 2.f);
 
+    gsf::ScrollableWidget scrollableWidget(300, 200);
+
     gsf::VerticalLayout layout(300, 200);
     layout.centerOrigin();
     layout.setPosition(300.f , 200.f);

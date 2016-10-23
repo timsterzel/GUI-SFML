@@ -2,11 +2,11 @@
 #define VERTICALLAYOUT_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "ScrollableWidget.hpp"
+#include "ChildWidget.hpp"
 
 namespace gsf
 {
-    class VerticalLayout: public gsf::ScrollableWidget
+    class VerticalLayout: public gsf::ChildWidget
     {
         protected:
 

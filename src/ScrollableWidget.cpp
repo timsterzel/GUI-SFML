@@ -54,9 +54,12 @@ sf::View gsf::ScrollableWidget::getShownAreaView(sf::RenderTarget &target) const
         // The view should have the same size as the layout, so the shown area of the widget is never bigger than the size of the widget,
         // although when the children widgets of the layout are bigger.
         view.setSize(getWidth(), getHeight());
+        /*
         float scrollOffsetX = m_scrollOffsetX;
         float scrollOffsetY = m_scrollOffsetY;
         view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f) + scrollOffsetX, getWorldPosition().y - getOrigin().y + (getHeight() / 2.f) + scrollOffsetY );
+        */
+        view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f), getWorldPosition().y - getOrigin().y + (getHeight() / 2.f) );
 
         float startX = ( getWorldPosition().x - getOrigin().x ) / target.getSize().x;
         float startY = ( getWorldPosition().y - getOrigin().y ) / target.getSize().y;
@@ -92,10 +95,17 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
     {
         std::cout << "MouseWheel moved, delta: " << event.mouseWheel.delta << std::endl;
         std::cout << "m_scrollOffsetY: " << m_scrollOffsetY << std::endl;
+        /*
         m_scrollOffsetY -= event.mouseWheel.delta * m_scrollSpeed;
         if (m_scrollOffsetY < 0)
         {
             m_scrollOffsetY = 0.f;
+        }
+        */
+        float scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
+        for (const Ptr &child : m_children)
+        {
+            child->move(0.f, scrollOffsetY);
         }
     }
 

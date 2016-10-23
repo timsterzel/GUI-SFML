@@ -2,7 +2,7 @@
 #include <iostream>
 
 gsf::VerticalLayout::VerticalLayout(float width, float height)
-: ScrollableWidget(width, height)
+: ChildWidget(width, height)
 {
 
 }
@@ -16,7 +16,7 @@ gsf::VerticalLayout::~VerticalLayout()
 void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     // Draw background
-    sf::RectangleShape bgShape({ getTotalWidth(), getTotalHeight() });
+    sf::RectangleShape bgShape({ getWidth(), getHeight() });
     bgShape.setFillColor(m_bgColor);
     target.draw(bgShape, states);
 }
@@ -28,7 +28,7 @@ void gsf::VerticalLayout::updateCurrent(float dt)
 
 bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
 {
-    ScrollableWidget::handleEventCurrent(event);
+    ChildWidget::handleEventCurrent(event);
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
