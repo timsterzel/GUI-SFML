@@ -43,8 +43,30 @@ int main()
     textWidget.setCharacterSize(60);
     textWidget.setPosition(windowWidth / 2.f, windowHeight / 2.f);
 
-    gsf::ScrollableWidget scrollableWidget(300, 200);
 
+    gsf::ScrollableWidget scrollableWidget(300, 200);
+    scrollableWidget.centerOrigin();
+    scrollableWidget.setPosition(300.f , 200.f);
+    scrollableWidget.setBackgroundColor(sf::Color::Blue);
+
+    std::unique_ptr<gsf::VerticalLayout> layout = { std::make_unique<gsf::VerticalLayout>(300, 200) };
+    layout->centerOrigin();
+    layout->setPosition(150.f , 100.f);
+    layout->setBackgroundColor(sf::Color::Cyan);
+
+    std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
+    for (int i = { 0 }; i != 6; i++)
+    {
+        std::string textString = "Text Num " + std::to_string(i);
+        std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };
+        //text->setBackgroundColor(sf::Color::Red);
+        layout->attachChild(std::move(text));
+    }
+
+
+    scrollableWidget.attachChild(std::move(layout));
+
+    /*
     gsf::VerticalLayout layout(300, 200);
     layout.centerOrigin();
     layout.setPosition(300.f , 200.f);
@@ -56,23 +78,25 @@ int main()
         std::string textString = "Text Num " + std::to_string(i);
         std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };
         //text->setBackgroundColor(sf::Color::Red);
-        layout.attachChild(std::move(text));
+        layout->attachChild(std::move(text));
     }
-
+    */
     while (window.isOpen())
     {
         determineFpsAndDeltaTime(txtStatFPS, dt, timePoint1);
         sf::Event event;
         while (window.pollEvent(event))
         {
-            layout.handleEvent(event);
+            //layout.handleEvent(event);
+            scrollableWidget.handleEvent(event);
             if (event.type == sf::Event::Closed)
                 window.close();
         }
 
         window.clear();
         window.draw(textWidget);
-        window.draw(layout);
+        //window.draw(layout);
+        window.draw(scrollableWidget);
         window.draw(txtStatFPS);
         window.display();
     }

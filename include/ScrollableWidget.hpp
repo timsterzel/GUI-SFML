@@ -23,7 +23,7 @@ namespace gsf
             bool m_isHorizontalScrollEnabled;
 
         public:
-
+            ScrollableWidget(float width, float height);
             virtual ~ScrollableWidget();
 
             void setIsVerticalScrollEnabled(bool isEnabled);
@@ -39,8 +39,10 @@ namespace gsf
 
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+        private:
+            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
+
         protected:
-            ScrollableWidget(float width, float height);
 
             virtual bool handleEventCurrent(sf::Event &event) override;
     };

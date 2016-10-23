@@ -88,6 +88,14 @@ void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates stat
         target.setView(defaultView);
 }
 
+void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    // Draw background
+    sf::RectangleShape bgShape({ getWidth(), getHeight() });
+    bgShape.setFillColor(m_bgColor);
+    target.draw(bgShape, states);
+}
+
 bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
     Widget::handleEvent(event);
