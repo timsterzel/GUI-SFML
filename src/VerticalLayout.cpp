@@ -1,6 +1,12 @@
 #include "VerticalLayout.hpp"
 #include <iostream>
 
+gsf::VerticalLayout::VerticalLayout()
+: ChildWidget()
+{
+
+}
+
 gsf::VerticalLayout::VerticalLayout(float width, float height)
 : ChildWidget(width, height)
 {
@@ -43,7 +49,6 @@ bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
 
 void gsf::VerticalLayout::calculateSize()
 {
-    /*
     float height = 0.f;
     float width = 0.f;
     for (const Ptr &child : m_children)
@@ -57,7 +62,6 @@ void gsf::VerticalLayout::calculateSize()
     }
     m_height = height;
     m_width = width;
-    */
 }
 
 void gsf::VerticalLayout::arrangeChildren()

@@ -74,7 +74,7 @@ float gsf::Widget::getTop() const
 
 float gsf::Widget::getBottom() const
 {
-    return getWorldPosition().y - getOrigin().y + getHeight();
+    return getPosition().y - getOrigin().y + getHeight();
 }
 
 float gsf::Widget::getWorldLeft() const

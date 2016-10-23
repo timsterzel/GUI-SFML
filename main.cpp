@@ -49,9 +49,8 @@ int main()
     scrollableWidget.setPosition(300.f , 200.f);
     scrollableWidget.setBackgroundColor(sf::Color::Blue);
 
-    std::unique_ptr<gsf::VerticalLayout> layout = { std::make_unique<gsf::VerticalLayout>(300, 200) };
-    layout->centerOrigin();
-    layout->setPosition(150.f , 100.f);
+    std::unique_ptr<gsf::VerticalLayout> layout = { std::make_unique<gsf::VerticalLayout>() };
+    layout->setPosition(0.f , 0.f);
     layout->setBackgroundColor(sf::Color::Cyan);
 
     std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
@@ -59,10 +58,19 @@ int main()
     {
         std::string textString = "Text Num " + std::to_string(i);
         std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };
+        if (i % 2 == 0)
+        {
+            text->setBackgroundColor(sf::Color::Green);
+        }
+        else
+        {
+            text->setBackgroundColor(sf::Color::Magenta);
+        }
+        std::cout << "Text height: " << text->getHeight() << std:: endl;
         //text->setBackgroundColor(sf::Color::Red);
         layout->attachChild(std::move(text));
     }
-
+    //layout->centerOrigin();
 
     scrollableWidget.attachChild(std::move(layout));
 

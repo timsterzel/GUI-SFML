@@ -110,10 +110,20 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
             m_scrollOffsetY = 0.f;
         }
         */
+
         float scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
         for (const Ptr &child : m_children)
         {
+            sf::Vector2f oldPos = { child->getPosition() };
             child->move(0.f, scrollOffsetY);
+            if (child->getBottom() <= getHeight())
+            {
+                std::cout << "Scroll height: " << getHeight() << " Child height: " << child->getHeight() << " bottom: " << child->getBottom() << std::endl;
+                child->move(0.f, getHeight() - child->getBottom() );
+                //child->setPosition(oldPos.x, getHeight() - ( child->getHeight() / 2.f ));
+            }
+
+
         }
     }
 
