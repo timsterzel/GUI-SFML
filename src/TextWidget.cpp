@@ -94,7 +94,7 @@ bool gsf::TextWidget::handleEvent(sf::Event &event)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
         {
-            std::cout << "TextWidget: Left Mouse Button Clicked" << std::endl;
+            std::cout << "TextWidget: Left Mouse Button Clicked." << std::endl;
             return true;
         }
     }

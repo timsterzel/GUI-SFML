@@ -119,7 +119,6 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
             // Correct the position of the childs when there are out of the bounds
             if (child->getBottom() <= getHeight())
             {
-                std::cout << "Scroll height: " << getHeight() << " Child height: " << child->getHeight() << " bottom: " << child->getBottom() << std::endl;
                 child->move(0.f, getHeight() - child->getBottom() );
             }
             else if (child->getTop() > 0.f)
