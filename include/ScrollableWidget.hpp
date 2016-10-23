@@ -16,8 +16,8 @@ namespace gsf
             // and a total size (the size with all the children widgets inside the scollable widget)
             float m_totalWidth;
             float m_totalHeight;
-            float m_scrollOffsetX;
-            float m_scrollOffsetY;
+            //float m_scrollOffsetX;
+            //float m_scrollOffsetY;
             float m_scrollSpeed;
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;

@@ -5,8 +5,8 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 : ChildWidget(width, height)
 , m_totalWidth{ width }
 , m_totalHeight{ height }
-, m_scrollOffsetX{ 0.f }
-, m_scrollOffsetY{ 0.f }
+//, m_scrollOffsetX{ 0.f }
+//, m_scrollOffsetY{ 0.f }
 , m_scrollSpeed{ 6.0f }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ false }
@@ -101,8 +101,6 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
     Widget::handleEvent(event);
     if (event.type == sf::Event::MouseWheelMoved)
     {
-        std::cout << "MouseWheel moved, delta: " << event.mouseWheel.delta << std::endl;
-        std::cout << "m_scrollOffsetY: " << m_scrollOffsetY << std::endl;
         /*
         m_scrollOffsetY -= event.mouseWheel.delta * m_scrollSpeed;
         if (m_scrollOffsetY < 0)
@@ -114,7 +112,6 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
         float scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
         for (const Ptr &child : m_children)
         {
-            sf::Vector2f oldPos = { child->getPosition() };
             child->move(0.f, scrollOffsetY);
             // Correct the position of the childs when there are out of the bounds
             if (child->getBottom() <= getHeight())
