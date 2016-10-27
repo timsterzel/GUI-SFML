@@ -29,7 +29,7 @@ namespace gsf
 
             std::vector<Ptr> m_children;
 
-            std::function<void(Widget*, sf::Vector2f)> m_onClickListener;
+            std::function<void(Widget*, sf::Vector2f)> m_onLeftClickListener;
 
         public:
             Widget();
@@ -39,7 +39,7 @@ namespace gsf
             void setParent(Widget *parent);
             Widget* getParent() const;
 
-            void setOnClickListener(std::function<void(Widget *widget, sf::Vector2f)> onClickListener);
+            void setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
 
             void setWidth(const float width);
             float getWidth() const;

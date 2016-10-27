@@ -37,9 +37,9 @@ gsf::Widget* gsf::Widget::getParent() const
     return m_parent;
 }
 
-void gsf::Widget::setOnClickListener(std::function<void(Widget *widget, sf::Vector2f)> onClickListener)
+void gsf::Widget::setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener)
 {
-    m_onClickListener = onClickListener;
+    m_onLeftClickListener = onLeftClickListener;
 }
 
 void gsf::Widget::setWidth(const float width)
@@ -129,9 +129,9 @@ bool gsf::Widget::handleEvent(sf::Event &event)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
         {
-            if (m_onClickListener)
+            if (m_onLeftClickListener)
             {
-                m_onClickListener(this, sf::Vector2f(event.mouseButton.x , event.mouseButton.y));
+                m_onLeftClickListener(this, sf::Vector2f(event.mouseButton.x , event.mouseButton.y));
             }
             return true;
         }
