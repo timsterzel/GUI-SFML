@@ -67,6 +67,12 @@ int main()
             text->setBackgroundColor(sf::Color::Magenta);
         }
         std::cout << "Text height: " << text->getHeight() << std:: endl;
+        std::function<void(gsf::Widget*, sf::Vector2f)> clickListener = [] (gsf::Widget* widget, sf::Vector2f mousePos)
+        {
+            gsf::TextWidget *textWidget = static_cast<gsf::TextWidget*>(widget);
+            std::cout << "TextWidget: Left Mouse Button Clicked. Text: " <<  textWidget->getText() /*<< m_text.getString().toAnsiString() */<< std::endl;
+        };
+        text->setOnClickListener(clickListener);
         //text->setBackgroundColor(sf::Color::Red);
         layout->attachChild(std::move(text));
     }

@@ -47,7 +47,7 @@ void gsf::TextWidget::setText(const std::string text)
 
 std::string gsf::TextWidget::getText() const
 {
-    return m_text.getString();
+    return m_text.getString().toAnsiString();
 }
 
 void gsf::TextWidget::setCharacterSize(const unsigned int size)
@@ -90,6 +90,8 @@ void gsf::TextWidget::update(float dt)
 
 bool gsf::TextWidget::handleEvent(sf::Event &event)
 {
+    bool handled = Widget::handleEvent(event);
+    /*
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
@@ -98,7 +100,8 @@ bool gsf::TextWidget::handleEvent(sf::Event &event)
             return true;
         }
     }
-    return false;
+    */
+    return handled;
 }
 
 void gsf::TextWidget::calculateSize()

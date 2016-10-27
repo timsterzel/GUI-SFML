@@ -71,11 +71,12 @@ bool gsf::ChildWidget::handleEvent(sf::Event &event)
 {
     // Only let widget handle event, when child widgets
     // dont handle event successfully
+    bool handled = Widget::handleEvent(event);
     if (!handleEventChildren(event))
     {
         return handleEventCurrent(event);
     }
-    return true;
+    return handled;
 }
 
 bool gsf::ChildWidget::handleEventChildren(sf::Event &event)
@@ -92,7 +93,8 @@ bool gsf::ChildWidget::handleEventChildren(sf::Event &event)
 
 bool gsf::ChildWidget::handleEventCurrent(sf::Event &event)
 {
-    return false;
+    bool handled = Widget::handleEvent(event);
+    return handled;
 }
 
 void gsf::ChildWidget::update(float dt)

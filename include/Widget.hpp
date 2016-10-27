@@ -1,6 +1,7 @@
 #ifndef WIDGET_HPP
 #define WIDGET_HPP
 #include <SFML/Graphics.hpp>
+#include <functional>
 
 namespace gsf
 {
@@ -28,6 +29,8 @@ namespace gsf
 
             std::vector<Ptr> m_children;
 
+            std::function<void(Widget*, sf::Vector2f)> m_onClickListener;
+
         public:
             Widget();
             Widget(float width, float height);
@@ -35,6 +38,8 @@ namespace gsf
 
             void setParent(Widget *parent);
             Widget* getParent() const;
+
+            void setOnClickListener(std::function<void(Widget *widget, sf::Vector2f)> onClickListener);
 
             void setWidth(const float width);
             float getWidth() const;
