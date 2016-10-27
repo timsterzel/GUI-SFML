@@ -34,7 +34,7 @@ void gsf::VerticalLayout::updateCurrent(float dt)
 
 bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
 {
-    ChildWidget::handleEventCurrent(event);
+    bool handled = ChildWidget::handleEventCurrent(event);
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
@@ -43,8 +43,7 @@ bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
             return true;
         }
     }
-
-    return false;
+    return handled;
 }
 
 void gsf::VerticalLayout::calculateSize()

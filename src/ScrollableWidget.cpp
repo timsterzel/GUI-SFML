@@ -98,7 +98,7 @@ void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStat
 
 bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
-    Widget::handleEvent(event);
+    bool handled = Widget::handleEvent(event);
     if (event.type == sf::Event::MouseWheelMoved)
     {
         /*
@@ -124,7 +124,7 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
             }
 
         }
+        return true;
     }
-
-    return false;
+    return handled;
 }

@@ -98,7 +98,6 @@ bool gsf::TextWidget::handleEvent(sf::Event &event)
             return true;
         }
     }
-
     return false;
 }
 
