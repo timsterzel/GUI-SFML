@@ -98,7 +98,7 @@ void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStat
 
 bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
-    if (event.type == sf::Event::MouseWheelMoved)
+    if (event.type == sf::Event::MouseWheelMoved && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
     {
         /*
         m_scrollOffsetY -= event.mouseWheel.delta * m_scrollSpeed;
