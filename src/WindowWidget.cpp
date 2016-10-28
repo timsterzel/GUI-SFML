@@ -4,6 +4,7 @@
 gsf::WindowWidget::WindowWidget()
 : ChildWidget()
 , m_topbarHeight{ 20.f }
+, m_moveModeActive{ false }
 {
 
 }
@@ -11,6 +12,7 @@ gsf::WindowWidget::WindowWidget()
 gsf::WindowWidget::WindowWidget(float width, float height)
 : ChildWidget(width, height)
 , m_topbarHeight{ 20.f }
+, m_moveModeActive{ false }
 {
 
 }
@@ -89,8 +91,26 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
         if (event.mouseButton.button == sf::Mouse::Left && isPointInTopBar(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
         {
             std::cout << "WindowWidget: Left mouse button clicked in topbar" << std::endl;
+            m_moveModeActive = true;
+            m_moveModeRelMousePos.x = event.mouseButton.x - getWorldPosition().x;
+            m_moveModeRelMousePos.y = event.mouseButton.y - getWorldPosition().y;
             return true;
         }
+    }
+    else if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left && isPointInTopBar(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        {
+            std::cout << "WindowWidget: Left mouse button released in topbar" << std::endl;
+            m_moveModeActive = false;
+            return true;
+        }
+    }
+    else if (event.type == sf::Event::MouseMoved && m_moveModeActive)
+    {
+        setPosition(event.mouseMove.x - getOrigin().x - m_moveModeRelMousePos.x, event.mouseMove.y - getOrigin().y - m_moveModeRelMousePos.y);
+        //move();
+        std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
     }
     return handled;
 }

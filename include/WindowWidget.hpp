@@ -13,6 +13,9 @@ namespace gsf
         private:
             float m_topbarHeight;
 
+            bool m_moveModeActive;
+            // The relative Mouse pos where the topbar is clicked by activating moving
+            sf::Vector2f m_moveModeRelMousePos;
         public:
             WindowWidget();
             WindowWidget(float width, float height);

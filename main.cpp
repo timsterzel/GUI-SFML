@@ -121,10 +121,6 @@ int main()
             {
                 window.close();
             }
-            else if (event.type == sf::Event::MouseMoved)
-            {
-                std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
-            }
         }
 
         window.clear();
