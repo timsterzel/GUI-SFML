@@ -11,7 +11,7 @@ namespace gsf
         protected:
 
         private:
-
+            float m_topbarHeight;
 
         public:
             WindowWidget();
@@ -28,6 +28,8 @@ namespace gsf
             virtual void updateCurrent(float dt) override;
 
             virtual bool handleEventCurrent(sf::Event &event) override;
+
+            bool isPointInTopBar(sf::Vector2f point);
 
             // Calculate the size of the current View
             virtual void calculateSize() override;

@@ -54,6 +54,8 @@ int main()
     layout->setPosition(0.f , 0.f);
     layout->setBackgroundColor(sf::Color::Cyan);
 
+    preventNoResponseDialog(window);
+
     std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
     for (int i = { 0 }; i != 6; i++)
     {
@@ -81,6 +83,8 @@ int main()
 
     scrollableWidget.attachChild(std::move(layout));
 
+    preventNoResponseDialog(window);
+
     /*
     gsf::VerticalLayout layout(300, 200);
     layout.centerOrigin();
@@ -98,8 +102,8 @@ int main()
     */
 
 
-    std::unique_ptr<gsf::WindowWidget> windowWidget = { std::make_unique<gsf::WindowWidget>(300.f, 500.f) };
-    windowWidget->setPosition(20.f , 20.f);
+    std::unique_ptr<gsf::WindowWidget> windowWidget = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
+    windowWidget->setPosition(20.f , 40.f);
     windowWidget->setBackgroundColor(sf::Color::White);
 
 
@@ -111,8 +115,16 @@ int main()
         {
             //layout.handleEvent(event);
             scrollableWidget.handleEvent(event);
+            windowWidget->handleEvent(event);
+
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
+            }
+            else if (event.type == sf::Event::MouseMoved)
+            {
+                std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
+            }
         }
 
         window.clear();

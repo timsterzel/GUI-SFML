@@ -3,12 +3,14 @@
 
 gsf::WindowWidget::WindowWidget()
 : ChildWidget()
+, m_topbarHeight{ 20.f }
 {
 
 }
 
 gsf::WindowWidget::WindowWidget(float width, float height)
 : ChildWidget(width, height)
+, m_topbarHeight{ 20.f }
 {
 
 }
@@ -60,10 +62,14 @@ void gsf::WindowWidget::draw(sf::RenderTarget &target, sf::RenderStates states) 
 
 void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    sf::RectangleShape topBar({ getWidth(), 10.f });
+    // Draw Topbar
+    sf::RectangleShape topBar({ getWidth(), m_topbarHeight });
     topBar.setFillColor(sf::Color::Magenta);
-    topBar.setPosition( 0.f, -10.f );
+    // The Topbar is drawn over the real area of the widget
+    // So the topbar dont hide child elements
+    topBar.setPosition( 0.f, -m_topbarHeight );
     target.draw(topBar, states);
+
     // Draw background
     sf::RectangleShape bgShape({ getWidth(), getHeight() });
     bgShape.setFillColor(m_bgColor);
@@ -80,13 +86,18 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
     bool handled = ChildWidget::handleEventCurrent(event);
     if (event.type == sf::Event::MouseButtonPressed)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        if (event.mouseButton.button == sf::Mouse::Left && isPointInTopBar(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
         {
-            std::cout << "VerticalLayout: Left Mouse Button Clicked" << std::endl;
+            std::cout << "WindowWidget: Left mouse button clicked in topbar" << std::endl;
             return true;
         }
     }
     return handled;
+}
+
+bool gsf::WindowWidget::isPointInTopBar(sf::Vector2f point)
+{
+    return point.x >= getWorldLeft() && point.x <= getWorldRight() && point.y >= getWorldTop() - m_topbarHeight && point.y <= getWorldTop();
 }
 
 void gsf::WindowWidget::calculateSize()
