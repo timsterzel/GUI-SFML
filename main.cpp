@@ -7,6 +7,7 @@
 #include "TextWidget.hpp"
 #include "VerticalLayout.hpp"
 #include "ScrollableWidget.hpp"
+#include "WindowWidget.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -95,6 +96,13 @@ int main()
         layout->attachChild(std::move(text));
     }
     */
+
+
+    std::unique_ptr<gsf::WindowWidget> windowWidget = { std::make_unique<gsf::WindowWidget>(300.f, 500.f) };
+    windowWidget->setPosition(20.f , 20.f);
+    windowWidget->setBackgroundColor(sf::Color::White);
+
+
     while (window.isOpen())
     {
         determineFpsAndDeltaTime(txtStatFPS, dt, timePoint1);
@@ -111,6 +119,7 @@ int main()
         window.draw(textWidget);
         //window.draw(layout);
         window.draw(scrollableWidget);
+        window.draw(*windowWidget);
         window.draw(txtStatFPS);
         window.display();
     }
