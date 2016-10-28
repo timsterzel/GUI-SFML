@@ -43,6 +43,8 @@ sf::Text& gsf::TextWidget::getText()
 void gsf::TextWidget::setText(const std::string text)
 {
     m_text.setString(text);
+    calculateSize();
+    centerOrigin();
 }
 
 std::string gsf::TextWidget::getText() const
