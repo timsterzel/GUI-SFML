@@ -15,6 +15,7 @@ namespace gsf
         public:
 
             MoveableBlock();
+            MoveableBlock(float width, float height);
             virtual ~MoveableBlock();
 
             sf::Vector2f getPosition() const;
@@ -27,11 +28,18 @@ namespace gsf
             float getHeight() const;
             void setHeight(float height);
 
+            float getLeft() const;
+            float getRight() const;
+            float getTop() const;
+            float getBottom() const;
+
             void move(float x, float y);
             void move(sf::Vector2f xy);
+
+            bool isPointIntersecting(sf::Vector2f point);
 
     };
 
 }
 
-#endif // WIDGET_HPP
+#endif // MOVEABLEBLOCK

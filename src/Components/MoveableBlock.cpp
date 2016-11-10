@@ -6,6 +6,13 @@ gsf::MoveableBlock::MoveableBlock()
 
 }
 
+gsf::MoveableBlock::MoveableBlock(float width, float height)
+: m_width(width)
+, m_height(height)
+{
+
+}
+
 gsf::MoveableBlock::~MoveableBlock()
 {
 
@@ -53,6 +60,26 @@ void gsf::MoveableBlock::setHeight(float height)
     m_height = height;
 }
 
+float gsf::MoveableBlock::getLeft() const
+{
+    return m_pos.x - (getWidth() / 2.f);
+}
+
+float gsf::MoveableBlock::getRight() const
+{
+    return m_pos.x + (getWidth() / 2.f);
+}
+
+float gsf::MoveableBlock::getTop() const
+{
+    return m_pos.y - (getHeight() / 2.f);
+}
+
+float gsf::MoveableBlock::getBottom() const
+{
+    return m_pos.y + (getHeight() / 2.f);
+}
+
 void gsf::MoveableBlock::move(float x, float y)
 {
     setPosition(m_pos.x + x, m_pos.y + y);
@@ -61,4 +88,9 @@ void gsf::MoveableBlock::move(float x, float y)
 void gsf::MoveableBlock::move(sf::Vector2f xy)
 {
     move(xy.x, xy.y);
+}
+
+bool gsf::MoveableBlock::isPointIntersecting(sf::Vector2f point)
+{
+    return point.x >= getLeft() && point.x <= getRight() && point.y >= getBottom() && point.y <= getTop();
 }
