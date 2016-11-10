@@ -5,8 +5,8 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 : ChildWidget(width, height)
 , m_totalWidth{ width }
 , m_totalHeight{ height }
-//, m_scrollOffsetX{ 0.f }
-//, m_scrollOffsetY{ 0.f }
+, m_scrollOffsetX{ 0.f }
+, m_scrollOffsetY{ 0.f }
 , m_scrollSpeed{ 6.0f }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ false }
@@ -100,14 +100,8 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
     if (event.type == sf::Event::MouseWheelMoved && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
     {
-        /*
-        m_scrollOffsetY -= event.mouseWheel.delta * m_scrollSpeed;
-        if (m_scrollOffsetY < 0)
-        {
-            m_scrollOffsetY = 0.f;
-        }
-        */
 
+        /*
         float scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
         for (const Ptr &child : m_children)
         {
@@ -121,9 +115,30 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
             {
                 child->move(0.f, 0.f - child->getTop() );
             }
-
         }
+        */
+        m_scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
+
         return true;
     }
     return false;
+}
+
+void gsf::ScrollableWidget::updateCurrent(float dt)
+{
+    for (const Ptr &child : m_children)
+    {
+        child->move(0.f, m_scrollOffsetY);
+        // Correct the position of the childs when there are out of the bounds
+        if (child->getBottom() <= getHeight())
+        {
+            child->move(0.f, getHeight() - child->getBottom() );
+        }
+        else if (child->getTop() > 0.f)
+        {
+            child->move(0.f, 0.f - child->getTop() );
+        }
+    }
+    // Scrolling handled
+    m_scrollOffsetY = 0.f;
 }

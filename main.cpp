@@ -122,6 +122,7 @@ int main()
                 window.close();
             }
         }
+        scrollableWidget.update(dt);
 
         window.clear();
         window.draw(textWidget);
