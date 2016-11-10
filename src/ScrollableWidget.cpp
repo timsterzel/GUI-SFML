@@ -100,25 +100,7 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
     if (event.type == sf::Event::MouseWheelMoved && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
     {
-
-        /*
-        float scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
-        for (const Ptr &child : m_children)
-        {
-            child->move(0.f, scrollOffsetY);
-            // Correct the position of the childs when there are out of the bounds
-            if (child->getBottom() <= getHeight())
-            {
-                child->move(0.f, getHeight() - child->getBottom() );
-            }
-            else if (child->getTop() > 0.f)
-            {
-                child->move(0.f, 0.f - child->getTop() );
-            }
-        }
-        */
         m_scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
-
         return true;
     }
     return false;
