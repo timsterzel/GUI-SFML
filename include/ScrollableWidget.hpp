@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "ChildWidget.hpp"
+#include "Components/MoveableBlock.hpp"
 
 namespace gsf
 {
@@ -24,6 +25,8 @@ namespace gsf
             float m_scrollSpeed;
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;
+
+            MoveableBlock m_scrollbarHorizontal;
 
         public:
             ScrollableWidget(float width, float height);

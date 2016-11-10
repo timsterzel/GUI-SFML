@@ -10,8 +10,9 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_scrollSpeed{ 6.0f }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ false }
+, m_scrollbarHorizontal{ 30.f, 60.f }
 {
-
+    m_scrollbarHorizontal.setPosition(getRight() - m_scrollbarHorizontal.getWidth() / 2.f - 3.f, m_scrollbarHorizontal.getHeight() / 2.f + 3.f );
 }
 
 gsf::ScrollableWidget::~ScrollableWidget()
@@ -86,6 +87,14 @@ void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates stat
         //Widget::draw(target, states);
 
         target.setView(defaultView);
+
+        // Draw Scroll Elements
+        // Do to for later: impelemnt draw method for drawing in MoveableBlock class
+        sf::RectangleShape scrollYShape({ m_scrollbarHorizontal.getWidth(), m_scrollbarHorizontal.getHeight() });
+        scrollYShape.setFillColor(sf::Color::White);
+        scrollYShape.setPosition(m_scrollbarHorizontal.getPosition());
+        scrollYShape.setOrigin(m_scrollbarHorizontal.getWidth() / 2.f, m_scrollbarHorizontal.getHeight() / 2.f);
+        target.draw(scrollYShape, states);
 }
 
 void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const

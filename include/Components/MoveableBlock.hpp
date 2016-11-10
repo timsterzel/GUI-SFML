@@ -1,5 +1,5 @@
-#ifndef WIDGET_HPP
-#define WIDGET_HPP
+#ifndef MOVEABLEBLOCK
+#define MOVEABLEBLOCK
 #include <SFML/Graphics.hpp>
 
 namespace gsf
