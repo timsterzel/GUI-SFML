@@ -122,6 +122,8 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
         {
             std::cout << "ScrollableWidget: Left mouse button clicked in scrollbar" << std::endl;
             m_scrollbarMoveActive = true;
+            m_scrollbarMoveModeRelPos.x = localMousePos.x - m_scrollbarHorizontal.getPosition().x;
+            m_scrollbarMoveModeRelPos.y = localMousePos.y - m_scrollbarHorizontal.getPosition().y;
             return true;
         }
     }
@@ -136,7 +138,12 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
     }
     else if (event.type == sf::Event::MouseMoved)
     {
-        //std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
+        if (m_scrollbarMoveActive) {
+            sf::Vector2f localMousePos = { event.mouseMove.x - getWorldLeft() , event.mouseMove.y - getWorldTop() };
+            m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, localMousePos.y - m_scrollbarMoveModeRelPos.y);
+            std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
+        }
+
     }
     return false;
 }

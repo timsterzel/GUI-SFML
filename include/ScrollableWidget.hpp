@@ -28,6 +28,7 @@ namespace gsf
 
             MoveableBlock m_scrollbarHorizontal;
             bool m_scrollbarMoveActive;
+            sf::Vector2f m_scrollbarMoveModeRelPos;
 
         public:
             ScrollableWidget(float width, float height);
