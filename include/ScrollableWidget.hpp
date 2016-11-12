@@ -26,9 +26,12 @@ namespace gsf
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;
 
+            // Scrollbar horizontal
             MoveableBlock m_scrollbarHorizontal;
             bool m_scrollbarMoveActive;
             sf::Vector2f m_scrollbarMoveModeRelPos;
+            // Horizontal padding
+            const float SCROLLBAR_PAD_HOR;
 
         public:
             ScrollableWidget(float width, float height);

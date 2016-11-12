@@ -12,6 +12,7 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_isHorizontalScrollEnabled{ false }
 , m_scrollbarHorizontal{ 30.f, 60.f }
 , m_scrollbarMoveActive{ false }
+, SCROLLBAR_PAD_HOR{ 6.f }
 {
     m_scrollbarHorizontal.setPosition(getRight() - m_scrollbarHorizontal.getWidth() / 2.f - 3.f, m_scrollbarHorizontal.getHeight() / 2.f + 3.f );
 }
@@ -140,8 +141,14 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
     {
         if (m_scrollbarMoveActive) {
             sf::Vector2f localMousePos = { event.mouseMove.x - getWorldLeft() , event.mouseMove.y - getWorldTop() };
-            //if (m_scrollbarHorizontal.getTop() < 0.f)
-            m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, localMousePos.y - m_scrollbarMoveModeRelPos.y);
+            m_scrollbarHorizontal.setPositionAndStoreOld(m_scrollbarHorizontal.getPosition().x, localMousePos.y - m_scrollbarMoveModeRelPos.y);
+            // If scrollbar is out of wirdget, correct its position
+            if (m_scrollbarHorizontal.getTop() < 0.f) {
+                m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, 0.f + m_scrollbarHorizontal.getHeight() / 2.f + SCROLLBAR_PAD_HOR);
+            }
+            else if (m_scrollbarHorizontal.getBottom() > getHeight()) {
+                m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, getHeight() - m_scrollbarHorizontal.getHeight() / 2.f - SCROLLBAR_PAD_HOR);
+            }
 
 
             std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
