@@ -21,6 +21,9 @@ namespace gsf
             sf::Vector2f getPosition() const;
             void setPosition(float x, float y);
             void setPosition(sf::Vector2f pos);
+            // Change the position and store the old pos
+            void setPositionAndStoreOld(float x, float y);
+            void setPositionAndStoreOld(sf::Vector2f pos);
             sf::Vector2f getLastPosition() const;
 
             float getWidth() const;
@@ -35,6 +38,9 @@ namespace gsf
 
             void move(float x, float y);
             void move(sf::Vector2f xy);
+            // Move block and store old pos
+            void moveAndStoreOldPos(float x, float y);
+            void moveAndStoreOldPos(sf::Vector2f xy);
 
             bool isPointIntersecting(sf::Vector2f point);
 

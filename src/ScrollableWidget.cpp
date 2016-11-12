@@ -140,7 +140,10 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
     {
         if (m_scrollbarMoveActive) {
             sf::Vector2f localMousePos = { event.mouseMove.x - getWorldLeft() , event.mouseMove.y - getWorldTop() };
+            //if (m_scrollbarHorizontal.getTop() < 0.f)
             m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, localMousePos.y - m_scrollbarMoveModeRelPos.y);
+
+
             std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
         }
 

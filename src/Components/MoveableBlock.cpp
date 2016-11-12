@@ -25,7 +25,6 @@ sf::Vector2f gsf::MoveableBlock::getPosition() const
 
 void gsf::MoveableBlock::setPosition(float x, float y)
 {
-    m_lastPos = m_pos;
     m_pos.x = x;
     m_pos.y = y;
 }
@@ -33,6 +32,17 @@ void gsf::MoveableBlock::setPosition(float x, float y)
 void gsf::MoveableBlock::setPosition(sf::Vector2f pos)
 {
     setPosition(pos.x, pos.y);
+}
+
+void gsf::MoveableBlock::setPositionAndStoreOld(float x, float y)
+{
+    m_lastPos = m_pos;
+    setPosition(x, y);
+}
+
+void gsf::MoveableBlock::setPositionAndStoreOld(sf::Vector2f pos)
+{
+    setPositionAndStoreOld(pos.x, pos.y);
 }
 
 sf::Vector2f gsf::MoveableBlock::getLastPosition() const
@@ -88,6 +98,16 @@ void gsf::MoveableBlock::move(float x, float y)
 void gsf::MoveableBlock::move(sf::Vector2f xy)
 {
     move(xy.x, xy.y);
+}
+
+void gsf::MoveableBlock::moveAndStoreOldPos(float x, float y)
+{
+    setPositionAndStoreOld(m_pos.x + x, m_pos.y + y);
+}
+
+void gsf::MoveableBlock::moveAndStoreOldPos(sf::Vector2f xy)
+{
+    moveAndStoreOldPos(xy.x, xy.y);
 }
 
 bool gsf::MoveableBlock::isPointIntersecting(sf::Vector2f point)
