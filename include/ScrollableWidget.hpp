@@ -27,6 +27,7 @@ namespace gsf
             bool m_isHorizontalScrollEnabled;
 
             MoveableBlock m_scrollbarHorizontal;
+            bool m_scrollbarMoveActive;
 
         public:
             ScrollableWidget(float width, float height);

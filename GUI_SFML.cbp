@@ -43,6 +43,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/ChildWidget.hpp" />
+		<Unit filename="include/Components/MoveableBlock.hpp" />
 		<Unit filename="include/ScrollableWidget.hpp" />
 		<Unit filename="include/TextWidget.hpp" />
 		<Unit filename="include/VerticalLayout.hpp" />
@@ -50,6 +51,7 @@
 		<Unit filename="include/WindowWidget.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ChildWidget.cpp" />
+		<Unit filename="src/Components/MoveableBlock.cpp" />
 		<Unit filename="src/ScrollableWidget.cpp" />
 		<Unit filename="src/TextWidget.cpp" />
 		<Unit filename="src/VerticalLayout.cpp" />

@@ -92,5 +92,5 @@ void gsf::MoveableBlock::move(sf::Vector2f xy)
 
 bool gsf::MoveableBlock::isPointIntersecting(sf::Vector2f point)
 {
-    return point.x >= getLeft() && point.x <= getRight() && point.y >= getBottom() && point.y <= getTop();
+    return point.x >= getLeft() && point.x <= getRight() && point.y >= getTop() && point.y <= getBottom();
 }

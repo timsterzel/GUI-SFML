@@ -11,6 +11,7 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ false }
 , m_scrollbarHorizontal{ 30.f, 60.f }
+, m_scrollbarMoveActive{ false }
 {
     m_scrollbarHorizontal.setPosition(getRight() - m_scrollbarHorizontal.getWidth() / 2.f - 3.f, m_scrollbarHorizontal.getHeight() / 2.f + 3.f );
 }
@@ -111,6 +112,31 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
     {
         m_scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
         return true;
+    }
+    else if (event.type == sf::Event::MouseButtonPressed)
+    {
+        // We need the mouse pos as local position in the ScrollWidget
+        sf::Vector2f localMousePos = { event.mouseButton.x - getWorldLeft() , event.mouseButton.y - getWorldTop() };
+        std::cout << "ScrollableWidget: Local Mouse pos x: " << localMousePos.x << " y: " << localMousePos.y << " Is intersecting: " << m_scrollbarHorizontal.isPointIntersecting({ localMousePos.x , localMousePos.y }) << std::endl;
+        if (event.mouseButton.button == sf::Mouse::Left && m_scrollbarHorizontal.isPointIntersecting({ localMousePos.x , localMousePos.y }))
+        {
+            std::cout << "ScrollableWidget: Left mouse button clicked in scrollbar" << std::endl;
+            m_scrollbarMoveActive = true;
+            return true;
+        }
+    }
+    else if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            std::cout << "WindowWidget: Left mouse button released" << std::endl;
+            m_scrollbarMoveActive = false;
+            return true;
+        }
+    }
+    else if (event.type == sf::Event::MouseMoved)
+    {
+        //std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
     }
     return false;
 }
