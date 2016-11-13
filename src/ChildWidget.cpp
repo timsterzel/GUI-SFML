@@ -26,6 +26,7 @@ void gsf::ChildWidget::attachChild(Ptr child)
     child->setParent(this);
     m_children.push_back(std::move(child));
 
+    childAdded();
     arrangeChildren();
     calculateSize();
 }
@@ -40,6 +41,7 @@ gsf::Widget::Ptr gsf::ChildWidget::detachChild(const Widget& node)
     result->setParent(nullptr);
     m_children.erase(found);
 
+    childRemoved();
     arrangeChildren();
     calculateSize();
 
@@ -122,6 +124,16 @@ void gsf::ChildWidget::calculateSize()
 }
 
 void gsf::ChildWidget::arrangeChildren()
+{
+    // Do nothing by default
+}
+
+void gsf::ChildWidget::childAdded()
+{
+    // Do nothing by default
+}
+
+void gsf::ChildWidget::childRemoved()
 {
     // Do nothing by default
 }

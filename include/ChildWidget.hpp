@@ -39,11 +39,14 @@ namespace gsf
 
             bool handleEventChildren(sf::Event &event);
 
-
             // Calculate the size of the current Widget
             virtual void calculateSize() override;
             // Place Children in this Widget
             virtual void arrangeChildren();
+            // Things which should get done when a child was added
+            virtual void childAdded();
+            // Things which should get done when a child was removed
+            virtual void childRemoved();
     };
 
 }

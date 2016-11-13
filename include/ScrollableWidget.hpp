@@ -37,6 +37,8 @@ namespace gsf
             ScrollableWidget(float width, float height);
             virtual ~ScrollableWidget();
 
+            void calculateScrollbarSize();
+
             void setIsVerticalScrollEnabled(bool isEnabled);
             bool isVerticalScrollEnabled() const;
             void setIsHorizontalScrollEnabled(bool isEnabled);
@@ -53,6 +55,10 @@ namespace gsf
         private:
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
             virtual void updateCurrent(float dt);
+
+            virtual void childAdded() override;
+
+            virtual void childRemoved() override;
 
         protected:
 
