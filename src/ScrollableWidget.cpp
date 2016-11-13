@@ -160,12 +160,22 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
             sf::Vector2f localMousePos = { event.mouseMove.x - getWorldLeft() , event.mouseMove.y - getWorldTop() };
             m_scrollbarHorizontal.setPositionAndStoreOld(m_scrollbarHorizontal.getPosition().x, localMousePos.y - m_scrollbarMoveModeRelPos.y);
             // If scrollbar is out of widget, correct its position
-            if (m_scrollbarHorizontal.getTop() < 0.f) {
+            if (m_scrollbarHorizontal.getTop() < 0.f + SCROLLBAR_PAD_HOR) {
                 m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, 0.f + m_scrollbarHorizontal.getHeight() / 2.f + SCROLLBAR_PAD_HOR);
             }
-            else if (m_scrollbarHorizontal.getBottom() > getHeight()) {
+            else if (m_scrollbarHorizontal.getBottom() > getHeight() - SCROLLBAR_PAD_HOR) {
                 m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, getHeight() - m_scrollbarHorizontal.getHeight() / 2.f - SCROLLBAR_PAD_HOR);
             }
+            // Only ste a offset when there is a child to move
+            if (m_children.size() > 0)
+            {
+                // get first element
+                Widget *widget = m_children.at(0).get();
+                float childrenHeight = widget->getHeight();
+                // Calculate the offset
+                m_scrollOffsetY = ( (m_scrollbarHorizontal.getLastPosition().y - m_scrollbarHorizontal.getPosition().y) / (getHeight() - 2 * SCROLLBAR_PAD_HOR ) ) * childrenHeight;
+            }
+
             std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
         }
 
