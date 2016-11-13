@@ -53,6 +53,8 @@ namespace gsf
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
         private:
+            void correctScrollBarPosition();
+
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
             virtual void updateCurrent(float dt);
 

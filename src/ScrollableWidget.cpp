@@ -90,6 +90,17 @@ sf::View gsf::ScrollableWidget::getShownAreaView(sf::RenderTarget &target) const
         return view;
 }
 
+void gsf::ScrollableWidget::correctScrollBarPosition()
+{
+    // If scrollbar is out of widget, correct its position
+    if (m_scrollbarHorizontal.getTop() < 0.f + SCROLLBAR_PAD_HOR) {
+        m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, 0.f + m_scrollbarHorizontal.getHeight() / 2.f + SCROLLBAR_PAD_HOR);
+    }
+    else if (m_scrollbarHorizontal.getBottom() > getHeight() - SCROLLBAR_PAD_HOR) {
+        m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, getHeight() - m_scrollbarHorizontal.getHeight() / 2.f - SCROLLBAR_PAD_HOR);
+    }
+}
+
 void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
@@ -129,6 +140,17 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
     if (event.type == sf::Event::MouseWheelMoved && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
     {
         m_scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
+        // We have to move the scrollbar too when we scroll with the scroll wheel
+        if (m_children.size() > 0)
+        {
+            // get first element
+            Widget *widget = m_children.at(0).get();
+            float childHeight = widget->getHeight();
+            // Calculate the offset
+            float moveScr = -(m_scrollOffsetY * getHeight()) / childHeight;
+            m_scrollbarHorizontal.moveAndStoreOldPos(0.f, moveScr);
+            correctScrollBarPosition();
+        }
         return true;
     }
     else if (event.type == sf::Event::MouseButtonPressed)
@@ -159,13 +181,7 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
         if (m_scrollbarMoveActive) {
             sf::Vector2f localMousePos = { event.mouseMove.x - getWorldLeft() , event.mouseMove.y - getWorldTop() };
             m_scrollbarHorizontal.setPositionAndStoreOld(m_scrollbarHorizontal.getPosition().x, localMousePos.y - m_scrollbarMoveModeRelPos.y);
-            // If scrollbar is out of widget, correct its position
-            if (m_scrollbarHorizontal.getTop() < 0.f + SCROLLBAR_PAD_HOR) {
-                m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, 0.f + m_scrollbarHorizontal.getHeight() / 2.f + SCROLLBAR_PAD_HOR);
-            }
-            else if (m_scrollbarHorizontal.getBottom() > getHeight() - SCROLLBAR_PAD_HOR) {
-                m_scrollbarHorizontal.setPosition(m_scrollbarHorizontal.getPosition().x, getHeight() - m_scrollbarHorizontal.getHeight() / 2.f - SCROLLBAR_PAD_HOR);
-            }
+            correctScrollBarPosition();
             // Only ste a offset when there is a child to move
             if (m_children.size() > 0)
             {
@@ -185,6 +201,7 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 
 void gsf::ScrollableWidget::updateCurrent(float dt)
 {
+    // Do to: a scrollwidgit should only have one child
     for (const Ptr &child : m_children)
     {
         child->move(0.f, m_scrollOffsetY);
