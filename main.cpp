@@ -45,10 +45,11 @@ int main()
     textWidget.setPosition(windowWidth / 2.f, windowHeight / 2.f);
 
 
-    gsf::ScrollableWidget scrollableWidget(300, 200);
-    scrollableWidget.centerOrigin();
-    scrollableWidget.setPosition(300.f , 200.f);
-    scrollableWidget.setBackgroundColor(sf::Color::Blue);
+    std::unique_ptr<gsf::ScrollableWidget> scrollableWidget = { std::make_unique<gsf::ScrollableWidget>(300, 200) };
+    //scrollableWidget->centerOrigin();
+    //scrollableWidget->setPosition(300.f , 200.f);
+    scrollableWidget->setPosition(0.f , 0.f);
+    scrollableWidget->setBackgroundColor(sf::Color::Blue);
 
     std::unique_ptr<gsf::VerticalLayout> layout = { std::make_unique<gsf::VerticalLayout>() };
     layout->setPosition(0.f , 0.f);
@@ -81,31 +82,22 @@ int main()
     }
     //layout->centerOrigin();
 
-    scrollableWidget.attachChild(std::move(layout));
+    scrollableWidget->attachChild(std::move(layout));
 
-    preventNoResponseDialog(window);
 
-    /*
-    gsf::VerticalLayout layout(300, 200);
-    layout.centerOrigin();
-    layout.setPosition(300.f , 200.f);
-    layout.setBackgroundColor(sf::Color::Cyan);
-
-    std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
-    for (int i = { 0 }; i != 6; i++)
-    {
-        std::string textString = "Text Num " + std::to_string(i);
-        std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };
-        //text->setBackgroundColor(sf::Color::Red);
-        layout->attachChild(std::move(text));
-    }
-    */
 
 
     std::unique_ptr<gsf::WindowWidget> windowWidget = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
     windowWidget->setPosition(20.f , 40.f);
     windowWidget->setBackgroundColor(sf::Color::White);
+    windowWidget->attachChild(std::move(scrollableWidget));
 
+    std::unique_ptr<gsf::WindowWidget> windowWidget2 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
+    windowWidget2->setPosition(180.f , 40.f);
+    windowWidget2->setBackgroundColor(sf::Color::Red);
+
+
+    preventNoResponseDialog(window);
 
     while (window.isOpen())
     {
@@ -114,21 +106,25 @@ int main()
         while (window.pollEvent(event))
         {
             //layout.handleEvent(event);
-            scrollableWidget.handleEvent(event);
+            //scrollableWidget->handleEvent(event);
             windowWidget->handleEvent(event);
+            windowWidget2->handleEvent(event);
 
             if (event.type == sf::Event::Closed)
             {
                 window.close();
             }
         }
-        scrollableWidget.update(dt);
+        //scrollableWidget->update(dt);
+        windowWidget->update(dt);
+        windowWidget2->update(dt);
 
         window.clear();
         window.draw(textWidget);
         //window.draw(layout);
-        window.draw(scrollableWidget);
+        //window.draw(*scrollableWidget);
         window.draw(*windowWidget);
+        window.draw(*windowWidget2);
         window.draw(txtStatFPS);
         window.display();
     }
