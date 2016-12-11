@@ -32,12 +32,13 @@ namespace gsf
 
             virtual bool handleEventCurrent(sf::Event &event);
 
+            bool handleEventChildren(sf::Event &event);
         private:
 
             virtual void updateCurrent(float dt);
             void updateChildren(float dt);
 
-            bool handleEventChildren(sf::Event &event);
+
 
             // Calculate the size of the current Widget
             virtual void calculateSize() override;

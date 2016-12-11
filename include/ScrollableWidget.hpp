@@ -50,6 +50,8 @@ namespace gsf
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;
 
+            bool handleEvent(sf::Event &event) override;
+
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
         private:
@@ -63,6 +65,9 @@ namespace gsf
             virtual void childRemoved() override;
 
         protected:
+
+            // Special Events are Events like scrolling (which have a higher priorety then the child events)
+            bool handleSpecialEvents(sf::Event &event);
 
             virtual bool handleEventCurrent(sf::Event &event) override;
     };

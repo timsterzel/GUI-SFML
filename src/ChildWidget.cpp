@@ -71,6 +71,8 @@ void gsf::ChildWidget::drawChildren(sf::RenderTarget &target, sf::RenderStates s
 
 bool gsf::ChildWidget::handleEvent(sf::Event &event)
 {
+
+
     // Only let widget handle event, when child widgets
     // dont handle event successfully
     bool handled = Widget::handleEvent(event);
