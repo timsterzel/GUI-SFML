@@ -70,6 +70,8 @@ namespace gsf
             bool handleSpecialEvents(sf::Event &event);
 
             virtual bool handleEventCurrent(sf::Event &event) override;
+
+            virtual bool handleEventChildren(sf::Event &event);
     };
 
 }

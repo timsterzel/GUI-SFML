@@ -32,7 +32,7 @@ namespace gsf
 
             virtual bool handleEventCurrent(sf::Event &event);
 
-            bool handleEventChildren(sf::Event &event);
+            virtual bool handleEventChildren(sf::Event &event);
         private:
 
             virtual void updateCurrent(float dt);

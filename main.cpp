@@ -47,8 +47,8 @@ int main()
 
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget = { std::make_unique<gsf::ScrollableWidget>(300, 200) };
     //scrollableWidget->centerOrigin();
-    //scrollableWidget->setPosition(300.f , 200.f);
-    scrollableWidget->setPosition(0.f , 0.f);
+    //scrollableWidget->setPosition(190.f , 20.f);
+    //scrollableWidget->setPosition(0.f , 0.f);
     scrollableWidget->setBackgroundColor(sf::Color::Blue);
 
     std::unique_ptr<gsf::VerticalLayout> layout = { std::make_unique<gsf::VerticalLayout>() };

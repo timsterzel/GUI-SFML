@@ -83,10 +83,13 @@ sf::View gsf::ScrollableWidget::getShownAreaView(sf::RenderTarget &target) const
 
         float startX = ( getWorldPosition().x - getOrigin().x ) / target.getSize().x;
         float startY = ( getWorldPosition().y - getOrigin().y ) / target.getSize().y;
+
+        // defaultView.getViewport().width;
         float viewWidth = getWidth() / target.getSize().x;
         float viewHeight = getHeight() / target.getSize().y;
         // The viewport is the area where the widget is on screen
         view.setViewport(sf::FloatRect(startX , startY , viewWidth, viewHeight));
+        //std::cout << "startX: " << startX << " view size x: "  << defaultView.getSize().x << std::endl;
         return view;
 }
 
@@ -111,6 +114,8 @@ void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates stat
         // which are in its shown area are drawn on the RenderTarget
         sf::View defaultView = target.getView();
         sf::View view = { getShownAreaView(target) };
+        //sf::View view = defaultView;
+
         target.setView(view);
 
         drawChildren(target, states);
@@ -197,6 +202,7 @@ bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
         }
 
     }
+    return false;
 }
 
 bool gsf::ScrollableWidget::handleEvent(sf::Event &event)
@@ -272,6 +278,23 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 
     }
     */
+    return false;
+}
+
+bool gsf::ScrollableWidget::handleEventChildren(sf::Event &event)
+{
+    // Only handle child Events if the event is in the are of the
+    // shown area (Not the real area)
+    if (!isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y))) {
+        return false;
+    }
+    for (const Ptr &child : m_children)
+    {
+        if (child->handleEvent(event))
+        {
+            return true;
+        }
+    }
     return false;
 }
 
