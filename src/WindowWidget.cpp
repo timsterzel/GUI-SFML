@@ -96,7 +96,11 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
             m_moveModeRelMousePos.y = event.mouseButton.y - getWorldPosition().y;
             // Window should now be shown in the foreground
             setMoveToForground(true);
-
+            return true;
+        }
+        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        {
+            setMoveToForground(true);
             return true;
         }
     }
