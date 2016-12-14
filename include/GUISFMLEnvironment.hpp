@@ -1,23 +1,29 @@
 #ifndef GUISFMLENVIRONMENT_HPP
 #define GUISFMLENVIRONMENT_HPP
 #include <SFML/Graphics.hpp>
+#include "Widget.hpp"
+#include <vector>
+#include <memory>
 
 namespace gsf
 {
     class GUISFMLEnvironment : public sf::Drawable
     {
         private:
+            std::vector<Widget::Ptr> m_widgets;
 
         public:
             GUISFMLEnvironment();
             virtual ~GUISFMLEnvironment();
 
-            // dt is the delta time
-            virtual void update(float dt);
+            void addWidget(Widget::Ptr widget);
+            Widget::Ptr removeWidget(const Widget& widget);
 
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            void update(float dt);
 
-            virtual void handleEvents(sf::Event &event);
+            void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+            void handleEvents(sf::Event &event);
 
     };
 
