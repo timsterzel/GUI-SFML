@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "GUISFMLEnvironment.hpp"
 #include "TextWidget.hpp"
 #include "VerticalLayout.hpp"
 #include "ScrollableWidget.hpp"
@@ -36,14 +37,14 @@ int main()
     float dt = { 0.f };
     CLOCK::time_point timePoint1 = { CLOCK::now() };
 
-
-    gsf::TextWidget textWidget("Im a Text", font, 12, sf::Color::White);
+    gsf::GUISFMLEnvironment guiEnvironment;
+    std::unique_ptr<gsf::TextWidget> textWidget = { std::make_unique<gsf::TextWidget>("Im a Text", font, 12, sf::Color::White) };
     //textWidget.getText().setColor(sf::Color::Red);
-    textWidget.centerOrigin();
-    textWidget.setBackgroundColor(sf::Color::Red);
-    textWidget.setCharacterSize(60);
-    textWidget.setPosition(windowWidth / 2.f, windowHeight / 2.f);
-
+    textWidget->centerOrigin();
+    textWidget->setBackgroundColor(sf::Color::Red);
+    textWidget->setCharacterSize(60);
+    textWidget->setPosition(windowWidth / 2.f, windowHeight / 2.f);
+    guiEnvironment.addWidget(std::move(textWidget));
 
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget = { std::make_unique<gsf::ScrollableWidget>(300, 200) };
     //scrollableWidget->centerOrigin();
@@ -91,11 +92,13 @@ int main()
     windowWidget->setPosition(20.f , 40.f);
     windowWidget->setBackgroundColor(sf::Color::White);
     windowWidget->attachChild(std::move(scrollableWidget));
+    guiEnvironment.addWidget(std::move(windowWidget));
+
 
     std::unique_ptr<gsf::WindowWidget> windowWidget2 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
     windowWidget2->setPosition(180.f , 40.f);
     windowWidget2->setBackgroundColor(sf::Color::Red);
-
+    guiEnvironment.addWidget(std::move(windowWidget2));
 
     preventNoResponseDialog(window);
 
@@ -105,26 +108,19 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            //layout.handleEvent(event);
-            //scrollableWidget->handleEvent(event);
-            windowWidget->handleEvent(event);
-            windowWidget2->handleEvent(event);
+            guiEnvironment.handleEvent(event);
 
             if (event.type == sf::Event::Closed)
             {
                 window.close();
             }
         }
-        //scrollableWidget->update(dt);
-        windowWidget->update(dt);
-        windowWidget2->update(dt);
+        guiEnvironment.update(dt);
 
         window.clear();
-        window.draw(textWidget);
+        window.draw(guiEnvironment);
         //window.draw(layout);
         //window.draw(*scrollableWidget);
-        window.draw(*windowWidget);
-        window.draw(*windowWidget2);
         window.draw(txtStatFPS);
         window.display();
     }

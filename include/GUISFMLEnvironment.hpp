@@ -23,7 +23,7 @@ namespace gsf
 
             void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-            void handleEvents(sf::Event &event);
+            void handleEvent(sf::Event &event);
 
     };
 
