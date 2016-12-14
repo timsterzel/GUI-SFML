@@ -38,10 +38,20 @@ void gsf::GUISFMLEnvironment::draw(sf::RenderTarget &target, sf::RenderStates st
 
 void gsf::GUISFMLEnvironment::handleEvent(sf::Event &event)
 {
-    for (const Widget::Ptr &widget : m_widgets)
+    // Iterate backwards, because the widgets which are shown at the front of the window
+    // have a higher priority forevent handling
+    // (Widgets drawn at the front are the ones which are at the end of the vector)
+    for (auto it = m_widgets.rbegin(); it != m_widgets.rend(); it++)
     {
-        widget->handleEvent(event);
+        if ((*it)->handleEvent(event))
+        {
+            // Event handled so we have nothing to handly anymore.
+            // So we can ensure that a event is handled by the window in the fron
+            // and not affect a window behind it.
+            break;
+        }
     }
+
 }
 
 void gsf::GUISFMLEnvironment::update(float dt)
