@@ -94,6 +94,9 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
             m_moveModeActive = true;
             m_moveModeRelMousePos.x = event.mouseButton.x - getWorldPosition().x;
             m_moveModeRelMousePos.y = event.mouseButton.y - getWorldPosition().y;
+            // Window should now be shown in the foreground
+            setMoveToForground(true);
+
             return true;
         }
     }

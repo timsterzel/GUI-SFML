@@ -26,6 +26,9 @@ namespace gsf
             float m_height;
             sf::Color m_bgColor;
             Widget *m_parent;
+            // If this is true, widget should be draw at the foreground
+            // This is eg useful for windows
+            bool m_moveToForeground;
 
             std::vector<Ptr> m_children;
 
@@ -38,6 +41,9 @@ namespace gsf
 
             void setParent(Widget *parent);
             Widget* getParent() const;
+
+            void setMoveToForground(bool moveToForeground);
+            bool isMarkedForMoveToForeground() const;
 
             void setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
 

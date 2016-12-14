@@ -89,19 +89,23 @@ int main()
 
 
     std::unique_ptr<gsf::WindowWidget> windowWidget = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
-    windowWidget->setPosition(20.f , 40.f);
+    windowWidget->setPosition(60.f , 40.f);
     windowWidget->setBackgroundColor(sf::Color::White);
     windowWidget->attachChild(std::move(scrollableWidget));
     guiEnvironment.addWidget(std::move(windowWidget));
 
 
     std::unique_ptr<gsf::WindowWidget> windowWidget2 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
-    windowWidget2->setPosition(180.f , 40.f);
+    windowWidget2->setPosition(240.f , 40.f);
     windowWidget2->setBackgroundColor(sf::Color::Red);
     guiEnvironment.addWidget(std::move(windowWidget2));
 
-    preventNoResponseDialog(window);
+    std::unique_ptr<gsf::WindowWidget> windowWidget3 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
+    windowWidget3->setPosition(300.f , 60.f);
+    windowWidget3->setBackgroundColor(sf::Color::Blue);
+    guiEnvironment.addWidget(std::move(windowWidget3));
 
+    preventNoResponseDialog(window);
     while (window.isOpen())
     {
         determineFpsAndDeltaTime(txtStatFPS, dt, timePoint1);

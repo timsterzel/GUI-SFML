@@ -50,4 +50,22 @@ void gsf::GUISFMLEnvironment::update(float dt)
     {
         widget->update(dt);
     }
+    // Move widget to foreground which are marked for this
+    // (Forground at the window, which is the last item in our vector)
+    bool moved = false;
+    do
+    {
+        moved = false;
+        for (auto it = m_widgets.begin(); it != m_widgets.end(); it++)
+        {
+            if ((*it)->isMarkedForMoveToForeground()) {
+                (*it)->setMoveToForground(false);
+                // Move actual object to end of vector
+                std::rotate(it, it + 1 , m_widgets.end());
+                // Leave actual loop and start again from beginning, because vector has changed
+                moved = true;
+                break;
+            }
+        }
+    } while (moved);
 }

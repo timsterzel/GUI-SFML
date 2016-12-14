@@ -8,6 +8,7 @@ gsf::Widget::Widget()
 , m_height{ 0.f }
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
+, m_moveToForeground{ false }
 {
 
 }
@@ -18,6 +19,7 @@ gsf::Widget::Widget(float width, float height)
 , m_height{ height }
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
+, m_moveToForeground{ false }
 {
 
 }
@@ -36,6 +38,17 @@ gsf::Widget* gsf::Widget::getParent() const
 {
     return m_parent;
 }
+
+void gsf::Widget::setMoveToForground(bool moveToForeground)
+{
+    m_moveToForeground = moveToForeground;
+}
+
+bool gsf::Widget::isMarkedForMoveToForeground() const
+{
+    return m_moveToForeground;
+}
+
 
 void gsf::Widget::setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener)
 {
