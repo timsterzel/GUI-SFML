@@ -24,7 +24,7 @@ namespace gsf
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;
 
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
         private:
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
 

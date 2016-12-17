@@ -48,7 +48,7 @@ gsf::Widget::Ptr gsf::ChildWidget::detachChild(const Widget& node)
     return result;
 }
 
-void gsf::ChildWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::ChildWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
 

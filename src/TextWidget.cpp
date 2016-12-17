@@ -74,7 +74,7 @@ sf::Color gsf::TextWidget::getTextColor() const
     return m_text.getColor();
 }
 
-void gsf::TextWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::TextWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     // Draw background

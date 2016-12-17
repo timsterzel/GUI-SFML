@@ -30,7 +30,8 @@ namespace gsf
 
             virtual ~TextWidget();
 
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            //virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
             virtual void update(float dt) override;
             virtual bool handleEvent(sf::Event &event) override;
 

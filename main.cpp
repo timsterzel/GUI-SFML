@@ -92,6 +92,7 @@ int main()
     windowWidget->setPosition(60.f , 40.f);
     windowWidget->setBackgroundColor(sf::Color::White);
     windowWidget->attachChild(std::move(scrollableWidget));
+    windowWidget->setIsVisible(false);
     guiEnvironment.addWidget(std::move(windowWidget));
 
 

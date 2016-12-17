@@ -9,6 +9,8 @@ gsf::Widget::Widget()
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
+, m_removeNext{ false }
+, m_isVisible{ true }
 {
 
 }
@@ -20,6 +22,8 @@ gsf::Widget::Widget(float width, float height)
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
+, m_removeNext{ false }
+, m_isVisible{ true }
 {
 
 }
@@ -49,6 +53,15 @@ bool gsf::Widget::isMarkedForMoveToForeground() const
     return m_moveToForeground;
 }
 
+void gsf::Widget::setIsVisible(bool isVisible)
+{
+    m_isVisible = isVisible;
+}
+
+bool gsf::Widget::isVisible() const
+{
+    return m_isVisible;
+}
 
 void gsf::Widget::setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener)
 {
@@ -132,7 +145,15 @@ void gsf::Widget::centerOrigin()
 
 void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-        // Do nothing by default
+    if (m_isVisible)
+    {
+        drawWidget(target, states);
+    }
+}
+
+void gsf::Widget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    // Do nothing by default
 }
 
 

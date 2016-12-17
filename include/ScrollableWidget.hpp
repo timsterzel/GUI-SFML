@@ -52,7 +52,7 @@ namespace gsf
 
             //bool handleEvent(sf::Event &event) override;
 
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
 
         private:
             void correctScrollBarPosition();

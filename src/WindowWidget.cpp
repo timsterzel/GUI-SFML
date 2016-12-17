@@ -44,7 +44,7 @@ sf::View gsf::WindowWidget::getShownAreaView(sf::RenderTarget &target) const
         return view;
 }
 
-void gsf::WindowWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::WindowWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
 

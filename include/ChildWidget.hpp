@@ -20,7 +20,7 @@ namespace gsf
             // dt is the delta time
             void update(float dt);
 
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
 
             // Returns true if widget has handled the event and children dont have to handle it
             bool handleEvent(sf::Event &event) override;

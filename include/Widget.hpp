@@ -29,6 +29,10 @@ namespace gsf
             // If this is true, widget should be draw at the foreground
             // This is eg useful for windows
             bool m_moveToForeground;
+            // When it is true the widget signals that it can get removed next time
+            bool m_removeNext;
+            // Only render window when it is visible
+            bool m_isVisible;
 
             std::vector<Ptr> m_children;
 
@@ -44,6 +48,9 @@ namespace gsf
 
             void setMoveToForground(bool moveToForeground);
             bool isMarkedForMoveToForeground() const;
+
+            void setIsVisible(bool isVisible);
+            bool isVisible() const;
 
             void setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
 
@@ -79,12 +86,14 @@ namespace gsf
 
             bool isIntersecting(sf::Vector2f pos) const;
 
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final override;
 
             // Returns true if widget has handled the event and children dont have to handle it
             virtual bool handleEvent(sf::Event &event);
 
         private:
+            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const;
+
             // Calculate the size of the current widget
             virtual void calculateSize();
 

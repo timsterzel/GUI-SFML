@@ -104,7 +104,7 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
     }
 }
 
-void gsf::ScrollableWidget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::ScrollableWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
 
