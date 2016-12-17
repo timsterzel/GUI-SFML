@@ -9,7 +9,7 @@ gsf::Widget::Widget()
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
-, m_removeNext{ false }
+, m_isRemoveable{ false }
 , m_isVisible{ true }
 {
 
@@ -22,7 +22,7 @@ gsf::Widget::Widget(float width, float height)
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
-, m_removeNext{ false }
+, m_isRemoveable{ false }
 , m_isVisible{ true }
 {
 
@@ -51,6 +51,16 @@ void gsf::Widget::setMoveToForground(bool moveToForeground)
 bool gsf::Widget::isMarkedForMoveToForeground() const
 {
     return m_moveToForeground;
+}
+
+void gsf::Widget::setIsRemoveable(bool isRemoveable)
+{
+    m_isRemoveable = isRemoveable;
+}
+
+bool gsf::Widget::isRemoveable() const
+{
+    return m_isRemoveable;
 }
 
 void gsf::Widget::setIsVisible(bool isVisible)

@@ -30,7 +30,7 @@ namespace gsf
             // This is eg useful for windows
             bool m_moveToForeground;
             // When it is true the widget signals that it can get removed next time
-            bool m_removeNext;
+            bool m_isRemoveable;
             // Only render window when it is visible
             bool m_isVisible;
 
@@ -48,6 +48,9 @@ namespace gsf
 
             void setMoveToForground(bool moveToForeground);
             bool isMarkedForMoveToForeground() const;
+
+            void setIsRemoveable(bool isRemoveable);
+            bool isRemoveable() const;
 
             void setIsVisible(bool isVisible);
             bool isVisible() const;

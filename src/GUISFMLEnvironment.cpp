@@ -78,4 +78,8 @@ void gsf::GUISFMLEnvironment::update(float dt)
             }
         }
     } while (moved);
+    // Remove widgets which signals that there are removeable
+    m_widgets.erase(std::remove_if(m_widgets.begin(), m_widgets.end(),
+                    [] (Widget::Ptr &widget) { return widget->isRemoveable(); }),
+                    m_widgets.end());
 }
