@@ -30,6 +30,8 @@ namespace gsf
 
             virtual void updateCurrent(float dt) override;
 
+            virtual bool handleSpecialEvents(sf::Event &event);
+
             virtual bool handleEventCurrent(sf::Event &event) override;
 
             bool isPointInTopBar(sf::Vector2f point);

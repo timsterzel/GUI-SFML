@@ -30,6 +30,9 @@ namespace gsf
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
             void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
 
+            // Special Events are Events like scrolling (which have a higher priorety then the child events)
+            virtual bool handleSpecialEvents(sf::Event &event);
+
             virtual bool handleEventCurrent(sf::Event &event);
 
             virtual bool handleEventChildren(sf::Event &event);

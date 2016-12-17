@@ -83,9 +83,8 @@ void gsf::WindowWidget::updateCurrent(float dt)
     // Do nothing by default
 }
 
-bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
+bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
 {
-    bool handled = ChildWidget::handleEventCurrent(event);
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isPointInTopBar(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
@@ -101,8 +100,9 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
         {
             setMoveToForground(true);
-            return true;
+            return false;
         }
+
     }
     else if (event.type == sf::Event::MouseButtonReleased)
     {
@@ -113,7 +113,13 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
             return true;
         }
     }
-    else if (event.type == sf::Event::MouseMoved && m_moveModeActive)
+    return false;
+}
+
+bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
+{
+    bool handled = ChildWidget::handleEventCurrent(event);
+    if (event.type == sf::Event::MouseMoved && m_moveModeActive)
     {
         setPosition(event.mouseMove.x - getOrigin().x - m_moveModeRelMousePos.x, event.mouseMove.y - getOrigin().y - m_moveModeRelMousePos.y);
         //move();

@@ -50,7 +50,7 @@ namespace gsf
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;
 
-            bool handleEvent(sf::Event &event) override;
+            //bool handleEvent(sf::Event &event) override;
 
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 

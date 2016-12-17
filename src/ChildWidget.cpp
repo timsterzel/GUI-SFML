@@ -69,13 +69,19 @@ void gsf::ChildWidget::drawChildren(sf::RenderTarget &target, sf::RenderStates s
     }
 }
 
+bool gsf::ChildWidget::handleSpecialEvents(sf::Event &event)
+{
+    return false;
+}
+
 bool gsf::ChildWidget::handleEvent(sf::Event &event)
 {
-
-
-    // Only let widget handle event, when child widgets
-    // dont handle event successfully
     bool handled = Widget::handleEvent(event);
+    // Special Events have the highest priorety, so handle them first
+    if (handleSpecialEvents(event))
+    {
+        return true;
+    }
     if (!handleEventChildren(event))
     {
         return handleEventCurrent(event);
