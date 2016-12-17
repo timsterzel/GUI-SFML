@@ -92,10 +92,6 @@ void gsf::TextWidget::update(float dt)
 
 bool gsf::TextWidget::handleEvent(sf::Event &event)
 {
-    if (!isVisible())
-    {
-        return false;
-    }
     bool handled = Widget::handleEvent(event);
     /*
     if (event.type == sf::Event::MouseButtonPressed)

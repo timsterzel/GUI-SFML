@@ -229,7 +229,7 @@ bool gsf::ScrollableWidget::handleEventChildren(sf::Event &event)
     }
     for (const Ptr &child : m_children)
     {
-        if (child->handleEvent(event))
+        if (child->handleEventWidget(event))
         {
             return true;
         }

@@ -33,6 +33,9 @@ namespace gsf
             //virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
             virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
             virtual void update(float dt) override;
+
+        protected:
+
             virtual bool handleEvent(sf::Event &event) override;
 
         private:

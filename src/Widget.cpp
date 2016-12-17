@@ -156,13 +156,17 @@ void gsf::Widget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) 
     // Do nothing by default
 }
 
-
-bool gsf::Widget::handleEvent(sf::Event &event)
+bool gsf::Widget::handleEventWidget(sf::Event &event)
 {
-    if (!isVisible())
+    if(!isVisible())
     {
         return false;
     }
+    return handleEvent(event);
+}
+
+bool gsf::Widget::handleEvent(sf::Event &event)
+{
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))

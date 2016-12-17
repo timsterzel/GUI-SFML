@@ -87,6 +87,10 @@ namespace gsf
             bool isIntersecting(sf::Vector2f pos) const;
 
             virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final override;
+            // Returns true if widget has handled the event and children dont have to handle it
+            bool handleEventWidget(sf::Event &event);
+
+        protected:
 
             // Returns true if widget has handled the event and children dont have to handle it
             virtual bool handleEvent(sf::Event &event);

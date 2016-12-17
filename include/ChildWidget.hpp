@@ -22,14 +22,13 @@ namespace gsf
 
             virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-            // Returns true if widget has handled the event and children dont have to handle it
-            bool handleEvent(sf::Event &event) override;
-
         protected:
 
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
             void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
 
+            // Returns true if widget has handled the event and children dont have to handle it
+            bool handleEvent(sf::Event &event) override;
             // Special Events are Events like scrolling (which have a higher priorety then the child events)
             virtual bool handleSpecialEvents(sf::Event &event);
 
@@ -40,8 +39,6 @@ namespace gsf
 
             virtual void updateCurrent(float dt);
             void updateChildren(float dt);
-
-
 
             // Calculate the size of the current Widget
             virtual void calculateSize() override;

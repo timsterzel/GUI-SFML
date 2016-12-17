@@ -76,10 +76,6 @@ bool gsf::ChildWidget::handleSpecialEvents(sf::Event &event)
 
 bool gsf::ChildWidget::handleEvent(sf::Event &event)
 {
-    if (!isVisible())
-    {
-        return false;
-    }
     bool handled = Widget::handleEvent(event);
     // Special Events have the highest priorety, so handle them first
     if (handleSpecialEvents(event))
@@ -97,7 +93,7 @@ bool gsf::ChildWidget::handleEventChildren(sf::Event &event)
 {
     for (const Ptr &child : m_children)
     {
-        if (child->handleEvent(event))
+        if (child->handleEventWidget(event))
         {
             return true;
         }
