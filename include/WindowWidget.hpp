@@ -12,8 +12,8 @@ namespace gsf
         protected:
 
         private:
-            float m_topbarHeight;
-            MoveableBlock m_topbar;
+            float m_topBarHeight;
+            MoveableBlock m_topBar;
             MoveableBlock m_btnClose;
 
 
@@ -25,6 +25,9 @@ namespace gsf
             WindowWidget(float width, float height);
             void init();
             virtual ~WindowWidget();
+
+            sf::Color getTopbarFillColor() const;
+            sf::Color setTopBarFillColor(const sf::Color color);
 
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;

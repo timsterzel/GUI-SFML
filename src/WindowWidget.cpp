@@ -3,9 +3,9 @@
 
 gsf::WindowWidget::WindowWidget()
 : ChildWidget()
-, m_topbarHeight{ 20.f }
-, m_topbar{ 0.f, m_topbarHeight }
-, m_btnClose{ m_topbarHeight - 6.f, m_topbarHeight - 6.f }
+, m_topBarHeight{ 20.f }
+, m_topBar{ 0.f, m_topBarHeight }
+, m_btnClose{ m_topBarHeight - 6.f, m_topBarHeight - 6.f }
 , m_moveModeActive{ false }
 {
     init();
@@ -13,9 +13,9 @@ gsf::WindowWidget::WindowWidget()
 
 gsf::WindowWidget::WindowWidget(float width, float height)
 : ChildWidget(width, height)
-, m_topbarHeight{ 20.f }
-, m_topbar{ width, m_topbarHeight }
-, m_btnClose{ m_topbarHeight - 6.f, m_topbarHeight - 6.f }
+, m_topBarHeight{ 20.f }
+, m_topBar{ width, m_topBarHeight }
+, m_btnClose{ m_topBarHeight - 6.f, m_topBarHeight - 6.f }
 , m_moveModeActive{ false }
 {
     init();
@@ -25,17 +25,27 @@ void gsf::WindowWidget::init()
 {
     // The Topbar is drawn over the real area of the widget
     // So the topbar dont hide child elements
-    m_topbar.setOrigin(m_topbar.getWidth() / 2.f, m_topbar.getHeight() / 2.f);
-    m_topbar.setPosition(m_topbar.getWidth() / 2.f, -m_topbar.getHeight() + m_topbar.getHeight() / 2.f );
-    m_topbar.setFillColor(sf::Color::Magenta);
+    m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
+    m_topBar.setPosition(m_topBar.getWidth() / 2.f, -m_topBar.getHeight() + m_topBar.getHeight() / 2.f );
+    m_topBar.setFillColor(sf::Color::Magenta);
     m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
-    m_btnClose.setPosition(getWidth() - (m_btnClose.getWidth() / 2.f) - 3.f, -m_topbarHeight + (m_btnClose.getHeight() / 2.f) + 3.f);
+    m_btnClose.setPosition(getWidth() - (m_btnClose.getWidth() / 2.f) - 3.f, -m_topBarHeight + (m_btnClose.getHeight() / 2.f) + 3.f);
     m_btnClose.setFillColor(sf::Color::White);
 }
 
 gsf::WindowWidget::~WindowWidget()
 {
 
+}
+
+sf::Color gsf::WindowWidget::getTopbarFillColor() const
+{
+    return m_topBar.getFillColor();
+}
+
+sf::Color gsf::WindowWidget::setTopBarFillColor(const sf::Color color)
+{
+    m_topBar.setFillColor(color);
 }
 
 sf::View gsf::WindowWidget::getShownAreaView(sf::RenderTarget &target) const
@@ -81,7 +91,7 @@ void gsf::WindowWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates st
 void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     // Draw Topbar
-    target.draw(m_topbar, states);
+    target.draw(m_topBar, states);
     // Draw close Button
     target.draw(m_btnClose, states);
 
@@ -101,7 +111,7 @@ bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
     sf::Vector2f localMousePoint = { event.mouseButton.x - getWorldPosition().x , event.mouseButton.y - getWorldPosition().y };
     if (event.type == sf::Event::MouseButtonPressed)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && m_topbar.isPointIntersecting(localMousePoint))
+        if (event.mouseButton.button == sf::Mouse::Left && m_topBar.isPointIntersecting(localMousePoint))
         {
             // Check if close button was pressed. We have to map the mouse coordinate to local widget coordinates
             if (m_btnClose.isPointIntersecting(localMousePoint))
@@ -125,7 +135,7 @@ bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
     }
     else if (event.type == sf::Event::MouseButtonReleased)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && m_topbar.isPointIntersecting(localMousePoint))
+        if (event.mouseButton.button == sf::Mouse::Left && m_topBar.isPointIntersecting(localMousePoint))
         {
             std::cout << "WindowWidget: Left mouse button released in topbar" << std::endl;
             m_moveModeActive = false;

@@ -99,6 +99,7 @@ int main()
     std::unique_ptr<gsf::WindowWidget> windowWidget2 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
     windowWidget2->setPosition(240.f , 40.f);
     windowWidget2->setBackgroundColor(sf::Color::Red);
+    windowWidget2->setTopBarFillColor(sf::Color::Green);
     guiEnvironment.addWidget(std::move(windowWidget2));
 
     std::unique_ptr<gsf::WindowWidget> windowWidget3 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f) };
