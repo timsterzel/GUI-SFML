@@ -29,6 +29,9 @@ namespace gsf
             sf::Color getTopbarFillColor() const;
             sf::Color setTopBarFillColor(const sf::Color color);
 
+            sf::Color getCloseButtonFillColor() const;
+            sf::Color setCloseButtonFillColor(const sf::Color color);
+
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;
 
