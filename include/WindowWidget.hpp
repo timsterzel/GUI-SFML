@@ -12,7 +12,6 @@ namespace gsf
         protected:
 
         private:
-            float m_topBarHeight;
             MoveableBlock m_topBar;
             MoveableBlock m_btnClose;
 
