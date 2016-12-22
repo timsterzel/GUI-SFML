@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "ChildWidget.hpp"
+#include "Components/MoveableBlock.hpp"
 
 namespace gsf
 {
@@ -12,6 +13,8 @@ namespace gsf
 
         private:
             float m_topbarHeight;
+            MoveableBlock m_btnClose;
+
 
             bool m_moveModeActive;
             // The relative Mouse pos where the topbar is clicked by activating moving
@@ -19,6 +22,7 @@ namespace gsf
         public:
             WindowWidget();
             WindowWidget(float width, float height);
+            void init();
             virtual ~WindowWidget();
 
             // Get the view of the widget (the shown area on display)

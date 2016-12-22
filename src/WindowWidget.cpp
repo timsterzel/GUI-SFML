@@ -4,17 +4,26 @@
 gsf::WindowWidget::WindowWidget()
 : ChildWidget()
 , m_topbarHeight{ 20.f }
+, m_btnClose{ 20.f - 6.f, 20.f - 6.f }
 , m_moveModeActive{ false }
 {
-
+    init();
 }
 
 gsf::WindowWidget::WindowWidget(float width, float height)
 : ChildWidget(width, height)
 , m_topbarHeight{ 20.f }
+, m_btnClose{ 20.f - 6.f, 20.f - 6.f }
 , m_moveModeActive{ false }
 {
+    init();
+}
 
+void gsf::WindowWidget::init()
+{
+    m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
+    m_btnClose.setPosition(getWidth() - (m_btnClose.getWidth() / 2.f) - 3.f, -m_topbarHeight + (m_btnClose.getHeight() / 2.f) + 3.f);
+    m_btnClose.setFillColor(sf::Color::White);
 }
 
 gsf::WindowWidget::~WindowWidget()
@@ -72,11 +81,7 @@ void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates s
     topBar.setPosition( 0.f, -m_topbarHeight );
     target.draw(topBar, states);
     // Draw close Button
-    float closeBtnWidth = { 15.f };
-    sf::RectangleShape closeBtn({ closeBtnWidth, m_topbarHeight - 6.f });
-    closeBtn.setFillColor(sf::Color::White);
-    closeBtn.setPosition( getWidth() - closeBtnWidth - 3.f , -m_topbarHeight + 3.f );
-    target.draw(closeBtn, states);
+    target.draw(m_btnClose, states);
 
     // Draw background
     sf::RectangleShape bgShape({ getWidth(), getHeight() });
