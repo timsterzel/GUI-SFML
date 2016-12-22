@@ -43,7 +43,7 @@ sf::Color gsf::WindowWidget::getTopbarFillColor() const
     return m_topBar.getFillColor();
 }
 
-sf::Color gsf::WindowWidget::setTopBarFillColor(const sf::Color color)
+void gsf::WindowWidget::setTopBarFillColor(const sf::Color color)
 {
     m_topBar.setFillColor(color);
 }
@@ -53,7 +53,7 @@ sf::Color gsf::WindowWidget::getCloseButtonFillColor() const
     return m_btnClose.getFillColor();
 }
 
-sf::Color gsf::WindowWidget::setCloseButtonFillColor(const sf::Color color)
+void gsf::WindowWidget::setCloseButtonFillColor(const sf::Color color)
 {
     m_btnClose.setFillColor(color);
 }

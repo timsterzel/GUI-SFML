@@ -27,10 +27,10 @@ namespace gsf
             virtual ~WindowWidget();
 
             sf::Color getTopbarFillColor() const;
-            sf::Color setTopBarFillColor(const sf::Color color);
+            void setTopBarFillColor(const sf::Color color);
 
             sf::Color getCloseButtonFillColor() const;
-            sf::Color setCloseButtonFillColor(const sf::Color color);
+            void setCloseButtonFillColor(const sf::Color color);
 
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;
