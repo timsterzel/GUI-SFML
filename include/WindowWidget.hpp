@@ -14,14 +14,17 @@ namespace gsf
         private:
             MoveableBlock m_topBar;
             MoveableBlock m_btnClose;
+            std::string m_windowTitle;
+            sf::Font &m_windowTitleFont;
+            sf::Color m_windowTitleColor;
 
 
             bool m_moveModeActive;
             // The relative Mouse pos where the topbar is clicked by activating moving
             sf::Vector2f m_moveModeRelMousePos;
         public:
-            WindowWidget();
-            WindowWidget(float width, float height);
+            //WindowWidget();
+            WindowWidget(float width, float height, std::string title, sf::Font &font);
             void init();
             virtual ~WindowWidget();
 
@@ -30,6 +33,15 @@ namespace gsf
 
             sf::Color getCloseButtonFillColor() const;
             void setCloseButtonFillColor(const sf::Color color);
+
+            std::string getWindowTitle() const;
+            void setWindowTitle(std::string text);
+
+            sf::Font getWindowTitleFont() const;
+            void setWindowTitleFont(sf::Font &font);
+
+            sf::Color getWindowTitleColor() const;
+            void setWindowTitleColor(sf::Color color);
 
             // Get the view of the widget (the shown area on display)
             sf::View getShownAreaView(sf::RenderTarget &target) const;

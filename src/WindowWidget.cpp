@@ -1,19 +1,23 @@
 #include "WindowWidget.hpp"
 #include <iostream>
-
+/*
 gsf::WindowWidget::WindowWidget()
 : ChildWidget()
 , m_topBar{ 0.f, 20.f }
 , m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
 , m_moveModeActive{ false }
+, m_windowTextFont{ nullptr }
 {
     init();
 }
-
-gsf::WindowWidget::WindowWidget(float width, float height)
+*/
+gsf::WindowWidget::WindowWidget(float width, float height, std::string title, sf::Font &font)
 : ChildWidget(width, height)
 , m_topBar{ width, 20.f }
 , m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
+, m_windowTitle{ title }
+, m_windowTitleFont{ font }
+, m_windowTitleColor{ sf::Color::White }
 , m_moveModeActive{ false }
 {
     init();
@@ -54,6 +58,36 @@ sf::Color gsf::WindowWidget::getCloseButtonFillColor() const
 void gsf::WindowWidget::setCloseButtonFillColor(const sf::Color color)
 {
     m_btnClose.setFillColor(color);
+}
+
+std::string gsf::WindowWidget::getWindowTitle() const
+{
+    return m_windowTitle;
+}
+
+void gsf::WindowWidget::setWindowTitle(std::string text)
+{
+    m_windowTitle = text;
+}
+
+sf::Font gsf::WindowWidget::getWindowTitleFont() const
+{
+    return m_windowTitleFont;
+}
+
+void gsf::WindowWidget::setWindowTitleFont(sf::Font &font)
+{
+    m_windowTitleFont = font;
+}
+
+sf::Color gsf::WindowWidget::getWindowTitleColor() const
+{
+    return m_windowTitleColor;
+}
+
+void gsf::WindowWidget::setWindowTitleColor(sf::Color color)
+{
+    m_windowTitleColor = color;
 }
 
 sf::View gsf::WindowWidget::getShownAreaView(sf::RenderTarget &target) const
@@ -100,6 +134,15 @@ void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates s
 {
     // Draw Topbar
     target.draw(m_topBar, states);
+    // Draw window title
+    sf::Text title;
+    title.setFont(m_windowTitleFont);
+    title.setString(m_windowTitle);
+    title.setCharacterSize(m_topBar.getHeight() - 6.f);
+    title.setColor(m_windowTitleColor);
+    title.setStyle(sf::Text::Bold);
+    title.setPosition(6.f, -m_topBar.getHeight());
+    target.draw(title, states);
     // Draw close Button
     target.draw(m_btnClose, states);
 
