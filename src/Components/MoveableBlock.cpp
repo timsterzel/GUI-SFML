@@ -2,6 +2,9 @@
 #include <iostream>
 
 gsf::MoveableBlock::MoveableBlock()
+: m_width(0.f)
+, m_height(0.f)
+, m_fillColor{ sf::Color::White }
 {
 
 }
@@ -9,6 +12,7 @@ gsf::MoveableBlock::MoveableBlock()
 gsf::MoveableBlock::MoveableBlock(float width, float height)
 : m_width(width)
 , m_height(height)
+, m_fillColor{ sf::Color::White }
 {
 
 }
@@ -18,25 +22,9 @@ gsf::MoveableBlock::~MoveableBlock()
 
 }
 
-sf::Vector2f gsf::MoveableBlock::getPosition() const
-{
-    return m_pos;
-}
-
-void gsf::MoveableBlock::setPosition(float x, float y)
-{
-    m_pos.x = x;
-    m_pos.y = y;
-}
-
-void gsf::MoveableBlock::setPosition(sf::Vector2f pos)
-{
-    setPosition(pos.x, pos.y);
-}
-
 void gsf::MoveableBlock::setPositionAndStoreOld(float x, float y)
 {
-    m_lastPos = m_pos;
+    m_lastPos = getPosition();
     setPosition(x, y);
 }
 
@@ -70,39 +58,39 @@ void gsf::MoveableBlock::setHeight(float height)
     m_height = height;
 }
 
+sf::Color gsf::MoveableBlock::getFillColor() const
+{
+    return m_fillColor;
+}
+
+void gsf::MoveableBlock::setFillColor(sf::Color color)
+{
+    m_fillColor = color;
+}
+
 float gsf::MoveableBlock::getLeft() const
 {
-    return m_pos.x - (getWidth() / 2.f);
+    return getPosition().x - getOrigin().x;
 }
 
 float gsf::MoveableBlock::getRight() const
 {
-    return m_pos.x + (getWidth() / 2.f);
+    return getPosition().x + getOrigin().x;
 }
 
 float gsf::MoveableBlock::getTop() const
 {
-    return m_pos.y - (getHeight() / 2.f);
+    return getPosition().y - getOrigin().y;
 }
 
 float gsf::MoveableBlock::getBottom() const
 {
-    return m_pos.y + (getHeight() / 2.f);
-}
-
-void gsf::MoveableBlock::move(float x, float y)
-{
-    setPosition(m_pos.x + x, m_pos.y + y);
-}
-
-void gsf::MoveableBlock::move(sf::Vector2f xy)
-{
-    move(xy.x, xy.y);
+    return getPosition().y + getOrigin().y;
 }
 
 void gsf::MoveableBlock::moveAndStoreOldPos(float x, float y)
 {
-    setPositionAndStoreOld(m_pos.x + x, m_pos.y + y);
+    setPositionAndStoreOld(getPosition().x + x, getPosition().y + y);
 }
 
 void gsf::MoveableBlock::moveAndStoreOldPos(sf::Vector2f xy)
@@ -113,4 +101,13 @@ void gsf::MoveableBlock::moveAndStoreOldPos(sf::Vector2f xy)
 bool gsf::MoveableBlock::isPointIntersecting(sf::Vector2f point)
 {
     return point.x >= getLeft() && point.x <= getRight() && point.y >= getTop() && point.y <= getBottom();
+}
+
+void gsf::MoveableBlock::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    states.transform *= getTransform();
+
+    sf::RectangleShape rect({ m_width, m_height });
+    rect.setFillColor(getFillColor());
+    target.draw(rect, states);
 }

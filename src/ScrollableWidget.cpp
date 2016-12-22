@@ -36,6 +36,7 @@ void gsf::ScrollableWidget::calculateScrollbarSize()
         float scrollbarHeight = (getHeight() - 2 * SCROLLBAR_PAD_HOR) * proportion;
         m_scrollbarHorizontal.setHeight(scrollbarHeight);
         m_scrollbarHorizontal.setPosition(getWidth() - m_scrollbarHorizontal.getWidth() / 2.f - 3.f, 0.f + m_scrollbarHorizontal.getHeight() / 2.f + SCROLLBAR_PAD_HOR);
+        m_scrollbarHorizontal.setOrigin(m_scrollbarHorizontal.getWidth() / 2.f, m_scrollbarHorizontal.getHeight() / 2.f);
     }
 }
 
@@ -124,12 +125,7 @@ void gsf::ScrollableWidget::drawWidget(sf::RenderTarget &target, sf::RenderState
         target.setView(defaultView);
 
         // Draw Scroll Elements
-        // Do to for later: impelemnt draw method for drawing in MoveableBlock class
-        sf::RectangleShape scrollYShape({ m_scrollbarHorizontal.getWidth(), m_scrollbarHorizontal.getHeight() });
-        scrollYShape.setFillColor(sf::Color::White);
-        scrollYShape.setPosition(m_scrollbarHorizontal.getPosition());
-        scrollYShape.setOrigin(m_scrollbarHorizontal.getWidth() / 2.f, m_scrollbarHorizontal.getHeight() / 2.f);
-        target.draw(scrollYShape, states);
+        target.draw(m_scrollbarHorizontal, states);
 }
 
 void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const

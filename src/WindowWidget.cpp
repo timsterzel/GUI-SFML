@@ -71,6 +71,12 @@ void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates s
     // So the topbar dont hide child elements
     topBar.setPosition( 0.f, -m_topbarHeight );
     target.draw(topBar, states);
+    // Draw close Button
+    float closeBtnWidth = { 15.f };
+    sf::RectangleShape closeBtn({ closeBtnWidth, m_topbarHeight - 6.f });
+    closeBtn.setFillColor(sf::Color::White);
+    closeBtn.setPosition( getWidth() - closeBtnWidth - 3.f , -m_topbarHeight + 3.f );
+    target.draw(closeBtn, states);
 
     // Draw background
     sf::RectangleShape bgShape({ getWidth(), getHeight() });
