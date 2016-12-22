@@ -13,6 +13,7 @@ namespace gsf
 
         private:
             float m_topbarHeight;
+            MoveableBlock m_topbar;
             MoveableBlock m_btnClose;
 
 
@@ -37,8 +38,6 @@ namespace gsf
             virtual bool handleSpecialEvents(sf::Event &event);
 
             virtual bool handleEventCurrent(sf::Event &event) override;
-
-            bool isPointInTopBar(sf::Vector2f point);
 
             // Calculate the size of the current View
             virtual void calculateSize() override;

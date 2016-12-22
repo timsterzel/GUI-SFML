@@ -4,7 +4,8 @@
 gsf::WindowWidget::WindowWidget()
 : ChildWidget()
 , m_topbarHeight{ 20.f }
-, m_btnClose{ 20.f - 6.f, 20.f - 6.f }
+, m_topbar{ 0.f, m_topbarHeight }
+, m_btnClose{ m_topbarHeight - 6.f, m_topbarHeight - 6.f }
 , m_moveModeActive{ false }
 {
     init();
@@ -13,7 +14,8 @@ gsf::WindowWidget::WindowWidget()
 gsf::WindowWidget::WindowWidget(float width, float height)
 : ChildWidget(width, height)
 , m_topbarHeight{ 20.f }
-, m_btnClose{ 20.f - 6.f, 20.f - 6.f }
+, m_topbar{ width, m_topbarHeight }
+, m_btnClose{ m_topbarHeight - 6.f, m_topbarHeight - 6.f }
 , m_moveModeActive{ false }
 {
     init();
@@ -21,6 +23,11 @@ gsf::WindowWidget::WindowWidget(float width, float height)
 
 void gsf::WindowWidget::init()
 {
+    // The Topbar is drawn over the real area of the widget
+    // So the topbar dont hide child elements
+    m_topbar.setOrigin(m_topbar.getWidth() / 2.f, m_topbar.getHeight() / 2.f);
+    m_topbar.setPosition(m_topbar.getWidth() / 2.f, -m_topbar.getHeight() + m_topbar.getHeight() / 2.f );
+    m_topbar.setFillColor(sf::Color::Magenta);
     m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
     m_btnClose.setPosition(getWidth() - (m_btnClose.getWidth() / 2.f) - 3.f, -m_topbarHeight + (m_btnClose.getHeight() / 2.f) + 3.f);
     m_btnClose.setFillColor(sf::Color::White);
@@ -74,12 +81,7 @@ void gsf::WindowWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates st
 void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
     // Draw Topbar
-    sf::RectangleShape topBar({ getWidth(), m_topbarHeight });
-    topBar.setFillColor(sf::Color::Magenta);
-    // The Topbar is drawn over the real area of the widget
-    // So the topbar dont hide child elements
-    topBar.setPosition( 0.f, -m_topbarHeight );
-    target.draw(topBar, states);
+    target.draw(m_topbar, states);
     // Draw close Button
     target.draw(m_btnClose, states);
 
@@ -96,10 +98,16 @@ void gsf::WindowWidget::updateCurrent(float dt)
 
 bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
 {
+    sf::Vector2f localMousePoint = { event.mouseButton.x - getWorldPosition().x , event.mouseButton.y - getWorldPosition().y };
     if (event.type == sf::Event::MouseButtonPressed)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && isPointInTopBar(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        if (event.mouseButton.button == sf::Mouse::Left && m_topbar.isPointIntersecting(localMousePoint))
         {
+            // Check if close button was pressed. We have to map the mouse coordinate to local widget coordinates
+            if (m_btnClose.isPointIntersecting(localMousePoint))
+            {
+                setIsRemoveable(true);
+            }
             std::cout << "WindowWidget: Left mouse button clicked in topbar" << std::endl;
             m_moveModeActive = true;
             m_moveModeRelMousePos.x = event.mouseButton.x - getWorldPosition().x;
@@ -117,7 +125,7 @@ bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
     }
     else if (event.type == sf::Event::MouseButtonReleased)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && isPointInTopBar(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        if (event.mouseButton.button == sf::Mouse::Left && m_topbar.isPointIntersecting(localMousePoint))
         {
             std::cout << "WindowWidget: Left mouse button released in topbar" << std::endl;
             m_moveModeActive = false;
@@ -137,11 +145,6 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
         std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
     }
     return handled;
-}
-
-bool gsf::WindowWidget::isPointInTopBar(sf::Vector2f point)
-{
-    return point.x >= getWorldLeft() && point.x <= getWorldRight() && point.y >= getWorldTop() - m_topbarHeight && point.y <= getWorldTop();
 }
 
 void gsf::WindowWidget::calculateSize()
