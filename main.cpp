@@ -129,11 +129,6 @@ int main()
         while (window.pollEvent(event))
         {
             guiEnvironment.handleEvent(event);
-
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
         }
         guiEnvironment.update(dt);
 

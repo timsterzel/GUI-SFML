@@ -186,9 +186,8 @@ bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
     }
     else if (event.type == sf::Event::MouseButtonReleased)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && m_topBar.isPointIntersecting(localMousePoint))
+        if (event.mouseButton.button == sf::Mouse::Left && m_moveModeActive)
         {
-            std::cout << "WindowWidget: Left mouse button released in topbar" << std::endl;
             m_moveModeActive = false;
             return true;
         }

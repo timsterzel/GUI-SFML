@@ -3,6 +3,8 @@
 #include <cassert>
 
 gsf::GUISFMLEnvironment::GUISFMLEnvironment()
+: m_isMouseInWindow{ true }
+, m_isWindowFocused{ true }
 {
 
 }
@@ -38,6 +40,29 @@ void gsf::GUISFMLEnvironment::draw(sf::RenderTarget &target, sf::RenderStates st
 
 void gsf::GUISFMLEnvironment::handleEvent(sf::Event &event)
 {
+    if (event.type == sf::Event::MouseLeft || event.type == sf::Event::LostFocus)
+    {
+        m_isMouseInWindow = false;
+    }
+    else if(event.type == sf::Event::MouseEntered)
+    {
+        m_isMouseInWindow = true;
+    }
+    if (event.type == sf::Event::LostFocus)
+    {
+       m_isWindowFocused = false;
+    }
+    if (event.type == sf::Event::GainedFocus)
+    {
+        m_isWindowFocused = true;
+    }
+
+    // Dont handle mouse move events when mouse is not inside window or window is not focussed
+    if (event.type == sf::Event::MouseMoved && (!m_isMouseInWindow || !m_isWindowFocused))
+    {
+        return;
+    }
+
     // Iterate backwards, because the widgets which are shown at the front of the window
     // have a higher priority forevent handling
     // (Widgets drawn at the front are the ones which are at the end of the vector)

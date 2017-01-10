@@ -11,7 +11,10 @@ namespace gsf
     {
         private:
             std::vector<Widget::Ptr> m_widgets;
-
+            // Is true when ever the mouse is inside the window and false
+            // when the mouse is outside
+            bool m_isMouseInWindow;
+            bool m_isWindowFocused;
         public:
             GUISFMLEnvironment();
             virtual ~GUISFMLEnvironment();

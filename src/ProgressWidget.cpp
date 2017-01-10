@@ -92,7 +92,6 @@ void gsf::ProgressWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates 
     // Calc acutal width of progress rect
     float widthProg = (m_width - 2 * m_progressMargin) * (m_progress / 100.f);
     float heightProg = (m_height - 2 * m_progressMargin);
-    std::cout << "Prog: " << widthProg << std::endl;
     sf::RectangleShape progressShape({ widthProg, heightProg         });
     progressShape.setPosition(m_progressMargin, m_progressMargin);
     progressShape.setFillColor(m_progessColor);

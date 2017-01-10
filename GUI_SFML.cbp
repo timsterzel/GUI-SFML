@@ -45,6 +45,7 @@
 		<Unit filename="include/ChildWidget.hpp" />
 		<Unit filename="include/Components/MoveableBlock.hpp" />
 		<Unit filename="include/GUISFMLEnvironment.hpp" />
+		<Unit filename="include/ProgressWidget.hpp" />
 		<Unit filename="include/ScrollableWidget.hpp" />
 		<Unit filename="include/TextWidget.hpp" />
 		<Unit filename="include/VerticalLayout.hpp" />
@@ -54,6 +55,7 @@
 		<Unit filename="src/ChildWidget.cpp" />
 		<Unit filename="src/Components/MoveableBlock.cpp" />
 		<Unit filename="src/GUISFMLEnvironment.cpp" />
+		<Unit filename="src/ProgressWidget.cpp" />
 		<Unit filename="src/ScrollableWidget.cpp" />
 		<Unit filename="src/TextWidget.cpp" />
 		<Unit filename="src/VerticalLayout.cpp" />
