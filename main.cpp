@@ -5,6 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "GUISFMLEnvironment.hpp"
+#include "ProgressWidget.hpp"
 #include "TextWidget.hpp"
 #include "VerticalLayout.hpp"
 #include "ScrollableWidget.hpp"
@@ -55,6 +56,16 @@ int main()
     std::unique_ptr<gsf::VerticalLayout> layout = { std::make_unique<gsf::VerticalLayout>() };
     layout->setPosition(0.f , 0.f);
     layout->setBackgroundColor(sf::Color::Cyan);
+
+    std::unique_ptr<gsf::ProgressWidget> progressWidget = { std::make_unique<gsf::ProgressWidget>(260, 40) };
+    progressWidget->setPosition(460, 460);
+    progressWidget->setBackgroundColor(sf::Color::White);
+    progressWidget->setOutlineThickness(5.f);
+    progressWidget->setOutlineColor(sf::Color::Blue);
+    progressWidget->setProgress(50);
+    guiEnvironment.addWidget(std::move(progressWidget));
+
+
 
     preventNoResponseDialog(window);
 
