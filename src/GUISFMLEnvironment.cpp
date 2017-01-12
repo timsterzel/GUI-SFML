@@ -71,7 +71,7 @@ void gsf::GUISFMLEnvironment::handleEvent(sf::Event &event)
         if ((*it)->handleEventWidget(event))
         {
             // Event handled so we have nothing to handly anymore.
-            // So we can ensure that a event is handled by the window in the fron
+            // So we can ensure that a event is handled by the window in the front
             // and not affect a window behind it.
             break;
         }
