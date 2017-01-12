@@ -25,6 +25,7 @@ namespace gsf
             float m_width;
             float m_height;
             sf::Color m_bgColor;
+            // A parent can have a parent, e.g. when it is added to a widget of type childWidget
             Widget *m_parent;
             // If this is true, widget should be draw at the foreground
             // This is eg useful for windows
@@ -97,6 +98,12 @@ namespace gsf
 
             // Returns true if widget has handled the event and children dont have to handle it
             virtual bool handleEvent(sf::Event &event);
+
+            // Get the view of the widget. The view has the width and height of the widget
+            // and has its position. So when the widget has childs or other widgets inside it
+            // only the widget and parts of the widgit which are inside this widget are draw,
+            // when this view is used.
+            sf::View getShownAreaView(sf::RenderTarget &target) const;
 
         private:
             virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const;

@@ -49,7 +49,9 @@ int main()
 
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget = { std::make_unique<gsf::ScrollableWidget>(300, 200) };
     //scrollableWidget->centerOrigin();
-    //scrollableWidget->setPosition(190.f , 20.f);
+    //scrollableWidget->setPosition(190.f , -20.f);
+    scrollableWidget->setPosition(0.f , -40.f);
+    //scrollableWidget->setPosition(-60.f , 30.f);
     //scrollableWidget->setPosition(0.f , 0.f);
     scrollableWidget->setBackgroundColor(sf::Color::Blue);
 
@@ -128,9 +130,14 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
             guiEnvironment.handleEvent(event);
         }
         guiEnvironment.update(dt);
+
 
         window.clear();
         window.draw(guiEnvironment);

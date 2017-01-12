@@ -90,28 +90,6 @@ void gsf::WindowWidget::setWindowTitleColor(sf::Color color)
     m_windowTitleColor = color;
 }
 
-sf::View gsf::WindowWidget::getShownAreaView(sf::RenderTarget &target) const
-{
-        sf::View view;
-        // The view should have the same size as the layout, so the shown area of the widget is never bigger than the size of the widget,
-        // although when the children widgets of the layout are bigger.
-        view.setSize(getWidth(), getHeight());
-        /*
-        float scrollOffsetX = m_scrollOffsetX;
-        float scrollOffsetY = m_scrollOffsetY;
-        view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f) + scrollOffsetX, getWorldPosition().y - getOrigin().y + (getHeight() / 2.f) + scrollOffsetY );
-        */
-        view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f), getWorldPosition().y - getOrigin().y + (getHeight() / 2.f) );
-
-        float startX = ( getWorldPosition().x - getOrigin().x ) / target.getSize().x;
-        float startY = ( getWorldPosition().y - getOrigin().y ) / target.getSize().y;
-        float viewWidth = getWidth() / target.getSize().x;
-        float viewHeight = getHeight() / target.getSize().y;
-        // The viewport is the area where the widget is on screen
-        view.setViewport(sf::FloatRect(startX , startY , viewWidth, viewHeight));
-        return view;
-}
-
 void gsf::WindowWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
         states.transform *= getTransform();
