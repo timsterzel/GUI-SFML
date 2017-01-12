@@ -220,7 +220,7 @@ sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
     // although when containing widgets of the widget are bigger.
     view.setSize(getWidth(), getHeight());
 
-    view.setCenter(getWorldPosition().x - getOrigin().x + (getWidth() / 2.f), getWorldPosition().y - getOrigin().y + (getHeight() / 2.f) );
+    view.setCenter(getWorldLeft() + (getWidth() / 2.f), getWorldTop() + (getHeight() / 2.f) );
 
     float startX = ( getWorldLeft() ) / target.getSize().x;
     float startY = ( getWorldTop() ) / target.getSize().y;
@@ -234,6 +234,7 @@ sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
     if (m_parent != nullptr)
     {
         // We have to get the parents viewport, so we dont ignore its viewport.
+        // (The views of this view have to be in the viewport of the actuals widgets parent, too
         sf::View parentView = { m_parent->getShownAreaView(target) };
         sf::FloatRect parentViewPort = { parentView.getViewport() };
 
@@ -250,8 +251,10 @@ sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
         // Calculate where the viewport starts. (The startpoint should be right of the left side of its parent and
         // under the top side of its parent. Is the startpoint right of the right side of its parent or
         // under the bottom side of its parent the overlapping area is zero, so nothing is drawn
-        float viewportStartX = (std::max(leftA, leftB) / target.getSize().x);
-        float viewportStartY = (std::max(topA, topB) / target.getSize().y);
+        float startX = std::max(leftA, leftB);
+        float startY = std::max(topA, topB);
+        float viewportStartX = startX / target.getSize().x;
+        float viewportStartY = startY / target.getSize().y;
 
         // The shown size should only have the size of the area of the widget which is on the parent widget
         // For this we need the intersecting area of the this widget with its parent
@@ -261,6 +264,7 @@ sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
         float viewportWidth = overlapX / target.getSize().x;
         float viewportHeight = overlapY / target.getSize().y;
         view.setSize(overlapX, overlapY);
+        view.setCenter(startX + (overlapX / 2.f), startY + (overlapY / 2.f) );
         view.setViewport(sf::FloatRect(viewportStartX , viewportStartY , viewportWidth, viewportHeight));
     }
     return view;

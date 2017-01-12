@@ -24,7 +24,6 @@ int main()
     unsigned int windowWidth = { 1280 };
     unsigned int windowHeight = { 720 };
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "GUI-SFML");
-    preventNoResponseDialog(window);
 
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/LiberationSans-Regular.ttf"))
@@ -49,10 +48,8 @@ int main()
 
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget = { std::make_unique<gsf::ScrollableWidget>(300, 200) };
     //scrollableWidget->centerOrigin();
-    //scrollableWidget->setPosition(190.f , -20.f);
-    scrollableWidget->setPosition(0.f , -40.f);
-    //scrollableWidget->setPosition(-60.f , 30.f);
-    //scrollableWidget->setPosition(0.f , 0.f);
+    //scrollableWidget->setPosition(280.f , 0.f);
+    scrollableWidget->setPosition(0.f , 0.f);
     scrollableWidget->setBackgroundColor(sf::Color::Blue);
 
     std::unique_ptr<gsf::VerticalLayout> layout = { std::make_unique<gsf::VerticalLayout>() };
@@ -66,10 +63,6 @@ int main()
     progressWidget->setOutlineColor(sf::Color::Blue);
     progressWidget->setProgress(50);
     guiEnvironment.addWidget(std::move(progressWidget));
-
-
-
-    preventNoResponseDialog(window);
 
     std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
     for (int i = { 0 }; i != 6; i++)
