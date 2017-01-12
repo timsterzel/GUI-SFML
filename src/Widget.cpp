@@ -255,8 +255,8 @@ sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
         float viewportLeftNew = { std::max(leftA, leftB) };
         float viewportTopNew = { std::max(topA, topB) };
         // The start of the view in pixels
-        float pixelLeft = viewportLeftNew * target.getSize().x;
-        float pixelTop = viewportTopNew * target.getSize().y;
+        float pixelLeft = { viewportLeftNew * target.getSize().x };
+        float pixelTop = { viewportTopNew * target.getSize().y };
 
 
         // The shown size should only have the size of the area of the widget which is on the parent widget
