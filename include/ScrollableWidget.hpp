@@ -23,6 +23,7 @@ namespace gsf
             float m_scrollOffsetY;
 
             float m_scrollSpeed;
+            // Set by user (default: true)
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;
 

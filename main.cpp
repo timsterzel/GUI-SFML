@@ -111,7 +111,7 @@ int main()
     windowWidget2->setWindowTitleColor(sf::Color::Red);
     guiEnvironment.addWidget(std::move(windowWidget2));
 
-    std::unique_ptr<gsf::WindowWidget> windowWidget3 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f, "Test Window", font) };
+    std::unique_ptr<gsf::WindowWidget> windowWidget3 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f, "Test Window TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", font) };
     windowWidget3->setPosition(300.f , 60.f);
     windowWidget3->setBackgroundColor(sf::Color::Blue);
     guiEnvironment.addWidget(std::move(windowWidget3));
@@ -124,7 +124,6 @@ int main()
     scrollableWidget3->setBackgroundColor(sf::Color::Yellow);
 
     std::unique_ptr<gsf::VerticalLayout> layout4 = { std::make_unique<gsf::VerticalLayout>() };
-    layout4->setPosition(0.f , 0.f);
     layout4->setBackgroundColor(sf::Color::Cyan);
 
     for (int i = { 0 }; i != 2; i++)

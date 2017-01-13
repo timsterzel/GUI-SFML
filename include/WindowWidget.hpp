@@ -46,6 +46,9 @@ namespace gsf
             virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
 
         private:
+            // Get a view which only draw in title area
+            sf::View getWindowTitleView(sf::RenderTarget &target) const;
+
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
 
             virtual void updateCurrent(float dt) override;

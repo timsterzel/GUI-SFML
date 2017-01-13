@@ -31,10 +31,11 @@ void gsf::ScrollableWidget::calculateScrollbarSize()
         // get first element
         Widget *childWidget = { m_children.at(0).get() };
         float childrenHeight = { childWidget->getHeight() };
-        // Only show scrollbar when there is any need to scroll
+        // check if there is any need for scrolling (Child is higher then ScrollableWidgets height or outside)
         m_isVerticalScrollNeeded = childWidget->getTop() < 0.f || childWidget->getBottom() > getHeight() ||
             childWidget->getHeight() > getHeight();
-        if (!m_isVerticalScrollNeeded) {
+        // Only show scrollbar when there is any need to scroll and scrolling is enabled
+        if (!m_isVerticalScrollEnabled || !m_isVerticalScrollNeeded) {
             std::cout << "smaller \n";
             return;
         }
