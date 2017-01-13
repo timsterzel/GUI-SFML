@@ -104,6 +104,10 @@ namespace gsf
             // only the widget and parts of the widgit which are inside this widget are draw,
             // when this view is used.
             sf::View getShownAreaView(sf::RenderTarget &target) const;
+            // Get the shown area of the widget. The Shown area is the width and height of the widget,
+            // with left and top coordinates (top-left corner), but is affected by the values of
+            // its parent too. The final shown area is the overlapping area off the widget and all its parents
+            sf::FloatRect getShownArea() const;
 
         private:
             virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const;

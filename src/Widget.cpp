@@ -215,103 +215,60 @@ sf::Vector2f gsf::Widget::getWorldPosition() const
 
 sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
 {
+    sf::FloatRect shownAreaRect = { getShownArea() };
+    float left = shownAreaRect.left;
+    float top = shownAreaRect.top;
+    float width = shownAreaRect.width;
+    float height = shownAreaRect.height;
+
     sf::View view;
-    // The view should have the same size as the widget, so the shown area of the widget is never bigger than the size of the widget,
+    // The view should have the same size as the widgets shown area,
+    // so the shown area of the widget is never bigger than the size of the widget,
     // although when containing widgets of the widget are bigger.
-    view.setSize(getWidth(), getHeight());
+    view.setSize(width , height);
 
-    view.setCenter(getWorldLeft() + (getWidth() / 2.f), getWorldTop() + (getHeight() / 2.f) );
-
-    float viewLeft = ( getWorldLeft() ) / target.getSize().x;
-    float viewTop = ( getWorldTop() ) / target.getSize().y;
-    float viewWidth = getWidth() / target.getSize().x;
-    float viewHeight = getHeight() / target.getSize().y;
+    view.setCenter(left + (width / 2.f), top + (height / 2.f) );
 
     // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(viewLeft , viewTop , viewWidth, viewHeight));
+    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y , width / target.getSize().x, height / target.getSize().y));
+    return view;
+}
 
-    // View based. This has the advantage in opposite to position based, that not only the parents area
-    // is respected, but also the parents parent etc...
-    if (m_parent != nullptr)
+sf::FloatRect gsf::Widget::getShownArea() const
+{
+    sf::FloatRect rectThis{getWorldLeft(), getWorldTop(), getWidth(), getHeight()};
+
+    if (m_parent)
     {
-         // We have to get the parents viewport, so we dont ignore its viewport.
-        // (The views of this view have to be in the viewport of the actuals widgets parent, too
-        sf::View parentView = { m_parent->getShownAreaView(target) };
-        sf::FloatRect parentViewPort = { parentView.getViewport() };
+         // We have to get the parents shown screen area to calculate the overlapping rect
+        sf::FloatRect rectParent = { m_parent->getShownArea() };
 
-        // this Widget is widgetA parent widget is widgetB
-        float leftA = { viewLeft };
-        float rightA = { viewLeft + viewWidth};
-        float topA = { viewTop };
-        float bottomA = { viewTop + viewHeight };
+        // Data of this widget
+        float leftA = { rectThis.left };
+        float rightA = { rectThis.left + rectThis.width };
+        float topA = { rectThis.top };
+        float bottomA = { rectThis.top + rectThis.height };
+        // Data of parent widgets shown area
+        float leftB = { rectParent.left };
+        float rightB = { rectParent.left + rectParent.width };
+        float topB = { rectParent.top };
+        float bottomB = { rectParent.top + rectParent.height };
 
-        float leftB = { parentViewPort.left };
-        float rightB = { parentViewPort.left + parentViewPort.width };
-        float topB = { parentViewPort.top };
-        float bottomB = { parentViewPort.top + parentViewPort.height };
-        // Calculate where the viewport starts. (The startpoint should be right of the left side of its parent and
-        // under the top side of its parent. Is the startpoint right of the right side of its parent or
-        // under the bottom side of its parent the overlapping area is zero, so nothing is drawn
-        float viewportLeftNew = { std::max(leftA, leftB) };
-        float viewportTopNew = { std::max(topA, topB) };
-        // The start of the view in pixels
-        float pixelLeft = { viewportLeftNew * target.getSize().x };
-        float pixelTop = { viewportTopNew * target.getSize().y };
-
-
-        // The shown size should only have the size of the area of the widget which is on the parent widget
-        // For this we need the intersecting area of the this widget with its parent
-        float overlapX = { std::max(0.f, std::min(rightA, rightB) - std::max(leftA, leftB)) };
-        float overlapY = { std::max(0.f, std::min(bottomA, bottomB) - std::max(topA, topB)) };
-        // We need the pixels instead of the size in viewport range, so we convert them back
-        float pixelOverlapX = { overlapX * target.getSize().x };
-        float pixelOverlapY = { overlapY * target.getSize().y };
-
-
-        view.setSize(pixelOverlapX , pixelOverlapY);
-        view.setCenter(pixelLeft + (pixelOverlapX / 2.f), pixelTop + (pixelOverlapY / 2.f) );
-        view.setViewport(sf::FloatRect(viewportLeftNew , viewportTopNew , overlapX, overlapY));
-    }
-    /*
-    // position based
-    if (m_parent != nullptr)
-    {
-        // Do to: use parentView values instead of parents world values to calculate the view right
-        // We have to get the parents viewport, so we dont ignore its viewport.
-        // (The views of this view have to be in the viewport of the actuals widgets parent, too
-        sf::View parentView = { m_parent->getShownAreaView(target) };
-
-        // this Widget is widgetA parent widget is widgetB
-        float leftA = { getWorldLeft() };
-        float rightA = { getWorldRight() };
-        float topA = { getWorldTop() };
-        float bottomA = { getWorldBottom() };
-
-        float leftB = { m_parent->getWorldLeft() };
-        float rightB = { m_parent->getWorldRight() };
-        float topB = { m_parent->getWorldTop() };
-        float bottomB = { m_parent->getWorldBottom() };
-        // Calculate where the viewport starts. (The startpoint should be right of the left side of its parent and
-        // under the top side of its parent. Is the startpoint right of the right side of its parent or
-        // under the bottom side of its parent the overlapping area is zero, so nothing is drawn
         float startX = { std::max(leftA, leftB) };
         float startY = { std::max(topA, topB) };
-        float viewportStartX = { startX / target.getSize().x };
-        float viewportStartY = { startY / target.getSize().y };
 
+        // Calculate where the shown area starts. (The startpoint should be right of the left side of its parent and
+        // under the top side of its parent. Is the startpoint right of the right side of its parent or
+        // under the bottom side of its parent the overlapping area is zero.
+        float leftAB = { std::max(leftA, leftB) };
+        float topAB = { std::max(topA, topB) };
         // The shown size should only have the size of the area of the widget which is on the parent widget
         // For this we need the intersecting area of the this widget with its parent
         float overlapX = { std::max(0.f, std::min(rightA, rightB) - std::max(leftA, leftB)) };
         float overlapY = { std::max(0.f, std::min(bottomA, bottomB) - std::max(topA, topB)) };
-
-        float viewportWidth = { overlapX / target.getSize().x };
-        float viewportHeight = { overlapY / target.getSize().y };
-        view.setSize(overlapX, overlapY);
-        view.setCenter(startX + (overlapX / 2.f), startY + (overlapY / 2.f) );
-        view.setViewport(sf::FloatRect(viewportStartX , viewportStartY , viewportWidth, viewportHeight));
+        return sf::FloatRect{ leftAB, topAB, overlapX, overlapY };
     }
-    */
-    return view;
+    return rectThis;
 }
 
 bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
