@@ -179,8 +179,6 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
     if (event.type == sf::Event::MouseMoved && m_moveModeActive)
     {
         setPosition(event.mouseMove.x - getOrigin().x - m_moveModeRelMousePos.x, event.mouseMove.y - getOrigin().y - m_moveModeRelMousePos.y);
-        //move();
-        std::cout << "MouseMoveEvent mouseMove x: " << event.mouseMove.x << " y: " << event.mouseMove.y << std::endl;
     }
     return handled;
 }

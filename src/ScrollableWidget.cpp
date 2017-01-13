@@ -113,7 +113,9 @@ void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStat
 
 bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
 {
-    if (event.type == sf::Event::MouseWheelMoved && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+    // Is the mouse in the shown area of the widget
+    bool isMouseInShownArea = { getShownArea().contains(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)) };
+    if (event.type == sf::Event::MouseWheelMoved && isMouseInShownArea)
     {
         m_scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
         // We have to move the scrollbar too when we scroll with the scroll wheel
@@ -129,7 +131,7 @@ bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
         }
         return true;
     }
-    else if (event.type == sf::Event::MouseButtonPressed)
+    else if (event.type == sf::Event::MouseButtonPressed && isMouseInShownArea)
     {
         // We need the mouse pos as local position in the ScrollWidget
         sf::Vector2f localMousePos = { event.mouseButton.x - getWorldLeft() , event.mouseButton.y - getWorldTop() };

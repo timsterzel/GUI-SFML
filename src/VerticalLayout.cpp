@@ -35,7 +35,9 @@ void gsf::VerticalLayout::updateCurrent(float dt)
 bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
 {
     bool handled = ChildWidget::handleEventCurrent(event);
-    if (event.type == sf::Event::MouseButtonPressed)
+    // Is the mouse in the shown area of the widget
+    bool isMouseInShownArea = { getShownArea().contains(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)) };
+    if (event.type == sf::Event::MouseButtonPressed && isMouseInShownArea)
     {
         if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
         {

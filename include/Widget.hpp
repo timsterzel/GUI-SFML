@@ -99,15 +99,12 @@ namespace gsf
             // Returns true if widget has handled the event and children dont have to handle it
             virtual bool handleEvent(sf::Event &event);
 
-            // Get the view of the widget. The view has the width and height of the widget
-            // and has its position. So when the widget has childs or other widgets inside it
-            // only the widget and parts of the widgit which are inside this widget are draw,
-            // when this view is used.
-            sf::View getShownAreaView(sf::RenderTarget &target) const;
             // Get the shown area of the widget. The Shown area is the width and height of the widget,
             // with left and top coordinates (top-left corner), but is affected by the values of
             // its parent too. The final shown area is the overlapping area off the widget and all its parents
             sf::FloatRect getShownArea() const;
+            // Returns a view in which only the shown area of the widget is shown by drawing
+            sf::View getShownAreaView(sf::RenderTarget &target) const;
 
         private:
             virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const;

@@ -93,16 +93,6 @@ void gsf::TextWidget::update(float dt)
 bool gsf::TextWidget::handleEvent(sf::Event &event)
 {
     bool handled = Widget::handleEvent(event);
-    /*
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
-        {
-            std::cout << "TextWidget: Left Mouse Button Clicked. Text: " << m_text.getString().toAnsiString() << std::endl;
-            return true;
-        }
-    }
-    */
     return handled;
 }
 
