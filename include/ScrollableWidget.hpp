@@ -29,7 +29,7 @@ namespace gsf
             // Scrollbar Vertical
             // Only scroll when there is a need to scrolling
             // (child is not shown fully in widget)
-            bool m_verticalScrollNeeded;
+            bool m_isVerticalScrollNeeded;
             MoveableBlock m_scrollbarVertical;
             bool m_scrollbarMoveActive;
             sf::Vector2f m_scrollbarMoveModeRelPos;

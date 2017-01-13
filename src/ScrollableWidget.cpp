@@ -10,7 +10,7 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_scrollSpeed{ 6.0f }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ false }
-, m_verticalScrollNeeded{ true }
+, m_isVerticalScrollNeeded{ true }
 , m_scrollbarVertical{ 30.f, 0.f }
 , m_scrollbarMoveActive{ false }
 , SCROLLBAR_PAD_HOR{ 6.f }
@@ -32,9 +32,9 @@ void gsf::ScrollableWidget::calculateScrollbarSize()
         Widget *childWidget = { m_children.at(0).get() };
         float childrenHeight = { childWidget->getHeight() };
         // Only show scrollbar when there is any need to scroll
-        m_verticalScrollNeeded = childWidget->getTop() < 0.f || childWidget->getBottom() > getHeight() ||
+        m_isVerticalScrollNeeded = childWidget->getTop() < 0.f || childWidget->getBottom() > getHeight() ||
             childWidget->getHeight() > getHeight();
-        if (!m_verticalScrollNeeded) {
+        if (!m_isVerticalScrollNeeded) {
             std::cout << "smaller \n";
             return;
         }
@@ -123,7 +123,10 @@ bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
 {
     // Is the mouse in the shown area of the widget
     bool isMouseInShownArea = { getShownArea().contains(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)) };
-    if (event.type == sf::Event::MouseWheelMoved && isMouseInShownArea)
+    if (event.type == sf::Event::MouseWheelMoved &&
+        isMouseInShownArea &&
+        m_isVerticalScrollNeeded &&
+        m_isVerticalScrollEnabled)
     {
         m_scrollOffsetY = { event.mouseWheel.delta * m_scrollSpeed };
         // We have to move the scrollbar too when we scroll with the scroll wheel
@@ -143,7 +146,10 @@ bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
     {
         // We need the mouse pos as local position in the ScrollWidget
         sf::Vector2f localMousePos = { event.mouseButton.x - getWorldLeft() , event.mouseButton.y - getWorldTop() };
-        if (event.mouseButton.button == sf::Mouse::Left && m_scrollbarVertical.isPointIntersecting({ localMousePos.x , localMousePos.y }))
+        if (event.mouseButton.button == sf::Mouse::Left &&
+            m_scrollbarVertical.isPointIntersecting({ localMousePos.x , localMousePos.y }) &&
+            m_isVerticalScrollNeeded &&
+            m_isVerticalScrollEnabled)
         {
             m_scrollbarMoveActive = true;
             m_scrollbarMoveModeRelPos.x = localMousePos.x - m_scrollbarVertical.getPosition().x;
@@ -219,12 +225,12 @@ void gsf::ScrollableWidget::updateCurrent(float dt)
     for (const Ptr &child : m_children)
     {
         child->move(0.f, m_scrollOffsetY);
-        // Correct the position of the childs when there are out of the bounds
-        if (child->getBottom() <= getHeight())
+        // Correct the position of the childs when there are out of the bounds and scrolling is needed
+        if (child->getBottom() <= getHeight() && m_isVerticalScrollNeeded)
         {
             child->move(0.f, getHeight() - child->getBottom() );
         }
-        else if (child->getTop() > 0.f)
+        else if (child->getTop() > 0.f && m_isVerticalScrollNeeded)
         {
             child->move(0.f, 0.f - child->getTop() );
         }
