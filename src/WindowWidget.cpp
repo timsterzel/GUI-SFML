@@ -147,7 +147,6 @@ bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
             {
                 setIsRemoveable(true);
             }
-            std::cout << "WindowWidget: Left mouse button clicked in topbar" << std::endl;
             m_moveModeActive = true;
             m_moveModeRelMousePos.x = event.mouseButton.x - getWorldPosition().x;
             m_moveModeRelMousePos.y = event.mouseButton.y - getWorldPosition().y;

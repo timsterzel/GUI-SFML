@@ -48,7 +48,7 @@ int main()
 
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget = { std::make_unique<gsf::ScrollableWidget>(300, 200) };
     //scrollableWidget->centerOrigin();
-    scrollableWidget->setPosition(30.f , 180.f);
+    //scrollableWidget->setPosition(30.f , 180.f);
     //scrollableWidget->setPosition(180.f , 0.f);
     scrollableWidget->setBackgroundColor(sf::Color::Blue);
 
@@ -64,7 +64,7 @@ int main()
     progressWidget->setProgress(50);
     guiEnvironment.addWidget(std::move(progressWidget));
 
-    std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
+    //std::vector<std::unique_ptr<gsf::TextWidget>> textWidgets;
     for (int i = { 0 }; i != 6; i++)
     {
         std::string textString = "Text Num " + std::to_string(i);
@@ -115,6 +115,44 @@ int main()
     windowWidget3->setPosition(300.f , 60.f);
     windowWidget3->setBackgroundColor(sf::Color::Blue);
     guiEnvironment.addWidget(std::move(windowWidget3));
+
+
+
+    // SCROLLBAR TEST
+    std::unique_ptr<gsf::ScrollableWidget> scrollableWidget3 = { std::make_unique<gsf::ScrollableWidget>(300, 200) };
+    scrollableWidget3->setPosition(820.f, 420.f);
+    scrollableWidget3->setBackgroundColor(sf::Color::Yellow);
+
+    std::unique_ptr<gsf::VerticalLayout> layout4 = { std::make_unique<gsf::VerticalLayout>() };
+    layout4->setPosition(0.f , 0.f);
+    layout4->setBackgroundColor(sf::Color::Cyan);
+
+    for (int i = { 0 }; i != 2; i++)
+    {
+        std::string textString = "Text Num " + std::to_string(i);
+        std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };
+        if (i % 2 == 0)
+        {
+            text->setBackgroundColor(sf::Color::Green);
+        }
+        else
+        {
+            text->setBackgroundColor(sf::Color::Magenta);
+        }
+        std::cout << "Text height: " << text->getHeight() << std:: endl;
+        std::function<void(gsf::Widget*, sf::Vector2f)> leftClickListener = [] (gsf::Widget* widget, sf::Vector2f mousePos)
+        {
+            gsf::TextWidget *textWidget = static_cast<gsf::TextWidget*>(widget);
+            std::cout << "TextWidget: Left Mouse Button Clicked. Text: " <<  textWidget->getText() /*<< m_text.getString().toAnsiString() */<< std::endl;
+        };
+        text->setOnLeftClickListener(leftClickListener);
+        //text->setBackgroundColor(sf::Color::Red);
+        layout4->attachChild(std::move(text));
+    }
+    scrollableWidget3->attachChild(std::move(layout4));
+    guiEnvironment.addWidget(std::move(scrollableWidget3));
+
+
 
     preventNoResponseDialog(window);
     while (window.isOpen())

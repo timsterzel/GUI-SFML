@@ -26,8 +26,11 @@ namespace gsf
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;
 
-            // Scrollbar horizontal
-            MoveableBlock m_scrollbarHorizontal;
+            // Scrollbar Vertical
+            // Only scroll when there is a need to scrolling
+            // (child is not shown fully in widget)
+            bool m_verticalScrollNeeded;
+            MoveableBlock m_scrollbarVertical;
             bool m_scrollbarMoveActive;
             sf::Vector2f m_scrollbarMoveModeRelPos;
             // Horizontal padding
