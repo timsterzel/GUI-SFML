@@ -10,11 +10,12 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_scrollSpeed{ 6.0f }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ true }
+, m_scrollbarThickness{ 16.f }
 , m_isVerticalScrollNeeded{ true }
-, m_scrollbarVertical{ 30.f, 0.f }
+, m_scrollbarVertical{ m_scrollbarThickness, 0.f }
 , m_scrollbarVerMoveActive{ false }
 , m_isHorizontalScrollNeeded{ true }
-, m_scrollbarHorizontal{ 0.f, 30.f }
+, m_scrollbarHorizontal{ 0.f, m_scrollbarThickness }
 , m_scrollbarHorMoveActive{ false }
 , SCROLLBAR_PAD_HOR{ 6.f }
 , SCROLLBAR_PAD_VER{ 6.f }
@@ -70,9 +71,6 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
         // Horizontal Scrollbar
         m_isHorizontalScrollNeeded = childWidget->getLeft() < 0.f || childWidget->getRight() > getWidth() ||
             childWidget->getWidth() > getWidth();
-        std::cout << "Right: " << childWidget->getRight() << " width: " << getWidth() << std::endl;
-        if (m_isHorizontalScrollNeeded)
-            std::cout << "NEEDED\n";
         // Only show scrollbar when there is any need to scroll and scrolling is enabled
         if (!m_isHorizontalScrollEnabled || !m_isHorizontalScrollNeeded) {
             return;
@@ -313,7 +311,6 @@ void gsf::ScrollableWidget::updateCurrent(float dt)
     // Do to: a scrollwidgit should only have one child
     for (const Ptr &child : m_children)
     {
-        // Vertical scrolling
         child->move(m_scrollOffsetX, m_scrollOffsetY);
         // Correct the position of the childs when there are out of the bounds and scrolling is needed
         if (child->getBottom() <= getHeight() && m_isVerticalScrollNeeded)

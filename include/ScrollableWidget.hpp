@@ -26,7 +26,9 @@ namespace gsf
             // Set by user (default: true)
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;
-
+            // the thickness of the scrollbars. By Verticalscrollbar the width and
+            // bei horizontal scrolling the height
+            float m_scrollbarThickness;
             // Scrollbar Vertical
             // Only scroll when there is a need to scrolling
             // (child is not shown fully in widget)
@@ -43,6 +45,7 @@ namespace gsf
             const float SCROLLBAR_PAD_HOR;
             // Vertical padding
             const float SCROLLBAR_PAD_VER;
+
 
         public:
             ScrollableWidget(float width, float height);
