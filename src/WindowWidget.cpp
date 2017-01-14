@@ -31,7 +31,7 @@ void gsf::WindowWidget::init()
     m_topBar.setPosition(m_topBar.getWidth() / 2.f, -m_topBar.getHeight() + m_topBar.getHeight() / 2.f );
     m_topBar.setFillColor(sf::Color::Magenta);
     m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
-    m_btnClose.setPosition(getWidth() - (m_btnClose.getWidth() / 2.f) - 3.f, -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
+    m_btnClose.setPosition(getWidth() - (m_btnClose.getWidth() / 2.f) - 6.f, -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
     m_btnClose.setFillColor(sf::Color::White);
 }
 
