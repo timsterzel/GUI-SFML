@@ -32,16 +32,26 @@ namespace gsf
             // (child is not shown fully in widget)
             bool m_isVerticalScrollNeeded;
             MoveableBlock m_scrollbarVertical;
-            bool m_scrollbarMoveActive;
-            sf::Vector2f m_scrollbarMoveModeRelPos;
+            bool m_scrollbarVerMoveActive;
+            sf::Vector2f m_scrollbarVerMoveModeRelPos;
+            // Scrollbar Horizontal
+            bool m_isHorizontalScrollNeeded;
+            MoveableBlock m_scrollbarHorizontal;
+            bool m_scrollbarHorMoveActive;
+            sf::Vector2f m_scrollbarHorMoveModeRelPos;
             // Horizontal padding
             const float SCROLLBAR_PAD_HOR;
+            // Vertical padding
+            const float SCROLLBAR_PAD_VER;
 
         public:
             ScrollableWidget(float width, float height);
             virtual ~ScrollableWidget();
 
-            void calculateScrollbarSize();
+            void calculateVerticalScrollbarSize();
+            void calculateHorizontalScrollbarSize();
+            void calculateScrollbarSizes();
+
 
             void setIsVerticalScrollEnabled(bool isEnabled);
             bool isVerticalScrollEnabled() const;

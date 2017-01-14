@@ -128,7 +128,7 @@ int main()
 
     for (int i = { 0 }; i != 2; i++)
     {
-        std::string textString = "Text Num " + std::to_string(i);
+        std::string textString = "Text Text Text Text Text Text Text Num " + std::to_string(i);
         std::unique_ptr<gsf::TextWidget> text = { std::make_unique<gsf::TextWidget>(textString, font, 40, sf::Color::White) };
         if (i % 2 == 0)
         {
