@@ -48,8 +48,9 @@ void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
     if (!m_isVerticalScrollEnabled || !m_isVerticalScrollNeeded) {
         return;
     }
-    // Get proportion between the scrollable widget and its child
-    float proportionVer = { getHeight() / childrenHeight };
+    // Get proportion between the scrollable widget and its child ( We need to note the scrollbar thickness so the
+    // two scrollbars can not overlap
+    float proportionVer = { (getHeight() - m_scrollbarThickness) / childrenHeight };
     // Calculate the scrollbar size
     float scrollbarHeight = { (getHeight() - 2 * SCROLLBAR_PAD_VER) * proportionVer };
     m_scrollbarVertical.setHeight(scrollbarHeight);
@@ -75,8 +76,9 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
         if (!m_isHorizontalScrollEnabled || !m_isHorizontalScrollNeeded) {
             return;
         }
-        // Get proportion between the scrollable widget and its child
-        float proportionHor = { getWidth() / childrenWidth };
+        // Get proportion between the scrollable widget and its child ( We need to note the scrollbar thickness so the
+        // two scrollbars can not overlap
+        float proportionHor = { (getWidth() - m_scrollbarThickness) / childrenWidth };
         // Calculate the scrollbar size
         float scrollbarWidth = { (getWidth() - 2 * SCROLLBAR_PAD_HOR) * proportionHor };
         m_scrollbarHorizontal.setWidth(scrollbarWidth);
@@ -130,15 +132,15 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
     if (m_scrollbarVertical.getTop() < 0.f + SCROLLBAR_PAD_VER) {
         m_scrollbarVertical.setPosition(m_scrollbarVertical.getPosition().x, 0.f + m_scrollbarVertical.getHeight() / 2.f + SCROLLBAR_PAD_VER);
     }
-    else if (m_scrollbarVertical.getBottom() > getHeight() - SCROLLBAR_PAD_VER) {
-        m_scrollbarVertical.setPosition(m_scrollbarVertical.getPosition().x, getHeight() - m_scrollbarVertical.getHeight() / 2.f - SCROLLBAR_PAD_VER);
+    else if (m_scrollbarVertical.getBottom() > getHeight() - SCROLLBAR_PAD_VER - m_scrollbarThickness) {
+        m_scrollbarVertical.setPosition(m_scrollbarVertical.getPosition().x, getHeight() - m_scrollbarVertical.getHeight() / 2.f - SCROLLBAR_PAD_VER - m_scrollbarThickness);
     }
     // Horizontal
     if (m_scrollbarHorizontal.getLeft() < 0.f + SCROLLBAR_PAD_HOR) {
         m_scrollbarHorizontal.setPosition(0.f + m_scrollbarHorizontal.getWidth() / 2.f + SCROLLBAR_PAD_HOR, m_scrollbarHorizontal.getPosition().y);
     }
-    else if (m_scrollbarHorizontal.getRight() > getWidth() - SCROLLBAR_PAD_VER) {
-        m_scrollbarHorizontal.setPosition(getWidth() - m_scrollbarHorizontal.getWidth() / 2.f - SCROLLBAR_PAD_HOR, m_scrollbarHorizontal.getPosition().y);
+    else if (m_scrollbarHorizontal.getRight() > getWidth() - SCROLLBAR_PAD_VER - m_scrollbarThickness) {
+        m_scrollbarHorizontal.setPosition(getWidth() - m_scrollbarHorizontal.getWidth() / 2.f - SCROLLBAR_PAD_HOR - m_scrollbarThickness, m_scrollbarHorizontal.getPosition().y);
     }
 }
 
