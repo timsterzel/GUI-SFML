@@ -140,7 +140,7 @@ void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates s
     title.setFont(m_windowTitleFont);
     title.setString(m_windowTitle);
     title.setCharacterSize(m_topBar.getHeight() - 6.f);
-    title.setColor(m_windowTitleColor);
+    title.setFillColor(m_windowTitleColor);
     title.setStyle(sf::Text::Bold);
     title.setPosition(6.f, -m_topBar.getHeight());
     target.draw(title, states);

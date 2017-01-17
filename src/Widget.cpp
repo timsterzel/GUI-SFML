@@ -256,8 +256,8 @@ sf::FloatRect gsf::Widget::getShownArea() const
         float topB = { rectParent.top };
         float bottomB = { rectParent.top + rectParent.height };
 
-        float startX = { std::max(leftA, leftB) };
-        float startY = { std::max(topA, topB) };
+        //float startX = { std::max(leftA, leftB) };
+        //float startY = { std::max(topA, topB) };
 
         // Calculate where the shown area starts. (The startpoint should be right of the left side of its parent and
         // under the top side of its parent. Is the startpoint right of the right side of its parent or

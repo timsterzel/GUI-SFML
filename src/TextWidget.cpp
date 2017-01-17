@@ -26,7 +26,7 @@ void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize, 
     m_text.setString(text);
     m_text.setFont(font);
 	m_text.setCharacterSize(characterSize);
-	m_text.setColor(color);
+	m_text.setFillColor(color);
 	calculateSize();
 }
 
@@ -66,12 +66,12 @@ unsigned int gsf::TextWidget::getCharacterSize() const
 
 void gsf::TextWidget::setTextColor(const sf::Color color)
 {
-    m_text.setColor(color);
+    m_text.setFillColor(color);
 }
 
 sf::Color gsf::TextWidget::getTextColor() const
 {
-    return m_text.getColor();
+    return m_text.getFillColor();
 }
 
 void gsf::TextWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
