@@ -111,8 +111,6 @@ namespace gsf
 
             // Calculate the size of the current widget
             virtual void calculateSize();
-
-
     };
 
 }
