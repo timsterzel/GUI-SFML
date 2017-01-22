@@ -14,7 +14,7 @@ namespace gsf
             ChildWidget(float width, float height);
             virtual ~ChildWidget();
 
-            void attachChild(Ptr child);
+            virtual void attachChild(Ptr child);
             Widget::Ptr detachChild(const Widget& node);
 
             // dt is the delta time

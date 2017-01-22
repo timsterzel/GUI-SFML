@@ -29,6 +29,13 @@ gsf::ScrollableWidget::~ScrollableWidget()
 
 }
 
+void gsf::ScrollableWidget::attachChild(Ptr child)
+{
+    // Remove old widgets
+    m_children.clear();
+    ChildWidget::attachChild(std::move(child));
+}
+
 void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
 {
     if (m_children.size() < 1)

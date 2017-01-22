@@ -50,6 +50,9 @@ namespace gsf
             ScrollableWidget(float width, float height);
             virtual ~ScrollableWidget();
 
+            // ScrollableWidget only can handle one widget, so we have to implement the methods different
+            void attachChild(Ptr child) override;
+
             void calculateVerticalScrollbarSize();
             void calculateHorizontalScrollbarSize();
             void calculateScrollbarSizes();
