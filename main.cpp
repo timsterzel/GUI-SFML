@@ -33,7 +33,8 @@ int main()
     sf::Text txtStatFPS;
     txtStatFPS.setFont(font);
     txtStatFPS.setCharacterSize(12);
-    txtStatFPS.setFillColor(sf::Color::White);
+    //txtStatFPS.setFillColor(sf::Color::White);
+    txtStatFPS.setColor(sf::Color::White);
     float dt = { 0.f };
     CLOCK::time_point timePoint1 = { CLOCK::now() };
 
