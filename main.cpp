@@ -13,10 +13,6 @@
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
-// Poll events before starting loading other things, to prevent the message that the window is not responding (A bug?).
-// http://en.sfml-dev.org/forums/index.php?topic=19768.0
-void preventNoResponseDialog(sf::RenderWindow &window);
-
 void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt, CLOCK::time_point &timePoint1);
 
 int main()
@@ -34,7 +30,7 @@ int main()
     txtStatFPS.setFont(font);
     txtStatFPS.setCharacterSize(12);
     //txtStatFPS.setFillColor(sf::Color::White);
-    txtStatFPS.setColor(sf::Color::White);
+    txtStatFPS.setFillColor(sf::Color::White);
     float dt = { 0.f };
     CLOCK::time_point timePoint1 = { CLOCK::now() };
 
@@ -99,7 +95,6 @@ int main()
     windowWidget->setIsVisible(true);
     guiEnvironment.addWidget(std::move(windowWidget));
 
-
     std::unique_ptr<gsf::WindowWidget> windowWidget2 = { std::make_unique<gsf::WindowWidget>(300.f, 360.f, "", font) };
     windowWidget2->setPosition(240.f , 40.f);
     windowWidget2->setBackgroundColor(sf::Color::Red);
@@ -149,9 +144,6 @@ int main()
     scrollableWidget3->attachChild(std::move(layout4));
     guiEnvironment.addWidget(std::move(scrollableWidget3));
 
-
-
-    preventNoResponseDialog(window);
     while (window.isOpen())
     {
         determineFpsAndDeltaTime(txtStatFPS, dt, timePoint1);
@@ -176,15 +168,6 @@ int main()
     }
 
     return 0;
-}
-
-void preventNoResponseDialog(sf::RenderWindow &window)
-{
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-
-    }
 }
 
 void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt, CLOCK::time_point &timePoint1)
