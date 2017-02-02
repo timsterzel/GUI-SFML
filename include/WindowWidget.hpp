@@ -34,8 +34,8 @@ namespace gsf
             sf::Color getCloseButtonFillColor() const;
             void setCloseButtonFillColor(const sf::Color color);
 
-            std::string getWindowTitle() const;
-            void setWindowTitle(std::string text);
+            const std::string& getWindowTitle() const;
+            void setWindowTitle(const std::string &text);
 
             sf::Font getWindowTitleFont() const;
             void setWindowTitleFont(sf::Font &font);

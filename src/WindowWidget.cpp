@@ -1,16 +1,6 @@
 #include "WindowWidget.hpp"
 #include <iostream>
-/*
-gsf::WindowWidget::WindowWidget()
-: ChildWidget()
-, m_topBar{ 0.f, 20.f }
-, m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
-, m_moveModeActive{ false }
-, m_windowTextFont{ nullptr }
-{
-    init();
-}
-*/
+
 gsf::WindowWidget::WindowWidget(float width, float height, std::string title, sf::Font &font)
 : ChildWidget(width, height)
 , m_topBar{ width, 20.f }
@@ -60,12 +50,12 @@ void gsf::WindowWidget::setCloseButtonFillColor(const sf::Color color)
     m_btnClose.setFillColor(color);
 }
 
-std::string gsf::WindowWidget::getWindowTitle() const
+const std::string& gsf::WindowWidget::getWindowTitle() const
 {
     return m_windowTitle;
 }
 
-void gsf::WindowWidget::setWindowTitle(std::string text)
+void gsf::WindowWidget::setWindowTitle(const std::string &text)
 {
     m_windowTitle = text;
 }
