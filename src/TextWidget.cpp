@@ -38,12 +38,7 @@ gsf::TextWidget::~TextWidget()
 {
 
 }
-/*
-sf::Text& gsf::TextWidget::getText()
-{
-    return m_text;
-}
-*/
+
 void gsf::TextWidget::setText(const std::string text)
 {
     m_text.setString(text);
