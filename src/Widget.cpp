@@ -6,6 +6,8 @@
 gsf::Widget::Widget()
 : m_width{ 0.f }
 , m_height{ 0.f }
+, m_outlineColor{ sf::Color::White }
+, m_outlineThickness{ 2.f }
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
@@ -19,8 +21,10 @@ gsf::Widget::Widget()
 gsf::Widget::Widget(float width, float height)
 : m_width{ width }
 , m_height{ height }
-, m_bgColor{ sf::Color::Transparent }
+, m_outlineColor{ sf::Color::White }
+, m_outlineThickness{ 2.f }
 , m_parent{ nullptr }
+, m_bgColor{ sf::Color::Transparent }
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
@@ -33,6 +37,25 @@ gsf::Widget::~Widget()
 
 }
 
+sf::Color gsf::Widget::getOutlineColor() const
+{
+    return m_outlineColor;
+}
+
+void gsf::Widget::setOutlineColor(sf::Color color)
+{
+    m_outlineColor = color;
+}
+
+float gsf::Widget::getOutlineThickness() const
+{
+    return m_outlineThickness;
+}
+
+void gsf::Widget::setOutlineThickness(float outline)
+{
+    m_outlineThickness = outline;
+}
 void gsf::Widget::setParent(Widget *parent)
 {
     m_parent = parent;
@@ -157,7 +180,22 @@ void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     if (m_isVisible)
     {
+        states.transform *= getTransform();
+        // Draw basic shape (background and outline)
+        sf::RectangleShape basicShape{ sf::Vector2f(m_width, m_height) };
+        //basicShape.setOrigin(basicShape.getLocalBounds().width, basicShape.getLocalBounds().height);
+        //basicShape.setPosition(m_width / 2.f, m_height / 2.f);
+        basicShape.setFillColor(m_bgColor);
+        basicShape.setOutlineThickness(m_outlineThickness);
+        basicShape.setOutlineColor(m_outlineColor);
+        target.draw(basicShape, states);
+
+        sf::View defaultView = target.getView();
+        sf::View view = { getShownAreaView(target) };
+        target.setView(view);
+
         drawWidget(target, states);
+        target.setView(defaultView);
     }
 }
 

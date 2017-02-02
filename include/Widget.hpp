@@ -24,6 +24,9 @@ namespace gsf
         protected:
             float m_width;
             float m_height;
+
+            sf::Color m_outlineColor;
+            float m_outlineThickness;
             sf::Color m_bgColor;
             // A parent can have a parent, e.g. when it is added to a widget of type childWidget
             Widget *m_parent;
@@ -44,6 +47,12 @@ namespace gsf
             Widget(float width, float height);
             virtual ~Widget();
 
+
+            sf::Color getOutlineColor() const;
+            void setOutlineColor(sf::Color color);
+            float getOutlineThickness() const;
+            void setOutlineThickness(float outline);
+            
             void setParent(Widget *parent);
             Widget* getParent() const;
 

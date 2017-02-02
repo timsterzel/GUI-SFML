@@ -98,33 +98,56 @@ sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target) const
     return view;
 }
 
+sf::View gsf::WindowWidget::getTopBarView(sf::RenderTarget &target) const
+{
+    sf::View view;
+
+    float left = { getWorldLeft() };
+    float top = { getWorldTop() - m_topBar.getHeight() };
+    // Only draw in the toolbar from left til the close button (with little margin)
+    float width = { getWidth() };
+    float height = { m_topBar.getHeight() };
+
+    view.setSize(width, height);
+    view.setCenter(left + (width / 2.f), top + (height / 2.f));
+    // The viewport is the area where the widget is on screen
+    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
+        width / target.getSize().x, height / target.getSize().y));
+    return view;
+}
+
+
 void gsf::WindowWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
-        states.transform *= getTransform();
+        //states.transform *= getTransform();
 
         drawCurrent(target, states);
 
         // We change the view of the target, so that only the area of the widget and its child
         // which are in its shown area are drawn on the RenderTarget
-        sf::View defaultView = target.getView();
-        sf::View view = { getShownAreaView(target) };
-        target.setView(view);
+        //sf::View defaultView = target.getView();
+        //sf::View view = { getShownAreaView(target) };
+        //target.setView(view);
 
         drawChildren(target, states);
         //Widget::draw(target, states);
 
-        target.setView(defaultView);
+        //target.setView(defaultView);
 }
 
 void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    sf::View defaultView = target.getView();
     // Draw Topbar
+    sf::View viewTopBar = { getTopBarView(target) };
+    target.setView(viewTopBar);
     target.draw(m_topBar, states);
+    // Draw close Button
+    target.draw(m_btnClose, states);
 
     // Draw window title
-    sf::View defaultView = target.getView();
-    sf::View view = { getWindowTitleView(target) };
-    target.setView(view);
+    sf::View viewTitle = { getWindowTitleView(target) };
+    target.setView(viewTitle);
 
     sf::Text title;
     title.setFont(m_windowTitleFont);
@@ -134,10 +157,9 @@ void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates s
     title.setStyle(sf::Text::Bold);
     title.setPosition(6.f, -m_topBar.getHeight());
     target.draw(title, states);
+    
     target.setView(defaultView);
-    // Draw close Button
-    target.draw(m_btnClose, states);
-
+    
     // Draw background
     sf::RectangleShape bgShape({ getWidth(), getHeight() });
     bgShape.setFillColor(m_bgColor);

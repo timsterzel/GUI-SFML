@@ -81,7 +81,7 @@ void gsf::ProgressWidget::setProgress(int progress)
 
 void gsf::ProgressWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    states.transform *= getTransform();
+    //states.transform *= getTransform();
     // Draw background
     sf::RectangleShape bgShape({ m_width, m_height });
     bgShape.setFillColor(m_bgColor);

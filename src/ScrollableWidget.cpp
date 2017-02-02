@@ -153,7 +153,7 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
 
 void gsf::ScrollableWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
-        states.transform *= getTransform();
+        //states.transform *= getTransform();
 
         drawCurrent(target, states);
 

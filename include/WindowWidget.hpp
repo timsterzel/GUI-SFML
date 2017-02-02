@@ -46,6 +46,8 @@ namespace gsf
             virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
 
         private:
+            // Get the view for drawing Topbar 
+            sf::View getTopBarView(sf::RenderTarget &target) const;
             // Get a view which only draw in title area
             sf::View getWindowTitleView(sf::RenderTarget &target) const;
 

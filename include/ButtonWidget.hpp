@@ -9,8 +9,8 @@ namespace gsf
     class ButtonWidget: public gsf::Widget
     {
         private:
-            sf::Color m_outlineColor;
-            float m_outlineThickness;
+            //sf::Color m_outlineColor;
+            //float m_outlineThickness;
             const sf::Font &m_font;
             std::string m_text;
 
@@ -20,11 +20,6 @@ namespace gsf
             ButtonWidget(float width, float height, const std::string &text, const sf::Font &font);
 
             virtual ~ButtonWidget();
-
-            sf::Color getOutlineColor() const;
-            void setOutlineColor(sf::Color color);
-            float getOutlineThickness() const;
-            void setOutlineThickness(float outline);
 
             const std::string& getText() const;
             void setText(const std::string &text);

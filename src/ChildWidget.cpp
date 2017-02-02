@@ -50,7 +50,7 @@ gsf::Widget::Ptr gsf::ChildWidget::detachChild(const Widget& node)
 
 void gsf::ChildWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
-        states.transform *= getTransform();
+        //states.transform *= getTransform();
 
         drawCurrent(target, states);
         drawChildren(target, states);
