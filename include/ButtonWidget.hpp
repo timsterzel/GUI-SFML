@@ -10,7 +10,6 @@ namespace gsf
     {
         private:
             sf::Color m_outlineColor;
-            sf::Color m_fillColor;
             float m_outlineThickness;
             const sf::Font &m_font;
             std::string m_text;
@@ -24,8 +23,6 @@ namespace gsf
 
             sf::Color getOutlineColor() const;
             void setOutlineColor(sf::Color color);
-            sf::Color getFillColor() const;
-            void setFillColor(sf::Color color);
             float getOutlineThickness() const;
             void setOutlineThickness(float outline);
 

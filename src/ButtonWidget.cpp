@@ -2,32 +2,30 @@
 #include <iostream>
 
 gsf::ButtonWidget::ButtonWidget(const sf::Font &font)
-: m_outlineColor{ sf::Color::White }
-, m_fillColor{ sf::Color::Red }
-, m_outlineThickness{ 0.f }
+: Widget()
+, m_outlineColor{ sf::Color::White }
+, m_outlineThickness{ 2.f }
 , m_font{ font }  
 {
-
+    m_bgColor = sf::Color::Red;
 }
 
 gsf::ButtonWidget::ButtonWidget(float width, float height, const sf::Font &font)
 : Widget(width, height)
 , m_outlineColor{ sf::Color::White }
-, m_fillColor{ sf::Color::Red }
-, m_outlineThickness{ 0.f }
+, m_outlineThickness{ 2.f }
 , m_font{ font }
 {
-
+    m_bgColor = sf::Color::Red;
 }
 gsf::ButtonWidget::ButtonWidget(float width,float height, const std::string &text, const sf::Font &font)
 : Widget(width, height)
 , m_outlineColor{ sf::Color::White }
-, m_fillColor{ sf::Color::Red }
-, m_outlineThickness{ 0.f }
+, m_outlineThickness{ 2.f }
 , m_font{ font }
 , m_text{ text }
 {
-
+    m_bgColor = sf::Color::Red;
 }
 
 gsf::ButtonWidget::~ButtonWidget()
@@ -43,16 +41,6 @@ sf::Color gsf::ButtonWidget::getOutlineColor() const
 void gsf::ButtonWidget::setOutlineColor(sf::Color color)
 {
     m_outlineColor = color;
-}
-
-sf::Color gsf::ButtonWidget::getFillColor() const
-{
-    return m_fillColor;
-}
-
-void gsf::ButtonWidget::setFillColor(sf::Color color)
-{
-    m_fillColor = color;
 }
 
 float gsf::ButtonWidget::getOutlineThickness() const
@@ -83,7 +71,7 @@ void gsf::ButtonWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates st
     bgShape.setFillColor(m_bgColor);
     bgShape.setOutlineThickness(m_outlineThickness);
     bgShape.setOutlineColor(m_outlineColor);
-    bgShape.setFillColor(m_fillColor);
+    bgShape.setFillColor(m_bgColor);
     target.draw(bgShape, states);
     sf::Text text = { m_text, m_font };
     // Draw text
