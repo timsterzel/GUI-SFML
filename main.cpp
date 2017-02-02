@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "ButtonWidget.hpp"
 #include "GUISFMLEnvironment.hpp"
 #include "ProgressWidget.hpp"
 #include "TextWidget.hpp"
@@ -108,6 +109,10 @@ int main()
     windowWidget3->setPosition(300.f , 60.f);
     windowWidget3->setBackgroundColor(sf::Color::Blue);
     guiEnvironment.addWidget(std::move(windowWidget3));
+
+    std::unique_ptr<gsf::ButtonWidget> buttonWidget = { std::make_unique<gsf::ButtonWidget>(200.f, 80.f, "TTTTTTTTTTTTTTTTTTTTTTClick me", font) };
+    buttonWidget->setPosition(620.f , 360.f);
+    guiEnvironment.addWidget(std::move(buttonWidget));
 
 
 
