@@ -120,7 +120,6 @@ sf::View gsf::WindowWidget::getTopBarView(sf::RenderTarget &target) const
 void gsf::WindowWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
         //states.transform *= getTransform();
-
         drawCurrent(target, states);
 
         // We change the view of the target, so that only the area of the widget and its child

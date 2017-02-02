@@ -6,8 +6,8 @@
 gsf::Widget::Widget()
 : m_width{ 0.f }
 , m_height{ 0.f }
-, m_outlineColor{ sf::Color::White }
-, m_outlineThickness{ 2.f }
+, m_outlineColor{ sf::Color::Transparent }
+, m_outlineThickness{ 0.f }
 , m_bgColor{ sf::Color::Transparent }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
@@ -21,8 +21,8 @@ gsf::Widget::Widget()
 gsf::Widget::Widget(float width, float height)
 : m_width{ width }
 , m_height{ height }
-, m_outlineColor{ sf::Color::White }
-, m_outlineThickness{ 2.f }
+, m_outlineColor{ sf::Color::Transparent }
+, m_outlineThickness{ 0.f }
 , m_parent{ nullptr }
 , m_bgColor{ sf::Color::Transparent }
 , m_moveToForeground{ false }
@@ -190,6 +190,7 @@ void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
         basicShape.setOutlineColor(m_outlineColor);
         target.draw(basicShape, states);
 
+        // Set the targets to the view which is only the area of the widget, based on its with, height and position
         sf::View defaultView = target.getView();
         sf::View view = { getShownAreaView(target) };
         target.setView(view);
