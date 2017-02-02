@@ -2,21 +2,25 @@
 #include <iostream>
 
 gsf::TextWidget::TextWidget()
+: Widget()
 {
 
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font)
+: Widget()
 {
     init(text, font, 12, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font, int characterSize)
+: Widget()
 {
     init(text, font, characterSize, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font, int characterSize, sf::Color color)
+: Widget()
 {
     init(text, font, characterSize, color);
 }
@@ -76,11 +80,6 @@ sf::Color gsf::TextWidget::getTextColor() const
 
 void gsf::TextWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    //states.transform *= getTransform();
-    // Draw background
-    sf::RectangleShape bgShape({ m_width, m_height });
-    bgShape.setFillColor(m_bgColor);
-    target.draw(bgShape, states);
     // Draw text
     target.draw(m_text, states);
 }

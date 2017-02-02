@@ -2,9 +2,8 @@
 #include <iostream>
 
 gsf::ProgressWidget::ProgressWidget()
-: m_outlineColor{ sf::Color::White }
+: Widget()
 , m_progessColor{ sf::Color::Red }
-, m_outlineThickness{ 0.f }
 , m_progressMargin{ 5.f }
 , m_progress{ 0 }
 {
@@ -13,9 +12,7 @@ gsf::ProgressWidget::ProgressWidget()
 
 gsf::ProgressWidget::ProgressWidget(float width, float height)
 : Widget(width, height)
-, m_outlineColor{ sf::Color::White }
 , m_progessColor{ sf::Color::Red }
-, m_outlineThickness{ 0.f }
 , m_progressMargin{ 5.f }
 , m_progress{ 0 }
 {
@@ -27,16 +24,6 @@ gsf::ProgressWidget::~ProgressWidget()
 
 }
 
-sf::Color gsf::ProgressWidget::getOutlineColor() const
-{
-    return m_outlineColor;
-}
-
-void gsf::ProgressWidget::setOutlineColor(sf::Color color)
-{
-    m_outlineColor = color;
-}
-
 sf::Color gsf::ProgressWidget::getProgressColor() const
 {
     return m_progessColor;
@@ -45,16 +32,6 @@ sf::Color gsf::ProgressWidget::getProgressColor() const
 void gsf::ProgressWidget::setProgressColor(sf::Color color)
 {
     m_progessColor = color;
-}
-
-float gsf::ProgressWidget::getOutlineThickness() const
-{
-    return m_outlineThickness;
-}
-
-void gsf::ProgressWidget::setOutlineThickness(float outline)
-{
-    m_outlineThickness = outline;
 }
 
 float gsf::ProgressWidget::getProgressMargin() const
@@ -81,13 +58,6 @@ void gsf::ProgressWidget::setProgress(int progress)
 
 void gsf::ProgressWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    //states.transform *= getTransform();
-    // Draw background
-    sf::RectangleShape bgShape({ m_width, m_height });
-    bgShape.setFillColor(m_bgColor);
-    bgShape.setOutlineThickness(m_outlineThickness);
-    bgShape.setOutlineColor(m_outlineColor);
-    target.draw(bgShape, states);
     // Draw progress rect
     // Calc acutal width of progress rect
     float widthProg = (m_width - 2 * m_progressMargin) * (m_progress / 100.f);

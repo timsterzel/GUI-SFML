@@ -23,8 +23,8 @@ gsf::Widget::Widget(float width, float height)
 , m_height{ height }
 , m_outlineColor{ sf::Color::Transparent }
 , m_outlineThickness{ 0.f }
-, m_parent{ nullptr }
 , m_bgColor{ sf::Color::Transparent }
+, m_parent{ nullptr }
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }

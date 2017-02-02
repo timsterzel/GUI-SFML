@@ -158,11 +158,6 @@ void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates s
     target.draw(title, states);
     
     target.setView(defaultView);
-    
-    // Draw background
-    sf::RectangleShape bgShape({ getWidth(), getHeight() });
-    bgShape.setFillColor(m_bgColor);
-    target.draw(bgShape, states);
 }
 
 void gsf::WindowWidget::updateCurrent(float dt)

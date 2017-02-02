@@ -21,10 +21,7 @@ gsf::VerticalLayout::~VerticalLayout()
 
 void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    // Draw background
-    sf::RectangleShape bgShape({ getWidth(), getHeight() });
-    bgShape.setFillColor(m_bgColor);
-    target.draw(bgShape, states);
+
 }
 
 void gsf::VerticalLayout::updateCurrent(float dt)

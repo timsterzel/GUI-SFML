@@ -153,35 +153,25 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
 
 void gsf::ScrollableWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
-        //states.transform *= getTransform();
-
         drawCurrent(target, states);
 
         // We change the view of the target, so that only the area of the widget and its child
         // which are in its shown area are drawn on the RenderTarget
         sf::View defaultView = target.getView();
         sf::View view = { getShownAreaView(target) };
-        //sf::View view = defaultView;
 
         target.setView(view);
-
         drawChildren(target, states);
-        //Widget::draw(target, states);
-
         target.setView(defaultView);
 
         // Draw Scroll Elements
         target.draw(m_scrollbarVertical, states);
         target.draw(m_scrollbarHorizontal, states);
-
 }
 
 void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    // Draw background
-    sf::RectangleShape bgShape({ getWidth(), getHeight() });
-    bgShape.setFillColor(m_bgColor);
-    target.draw(bgShape, states);
+
 }
 
 bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
