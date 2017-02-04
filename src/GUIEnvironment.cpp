@@ -1,25 +1,25 @@
-#include "GUISFMLEnvironment.hpp"
+#include "GUIEnvironment.hpp"
 #include <iostream>
 #include <cassert>
 
-gsf::GUISFMLEnvironment::GUISFMLEnvironment()
+gsf::GUIEnvironment::GUIEnvironment()
 : m_isMouseInWindow{ true }
 , m_isWindowFocused{ true }
 {
 
 }
 
-gsf::GUISFMLEnvironment::~GUISFMLEnvironment()
+gsf::GUIEnvironment::~GUIEnvironment()
 {
 
 }
 
-void gsf::GUISFMLEnvironment::addWidget(Widget::Ptr widget)
+void gsf::GUIEnvironment::addWidget(Widget::Ptr widget)
 {
     m_widgets.push_back(std::move(widget));
 }
 
-gsf::Widget::Ptr gsf::GUISFMLEnvironment::removeWidget(const Widget& widget)
+gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
 {
     auto found = std::find_if(m_widgets.begin(), m_widgets.end(), 
             [&] (Widget::Ptr &p) -> bool { return p.get() == &widget; });
@@ -32,7 +32,7 @@ gsf::Widget::Ptr gsf::GUISFMLEnvironment::removeWidget(const Widget& widget)
     return result;
 }
 
-void gsf::GUISFMLEnvironment::draw(sf::RenderTarget &target, 
+void gsf::GUIEnvironment::draw(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
     for (const Widget::Ptr &widget : m_widgets)
@@ -41,7 +41,7 @@ void gsf::GUISFMLEnvironment::draw(sf::RenderTarget &target,
     }
 }
 
-void gsf::GUISFMLEnvironment::handleEvent(sf::Event &event)
+void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 {
     if (event.type == sf::Event::MouseLeft || event.type == sf::Event::LostFocus)
     {
@@ -84,7 +84,7 @@ void gsf::GUISFMLEnvironment::handleEvent(sf::Event &event)
 
 }
 
-void gsf::GUISFMLEnvironment::update(float dt)
+void gsf::GUIEnvironment::update(float dt)
 {
     for (const Widget::Ptr &widget : m_widgets)
     {

@@ -5,7 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "ButtonWidget.hpp"
-#include "GUISFMLEnvironment.hpp"
+#include "GUIEnvironment.hpp"
 #include "ProgressWidget.hpp"
 #include "TextWidget.hpp"
 #include "VerticalLayout.hpp"
@@ -35,7 +35,7 @@ int main()
     float dt{0.f};
     CLOCK::time_point timePoint1{ CLOCK::now() };
 
-    gsf::GUISFMLEnvironment guiEnvironment;
+    gsf::GUIEnvironment guiEnvironment;
     std::unique_ptr<gsf::TextWidget> textWidget{ 
         std::make_unique<gsf::TextWidget>("Im a Text", font, 12, sf::Color::White) };
     textWidget->centerOrigin();

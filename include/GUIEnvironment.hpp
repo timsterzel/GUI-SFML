@@ -1,5 +1,5 @@
-#ifndef GUISFMLENVIRONMENT_HPP
-#define GUISFMLENVIRONMENT_HPP
+#ifndef GUIENVIRONMENT_HPP
+#define GUIENVIRONMENT_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include <vector>
@@ -7,7 +7,7 @@
 
 namespace gsf
 {
-    class GUISFMLEnvironment : public sf::Drawable
+    class GUIEnvironment : public sf::Drawable
     {
         private:
             std::vector<Widget::Ptr> m_widgets;
@@ -16,8 +16,8 @@ namespace gsf
             bool m_isMouseInWindow;
             bool m_isWindowFocused;
         public:
-            GUISFMLEnvironment();
-            virtual ~GUISFMLEnvironment();
+            GUIEnvironment();
+            virtual ~GUIEnvironment();
 
             void addWidget(Widget::Ptr widget);
             Widget::Ptr removeWidget(const Widget& widget);
@@ -32,4 +32,4 @@ namespace gsf
 
 }
 
-#endif // GUISFMLENVIRONMENT_HPP
+#endif // GUIENVIRONMENT_HPP
