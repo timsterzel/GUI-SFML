@@ -122,7 +122,6 @@ int main()
     buttonWidget->setOnLeftClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
             {
                 std::cout << "Button Left Click\n";
-                std::cout << "Left bounds: " << widget->getGlobalBounds().left << " Left: " << widget->getWorldLeft() << std::endl;
 
             });
     buttonWidget->setOnRightClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
