@@ -176,8 +176,8 @@ float gsf::Widget::getWorldBottom() const
 
 sf::FloatRect gsf::Widget::getGlobalBounds() const
 {
-    float left = getWorldPosition().x - m_outlineThickness;
-    float top = getWorldPosition().y - m_outlineThickness;
+    float left{ getWorldLeft() - m_outlineThickness };
+    float top{ getWorldTop() - m_outlineThickness };
     float width{ m_width + 2 * m_outlineThickness };
     float height{ m_height + 2 * m_outlineThickness };
     return sf::FloatRect{ left, top, width, height };
@@ -185,8 +185,8 @@ sf::FloatRect gsf::Widget::getGlobalBounds() const
 
 sf::FloatRect gsf::Widget::getLocalBounds() const
 {
-    float left = getPosition().x - m_outlineThickness;
-    float top = getPosition().y - m_outlineThickness;
+    float left{ getLeft() - m_outlineThickness };
+    float top{ getTop() - m_outlineThickness };
     float width{ m_width + 2 * m_outlineThickness };
     float height{ m_height + 2 * m_outlineThickness };
     return sf::FloatRect{ left, top, width, height };
@@ -331,8 +331,11 @@ sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
 
 sf::FloatRect gsf::Widget::getShownArea() const
 {
-    sf::FloatRect rectThis{ getWorldLeft(), getWorldTop(), getWidth(), getHeight() };
-
+    // Without outline thickness
+    //sf::FloatRect rectThis
+        // { getWorldLeft(), getWorldTop(), getWidth(), getHeight() };
+    // With outline thickness in ShownArea
+    sf::FloatRect rectThis{ getGlobalBounds() };
     if (m_parent)
     {
          // We have to get the parents shown screen area to calculate 
@@ -371,6 +374,7 @@ sf::FloatRect gsf::Widget::getShownArea() const
 
 bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
 {
+    return getGlobalBounds().contains(pos);
     return pos.x >= getWorldLeft() && pos.x <= getWorldRight() && 
         pos.y >= getWorldTop() && pos.y <= getWorldBottom();
 }

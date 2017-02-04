@@ -118,9 +118,11 @@ int main()
         std::make_unique<gsf::ButtonWidget>
             (200.f, 80.f, "TTTTTTTTTTTTTTTTTTTTTTClick me", font) };
     buttonWidget->setPosition(620.f , 360.f);
+    buttonWidget->setOutlineThickness(8.f);
     buttonWidget->setOnLeftClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
             {
                 std::cout << "Button Left Click\n";
+                std::cout << "Left bounds: " << widget->getGlobalBounds().left << " Left: " << widget->getWorldLeft() << std::endl;
 
             });
     buttonWidget->setOnRightClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
