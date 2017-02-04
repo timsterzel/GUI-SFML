@@ -47,8 +47,8 @@ void gsf::ButtonWidget::setText(const std::string& text)
 void gsf::ButtonWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
 {
     // Draw text
-    sf::Text text = { m_text, m_font };
-    sf::FloatRect rect = { text.getLocalBounds() };
+    sf::Text text{ m_text, m_font };
+    sf::FloatRect rect{ text.getLocalBounds() };
     // sf::Text has non-zero values for widh and height so we dont may ignore them
     text.setOrigin(rect.left + rect.width / 2.f, rect.top + rect.height / 2.f);
     text.setPosition(getWidth() / 2.f, getHeight() / 2.f);

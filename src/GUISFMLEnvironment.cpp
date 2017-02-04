@@ -21,8 +21,10 @@ void gsf::GUISFMLEnvironment::addWidget(Widget::Ptr widget)
 
 gsf::Widget::Ptr gsf::GUISFMLEnvironment::removeWidget(const Widget& widget)
 {
-    auto found = std::find_if(m_widgets.begin(), m_widgets.end(), [&] (Widget::Ptr &p) -> bool { return p.get() == &widget; });
-    // There is an error when we try to detach a widget which does not exists,so stop execution in debug mode
+    auto found = std::find_if(m_widgets.begin(), m_widgets.end(), 
+            [&] (Widget::Ptr &p) -> bool { return p.get() == &widget; });
+    // There is an error when we try to detach a widget which does not exists, 
+    // so stop execution in debug mode
     assert(found != m_widgets.end());
 
     Widget::Ptr result = std::move(*found);
@@ -30,7 +32,8 @@ gsf::Widget::Ptr gsf::GUISFMLEnvironment::removeWidget(const Widget& widget)
     return result;
 }
 
-void gsf::GUISFMLEnvironment::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::GUISFMLEnvironment::draw(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
     for (const Widget::Ptr &widget : m_widgets)
     {
@@ -57,8 +60,10 @@ void gsf::GUISFMLEnvironment::handleEvent(sf::Event &event)
         m_isWindowFocused = true;
     }
 
-    // Dont handle mouse move events when mouse is not inside window or window is not focussed
-    if (event.type == sf::Event::MouseMoved && (!m_isMouseInWindow || !m_isWindowFocused))
+    // Dont handle mouse move events when mouse is not inside window or 
+    // window is not focussed
+    if (event.type == sf::Event::MouseMoved && 
+            (!m_isMouseInWindow || !m_isWindowFocused))
     {
         return;
     }
@@ -87,7 +92,7 @@ void gsf::GUISFMLEnvironment::update(float dt)
     }
     // Move widget to foreground which are marked for this
     // (Forground at the window, which is the last item in our vector)
-    bool moved = false;
+    bool moved{ false };
     do
     {
         moved = false;
@@ -97,7 +102,8 @@ void gsf::GUISFMLEnvironment::update(float dt)
                 (*it)->setMoveToForground(false);
                 // Move actual object to end of vector
                 std::rotate(it, it + 1 , m_widgets.end());
-                // Leave actual loop and start again from beginning, because vector has changed
+                // Leave actual loop and start again from beginning, 
+                // because vector has changed
                 moved = true;
                 break;
             }

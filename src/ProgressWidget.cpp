@@ -56,13 +56,14 @@ void gsf::ProgressWidget::setProgress(int progress)
     m_progress = progress;
 }
 
-void gsf::ProgressWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::ProgressWidget::drawWidget(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
     // Draw progress rect
     // Calc acutal width of progress rect
-    float widthProg = (m_width - 2 * m_progressMargin) * (m_progress / 100.f);
-    float heightProg = (m_height - 2 * m_progressMargin);
-    sf::RectangleShape progressShape({ widthProg, heightProg         });
+    float widthProg{ (m_width - 2 * m_progressMargin) * (m_progress / 100.f) };
+    float heightProg{ (m_height - 2 * m_progressMargin) };
+    sf::RectangleShape progressShape{ { widthProg, heightProg } };
     progressShape.setPosition(m_progressMargin, m_progressMargin);
     progressShape.setFillColor(m_progessColor);
     target.draw(progressShape, states);
@@ -76,6 +77,6 @@ void gsf::ProgressWidget::update(float dt)
 
 bool gsf::ProgressWidget::handleEvent(sf::Event &event)
 {
-    bool handled = Widget::handleEvent(event);
+    bool handled{ Widget::handleEvent(event) };
     return handled;
 }

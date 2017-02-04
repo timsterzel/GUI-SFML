@@ -92,7 +92,7 @@ bool gsf::TextWidget::handleEvent(sf::Event &event)
 
 void gsf::TextWidget::calculateSize()
 {
-    sf::FloatRect localBounds = { m_text.getLocalBounds() };
+    sf::FloatRect localBounds{ m_text.getLocalBounds() };
     // Top and left of the bounds are not allways 0, so we add the twice amound of this,
     // So the text is centered in the widget
     setHeight(localBounds.height + localBounds.top * 2);

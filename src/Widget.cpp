@@ -96,7 +96,8 @@ bool gsf::Widget::isVisible() const
     return m_isVisible;
 }
 
-void gsf::Widget::setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener)
+void gsf::Widget::setOnLeftClickListener(std::function
+        <void(Widget *widget, sf::Vector2f)> onLeftClickListener)
 {
     m_onLeftClickListener = onLeftClickListener;
 }
@@ -183,16 +184,15 @@ void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
         states.transform *= getTransform();
         // Draw basic shape (background and outline)
         sf::RectangleShape basicShape{ sf::Vector2f(m_width, m_height) };
-        //basicShape.setOrigin(basicShape.getLocalBounds().width, basicShape.getLocalBounds().height);
-        //basicShape.setPosition(m_width / 2.f, m_height / 2.f);
         basicShape.setFillColor(m_bgColor);
         basicShape.setOutlineThickness(m_outlineThickness);
         basicShape.setOutlineColor(m_outlineColor);
         target.draw(basicShape, states);
 
-        // Set the targets to the view which is only the area of the widget, based on its with, height and position
-        sf::View defaultView = target.getView();
-        sf::View view = { getShownAreaView(target) };
+        // Set the targets to the view which is only the area of the widget, 
+        // based on its with, height and position
+        sf::View defaultView{ target.getView() };
+        sf::View view{ getShownAreaView(target) };
         target.setView(view);
 
         drawWidget(target, states);
@@ -217,14 +217,15 @@ bool gsf::Widget::handleEventWidget(sf::Event &event)
 bool gsf::Widget::handleEvent(sf::Event &event)
 {
     // Is the mouse in the shown area of the widget
-    bool isMouseInShownArea = { getShownArea().contains(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)) };
+    sf::Vector2f mousePos{ (float) event.mouseButton.x , (float) event.mouseButton.y };
+    bool isMouseInShownArea{ getShownArea().contains(mousePos) };
     if (event.type == sf::Event::MouseButtonPressed && isMouseInShownArea)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(mousePos))
         {
             if (m_onLeftClickListener)
             {
-                m_onLeftClickListener(this, sf::Vector2f(event.mouseButton.x , event.mouseButton.y));
+                m_onLeftClickListener(this, mousePos);
             }
             return true;
         }
@@ -239,8 +240,8 @@ void gsf::Widget::update(float dt)
 
 sf::Transform gsf::Widget::getWorldTransform() const
 {
-    sf::Transform trform = { sf::Transform::Identity };
-    for (const Widget *node = this; node != nullptr; node = node->m_parent)
+    sf::Transform trform{ sf::Transform::Identity };
+    for (const Widget *node{ this }; node != nullptr; node = node->m_parent)
     {
         trform = node->getTransform() * trform;
     }
@@ -249,18 +250,19 @@ sf::Transform gsf::Widget::getWorldTransform() const
 
 sf::Vector2f gsf::Widget::getWorldPosition() const
 {
-    // Get world position ignores the real position when the origin is set ( the position is every time the one in the upper left corner)
+    // Get world position ignores the real position when the origin is set 
+    // (the position is every time the one in the upper left corner)
     // so we add the origin here.
-    return ( getWorldTransform() * sf::Vector2f() ) + getOrigin();
+    return (getWorldTransform() * sf::Vector2f()) + getOrigin();
 }
 
 sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
 {
-    sf::FloatRect shownAreaRect = { getShownArea() };
-    float left = shownAreaRect.left;
-    float top = shownAreaRect.top;
-    float width = shownAreaRect.width;
-    float height = shownAreaRect.height;
+    sf::FloatRect shownAreaRect{ getShownArea() };
+    float left{ shownAreaRect.left };
+    float top{ shownAreaRect.top };
+    float width{ shownAreaRect.width };
+    float height{ shownAreaRect.height };
 
     sf::View view;
     // The view should have the same size as the widgets shown area,
@@ -271,42 +273,46 @@ sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
     view.setCenter(left + (width / 2.f), top + (height / 2.f) );
 
     // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y , width / target.getSize().x, height / target.getSize().y));
+    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
+                width / target.getSize().x, height / target.getSize().y));
     return view;
 }
 
 sf::FloatRect gsf::Widget::getShownArea() const
 {
-    sf::FloatRect rectThis{getWorldLeft(), getWorldTop(), getWidth(), getHeight()};
+    sf::FloatRect rectThis{ getWorldLeft(), getWorldTop(), getWidth(), getHeight() };
 
     if (m_parent)
     {
-         // We have to get the parents shown screen area to calculate the overlapping rect
-        sf::FloatRect rectParent = { m_parent->getShownArea() };
+         // We have to get the parents shown screen area to calculate 
+         // the overlapping rect
+        sf::FloatRect rectParent{ m_parent->getShownArea() };
 
         // Data of this widget
-        float leftA = { rectThis.left };
-        float rightA = { rectThis.left + rectThis.width };
-        float topA = { rectThis.top };
-        float bottomA = { rectThis.top + rectThis.height };
+        float leftA{ rectThis.left };
+        float rightA{ rectThis.left + rectThis.width };
+        float topA{ rectThis.top };
+        float bottomA{ rectThis.top + rectThis.height };
         // Data of parent widgets shown area
-        float leftB = { rectParent.left };
-        float rightB = { rectParent.left + rectParent.width };
-        float topB = { rectParent.top };
-        float bottomB = { rectParent.top + rectParent.height };
+        float leftB{ rectParent.left };
+        float rightB{ rectParent.left + rectParent.width };
+        float topB{ rectParent.top };
+        float bottomB{ rectParent.top + rectParent.height };
 
-        //float startX = { std::max(leftA, leftB) };
-        //float startY = { std::max(topA, topB) };
-
-        // Calculate where the shown area starts. (The startpoint should be right of the left side of its parent and
-        // under the top side of its parent. Is the startpoint right of the right side of its parent or
+        // Calculate where the shown area starts. 
+        // (The startpoint should be right of the left side of its parent and
+        // under the top side of its parent. Is the startpoint right of the right 
+        // side of its parent or
         // under the bottom side of its parent the overlapping area is zero.
-        float leftAB = { std::max(leftA, leftB) };
-        float topAB = { std::max(topA, topB) };
-        // The shown size should only have the size of the area of the widget which is on the parent widget
+        float leftAB{ std::max(leftA, leftB) };
+        float topAB{ std::max(topA, topB) };
+        // The shown size should only have the size of the area of the widget 
+        // which is on the parent widget
         // For this we need the intersecting area of the this widget with its parent
-        float overlapX = { std::max(0.f, std::min(rightA, rightB) - std::max(leftA, leftB)) };
-        float overlapY = { std::max(0.f, std::min(bottomA, bottomB) - std::max(topA, topB)) };
+        float overlapX{ std::max(0.f, std::min(rightA, rightB) 
+                - std::max(leftA, leftB)) };
+        float overlapY{ std::max(0.f, std::min(bottomA, bottomB) 
+                - std::max(topA, topB)) };
         return sf::FloatRect{ leftAB, topAB, overlapX, overlapY };
     }
     return rectThis;
@@ -314,7 +320,8 @@ sf::FloatRect gsf::Widget::getShownArea() const
 
 bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
 {
-    return pos.x >= getWorldLeft() && pos.x <= getWorldRight() && pos.y >= getWorldTop() && pos.y <= getWorldBottom();
+    return pos.x >= getWorldLeft() && pos.x <= getWorldRight() && 
+        pos.y >= getWorldTop() && pos.y <= getWorldBottom();
 }
 
 void gsf::Widget::calculateSize()

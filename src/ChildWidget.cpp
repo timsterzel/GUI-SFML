@@ -33,11 +33,13 @@ void gsf::ChildWidget::attachChild(Ptr child)
 
 gsf::Widget::Ptr gsf::ChildWidget::detachChild(const Widget& node)
 {
-    auto found = std::find_if(m_children.begin(), m_children.end(), [&] (Ptr &p) -> bool { return p.get() == &node; });
-    // There is an error when we try to detach a child which does not exists,so stop execution in debug mode
+    auto found = std::find_if(m_children.begin(), m_children.end(), 
+            [&] (Ptr &p) -> bool { return p.get() == &node; });
+    // There is an error when we try to detach a child which does not exists, 
+    // so stop execution in debug mode
     assert(found != m_children.end());
 
-    Ptr result = std::move(*found);
+    Ptr result{ std::move(*found) };
     result->setParent(nullptr);
     m_children.erase(found);
 
@@ -48,18 +50,21 @@ gsf::Widget::Ptr gsf::ChildWidget::detachChild(const Widget& node)
     return result;
 }
 
-void gsf::ChildWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::ChildWidget::drawWidget(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
         drawCurrent(target, states);
         drawChildren(target, states);
 }
 
-void gsf::ChildWidget::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::ChildWidget::drawCurrent(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
     //Do nothing by default
 }
 
-void gsf::ChildWidget::drawChildren(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::ChildWidget::drawChildren(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
     for (const Ptr &child : m_children)
     {
@@ -74,7 +79,7 @@ bool gsf::ChildWidget::handleSpecialEvents(sf::Event &event)
 
 bool gsf::ChildWidget::handleEvent(sf::Event &event)
 {
-    bool handled = Widget::handleEvent(event);
+    bool handled{ Widget::handleEvent(event) };
     // Special Events have the highest priorety, so handle them first
     if (handleSpecialEvents(event))
     {
@@ -101,7 +106,7 @@ bool gsf::ChildWidget::handleEventChildren(sf::Event &event)
 
 bool gsf::ChildWidget::handleEventCurrent(sf::Event &event)
 {
-    bool handled = Widget::handleEvent(event);
+    bool handled{ Widget::handleEvent(event) };
     return handled;
 }
 

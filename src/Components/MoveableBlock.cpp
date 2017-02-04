@@ -2,16 +2,16 @@
 #include <iostream>
 
 gsf::MoveableBlock::MoveableBlock()
-: m_width(0.f)
-, m_height(0.f)
+: m_width{ 0.f }
+, m_height{ 0.f }
 , m_fillColor{ sf::Color::White }
 {
 
 }
 
 gsf::MoveableBlock::MoveableBlock(float width, float height)
-: m_width(width)
-, m_height(height)
+: m_width{ width }
+, m_height{ height }
 , m_fillColor{ sf::Color::White }
 {
 

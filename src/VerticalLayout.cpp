@@ -19,7 +19,8 @@ gsf::VerticalLayout::~VerticalLayout()
 }
 
 
-void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::VerticalLayout::drawCurrent(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
 
 }
@@ -31,14 +32,15 @@ void gsf::VerticalLayout::updateCurrent(float dt)
 
 bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
 {
-    bool handled = ChildWidget::handleEventCurrent(event);
+    bool handled{ ChildWidget::handleEventCurrent(event) };
     // Is the mouse in the shown area of the widget
-    bool isMouseInShownArea = { getShownArea().contains(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)) };
+    bool isMouseInShownArea{ getShownArea().contains(sf::Vector2f(event.mouseButton.x, 
+                event.mouseButton.y)) };
     if (event.type == sf::Event::MouseButtonPressed && isMouseInShownArea)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
+        if (event.mouseButton.button == sf::Mouse::Left && 
+                isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y)))
         {
-            std::cout << "VerticalLayout: Left Mouse Button Clicked" << std::endl;
             return true;
         }
     }
@@ -47,12 +49,12 @@ bool gsf::VerticalLayout::handleEventCurrent(sf::Event &event)
 
 void gsf::VerticalLayout::calculateSize()
 {
-    float height = 0.f;
-    float width = 0.f;
+    float height{ 0.f };
+    float width{ 0.f };
     for (const Ptr &child : m_children)
     {
         height += child->getHeight();
-        float childWidth = child->getWidth();
+        float childWidth{ child->getWidth() };
         if (childWidth > width)
         {
             width = childWidth;
@@ -64,7 +66,7 @@ void gsf::VerticalLayout::calculateSize()
 
 void gsf::VerticalLayout::arrangeChildren()
 {
-    float distance = 0.f;
+    float distance{ 0.f };
     for (const Ptr &child : m_children)
     {
         //child->centerOrigin();
