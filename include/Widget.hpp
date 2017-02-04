@@ -41,7 +41,8 @@ namespace gsf
             std::vector<Ptr> m_children;
 
             std::function<void(Widget*, sf::Vector2f)> m_onLeftClickListener;
-
+            std::function<void(Widget*, sf::Vector2f)> m_onRightClickListener;
+            std::function<void(Widget*, sf::Vector2f)> m_onMiddleClickListener;
         public:
             Widget();
             Widget(float width, float height);
@@ -66,7 +67,9 @@ namespace gsf
             bool isVisible() const;
 
             void setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
-
+            void setOnRightClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
+            void setOnMiddleClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
+            
             void setWidth(const float width);
             float getWidth() const;
             void setHeight(const float height);

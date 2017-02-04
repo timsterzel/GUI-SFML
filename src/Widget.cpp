@@ -97,9 +97,21 @@ bool gsf::Widget::isVisible() const
 }
 
 void gsf::Widget::setOnLeftClickListener(std::function
-        <void(Widget *widget, sf::Vector2f)> onLeftClickListener)
+        <void(Widget *widget, sf::Vector2f)> listener)
 {
-    m_onLeftClickListener = onLeftClickListener;
+    m_onLeftClickListener = listener;
+}
+
+void gsf::Widget::setOnRightClickListener(std::function
+        <void(Widget *widget, sf::Vector2f)> listener)
+{
+    m_onRightClickListener = listener;
+}
+
+void gsf::Widget::setOnMiddleClickListener(std::function
+        <void(Widget *widget, sf::Vector2f)> listener)
+{
+    m_onMiddleClickListener = listener;
 }
 
 void gsf::Widget::setWidth(const float width)
@@ -219,15 +231,36 @@ bool gsf::Widget::handleEvent(sf::Event &event)
     // Is the mouse in the shown area of the widget
     sf::Vector2f mousePos{ (float) event.mouseButton.x , (float) event.mouseButton.y };
     bool isMouseInShownArea{ getShownArea().contains(mousePos) };
-    if (event.type == sf::Event::MouseButtonPressed && isMouseInShownArea)
+    bool intersecting{ isIntersecting(mousePos) };
+    if (isMouseInShownArea)
     {
-        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(mousePos))
+        if (event.type == sf::Event::MouseButtonPressed && intersecting)
         {
-            if (m_onLeftClickListener)
+            switch (event.mouseButton.button)
             {
-                m_onLeftClickListener(this, mousePos);
+                case sf::Mouse::Left: 
+                    if (m_onLeftClickListener) 
+                    { 
+                        m_onLeftClickListener(this, mousePos);
+                        return true;
+                    }
+                    break;
+                case sf::Mouse::Right: 
+                    if (m_onRightClickListener)
+                    {
+                        m_onRightClickListener(this, mousePos); 
+                        return true;
+                    }
+                    break;
+                case sf::Mouse::Middle:
+                    if (m_onMiddleClickListener)
+                    {
+                        m_onMiddleClickListener(this, mousePos);
+                        return true;
+                    }
+                    break;
+                default: break;
             }
-            return true;
         }
     }
     return false;

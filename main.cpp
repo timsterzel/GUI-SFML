@@ -112,11 +112,27 @@ int main()
     windowWidget3->setPosition(300.f , 60.f);
     windowWidget3->setBackgroundColor(sf::Color::Blue);
     guiEnvironment.addWidget(std::move(windowWidget3));
-
+    
+    // BUTTON TEST
     std::unique_ptr<gsf::ButtonWidget> buttonWidget{ 
         std::make_unique<gsf::ButtonWidget>
             (200.f, 80.f, "TTTTTTTTTTTTTTTTTTTTTTClick me", font) };
     buttonWidget->setPosition(620.f , 360.f);
+    buttonWidget->setOnLeftClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
+            {
+                std::cout << "Button Left Click\n";
+
+            });
+    buttonWidget->setOnRightClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
+            {
+                std::cout << "Button Right Click\n";
+
+            });
+    buttonWidget->setOnMiddleClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
+            {
+                std::cout << "Button Middle Click\n";
+
+            });
     guiEnvironment.addWidget(std::move(buttonWidget));
 
     // SCROLLBAR TEST

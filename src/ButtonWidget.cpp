@@ -18,7 +18,8 @@ gsf::ButtonWidget::ButtonWidget(float width, float height, const sf::Font &font)
     m_outlineThickness = 2.f;
     m_outlineColor = sf::Color::White;
 }
-gsf::ButtonWidget::ButtonWidget(float width,float height, const std::string &text, const sf::Font &font)
+gsf::ButtonWidget::ButtonWidget(float width,float height, 
+        const std::string &text, const sf::Font &font)
 : Widget(width, height)
 , m_font{ font }
 , m_text{ text }
