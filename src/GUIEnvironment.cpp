@@ -5,6 +5,7 @@
 gsf::GUIEnvironment::GUIEnvironment()
 : m_isMouseInWindow{ true }
 , m_isWindowFocused{ true }
+//, m_isWindowRoughOutEnabled{ false }
 {
 
 }
@@ -18,6 +19,18 @@ void gsf::GUIEnvironment::addWidget(Widget::Ptr widget)
 {
     m_widgets.push_back(std::move(widget));
 }
+
+/*
+void gsf::GUIEnvironment::setIsWindowRoughOutEnabled(bool isEnabled)
+{
+    m_isWindowRoughOutEnabled = isEnabled;
+}
+
+bool gsf::GUIEnvironment::isWindowRoughOutEnabled() const
+{
+    return m_isWindowRoughOutEnabled;
+}
+*/
 
 gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
 {

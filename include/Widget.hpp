@@ -83,6 +83,12 @@ namespace gsf
             float getWorldRight() const;
             float getWorldTop() const;
             float getWorldBottom() const;
+            
+            // The global bounds of the widget. Here the outline thickniss is in the bounds. So the width and
+            // height can has higher values then the widgets height and width
+            sf::FloatRect getGlobalBounds() const;
+            // Same as getGlobalBounds, but with local coordinates for left and top
+            sf::FloatRect getLocalBounds() const;
 
             void setBackgroundColor(const sf::Color color);
             sf::Color getBackgroundColor() const;

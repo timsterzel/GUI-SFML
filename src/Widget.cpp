@@ -174,6 +174,24 @@ float gsf::Widget::getWorldBottom() const
     return getWorldPosition().y - getOrigin().y + getHeight();
 }
 
+sf::FloatRect gsf::Widget::getGlobalBounds() const
+{
+    float left = getWorldPosition().x - m_outlineThickness;
+    float top = getWorldPosition().y - m_outlineThickness;
+    float width{ m_width + 2 * m_outlineThickness };
+    float height{ m_height + 2 * m_outlineThickness };
+    return sf::FloatRect{ left, top, width, height };
+}
+
+sf::FloatRect gsf::Widget::getLocalBounds() const
+{
+    float left = getPosition().x - m_outlineThickness;
+    float top = getPosition().y - m_outlineThickness;
+    float width{ m_width + 2 * m_outlineThickness };
+    float height{ m_height + 2 * m_outlineThickness };
+    return sf::FloatRect{ left, top, width, height };
+}
+
 void gsf::Widget::setBackgroundColor(const sf::Color color)
 {
     m_bgColor = color;
