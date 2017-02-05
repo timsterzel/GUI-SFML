@@ -256,6 +256,7 @@ bool gsf::Widget::handleEventWidget(sf::Event &event)
 
 bool gsf::Widget::handleEvent(sf::Event &event)
 {
+
     // Is the mouse in the shown area of the widget
     sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };

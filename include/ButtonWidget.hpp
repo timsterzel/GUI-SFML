@@ -13,7 +13,10 @@ namespace gsf
             //float m_outlineThickness;
             const sf::Font &m_font;
             std::string m_text;
-
+            // True when mouse hover over button
+            bool m_isHovering;
+            // The color of the widget when mouse hover over button
+            sf::Color m_hoverFillColor;
         public:
             ButtonWidget(const sf::Font &font);
             ButtonWidget(float width, float height, const sf::Font &font);
@@ -24,6 +27,9 @@ namespace gsf
 
             const std::string& getText() const;
             void setText(const std::string &text);
+            
+            sf::Color getHoverFillColor() const;
+            void setHoverFillColor(sf::Color color);
 
             virtual void drawWidget(sf::RenderTarget &target, 
                     sf::RenderStates states) const override;

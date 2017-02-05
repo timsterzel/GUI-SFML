@@ -75,6 +75,7 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 
     // Dont handle mouse move events when mouse is not inside window or 
     // window is not focussed
+    
     if (event.type == sf::Event::MouseMoved && 
             (!m_isMouseInWindow || !m_isWindowFocused))
     {
