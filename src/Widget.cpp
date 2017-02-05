@@ -3,7 +3,7 @@
 #include <cassert>
 #include <iostream>
 
-gsf::Widget::Widget()
+gsf::Widget::Widget(bool isWindowWidget)
 : m_width{ 0.f }
 , m_height{ 0.f }
 , m_outlineColor{ sf::Color::Transparent }
@@ -13,12 +13,13 @@ gsf::Widget::Widget()
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
+, m_isWindowWidget{ isWindowWidget }
 {
 
 }
 
 
-gsf::Widget::Widget(float width, float height)
+gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 : m_width{ width }
 , m_height{ height }
 , m_outlineColor{ sf::Color::Transparent }
@@ -28,6 +29,7 @@ gsf::Widget::Widget(float width, float height)
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
+, m_isWindowWidget{ isWindowWidget }
 {
 
 }
@@ -95,6 +97,11 @@ void gsf::Widget::setIsVisible(bool isVisible)
 bool gsf::Widget::isVisible() const
 {
     return m_isVisible;
+}
+
+bool gsf::Widget::isWindowWidget() const
+{
+    return m_isWindowWidget;
 }
 
 void gsf::Widget::setOnLeftClickListener(std::function

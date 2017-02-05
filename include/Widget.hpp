@@ -28,7 +28,8 @@ namespace gsf
             sf::Color m_outlineColor;
             float m_outlineThickness;
             sf::Color m_bgColor;
-            // A parent can have a parent, e.g. when it is added to a widget of type childWidget
+            // A parent can have a parent, e.g. when it is added to a widget of type
+            // childWidget
             Widget *m_parent;
             // If this is true, widget should be draw at the foreground
             // This is eg useful for windows
@@ -43,9 +44,14 @@ namespace gsf
             std::function<void(Widget*, sf::Vector2f)> m_onLeftClickListener;
             std::function<void(Widget*, sf::Vector2f)> m_onRightClickListener;
             std::function<void(Widget*, sf::Vector2f)> m_onMiddleClickListener;
+        private:
+            // Window Widgets are special, so we store the information if
+            // the widget is a window here
+            bool m_isWindowWidget;
+        
         public:
-            Widget();
-            Widget(float width, float height);
+            Widget(bool isWindowWidget = false);
+            Widget(float width, float height, bool isWindowWidget = false);
             virtual ~Widget();
 
 
@@ -65,6 +71,8 @@ namespace gsf
 
             void setIsVisible(bool isVisible);
             bool isVisible() const;
+            
+            bool isWindowWidget() const;
 
             void setOnLeftClickListener(std::function<void(Widget *widget, 
                         sf::Vector2f)> onLeftClickListener);
