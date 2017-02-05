@@ -4,8 +4,8 @@
 gsf::WindowWidget::WindowWidget(float width, float height, std::string title, 
         sf::Font &font)
 : ChildWidget(width, height)
-, m_topBar{ width, 20.f }
-, m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
+//, m_topBar{ width, 20.f }
+//, m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
 , m_windowTitle{ title }
 , m_windowTitleFont{ font }
 , m_windowTitleColor{ sf::Color::White }
@@ -16,6 +16,8 @@ gsf::WindowWidget::WindowWidget(float width, float height, std::string title,
 
 void gsf::WindowWidget::init()
 {
+    boundsChanged();
+    /*
     // The Topbar is drawn over the real area of the widget
     // So the topbar dont hide child elements
     m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
@@ -26,6 +28,7 @@ void gsf::WindowWidget::init()
     m_btnClose.setPosition(getWidth() - (m_btnClose.getWidth() / 2.f) - 6.f, 
             -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
     m_btnClose.setFillColor(sf::Color::White);
+    */
 }
 
 gsf::WindowWidget::~WindowWidget()
@@ -87,7 +90,7 @@ sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target) const
 {
     sf::View view;
 
-    float left{ getWorldLeft() };
+    float left{ getGlobalBounds().left };
     float top{ getWorldTop() - m_topBar.getHeight() };
     // Only draw in the toolbar from left til the close button (with little margin)
     float width{ getWidth() - (getWidth() - m_btnClose.getLeft()) - 12.f  };
@@ -104,17 +107,18 @@ sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target) const
 sf::View gsf::WindowWidget::getTopBarView(sf::RenderTarget &target) const
 {
     sf::View view;
-
-    float left{ getWorldLeft() };
+    
+    float left{ getGlobalBounds().left };
     float top{ getWorldTop() - m_topBar.getHeight() };
     // Only draw in the toolbar from left til the close button (with little margin)
-    float width{ getWidth() };
+    float width{ m_topBar.getWidth() };
     float height{ m_topBar.getHeight() };
 
     view.setSize(width, height);
     view.setCenter(left + (width / 2.f), top + (height / 2.f));
     // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
+    view.setViewport(sf::FloatRect(left / target.getSize().x , 
+                top / target.getSize().y,
         width / target.getSize().x, height / target.getSize().y));
     return view;
 }
@@ -171,7 +175,6 @@ bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
     sf::Vector2f localMousePoint{ mousePos.x - getWorldPosition().x, 
         mousePos.y - getWorldPosition().y };
     
-    
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && 
@@ -219,9 +222,23 @@ bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
     return handled;
 }
 
-void gsf::WindowWidget::calculateSize()
-{
-
+void gsf::WindowWidget::boundsChanged()
+{    
+    m_topBar.setWidth(getLocalBounds().width);
+    m_topBar.setHeight(20.f);
+    // The Topbar is drawn over the real area of the widget
+    // So the topbar dont hide child elements
+    m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
+    m_topBar.setPosition(-m_outlineThickness + m_topBar.getWidth() / 2.f, 
+            -m_topBar.getHeight() + m_topBar.getHeight() / 2.f );
+    m_topBar.setFillColor(sf::Color::Magenta);
+    
+    m_btnClose.setWidth(m_topBar.getHeight() - 6.f);
+    m_btnClose.setHeight(m_topBar.getHeight() - 6.f);
+    m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
+    m_btnClose.setPosition(m_topBar.getRight() - (m_btnClose.getWidth() / 2.f) - 6.f, 
+            -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
+    m_btnClose.setFillColor(sf::Color::White);
 }
 
 void gsf::WindowWidget::arrangeChildren()

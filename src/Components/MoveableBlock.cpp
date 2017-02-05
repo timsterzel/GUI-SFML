@@ -107,7 +107,7 @@ void gsf::MoveableBlock::draw(sf::RenderTarget &target, sf::RenderStates states)
 {
     states.transform *= getTransform();
 
-    sf::RectangleShape rect({ m_width, m_height });
+    sf::RectangleShape rect{ { m_width, m_height } };
     rect.setFillColor(getFillColor());
     target.draw(rect, states);
 }

@@ -19,8 +19,8 @@ void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt,
 
 int main()
 {
-    unsigned int windowWidth = { 1280 };
-    unsigned int windowHeight = { 720 };
+    unsigned int windowWidth{ 1280 };
+    unsigned int windowHeight{ 720 };
     sf::RenderWindow window(sf::VideoMode{ windowWidth, windowHeight }, "GUI-SFML");
 
     sf::Font font;
@@ -110,6 +110,8 @@ int main()
         std::make_unique<gsf::WindowWidget>
             (300.f, 360.f, "Test Window TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", font) };
     windowWidget3->setPosition(300.f , 60.f);
+    windowWidget3->setOutlineThickness(12.f);
+    windowWidget3->setOutlineColor(sf::Color::White);
     windowWidget3->setBackgroundColor(sf::Color::Blue);
     guiEnvironment.addWidget(std::move(windowWidget3));
     

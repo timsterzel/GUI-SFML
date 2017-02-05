@@ -25,7 +25,8 @@ gsf::TextWidget::TextWidget(std::string text, sf::Font &font, int characterSize,
     init(text, font, characterSize, color);
 }
 
-void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize, sf::Color color)
+void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize, 
+        sf::Color color)
 {
     m_text.setString(text);
     m_text.setFont(font);

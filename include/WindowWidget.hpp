@@ -43,25 +43,29 @@ namespace gsf
             sf::Color getWindowTitleColor() const;
             void setWindowTitleColor(sf::Color color);
 
-            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
-
+            virtual void drawWidget(sf::RenderTarget &target, 
+                    sf::RenderStates states) const override;
+        
         private:
             // Get the view for drawing Topbar 
             sf::View getTopBarView(sf::RenderTarget &target) const;
             // Get a view which only draw in title area
             sf::View getWindowTitleView(sf::RenderTarget &target) const;
 
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawCurrent(sf::RenderTarget &target, 
+                    sf::RenderStates states) const override;
 
             virtual void updateCurrent(float dt) override;
 
             virtual bool handleSpecialEvents(sf::Event &event);
 
             virtual bool handleEventCurrent(sf::Event &event) override;
-
-            // Calculate the size of the current View
-            virtual void calculateSize() override;
             virtual void arrangeChildren() override;
+
+        protected:
+            // Override this so we can adjust the topbar whem outline thickness or
+            // width changed
+            virtual void boundsChanged() override;
     };
 
 }

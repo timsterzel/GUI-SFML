@@ -55,6 +55,7 @@ float gsf::Widget::getOutlineThickness() const
 void gsf::Widget::setOutlineThickness(float outline)
 {
     m_outlineThickness = outline;
+    boundsChanged();
 }
 void gsf::Widget::setParent(Widget *parent)
 {
@@ -117,6 +118,7 @@ void gsf::Widget::setOnMiddleClickListener(std::function
 void gsf::Widget::setWidth(const float width)
 {
     m_width = width;
+    boundsChanged();
 }
 
 float gsf::Widget::getWidth() const
@@ -127,6 +129,7 @@ float gsf::Widget::getWidth() const
 void gsf::Widget::setHeight(const float height)
 {
     m_height = height;
+    boundsChanged();
 }
 
 float gsf::Widget::getHeight() const
@@ -247,7 +250,8 @@ bool gsf::Widget::handleEventWidget(sf::Event &event)
 bool gsf::Widget::handleEvent(sf::Event &event)
 {
     // Is the mouse in the shown area of the widget
-    sf::Vector2f mousePos{ (float) event.mouseButton.x , (float) event.mouseButton.y };
+    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
+        (float) event.mouseButton.y };
     bool isMouseInShownArea{ getShownArea().contains(mousePos) };
     bool intersecting{ isIntersecting(mousePos) };
     if (isMouseInShownArea)
@@ -372,11 +376,16 @@ sf::FloatRect gsf::Widget::getShownArea() const
     return rectThis;
 }
 
+void gsf::Widget::boundsChanged()
+{
+    // Do nothing by default
+}
+
 bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
 {
     return getGlobalBounds().contains(pos);
-    return pos.x >= getWorldLeft() && pos.x <= getWorldRight() && 
-        pos.y >= getWorldTop() && pos.y <= getWorldBottom();
+    //return pos.x >= getWorldLeft() && pos.x <= getWorldRight() && 
+    //    pos.y >= getWorldTop() && pos.y <= getWorldBottom();
 }
 
 void gsf::Widget::calculateSize()

@@ -66,9 +66,12 @@ namespace gsf
             void setIsVisible(bool isVisible);
             bool isVisible() const;
 
-            void setOnLeftClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
-            void setOnRightClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
-            void setOnMiddleClickListener(std::function<void(Widget *widget, sf::Vector2f)> onLeftClickListener);
+            void setOnLeftClickListener(std::function<void(Widget *widget, 
+                        sf::Vector2f)> onLeftClickListener);
+            void setOnRightClickListener(std::function<void(Widget *widget, 
+                        sf::Vector2f)> onLeftClickListener);
+            void setOnMiddleClickListener(std::function<void(Widget *widget, 
+                        sf::Vector2f)> onLeftClickListener);
             
             void setWidth(const float width);
             float getWidth() const;
@@ -84,8 +87,9 @@ namespace gsf
             float getWorldTop() const;
             float getWorldBottom() const;
             
-            // The global bounds of the widget. Here the outline thickniss is in the bounds. So the width and
-            // height can has higher values then the widgets height and width
+            // The global bounds of the widget. Here the outline thickniss is in the
+            // bounds. So the width and height can has higher values then the 
+            // widgets height and width
             sf::FloatRect getGlobalBounds() const;
             // Same as getGlobalBounds, but with local coordinates for left and top
             sf::FloatRect getLocalBounds() const;
@@ -108,29 +112,39 @@ namespace gsf
 
             bool isIntersecting(sf::Vector2f pos) const;
 
-            virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const final override;
-            // Returns true if widget has handled the event and children dont have to handle it
+            virtual void draw(sf::RenderTarget &target, 
+                    sf::RenderStates states) const final override;
+            // Returns true if widget has handled the event and children dont 
+            // have to handle it
             bool handleEventWidget(sf::Event &event);
 
         protected:
 
-            // Returns true if widget has handled the event and children dont have to handle it
+            // Returns true if widget has handled the event and children dont have 
+            // to handle it
             virtual bool handleEvent(sf::Event &event);
 
-            // Get the shown area of the widget. The Shown area is the width and height of the widget,
-            // with left and top coordinates (top-left corner), but is affected by the values of
-            // its parent too. The final shown area is the overlapping area off the widget and all its parents
+            // Get the shown area of the widget. The Shown area is the width and 
+            // height of the widget,
+            // with left and top coordinates (top-left corner), but is affected by 
+            // the values of its parent too. The final shown area is the overlapping
+            // area off the widget and all its parents
             sf::FloatRect getShownArea() const;
-            // Returns a view in which only the shown area of the widget is shown by drawing
+            // Returns a view in which only the shown area of the widget is shown 
+            // by drawing
             sf::View getShownAreaView(sf::RenderTarget &target) const;
+            
+            // Is called when the bounds of the widget changes (e.g. width, height
+            // outlineThickness) so necessary things can get changed    
+            virtual void boundsChanged();
 
         private:
-            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const;
+            virtual void drawWidget(sf::RenderTarget &target, 
+                    sf::RenderStates states) const;
 
             // Calculate the size of the current widget
             virtual void calculateSize();
     };
-
 }
 
 #endif // WIDGET_HPP
