@@ -13,7 +13,7 @@ namespace gsf
         private:
             sf::Text m_text;
             // Is added to m_text in every draw process
-            std::wstring m_actualText;
+            std::wstring m_currentText;
             // True when Widget is focused
             bool m_isFocused;
             // The position of the cursor in Text Field

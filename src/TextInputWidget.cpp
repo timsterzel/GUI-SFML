@@ -55,7 +55,7 @@ void gsf::TextInputWidget::drawWidget(sf::RenderTarget &target,
 void gsf::TextInputWidget::update(float dt)
 {
     // Add cursor
-    std::wstring text{ m_actualText };
+    std::wstring text{ m_currentText };
     text.insert(m_cursorPos, L"|");
     // Draw text
     m_text.setString(text);
@@ -84,19 +84,19 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
     {
         switch (event.key.code)
         {
-            case sf::Keyboard::Left:
-                if (m_cursorPos > 0)
-                {
-                    m_cursorPos--;
-                }
-                return true;
-            case sf::Keyboard::Right: 
-                if (m_cursorPos < m_actualText.length())
-                {
-                    m_cursorPos++;
-                }
-                return true;
-            default: break;
+        case sf::Keyboard::Left:
+            if (m_cursorPos > 0)
+            {
+                m_cursorPos--;
+            }
+            return true;
+        case sf::Keyboard::Right: 
+            if (m_cursorPos < m_currentText.length())
+            {
+                m_cursorPos++;
+            }
+            return true;
+        default: break;
         }
     }
     // If Widget is focused and Text entered, handle entered text
@@ -111,22 +111,36 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
         {
         // Backspace
         case 8: 
-            if (m_actualText.length() > 0) 
+            if (m_currentText.length() > 0) 
             {
-                // When cursos is at the end of the text, p
-                // place cursor behind char which we want to delete,
-                if (m_cursorPos == m_actualText.length())
+                // Remove chars right of cursor when there are chars
+                if (m_cursorPos > 0 && m_cursorPos < m_currentText.length())
                 {
+                    m_currentText.erase(m_cursorPos - 1, 1);
                     m_cursorPos--;
                 }
-                // Delete last char
-                m_actualText.pop_back();
+                // When cursos is at the end of the text, p
+                // place cursor behind char which we want to delete,
+                else if (m_cursorPos == m_currentText.length())
+                {
+                    // Delete last char
+                    m_currentText.pop_back();
+                    m_cursorPos--;
+                }
             }
             break;
+        // Delete Pressed
+        case 127: 
+            if (m_currentText.length() > 0 && 
+                    m_cursorPos < m_currentText.length())
+            {
+                m_currentText.erase(m_cursorPos, 1);
+            }
+                break;
         // Enter key
-        case 13: m_actualText += '\n'; m_cursorPos++; break;
+        case 13: m_currentText += '\n'; m_cursorPos++; break;
         // Add char to text
-        default: m_actualText += c; m_cursorPos++;
+        default: m_currentText += c; m_cursorPos++;
         }
         
         return true;
