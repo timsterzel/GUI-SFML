@@ -78,12 +78,22 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
     // If Widget is focused and Text entered, handle entered text
     if (m_isFocused && event.type == sf::Event::TextEntered)
     {
-        std::string text{ getText() };
-        char entered{ static_cast<char>(event.text.unicode) };
-        std::cout << "Entered Text: " << entered
-             << std::endl;
-        text += entered;
-        setText(text);
+        // To handle umlauts and other 'exotic' chars we use widestring
+        // and wide char
+        std::wstring actualTxt{ m_text.getString().toWideString() };
+        wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
+        switch (c)
+        {
+            // Backspace
+            case 8: if (actualTxt.length() > 0) { actualTxt.pop_back(); } break;
+            // Enter key
+            case 13: actualTxt += '\n'; break;
+            // Add char to text
+            default: actualTxt += c;
+        }
+        // sf::String can handle widechars so we usw it
+        sf::String txtNew(actualTxt);
+        m_text.setString(txtNew);
         return true;
     }
     return handled;
