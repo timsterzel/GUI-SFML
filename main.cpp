@@ -8,6 +8,7 @@
 #include "GUIEnvironment.hpp"
 #include "ProgressWidget.hpp"
 #include "TextWidget.hpp"
+#include "TextInputWidget.hpp"
 #include "VerticalLayout.hpp"
 #include "ScrollableWidget.hpp"
 #include "WindowWidget.hpp"
@@ -176,6 +177,12 @@ int main()
     }
     scrollableWidget3->attachChild(std::move(layout4));
     guiEnvironment.addWidget(std::move(scrollableWidget3));
+
+    std::unique_ptr<gsf::TextInputWidget> textInput1{ 
+        std::make_unique<gsf::TextInputWidget>(300, 60, font) };
+    textInput1->setPosition(520.f, 320.f);
+    textInput1->setBackgroundColor(sf::Color::White);
+    guiEnvironment.addWidget(std::move(textInput1));
 
     while (window.isOpen())
     {
