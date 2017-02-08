@@ -2,6 +2,7 @@
 #define GUIENVIRONMENT_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
+#include "TextureHolder.hpp"
 #include <vector>
 #include <memory>
 
@@ -17,6 +18,8 @@ namespace gsf
             bool m_isWindowFocused;
             // If it is enabled window can rought out of the Render Window
             //bool m_isWindowRoughOutEnabled;
+        
+            TextureHolder m_textureHolder; 
         public:
             GUIEnvironment();
             virtual ~GUIEnvironment();
@@ -33,6 +36,7 @@ namespace gsf
 
             void handleEvent(sf::Event &event);
 
+            void loadTexture(const std::string &id, const std::string &fileName);
     };
 
 }

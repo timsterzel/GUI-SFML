@@ -128,3 +128,9 @@ void gsf::GUIEnvironment::update(float dt)
                     [] (Widget::Ptr &widget) { return widget->isRemoveable(); }),
                     m_widgets.end());
 }
+
+void gsf::GUIEnvironment::loadTexture(const std::string &id, 
+        const std::string &fileName)
+{
+    m_textureHolder.load(id, fileName);
+}
