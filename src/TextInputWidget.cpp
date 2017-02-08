@@ -2,7 +2,9 @@
 #include<iostream>
 
 gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
-:Widget(width, height)
+: Widget{ width, height }
+, m_isFocused{ false }
+, m_cursorPos{ 0 }
 {
     m_text.setFont(font);
     m_text.setCharacterSize(12);
@@ -47,13 +49,16 @@ bool gsf::TextInputWidget::isFocused() const
 void gsf::TextInputWidget::drawWidget(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
-   // Draw text
-   target.draw(m_text, states);
+    target.draw(m_text, states);
 }
 
 void gsf::TextInputWidget::update(float dt)
 {
-   // Do nothing by default
+    // Add cursor
+    std::wstring text{ m_actualText };
+    text.insert(m_cursorPos, L"|");
+    // Draw text
+    m_text.setString(text);
 }
 
 bool gsf::TextInputWidget::handleEvent(sf::Event &event)
@@ -80,20 +85,34 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
     {
         // To handle umlauts and other 'exotic' chars we use widestring
         // and wide char
-        std::wstring actualTxt{ m_text.getString().toWideString() };
+        //std::wstring actualTxt{ m_text.getString().toWideString() };
         wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
         switch (c)
         {
             // Backspace
-            case 8: if (actualTxt.length() > 0) { actualTxt.pop_back(); } break;
+            case 8: 
+                if (m_actualText.length() > 0) 
+                {
+                    // When cursos is at the end of the text, p
+                    // place cursor behind char which we want to delete,
+                    if (m_cursorPos == m_actualText.length())
+                    {
+                        m_cursorPos--;
+                    }
+                    // Delete last char
+                    m_actualText.pop_back();
+                }
+                break;
             // Enter key
-            case 13: actualTxt += '\n'; break;
+            case 13: m_actualText += '\n'; m_cursorPos++; break;
             // Add char to text
-            default: actualTxt += c;
+            default: m_actualText += c; m_cursorPos++;
         }
+
         // sf::String can handle widechars so we usw it
-        sf::String txtNew(actualTxt);
-        m_text.setString(txtNew);
+        //sf::String txtNew(actualTxt);
+        //m_text.setString(txtNew);
+        
         return true;
     }
     return handled;
