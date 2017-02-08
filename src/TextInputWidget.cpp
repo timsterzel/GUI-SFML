@@ -80,6 +80,25 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
             m_isFocused = false;
         }
     }
+    if (event.type == sf::Event::KeyPressed && m_isFocused)
+    {
+        switch (event.key.code)
+        {
+            case sf::Keyboard::Left:
+                if (m_cursorPos > 0)
+                {
+                    m_cursorPos--;
+                }
+                return true;
+            case sf::Keyboard::Right: 
+                if (m_cursorPos < m_actualText.length())
+                {
+                    m_cursorPos++;
+                }
+                return true;
+            default: break;
+        }
+    }
     // If Widget is focused and Text entered, handle entered text
     if (m_isFocused && event.type == sf::Event::TextEntered)
     {
@@ -87,31 +106,28 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
         // and wide char
         //std::wstring actualTxt{ m_text.getString().toWideString() };
         wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
+        std::cout << "Entered: " << c << std::endl;
         switch (c)
         {
-            // Backspace
-            case 8: 
-                if (m_actualText.length() > 0) 
+        // Backspace
+        case 8: 
+            if (m_actualText.length() > 0) 
+            {
+                // When cursos is at the end of the text, p
+                // place cursor behind char which we want to delete,
+                if (m_cursorPos == m_actualText.length())
                 {
-                    // When cursos is at the end of the text, p
-                    // place cursor behind char which we want to delete,
-                    if (m_cursorPos == m_actualText.length())
-                    {
-                        m_cursorPos--;
-                    }
-                    // Delete last char
-                    m_actualText.pop_back();
+                    m_cursorPos--;
                 }
-                break;
-            // Enter key
-            case 13: m_actualText += '\n'; m_cursorPos++; break;
-            // Add char to text
-            default: m_actualText += c; m_cursorPos++;
+                // Delete last char
+                m_actualText.pop_back();
+            }
+            break;
+        // Enter key
+        case 13: m_actualText += '\n'; m_cursorPos++; break;
+        // Add char to text
+        default: m_actualText += c; m_cursorPos++;
         }
-
-        // sf::String can handle widechars so we usw it
-        //sf::String txtNew(actualTxt);
-        //m_text.setString(txtNew);
         
         return true;
     }
