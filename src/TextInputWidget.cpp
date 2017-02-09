@@ -12,6 +12,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
     m_text.setFont(font);
     m_text.setCharacterSize(12);
     m_text.setFillColor(sf::Color::Black);
+    //m_scrollableWidget.attachChild();
 }
 
 void gsf::TextInputWidget::setText(const std::string &text)

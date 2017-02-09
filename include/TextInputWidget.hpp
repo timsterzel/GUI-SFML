@@ -2,6 +2,7 @@
 #define TEXTINPUTWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
+#include "ScrollableWidget.hpp"
 #include <string>
 
 namespace gsf

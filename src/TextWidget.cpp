@@ -40,7 +40,7 @@ gsf::TextWidget::~TextWidget()
 
 }
 
-void gsf::TextWidget::setText(const std::string text)
+void gsf::TextWidget::setText(const std::wstring text)
 {
     m_text.setString(text);
     calculateSize();
