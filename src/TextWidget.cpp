@@ -44,14 +44,14 @@ void gsf::TextWidget::setText(const sf::String &text)
 {
     m_text.setString(text);
     calculateSize();
-    centerOrigin();
+    //centerOrigin();
 }
 
 void gsf::TextWidget::setText(const std::wstring text)
 {
     m_text.setString(text);
     calculateSize();
-    centerOrigin();
+    //centerOrigin();
 }
 sf::String gsf::TextWidget::getText() const
 {
@@ -64,11 +64,16 @@ std::wstring gsf::TextWidget::getWideText() const
     return m_text.getString().toWideString();
 }
 
+void gsf::TextWidget::setFont(const sf::Font &font)
+{
+    m_text.setFont(font);
+}
+
 void gsf::TextWidget::setCharacterSize(const unsigned int size)
 {
     m_text.setCharacterSize(size);
     calculateSize();
-    centerOrigin();
+    //centerOrigin();
 }
 
 unsigned int gsf::TextWidget::getCharacterSize() const
@@ -86,8 +91,12 @@ sf::Color gsf::TextWidget::getTextColor() const
     return m_text.getFillColor();
 }
 
-void gsf::TextWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::TextWidget::drawWidget(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
+    std::cout << "Text: " << getText().toAnsiString() << " Width: " << getWidth()
+        << " Height: " << getHeight() <<  " Pos: x: " << getPosition().x 
+       << " y: " << getPosition().y << std::endl;
     // Draw text
     target.draw(m_text, states);
 }
@@ -106,8 +115,9 @@ bool gsf::TextWidget::handleEvent(sf::Event &event)
 void gsf::TextWidget::calculateSize()
 {
     sf::FloatRect localBounds{ m_text.getLocalBounds() };
-    // Top and left of the bounds are not allways 0, so we add the twice amound of this,
-    // So the text is centered in the widget
+    // Top and left of the bounds are not allways 0, 
+    // so we add the twice amound of this,
+    // so the text is centered in the widget
     setHeight(localBounds.height + localBounds.top * 2);
     setWidth(localBounds.width + localBounds.left * 2);
 }

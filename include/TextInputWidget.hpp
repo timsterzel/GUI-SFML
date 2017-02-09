@@ -3,16 +3,18 @@
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include "ScrollableWidget.hpp"
+#include "TextWidget.hpp"
 #include <string>
 
 namespace gsf
 {
-    class TextInputWidget: public gsf::Widget
+    class TextInputWidget: public gsf::ChildWidget
     {
         protected:
 
         private:
-            sf::Text m_text;
+            //sf::Text m_text;
+            TextWidget *m_text;
             // Is added to m_text in every draw process
             std::wstring m_currentText;
             // True when Widget is focused
@@ -41,7 +43,7 @@ namespace gsf
             
             bool isFocused() const;
 
-            virtual void drawWidget(sf::RenderTarget &target, 
+            virtual void drawCurrent(sf::RenderTarget &target, 
                     sf::RenderStates states) const override;
             virtual void update(float dt) override;
 

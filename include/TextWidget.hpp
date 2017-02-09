@@ -16,15 +16,19 @@ namespace gsf
             TextWidget();
             TextWidget(std::string text, sf::Font &font);
             TextWidget(std::string text, sf::Font &font, int characterSize);
-            TextWidget(std::string text, sf::Font &font, int characterSize, sf::Color color);
+            TextWidget(std::string text, sf::Font &font, int characterSize, 
+                    sf::Color color);
 
+            virtual ~TextWidget();
+            
             //sf::Text& getText();
             void setText(const sf::String &text);
             void setText(const std::wstring text);
             sf::String getText() const;
             // get text as wide string
             std::wstring getWideText() const;
-            
+           
+            void setFont(const sf::Font &font);
 
             void setCharacterSize(const unsigned int size);
             unsigned int getCharacterSize() const;
@@ -32,18 +36,17 @@ namespace gsf
             void setTextColor(const sf::Color color);
             sf::Color getTextColor() const;
 
-            virtual ~TextWidget();
 
-            //virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
-            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawWidget(sf::RenderTarget &target, 
+                    sf::RenderStates states) const override;
             virtual void update(float dt) override;
 
         protected:
-
             virtual bool handleEvent(sf::Event &event) override;
 
         private:
-            void init(std::string text, sf::Font &font, int characterSize, sf::Color color);
+            void init(std::string text, sf::Font &font, int characterSize, 
+                    sf::Color color);
 
             // Calculate the size of the current widget
             virtual void calculateSize() override;

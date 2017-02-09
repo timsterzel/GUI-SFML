@@ -2,47 +2,55 @@
 #include <iostream>
 
 gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
-: Widget{ width, height }
+: ChildWidget{ width, height }
+//, m_text{ "", font, 12, sf::Color::Black }
+, m_text{ nullptr }
 , m_isFocused{ false }
 , m_cursorPos{ 0 }
 , m_isCursorShown{ true }
 , m_blinkFreq{ 0.8f }
 , m_lastBlinkTime{ 0.f }
 {
-    m_text.setFont(font);
-    m_text.setCharacterSize(12);
-    m_text.setFillColor(sf::Color::Black);
+    std::unique_ptr<TextWidget> text{ 
+        std::make_unique<TextWidget>("", font, 12, sf::Color::Black) };
+    m_text = text.get();
+    attachChild(std::move(text));
+    //m_text.setFont(font);
+    //m_text.setCharacterSize(12);
+    //m_text.setTextColor(sf::Color::Black);
+    //m_text.setOrigin(0.f, 0.f);
+    //m_text.setPosition(0.f, 0.f);
     //m_scrollableWidget.attachChild();
 }
 
 void gsf::TextInputWidget::setText(const std::string &text)
 {
-   m_text.setString(text);
+   m_text->setText(text);
 }
 
 std::string gsf::TextInputWidget::getText() const
 {
-   return m_text.getString().toAnsiString();
+   return m_text->getText().toAnsiString();
 }
 
 void gsf::TextInputWidget::setCharacterSize(const unsigned int size)
 {
-   m_text.setCharacterSize(size);
+   m_text->setCharacterSize(size);
 }
 
 unsigned int gsf::TextInputWidget::getCharacterSize() const
 {
-   return m_text.getCharacterSize();
+   return m_text->getCharacterSize();
 }
 
 void gsf::TextInputWidget::setTextColor(const sf::Color color)
 {
-   m_text.setFillColor(color);
+   m_text->setTextColor(color);
 }
 
 sf::Color gsf::TextInputWidget::getTextColor() const
 {
-   return m_text.getFillColor();
+   return m_text->getTextColor();
 }
 
 bool gsf::TextInputWidget::isFocused() const
@@ -50,10 +58,11 @@ bool gsf::TextInputWidget::isFocused() const
     return m_isFocused;
 }
 
-void gsf::TextInputWidget::drawWidget(sf::RenderTarget &target, 
+void gsf::TextInputWidget::drawCurrent(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
-    target.draw(m_text, states);
+    //target.draw(m_text, states);
+    //target.draw(m_text);
 }
 
 void gsf::TextInputWidget::update(float dt)
@@ -71,7 +80,7 @@ void gsf::TextInputWidget::update(float dt)
     {
         text.insert(m_cursorPos, L"|");
     }
-    m_text.setString(text);    
+    m_text->setText(text);    
 }
 
 bool gsf::TextInputWidget::handleEvent(sf::Event &event)
