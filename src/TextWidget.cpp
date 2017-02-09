@@ -94,9 +94,6 @@ sf::Color gsf::TextWidget::getTextColor() const
 void gsf::TextWidget::drawWidget(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
-    std::cout << "Text: " << getText().toAnsiString() << " Width: " << getWidth()
-        << " Height: " << getHeight() <<  " Pos: x: " << getPosition().x 
-       << " y: " << getPosition().y << std::endl;
     // Draw text
     target.draw(m_text, states);
 }
