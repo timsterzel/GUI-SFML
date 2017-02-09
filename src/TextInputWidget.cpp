@@ -62,7 +62,6 @@ void gsf::TextInputWidget::drawCurrent(sf::RenderTarget &target,
         sf::RenderStates states) const
 {
     //target.draw(m_text, states);
-    //target.draw(m_text);
 }
 
 void gsf::TextInputWidget::update(float dt)
