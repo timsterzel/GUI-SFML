@@ -16,9 +16,16 @@ namespace gsf
             std::wstring m_currentText;
             // True when Widget is focused
             bool m_isFocused;
-            // The position of the cursor in Text Field
+            // The position of the cursor inside the text
             unsigned int m_cursorPos;
-
+            // When its true the cursor get drawn. The frequrency of the visibility
+            // change is set by the m_blinkFreq member
+            bool m_isCursorShown;
+            // The time between a visibility change of the cursor
+            float m_blinkFreq;
+            // The time since the cursor was last shown or invisble in secods
+            float m_lastBlinkTime;
+        
         public:
             TextInputWidget(float width, float height, sf::Font &font);
 

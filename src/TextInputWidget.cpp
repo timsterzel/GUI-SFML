@@ -5,6 +5,9 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 : Widget{ width, height }
 , m_isFocused{ false }
 , m_cursorPos{ 0 }
+, m_isCursorShown{ true }
+, m_blinkFreq{ 0.8f }
+, m_lastBlinkTime{ 0.f }
 {
     m_text.setFont(font);
     m_text.setCharacterSize(12);
@@ -54,11 +57,20 @@ void gsf::TextInputWidget::drawWidget(sf::RenderTarget &target,
 
 void gsf::TextInputWidget::update(float dt)
 {
-    // Add cursor
+    // Update cursor stuff
+    m_lastBlinkTime += dt;
+    if (m_lastBlinkTime >= m_blinkFreq)
+    {
+        m_isCursorShown = !m_isCursorShown;
+        m_lastBlinkTime = 0.f;
+    }
     std::wstring text{ m_currentText };
-    text.insert(m_cursorPos, L"|");
-    // Draw text
-    m_text.setString(text);
+    // Add cursor
+    if (m_isCursorShown)
+    {
+        text.insert(m_cursorPos, L"|");
+    }
+    m_text.setString(text);    
 }
 
 bool gsf::TextInputWidget::handleEvent(sf::Event &event)
