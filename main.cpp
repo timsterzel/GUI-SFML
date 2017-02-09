@@ -81,7 +81,7 @@ int main()
         {
             gsf::TextWidget *textWidget = static_cast<gsf::TextWidget*>(widget);
             std::cout << "TextWidget: Left Mouse Button Clicked. Text: " 
-                << textWidget->getText() << std::endl;
+                << textWidget->getText().toAnsiString() << std::endl;
         };
         text->setOnLeftClickListener(leftClickListener);
         layout->attachChild(std::move(text));
@@ -169,7 +169,7 @@ int main()
         {
             gsf::TextWidget *textWidget = static_cast<gsf::TextWidget*>(widget);
             std::cout << "TextWidget: Left Mouse Button Clicked. Text: " 
-                << textWidget->getText() << std::endl;
+                << textWidget->getText().toAnsiString() << std::endl;
         };
         text->setOnLeftClickListener(leftClickListener);
         //text->setBackgroundColor(sf::Color::Red);

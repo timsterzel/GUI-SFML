@@ -40,16 +40,28 @@ gsf::TextWidget::~TextWidget()
 
 }
 
-void gsf::TextWidget::setText(const std::wstring text)
+void gsf::TextWidget::setText(const sf::String &text)
 {
     m_text.setString(text);
     calculateSize();
     centerOrigin();
 }
 
-std::string gsf::TextWidget::getText() const
+void gsf::TextWidget::setText(const std::wstring text)
 {
-    return m_text.getString().toAnsiString();
+    m_text.setString(text);
+    calculateSize();
+    centerOrigin();
+}
+sf::String gsf::TextWidget::getText() const
+{
+    return m_text.getString();
+}
+
+
+std::wstring gsf::TextWidget::getWideText() const
+{
+    return m_text.getString().toWideString();
 }
 
 void gsf::TextWidget::setCharacterSize(const unsigned int size)
