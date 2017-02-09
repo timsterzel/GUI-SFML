@@ -138,9 +138,9 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
             }
                 break;
         // Enter key
-        case 13: m_currentText += '\n'; m_cursorPos++; break;
+        case 13: m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++; break;
         // Add char to text
-        default: m_currentText += c; m_cursorPos++;
+        default: m_currentText.insert(m_cursorPos, std::wstring() + c); m_cursorPos++;
         }
         
         return true;
