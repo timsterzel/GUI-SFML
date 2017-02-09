@@ -1,5 +1,5 @@
-#include"TextInputWidget.hpp"
-#include<iostream>
+#include "TextInputWidget.hpp"
+#include <iostream>
 
 gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 : Widget{ width, height }

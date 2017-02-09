@@ -49,7 +49,6 @@ namespace gsf
             virtual bool handleEvent(sf::Event &event) override;
 
         private:
-            void init(std::string text, sf::Font &font, int characterSize, sf::Color color);
 
     };
 
