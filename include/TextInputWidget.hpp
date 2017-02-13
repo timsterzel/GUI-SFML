@@ -15,6 +15,7 @@ namespace gsf
         private:
             //sf::Text m_text;
             TextWidget *m_text;
+            ScrollableWidget *m_scrollable;            
             // Is added to m_text in every draw process
             std::wstring m_currentText;
             // True when Widget is focused
@@ -45,10 +46,10 @@ namespace gsf
 
             virtual void drawCurrent(sf::RenderTarget &target, 
                     sf::RenderStates states) const override;
-            virtual void update(float dt) override;
+            virtual void updateCurrent(float dt) override;
 
         protected:
-            virtual bool handleEvent(sf::Event &event) override;
+            virtual bool handleEventCurrent(sf::Event &event) override;
 
         private:
             // Reset cursor status means, that m_lastBlinkTime is set to 0 and

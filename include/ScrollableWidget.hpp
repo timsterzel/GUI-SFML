@@ -65,6 +65,8 @@ namespace gsf
 
             float getTotalWidth() const;
             float getTotalHeight() const;
+            // Call when the scrollbar etc should get recalucated
+            void recalculateScroll();
 
             //bool handleEvent(sf::Event &event) override;
 
@@ -87,7 +89,7 @@ namespace gsf
 
             virtual bool handleEventCurrent(sf::Event &event) override;
 
-            virtual bool handleEventChildren(sf::Event &event);
+            //virtual bool handleEventChildren(sf::Event &event);
     };
 
 }

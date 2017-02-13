@@ -5,6 +5,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 : ChildWidget{ width, height }
 //, m_text{ "", font, 12, sf::Color::Black }
 , m_text{ nullptr }
+, m_scrollable{ nullptr }
 , m_isFocused{ false }
 , m_cursorPos{ 0 }
 , m_isCursorShown{ true }
@@ -13,8 +14,14 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 {
     std::unique_ptr<TextWidget> text{ 
         std::make_unique<TextWidget>("", font, 12, sf::Color::Black) };
+    std::unique_ptr<ScrollableWidget> scrollabe{ 
+        std::make_unique<ScrollableWidget>(width, height) };
+    m_scrollable = scrollabe.get();
     m_text = text.get();
-    attachChild(std::move(text));
+    scrollabe->setBackgroundColor(sf::Color::Red);
+    scrollabe->attachChild(std::move(text));
+    //attachChild(std::move(text));
+    attachChild(std::move(scrollabe));
     //m_text.setFont(font);
     //m_text.setCharacterSize(12);
     //m_text.setTextColor(sf::Color::Black);
@@ -64,7 +71,7 @@ void gsf::TextInputWidget::drawCurrent(sf::RenderTarget &target,
     //target.draw(m_text, states);
 }
 
-void gsf::TextInputWidget::update(float dt)
+void gsf::TextInputWidget::updateCurrent(float dt)
 {
     // Update cursor stuff
     m_lastBlinkTime += dt;
@@ -82,9 +89,10 @@ void gsf::TextInputWidget::update(float dt)
     m_text->setText(text);    
 }
 
-bool gsf::TextInputWidget::handleEvent(sf::Event &event)
+bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
 {
-    bool handled{ Widget::handleEvent(event) };
+    //bool handled{ ChildWidget::handleEvent(event) };/*|| 
+      //  m_scrollable->handleEventWidget(event) };*/
     // Check if actual Widget is focused
     if (event.type == sf::Event::MouseButtonPressed)
     {        
@@ -166,10 +174,12 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
         // Add char to text
         default: m_currentText.insert(m_cursorPos, std::wstring() + c); m_cursorPos++;
         }
-        resetCursorStatus(); 
+        resetCursorStatus();
+        m_scrollable->recalculateScroll();
         return true;
     }
-    return handled;
+    return false;
+    //return handled;
 }
 
 void gsf::TextInputWidget::resetCursorStatus()

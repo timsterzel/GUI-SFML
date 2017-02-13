@@ -180,7 +180,7 @@ int main()
 
     std::unique_ptr<gsf::TextInputWidget> textInput1{ 
         std::make_unique<gsf::TextInputWidget>(300.f, 60.f, font) };
-    textInput1->setPosition(520.f, 320.f);
+    textInput1->setPosition(320.f, 520.f);
     textInput1->setBackgroundColor(sf::Color::White);
     guiEnvironment.addWidget(std::move(textInput1));
 

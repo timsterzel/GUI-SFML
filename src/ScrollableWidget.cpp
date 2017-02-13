@@ -146,6 +146,11 @@ float gsf::ScrollableWidget::getTotalHeight() const
     return m_totalHeight;
 }
 
+void gsf::ScrollableWidget::recalculateScroll()
+{
+    calculateScrollbarSizes();
+}
+
 void gsf::ScrollableWidget::correctScrollBarPosition()
 {
     // If scrollbar is out of widget, correct its position
@@ -191,7 +196,7 @@ void gsf::ScrollableWidget::drawWidget(sf::RenderTarget &target,
         target.setView(view);
         drawChildren(target, states);
         target.setView(defaultView);
-
+        
         // Draw Scroll Elements
         target.draw(m_scrollbarVertical, states);
         target.draw(m_scrollbarHorizontal, states);
@@ -324,7 +329,7 @@ bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
 {
     return false;
 }
-
+/*
 bool gsf::ScrollableWidget::handleEventChildren(sf::Event &event)
 {
     // Only handle child Events if the event is in the are of the
@@ -341,10 +346,10 @@ bool gsf::ScrollableWidget::handleEventChildren(sf::Event &event)
     }
     return false;
 }
-
+*/
 void gsf::ScrollableWidget::updateCurrent(float dt)
 {
-    // Do to: a scrollwidgit should only have one child
+    // Do to: a scrollwidget should only have one child
     for (const Ptr &child : m_children)
     {
         child->move(m_scrollOffsetX, m_scrollOffsetY);
