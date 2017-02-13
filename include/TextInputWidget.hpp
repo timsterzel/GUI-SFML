@@ -48,10 +48,12 @@ namespace gsf
             virtual void update(float dt) override;
 
         protected:
-
             virtual bool handleEvent(sf::Event &event) override;
 
         private:
+            // Reset cursor status means, that m_lastBlinkTime is set to 0 and
+            // m_isCursorShown to true
+            void resetCursorStatus();
 
     };
 

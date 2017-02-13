@@ -110,12 +110,15 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
             {
                 m_cursorPos--;
             }
+            // when cursor is moved it should be drawn so we reset its status
+            resetCursorStatus();
             return true;
         case sf::Keyboard::Right: 
             if (m_cursorPos < m_currentText.length())
             {
                 m_cursorPos++;
             }
+            resetCursorStatus();
             return true;
         default: break;
         }
@@ -163,8 +166,14 @@ bool gsf::TextInputWidget::handleEvent(sf::Event &event)
         // Add char to text
         default: m_currentText.insert(m_cursorPos, std::wstring() + c); m_cursorPos++;
         }
-        
+        resetCursorStatus(); 
         return true;
     }
     return handled;
+}
+
+void gsf::TextInputWidget::resetCursorStatus()
+{
+    m_lastBlinkTime = 0.f;
+    m_isCursorShown = true;
 }
