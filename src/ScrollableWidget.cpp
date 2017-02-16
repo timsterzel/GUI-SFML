@@ -66,9 +66,11 @@ void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
     float scrollbarHeight{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
             /*- 2 * SCROLLBAR_PAD*/) * proportionVer };
     m_scrollbarVertical.setHeight(scrollbarHeight);
+    
     m_scrollbarVertical.setPosition(getWidth() - m_scrollbarVertical.getWidth() / 2.f 
             - SCROLLBAR_PAD, 0.f + m_scrollbarVertical.getHeight() / 2.f 
             + SCROLLBAR_PAD);
+    
     m_scrollbarVertical.setOrigin(m_scrollbarVertical.getWidth() / 2.f, 
             m_scrollbarVertical.getHeight() / 2.f);
 }
@@ -79,6 +81,7 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
         {
             return;
         }
+        
 
         // get first element
         Widget *childWidget{ m_children.at(0).get() };
@@ -102,6 +105,7 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
         float scrollbarWidth{ (getWidth() - m_scrollbarThickness 
                 - PAD_BETTWEEN_SCROLLBARS /*- 2 * SCROLLBAR_PAD*/) * proportionHor };
         m_scrollbarHorizontal.setWidth(scrollbarWidth);
+        
         m_scrollbarHorizontal.setPosition(0.f + m_scrollbarHorizontal.getWidth() / 2.f 
                 + SCROLLBAR_PAD, getHeight() - m_scrollbarHorizontal.getHeight() / 2.f 
                 - SCROLLBAR_PAD);

@@ -16,12 +16,16 @@ namespace gsf
             //sf::Text m_text;
             TextWidget *m_text;
             ScrollableWidget *m_scrollable;            
-            // Is added to m_text in every draw process
+            // The text which is stored in TextInput
             std::wstring m_currentText;
+            // The text which is shown in the Widget
+            std::wstring m_shownText;
             // True when Widget is focused
             bool m_isFocused;
             // The position of the cursor inside the text
             unsigned int m_cursorPos;
+            // The cnt of added line breaks in m_shownText before the cursor pos
+            unsigned int m_lBreaksBefCur;
             // When its true the cursor get drawn. The frequrency of the visibility
             // change is set by the m_blinkFreq member
             bool m_isCursorShown;
@@ -50,7 +54,9 @@ namespace gsf
 
         protected:
             virtual bool handleEventCurrent(sf::Event &event) override;
-
+            // Adjust the Text so that it fit in the Widget. E.g. when only vertical
+            // scroll is enabled add line breaks on the right positions
+            void adjustShownText();
         private:
             // Reset cursor status means, that m_lastBlinkTime is set to 0 and
             // m_isCursorShown to true

@@ -8,6 +8,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 , m_scrollable{ nullptr }
 , m_isFocused{ false }
 , m_cursorPos{ 0 }
+, m_lBreaksBefCur{ 0 }
 , m_isCursorShown{ true }
 , m_blinkFreq{ 0.8f }
 , m_lastBlinkTime{ 0.f }
@@ -80,13 +81,16 @@ void gsf::TextInputWidget::updateCurrent(float dt)
         m_isCursorShown = !m_isCursorShown;
         m_lastBlinkTime = 0.f;
     }
-    std::wstring text{ m_currentText };
+    //std::wstring text{ m_currentText };
+    std::wstring text{ m_shownText };
     // Add cursor
     if (m_isCursorShown)
     {
-        text.insert(m_cursorPos, L"|");
+        std::cout << "CursorPos: " << m_cursorPos << std::endl;
+        text.insert(m_cursorPos + m_lBreaksBefCur, L"|");
+        std::cout << "After cursor Pos" << std::endl;
     }
-    m_text->setText(text);  
+    m_text->setText(text); 
 }
 
 bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
@@ -175,7 +179,9 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         default: m_currentText.insert(m_cursorPos, std::wstring() + c); m_cursorPos++;
         }
         resetCursorStatus();
-        m_text->setText(m_currentText);
+        m_shownText = m_currentText;
+        m_text->setText(m_shownText);
+        adjustShownText();
         m_scrollable->recalculateScroll();
         m_scrollable->scrollToRight();
         m_scrollable->scrollToBottom();
@@ -183,6 +189,35 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
     }
     return false;
     //return handled;
+}
+
+void gsf::TextInputWidget::adjustShownText()
+{
+    if (!m_scrollable->isHorizontalScrollEnabled() && 
+            m_scrollable->getWidth() < m_text->getWidth())
+    {
+        m_lBreaksBefCur = 0;
+        m_text->setText("");
+        m_shownText = L"";
+        for (unsigned int i{ 0 }; i != m_currentText.size(); i++)
+        {
+            wchar_t c{ m_currentText[i] };
+            m_shownText += c;
+            m_text->setText(m_shownText);
+            // Text is out of widget so add a line break before the last added char
+            if (m_text->getWidth() > m_scrollable->getWidth())
+            {
+                if (i < m_cursorPos)
+                {
+                    // We have to increase the "line breaks befor cursor" counter
+                    // so we add the cursor later on the right position
+                    m_lBreaksBefCur++;
+                }
+                m_shownText.insert(m_shownText.size() - 2, L"\n");
+            }
+        }
+        m_text->setText(m_shownText);
+    }
 }
 
 void gsf::TextInputWidget::resetCursorStatus()
