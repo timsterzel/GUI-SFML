@@ -182,6 +182,7 @@ int main()
         std::make_unique<gsf::TextInputWidget>(300.f, 60.f, font) };
     textInput1->setPosition(320.f, 520.f);
     textInput1->setBackgroundColor(sf::Color::White);
+    textInput1->setIsHorizontalScrollEnabled(false);
     guiEnvironment.addWidget(std::move(textInput1));
 
     while (window.isOpen())

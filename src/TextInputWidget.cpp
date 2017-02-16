@@ -66,6 +66,26 @@ bool gsf::TextInputWidget::isFocused() const
     return m_isFocused;
 }
 
+void gsf::TextInputWidget::setIsVerticalScrollEnabled(bool isEnabled)
+{
+    m_scrollable->setIsVerticalScrollEnabled(isEnabled);
+}
+
+bool gsf::TextInputWidget::isVerticalScrollEnabled() const
+{
+    return m_scrollable->isVerticalScrollEnabled();
+}
+
+void gsf::TextInputWidget::setIsHorizontalScrollEnabled(bool isEnabled)
+{
+    m_scrollable->setIsHorizontalScrollEnabled(isEnabled);
+}
+
+bool gsf::TextInputWidget::isHorizontalScrollEnabled() const
+{
+    return m_scrollable->isHorizontalScrollEnabled();
+}
+
 void gsf::TextInputWidget::drawCurrent(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {

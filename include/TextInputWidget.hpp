@@ -45,8 +45,13 @@ namespace gsf
 
             void setTextColor(const sf::Color color);
             sf::Color getTextColor() const;
-            
+        
             bool isFocused() const;
+            
+            void setIsVerticalScrollEnabled(bool isEnabled);
+            bool isVerticalScrollEnabled() const;
+            void setIsHorizontalScrollEnabled(bool isEnabled);
+            bool isHorizontalScrollEnabled() const;
 
             virtual void drawCurrent(sf::RenderTarget &target, 
                     sf::RenderStates states) const override;
