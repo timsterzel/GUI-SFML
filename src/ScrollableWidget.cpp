@@ -54,12 +54,13 @@ void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
         childWidget->getHeight() > getHeight();
     // Only show scrollbar when there is any need to scroll and scrolling is enabled
     if (!m_isVerticalScrollEnabled || !m_isVerticalScrollNeeded) {
+        m_scrollbarVertical.setHeight(0.f);
         return;
     }
     // Get proportion between the scrollable widget and its child 
-    // ( We need to note the scrollbar thickness so the
+    // (We need to note the scrollbar thickness so the
     // two scrollbars can not overlap
-    float proportionVer{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS 
+    float proportionVer{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
             - 2 * SCROLLBAR_PAD) / childrenHeight };
     // Calculate the scrollbar size
     float scrollbarHeight{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
@@ -89,6 +90,7 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
             childWidget->getWidth() > getWidth();
         // Only show scrollbar when there is any need to scroll and scrolling is enabled
         if (!m_isHorizontalScrollEnabled || !m_isHorizontalScrollNeeded) {
+            m_scrollbarHorizontal.setWidth(0.f);
             return;
         }
         // Get proportion between the scrollable widget and its child 

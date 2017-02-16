@@ -168,7 +168,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             {
                 m_currentText.erase(m_cursorPos, 1);
             }
-                break;
+            break;
         // Enter key
         case 13: m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++; break;
         // Add char to text
