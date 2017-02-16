@@ -106,9 +106,8 @@ void gsf::TextInputWidget::updateCurrent(float dt)
     // Add cursor
     if (m_isCursorShown)
     {
-        std::cout << "CursorPos: " << m_cursorPos << std::endl;
+        //std::cout << "CursorPos: " << m_cursorPos << " breaks: " << m_lBreaksBefCur << std::endl << m_lBreaksBefCur << std::endl;
         text.insert(m_cursorPos + m_lBreaksBefCur, L"|");
-        std::cout << "After cursor Pos" << std::endl;
     }
     m_text->setText(text); 
 }
@@ -144,6 +143,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             }
             // when cursor is moved it should be drawn so we reset its status
             resetCursorStatus();
+            adjustShownText();
             return true;
         case sf::Keyboard::Right: 
             if (m_cursorPos < m_currentText.length())
@@ -151,6 +151,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
                 m_cursorPos++;
             }
             resetCursorStatus();
+            adjustShownText();
             return true;
         default: break;
         }
@@ -213,8 +214,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
 
 void gsf::TextInputWidget::adjustShownText()
 {
-    if (!m_scrollable->isHorizontalScrollEnabled() && 
-            m_scrollable->getWidth() < m_text->getWidth())
+    if (!m_scrollable->isHorizontalScrollEnabled())
     {
         m_lBreaksBefCur = 0;
         m_text->setText("");
