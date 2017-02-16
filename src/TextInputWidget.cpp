@@ -86,7 +86,7 @@ void gsf::TextInputWidget::updateCurrent(float dt)
     {
         text.insert(m_cursorPos, L"|");
     }
-    m_text->setText(text);    
+    m_text->setText(text);  
 }
 
 bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
@@ -175,7 +175,10 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         default: m_currentText.insert(m_cursorPos, std::wstring() + c); m_cursorPos++;
         }
         resetCursorStatus();
+        m_text->setText(m_currentText);
         m_scrollable->recalculateScroll();
+        m_scrollable->scrollToRight();
+        m_scrollable->scrollToBottom();
         return true;
     }
     return false;

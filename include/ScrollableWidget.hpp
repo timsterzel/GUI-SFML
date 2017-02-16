@@ -67,6 +67,15 @@ namespace gsf
             float getTotalHeight() const;
             // Call when the scrollbar etc should get recalucated
             void recalculateScroll();
+            
+            // Update the child position, so that it matches with the scollbar
+            void updateChildPosition();
+
+            // Move to left, right, top or bottom
+            void scrollToLeft();
+            void scrollToRight();
+            void scrollToTop();
+            void scrollToBottom();
 
             //bool handleEvent(sf::Event &event) override;
 
@@ -74,6 +83,8 @@ namespace gsf
 
         private:
             void correctScrollBarPosition();
+            
+            void handleChildScroll();
 
             virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
             virtual void updateCurrent(float dt);
