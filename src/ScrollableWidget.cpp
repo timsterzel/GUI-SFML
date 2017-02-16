@@ -61,10 +61,10 @@ void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
     // (We need to note the scrollbar thickness so the
     // two scrollbars can not overlap
     float proportionVer{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
-            - 2 * SCROLLBAR_PAD) / childrenHeight };
+            /*- 2 * SCROLLBAR_PAD*/) / childrenHeight };
     // Calculate the scrollbar size
     float scrollbarHeight{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
-            - 2 * SCROLLBAR_PAD) * proportionVer };
+            /*- 2 * SCROLLBAR_PAD*/) * proportionVer };
     m_scrollbarVertical.setHeight(scrollbarHeight);
     m_scrollbarVertical.setPosition(getWidth() - m_scrollbarVertical.getWidth() / 2.f 
             - SCROLLBAR_PAD, 0.f + m_scrollbarVertical.getHeight() / 2.f 
@@ -97,10 +97,10 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
         // (We need to note the scrollbar thickness so the 
         // two scrollbars can not overlap)
         float proportionHor{ (getWidth() - m_scrollbarThickness 
-                - PAD_BETTWEEN_SCROLLBARS - 2 * SCROLLBAR_PAD) / childrenWidth };
+                - PAD_BETTWEEN_SCROLLBARS /*- 2 * SCROLLBAR_PAD*/) / childrenWidth };
         // Calculate the scrollbar size
         float scrollbarWidth{ (getWidth() - m_scrollbarThickness 
-                - PAD_BETTWEEN_SCROLLBARS - 2 * SCROLLBAR_PAD) * proportionHor };
+                - PAD_BETTWEEN_SCROLLBARS /*- 2 * SCROLLBAR_PAD*/) * proportionHor };
         m_scrollbarHorizontal.setWidth(scrollbarWidth);
         m_scrollbarHorizontal.setPosition(0.f + m_scrollbarHorizontal.getWidth() / 2.f 
                 + SCROLLBAR_PAD, getHeight() - m_scrollbarHorizontal.getHeight() / 2.f 
