@@ -115,6 +115,8 @@ void gsf::TextInputWidget::updateCurrent(float dt)
         m_isCursorShown = !m_isCursorShown;
         m_lastBlinkTime = 0.f;
     }
+
+    m_cursor.setPosition(m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
     //std::wstring text{ m_currentText };
     //std::wstring text{ m_shownText };
     //m_text->setText(text); 
@@ -152,7 +154,8 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             // when cursor is moved it should be drawn so we reset its status
             resetCursorStatus();
             adjustShownText();
-            m_cursor.setPosition(m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
+            //m_cursor.setPosition(
+            //    m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
             return true;
         case sf::Keyboard::Right: 
             if (m_cursorPos < m_currentText.length())
@@ -161,8 +164,8 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             }
             resetCursorStatus();
             adjustShownText();
-            m_cursor.setPosition
-                (m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
+            //m_cursor.setPosition
+            //    (m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
             return true;
         default: break;
         }
@@ -214,7 +217,8 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         m_shownText = m_currentText;
         m_text->setText(m_shownText);
         adjustShownText();
-        m_cursor.setPosition(m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
+        //m_cursor.setPosition
+            //(m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
         m_scrollable->recalculateScroll();
         m_scrollable->scrollToRight();
         m_scrollable->scrollToBottom();
