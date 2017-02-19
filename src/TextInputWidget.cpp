@@ -278,22 +278,17 @@ void gsf::TextInputWidget::adjustShownText()
         //    << m_text->findCharacterPos(0).y << ")" << std::endl;
         m_lBreaksBefCur = 0;
         //m_text->setText("");
-        sf::Text tmpText("", m_text->getFont(), m_text->getCharacterSize());
-        std::wstring tmpString{ L"" };
         std::wstring shownString{ L"" };
-        //m_shownText = L"";
         unsigned int charCntLine{ 0 };
+        float lineWidth{ 0.f };
         for (unsigned int i{ 0 }; i < m_currentText.size(); i++)
         {
             wchar_t c{ m_currentText[i] };
-            float advance { m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
+            float cWidth { m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
                     false).advance };
-            std::cout << "Advance: " << advance << std::endl;
-
-            tmpString += c;
-            tmpText.setString(tmpString);
+            lineWidth += cWidth;
             // Text is out of widget so add a line break before the last added char
-            if (tmpText.findCharacterPos(i + 1).x > m_scrollable->getWidth())
+            if (lineWidth > m_scrollable->getWidth())
             {
                 if (i < m_cursorPos)
                 {
@@ -301,18 +296,18 @@ void gsf::TextInputWidget::adjustShownText()
                     // so we add the cursor later on the right position
                     m_lBreaksBefCur++;
                 }
-                shownString += tmpString.substr(i - charCntLine, charCntLine);
+                //shownString += m_currentText.substr(i - charCntLine, charCntLine);
                 shownString += L"\n";
-                tmpString = L"";
-                tmpString += c;
+                shownString += c;
                 charCntLine = 1;
+                lineWidth = cWidth;
             }
             else
             {
                 charCntLine++;
+                shownString += c;
             }
         }
-        shownString += tmpString;
         m_shownText = shownString;
         m_text->setText(m_shownText);
     }
