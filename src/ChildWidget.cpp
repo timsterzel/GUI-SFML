@@ -55,12 +55,13 @@ void gsf::ChildWidget::drawWidget(sf::RenderTarget &target,
 {
         drawCurrent(target, states);
         drawChildren(target, states);
+        drawCurrentAfterChildren(target, states);
 }
 
 void gsf::ChildWidget::drawCurrent(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
-    //Do nothing by default
+    // Do nothing by default
 }
 
 void gsf::ChildWidget::drawChildren(sf::RenderTarget &target, 
@@ -72,6 +73,11 @@ void gsf::ChildWidget::drawChildren(sf::RenderTarget &target,
     }
 }
 
+void gsf::ChildWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+    sf::RenderStates states) const
+{
+    // Do nothing by default
+}
 bool gsf::ChildWidget::handleSpecialEvents(sf::Event &event)
 {
     return false;

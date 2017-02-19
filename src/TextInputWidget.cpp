@@ -5,6 +5,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 : ChildWidget{ width, height }
 //, m_text{ "", font, 12, sf::Color::Black }
 , m_text{ nullptr }
+, m_cursor{ "|", font, 12 }
 , m_scrollable{ nullptr }
 , m_isFocused{ false }
 , m_cursorPos{ 0 }
@@ -12,6 +13,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 , m_isCursorShown{ true }
 , m_blinkFreq{ 0.8f }
 , m_lastBlinkTime{ 0.f }
+, m_minBreakCharCnt{ 0 }
 {
     std::unique_ptr<TextWidget> text{ 
         std::make_unique<TextWidget>("", font, 12, sf::Color::Black) };
@@ -23,6 +25,8 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
     scrollabe->attachChild(std::move(text));
     //attachChild(std::move(text));
     attachChild(std::move(scrollabe));
+    m_cursor.setFillColor(sf::Color::Black);
+
     //m_text.setFont(font);
     //m_text.setCharacterSize(12);
     //m_text.setTextColor(sf::Color::Black);
@@ -89,7 +93,17 @@ bool gsf::TextInputWidget::isHorizontalScrollEnabled() const
 void gsf::TextInputWidget::drawCurrent(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
-    //target.draw(m_text, states);
+
+}
+
+void gsf::TextInputWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+                    sf::RenderStates states) const
+{   
+    // Draw cursor after children, so that children are not drawn over cursor
+    if (m_isCursorShown)
+    {
+        target.draw(m_cursor, states);
+    }
 }
 
 void gsf::TextInputWidget::updateCurrent(float dt)
@@ -102,14 +116,8 @@ void gsf::TextInputWidget::updateCurrent(float dt)
         m_lastBlinkTime = 0.f;
     }
     //std::wstring text{ m_currentText };
-    std::wstring text{ m_shownText };
-    // Add cursor
-    if (m_isCursorShown)
-    {
-        //std::cout << "CursorPos: " << m_cursorPos << " breaks: " << m_lBreaksBefCur << std::endl << m_lBreaksBefCur << std::endl;
-        text.insert(m_cursorPos + m_lBreaksBefCur, L"|");
-    }
-    m_text->setText(text); 
+    //std::wstring text{ m_shownText };
+    //m_text->setText(text); 
 }
 
 bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
@@ -203,6 +211,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         m_shownText = m_currentText;
         m_text->setText(m_shownText);
         adjustShownText();
+        m_cursor.setPosition(m_text->findCharacterPos(m_cursorPos));
         m_scrollable->recalculateScroll();
         m_scrollable->scrollToRight();
         m_scrollable->scrollToBottom();
@@ -214,6 +223,50 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
 
 void gsf::TextInputWidget::adjustShownText()
 {
+    /*
+    if (m_scrollable->isHorizontalScrollEnabled() || m_currentText.size() == 0)
+        return;
+    
+    m_lBreaksBefCur = 0;
+    m_text->setText("");
+    m_shownText = L"";
+    // Add min cnt of chars we had in the past for a line break
+    m_shownText = m_currentText.substr(0, m_minBreakCharCnt);
+    // Start searching by the min cnt of chars we had in the past
+    bool done{ false };
+    unsigned int actualPos = m_minBreakCharCnt;
+    do
+    {
+        m_text->setText(m_shownText);
+        // Search expotenzial the pos where text dont fits anymore, and then
+        // search binary in this area
+        int i{ 1 };
+        while(m_text->getWidth() < m_scrollable->getWidth())
+        {
+            wchar_t c{ m_currentText[actualPos + i - 1] };
+            m_shownText += c;
+        }
+        // The search area is now between i / 2 and i -1
+        // In this area we now search binary
+
+        // Remove chars util the text fits in its parent
+        while(m_text->getWidth() > m_scrollable->getWidth())
+        {            
+            m_shownText.pop_back();
+            actualPos--;
+            m_text->setText(m_shownText);
+            // The minimum has changed
+            m_minBreakCharCnt--;
+        };
+        
+
+
+
+
+
+    } while (!done);
+    */
+    /*
     if (!m_scrollable->isHorizontalScrollEnabled())
     {
         m_lBreaksBefCur = 0;
@@ -238,6 +291,7 @@ void gsf::TextInputWidget::adjustShownText()
         }
         m_text->setText(m_shownText);
     }
+    */
 }
 
 void gsf::TextInputWidget::resetCursorStatus()

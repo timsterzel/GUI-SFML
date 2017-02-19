@@ -10,11 +10,10 @@ namespace gsf
 {
     class TextInputWidget: public gsf::ChildWidget
     {
-        protected:
-
         private:
             //sf::Text m_text;
             TextWidget *m_text;
+            sf::Text m_cursor;
             ScrollableWidget *m_scrollable;            
             // The text which is stored in TextInput
             std::wstring m_currentText;
@@ -33,7 +32,11 @@ namespace gsf
             float m_blinkFreq;
             // The time since the cursor was last shown or invisble in secods
             float m_lastBlinkTime;
-        
+     
+        protected:
+            // The minimum amount if chars where a line breake was added
+            unsigned int m_minBreakCharCnt;
+
         public:
             TextInputWidget(float width, float height, sf::Font &font);
 
@@ -53,16 +56,23 @@ namespace gsf
             void setIsHorizontalScrollEnabled(bool isEnabled);
             bool isHorizontalScrollEnabled() const;
 
-            virtual void drawCurrent(sf::RenderTarget &target, 
-                    sf::RenderStates states) const override;
-            virtual void updateCurrent(float dt) override;
 
         protected:
+
+            virtual void drawCurrent(sf::RenderTarget &target, 
+                    sf::RenderStates states) const override;
+
+            virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
+                    sf::RenderStates states) const;
             virtual bool handleEventCurrent(sf::Event &event) override;
             // Adjust the Text so that it fit in the Widget. E.g. when only vertical
             // scroll is enabled add line breaks on the right positions
             void adjustShownText();
+
         private:
+
+
+            virtual void updateCurrent(float dt) override;
             // Reset cursor status means, that m_lastBlinkTime is set to 0 and
             // m_isCursorShown to true
             void resetCursorStatus();

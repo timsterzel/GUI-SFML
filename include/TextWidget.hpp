@@ -36,6 +36,7 @@ namespace gsf
             void setTextColor(const sf::Color color);
             sf::Color getTextColor() const;
 
+            sf::Vector2f findCharacterPos(std::size_t index) const;
 
             virtual void drawWidget(sf::RenderTarget &target, 
                     sf::RenderStates states) const override;

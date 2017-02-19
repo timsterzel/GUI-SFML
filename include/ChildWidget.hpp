@@ -24,8 +24,13 @@ namespace gsf
 
         protected:
 
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const;
-            void drawChildren(sf::RenderTarget &target, sf::RenderStates states) const;
+            virtual void drawCurrent(sf::RenderTarget &target, 
+                    sf::RenderStates states) const;
+            void drawChildren(sf::RenderTarget &target, 
+                    sf::RenderStates states) const;
+            
+            virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
+                    sf::RenderStates states) const;
 
             // Returns true if widget has handled the event and children dont have to handle it
             bool handleEvent(sf::Event &event) override;

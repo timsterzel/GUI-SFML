@@ -91,6 +91,11 @@ sf::Color gsf::TextWidget::getTextColor() const
     return m_text.getFillColor();
 }
 
+sf::Vector2f gsf::TextWidget::findCharacterPos(std::size_t index) const
+{
+    return m_text.findCharacterPos(index) + getPosition();    
+}
+
 void gsf::TextWidget::drawWidget(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
