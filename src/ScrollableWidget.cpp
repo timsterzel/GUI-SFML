@@ -176,7 +176,7 @@ void gsf::ScrollableWidget::scrollToRight()
             || m_children.size() < 1)
         return;
     Widget* child = m_children.at(0).get();
-    m_scrollOffsetX = getRight() - child->getRight();
+    m_scrollOffsetX = -getRight() - child->getRight();
     // Move scrollbar by widgets width, because its always more then the scrollbar
     // can get, so the correctScrollBarPosition() method correct its postion then
     m_scrollbarHorizontal.move(getWidth() , 0);
@@ -194,7 +194,7 @@ void gsf::ScrollableWidget::scrollToTop()
     m_scrollOffsetY = getTop() - child->getTop();
     // Move scrollbar by widgets height, because its always more then the scrollbar
     // can get, so the correctScrollBarPosition() method correct its postion then
-    m_scrollbarHorizontal.move(-getHeight() , 0);
+    m_scrollbarVertical.move(-0.f , -getHeight());
     correctScrollBarPosition();
     handleChildScroll();
 }
@@ -205,10 +205,10 @@ void gsf::ScrollableWidget::scrollToBottom()
             || m_children.size() < 1)
         return;
     Widget* child = m_children.at(0).get();
-    m_scrollOffsetY = getBottom() - child->getBottom();
+    m_scrollOffsetY = -getBottom() - child->getBottom();
     // Move scrollbar by widgets height, because its always more then the scrollbar
     // can get, so the correctScrollBarPosition() method correct its postion then
-    m_scrollbarHorizontal.move(getHeight() , 0);
+    m_scrollbarVertical.move(0.f , getHeight());
     correctScrollBarPosition();
     handleChildScroll();
 }
