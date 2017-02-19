@@ -152,6 +152,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             // when cursor is moved it should be drawn so we reset its status
             resetCursorStatus();
             adjustShownText();
+            m_cursor.setPosition(m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
             return true;
         case sf::Keyboard::Right: 
             if (m_cursorPos < m_currentText.length())
