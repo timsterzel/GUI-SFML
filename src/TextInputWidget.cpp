@@ -225,69 +225,22 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
 
 void gsf::TextInputWidget::adjustShownText()
 {
-    /*
-    if (m_scrollable->isHorizontalScrollEnabled() || m_currentText.size() == 0)
-        return;
-    
-    m_lBreaksBefCur = 0;
-    m_text->setText("");
-    m_shownText = L"";
-    // Add min cnt of chars we had in the past for a line break
-    m_shownText = m_currentText.substr(0, m_minBreakCharCnt);
-    // Start searching by the min cnt of chars we had in the past
-    bool done{ false };
-    unsigned int actualPos = m_minBreakCharCnt;
-    do
-    {
-        m_text->setText(m_shownText);
-        // Search expotenzial the pos where text dont fits anymore, and then
-        // search binary in this area
-        int i{ 1 };
-        while(m_text->getWidth() < m_scrollable->getWidth())
-        {
-            wchar_t c{ m_currentText[actualPos + i - 1] };
-            m_shownText += c;
-        }
-        // The search area is now between i / 2 and i -1
-        // In this area we now search binary
-
-        // Remove chars util the text fits in its parent
-        while(m_text->getWidth() > m_scrollable->getWidth())
-        {            
-            m_shownText.pop_back();
-            actualPos--;
-            m_text->setText(m_shownText);
-            // The minimum has changed
-            m_minBreakCharCnt--;
-        };
-        
-
-
-
-
-
-    } while (!done);
-    */
-    
-    // advance is the with of the glyph
-    //float advance { m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
-    //    false).advance };
     if (!m_scrollable->isHorizontalScrollEnabled())
     {
-        //std::cout << "POS: (" << m_text->findCharacterPos(1).x  << "|" 
-        //    << m_text->findCharacterPos(0).y << ")" << std::endl;
         m_lBreaksBefCur = 0;
-        //m_text->setText("");
         std::wstring shownString{ L"" };
+        // The chars which are in the actual line
         unsigned int charCntLine{ 0 };
+        // The total width of all chars in the current line
         float lineWidth{ 0.f };
         for (unsigned int i{ 0 }; i < m_currentText.size(); i++)
         {
             wchar_t c{ m_currentText[i] };
+            // Width of the current char
             float cWidth { m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
                     false).advance };
             lineWidth += cWidth;
-            // Text is out of widget so add a line break before the last added char
+            // When Text is out of scrollable widget, we have to add a new line 
             if (lineWidth > m_scrollable->getWidth())
             {
                 if (i < m_cursorPos)
@@ -297,8 +250,11 @@ void gsf::TextInputWidget::adjustShownText()
                     m_lBreaksBefCur++;
                 }
                 //shownString += m_currentText.substr(i - charCntLine, charCntLine);
+                // Add new line
                 shownString += L"\n";
+                // add the char with which the line was to wide in the new line
                 shownString += c;
+                // We have added the char c in the new line, so we have now 1 char in the current line
                 charCntLine = 1;
                 lineWidth = cWidth;
             }
@@ -311,34 +267,6 @@ void gsf::TextInputWidget::adjustShownText()
         m_shownText = shownString;
         m_text->setText(m_shownText);
     }
-    /*
-    if (!m_scrollable->isHorizontalScrollEnabled())
-    {
-        //std::cout << "POS: (" << m_text->findCharacterPos(1).x  << "|" 
-        //    << m_text->findCharacterPos(0).y << ")" << std::endl;
-        m_lBreaksBefCur = 0;
-        m_text->setText("");
-        m_shownText = L"";
-        for (unsigned int i{ 0 }; i != m_currentText.size(); i++)
-        {
-            wchar_t c{ m_currentText[i] };
-            m_shownText += c;
-            m_text->setText(m_shownText);
-            // Text is out of widget so add a line break before the last added char
-            if (m_text->findCharacterPos(i).x > m_scrollable->getWidth())
-            {
-                if (i < m_cursorPos)
-                {
-                    // We have to increase the "line breaks befor cursor" counter
-                    // so we add the cursor later on the right position
-                    m_lBreaksBefCur++;
-                }
-                m_shownText.insert(m_shownText.size() - 2, L"\n");
-            }
-        }
-        m_text->setText(m_shownText);
-    }
-    */
 }
 
 void gsf::TextInputWidget::resetCursorStatus()
