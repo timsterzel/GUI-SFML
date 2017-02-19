@@ -269,6 +269,9 @@ void gsf::TextInputWidget::adjustShownText()
     } while (!done);
     */
     
+    // advance is the with of the glyph
+    //float advance { m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
+    //    false).advance };
     if (!m_scrollable->isHorizontalScrollEnabled())
     {
         //std::cout << "POS: (" << m_text->findCharacterPos(1).x  << "|" 
@@ -276,16 +279,18 @@ void gsf::TextInputWidget::adjustShownText()
         m_lBreaksBefCur = 0;
         //m_text->setText("");
         sf::Text tmpText("", m_text->getFont(), m_text->getCharacterSize());
-        std::wstring tmpString{ L" " };
+        std::wstring tmpString{ L"" };
         std::wstring shownString{ L"" };
         //m_shownText = L"";
         unsigned int charCntLine{ 0 };
         for (unsigned int i{ 0 }; i < m_currentText.size(); i++)
         {
             wchar_t c{ m_currentText[i] };
-            tmpString.pop_back();
+            float advance { m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
+                    false).advance };
+            std::cout << "Advance: " << advance << std::endl;
+
             tmpString += c;
-            tmpString += L' ';
             tmpText.setString(tmpString);
             // Text is out of widget so add a line break before the last added char
             if (tmpText.findCharacterPos(i + 1).x > m_scrollable->getWidth())
@@ -296,18 +301,17 @@ void gsf::TextInputWidget::adjustShownText()
                     // so we add the cursor later on the right position
                     m_lBreaksBefCur++;
                 }
-                shownString += tmpString.substr(i - charCntLine + 1, charCntLine);
+                shownString += tmpString.substr(i - charCntLine, charCntLine);
                 shownString += L"\n";
-                tmpString = L" ";
+                tmpString = L"";
+                tmpString += c;
                 charCntLine = 1;
-                //tmpString.insert(tmpString.size() - 2, L"\n");
             }
             else
             {
                 charCntLine++;
             }
         }
-        tmpString.pop_back();
         shownString += tmpString;
         m_shownText = shownString;
         m_text->setText(m_shownText);
