@@ -69,6 +69,11 @@ void gsf::TextWidget::setFont(const sf::Font &font)
     m_text.setFont(font);
 }
 
+const sf::Font& gsf::TextWidget::getFont() const
+{
+    return *(m_text.getFont());
+}
+
 void gsf::TextWidget::setCharacterSize(const unsigned int size)
 {
     m_text.setCharacterSize(size);

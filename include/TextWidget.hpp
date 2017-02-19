@@ -29,6 +29,7 @@ namespace gsf
             std::wstring getWideText() const;
            
             void setFont(const sf::Font &font);
+            const sf::Font& getFont() const;
 
             void setCharacterSize(const unsigned int size);
             unsigned int getCharacterSize() const;
