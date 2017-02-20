@@ -125,6 +125,8 @@ sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
     unsigned int charSize{ m_text.getCharacterSize() };
     // Determine width of the char
     float cWidth{ 0.f };
+    // To Do: determine if bold
+    //bool isBold{ m_text.getStyle()  }
     // Tabs are cases which have to be handled special, because the width is
     // not returned correctly by "advanced", so we calculate the width as 4
     // spaces
@@ -142,23 +144,12 @@ sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
 }
 
 sf::FloatRect gsf::TextWidget::getLocalBoundsOfChar(std::size_t i) const
-{
-    /*
-    wchar_t c{ m_shownText[i] };
-    sf::Vector2f charPos{ m_text->findCharacterPos(i) };
-    float cWidth{ 0.f };
-    if (c == '\t')
-    {
-        cWidth = (m_font.getGlyph(' ', m_charSize, false).advance) * 4;
-    }
-    else
-    {
-        cWidth = m_font.getGlyph(c, m_charSize, false).advance;
-    }
-    float cHeight{ m_font.getGlyph(c, m_charSize, false).bounds.height };
-    sf::FloatRect rect{ charPos.x, charPos.y, cWidth, cHeight };
-    */
-    return sf::FloatRect();
+{    
+    wchar_t c{ m_text.getString().toWideString()[i] };
+    sf::Vector2f charPos{ m_text.findCharacterPos(i) };
+    sf::Vector2f size{ getWidthAndHeightOfChar(c) };
+    sf::FloatRect rect{ charPos.x, charPos.y, size.x, size.y };    
+    return rect;
 }
 
 void gsf::TextWidget::drawWidget(sf::RenderTarget &target, 
