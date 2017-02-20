@@ -10,6 +10,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 , m_isEditable{ true }
 , m_cursor{ "|", font, m_charSize }
 , m_scrollable{ nullptr }
+, m_acceptNewLines{ true }
 , m_isFocused{ false }
 , m_cursorPos{ 0 }
 , m_lBreaksBefCur{ 0 }
@@ -24,7 +25,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
         std::make_unique<ScrollableWidget>(width, height) };
     m_scrollable = scrollabe.get();
     m_text = text.get();
-    scrollabe->setBackgroundColor(sf::Color::Red);
+    scrollabe->setBackgroundColor(sf::Color::Transparent);
     scrollabe->attachChild(std::move(text));
     //attachChild(std::move(text));
     attachChild(std::move(scrollabe));
@@ -76,6 +77,16 @@ void gsf::TextInputWidget::setTextColor(const sf::Color color)
 sf::Color gsf::TextInputWidget::getTextColor() const
 {
     return m_text->getTextColor();
+}
+
+void gsf::TextInputWidget::setIsNewLineAccepted(bool isAccepted)
+{
+    m_acceptNewLines = isAccepted;
+}
+
+bool gsf::TextInputWidget::getIsNewLineAccepted() const
+{
+    return m_acceptNewLines;
 }
 
 bool gsf::TextInputWidget::isFocused() const
@@ -238,7 +249,14 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             }
             break;
         // Enter key
-        case 13: m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++; break;
+        case 13: 
+            // Dont add new line, when new lines are not accepted
+            if (!m_acceptNewLines)
+            {
+                break;
+            }
+            m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++; 
+            break;
         // Add char to text
         default: m_currentText.insert(m_cursorPos, std::wstring() + c); m_cursorPos++;
         }

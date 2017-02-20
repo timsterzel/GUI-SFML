@@ -22,6 +22,8 @@ namespace gsf
             std::wstring m_currentText;
             // The text which is shown in the Widget
             std::wstring m_shownText;
+            // If it is false, entered new lines by user are not accepted
+            bool m_acceptNewLines;
             // True when Widget is focused
             bool m_isFocused;
             // The position of the cursor inside the text
@@ -35,7 +37,7 @@ namespace gsf
             float m_blinkFreq;
             // The time since the cursor was last shown or invisble in secods
             float m_lastBlinkTime;
-
+            
         protected:
             // The minimum amount if chars where a line breake was added
             unsigned int m_minBreakCharCnt;
@@ -54,7 +56,10 @@ namespace gsf
 
             void setTextColor(const sf::Color color);
             sf::Color getTextColor() const;
-        
+            
+            void setIsNewLineAccepted(bool isAccepted);
+            bool getIsNewLineAccepted() const;
+
             bool isFocused() const;
             
             void setIsVerticalScrollEnabled(bool isEnabled);

@@ -194,7 +194,7 @@ int main()
 
     // Console Widget
     std::unique_ptr<gsf::ConsoleWidget> console1{ 
-        std::make_unique<gsf::ConsoleWidget>(300.f, 200.f, font) };
+        std::make_unique<gsf::ConsoleWidget>(500.f, 200.f, font) };
     console1->setPosition(600.f, 400.f);
     guiEnvironment.addWidget(std::move(console1));
 

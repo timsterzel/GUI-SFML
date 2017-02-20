@@ -15,12 +15,14 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
     m_textInput = textInput.get();
 
     m_textDisplay->setIsHorizontalScrollEnabled(false);
-    //m_textDisplay->setBackgroundColor(sf::Color::Green);
+    m_textDisplay->setBackgroundColor(sf::Color::Magenta);
+    m_textDisplay->setIsEditable(false);
 
     m_textInput->setIsVerticalScrollEnabled(false);
-    //m_textInput->setBackgroundColor(sf::Color::White);
+    m_textInput->setBackgroundColor(sf::Color::White);
     m_textInput->setPosition(0.f, height - 20.f);
-
+    m_textInput->setIsNewLineAccepted(false);
+    
     attachChild(std::move(textDisplay));
     attachChild(std::move(textInput));
 }
