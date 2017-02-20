@@ -125,21 +125,20 @@ sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
     unsigned int charSize{ m_text.getCharacterSize() };
     // Determine width of the char
     float cWidth{ 0.f };
-    // To Do: determine if bold
-    //bool isBold{ m_text.getStyle()  }
+    bool isBold{ m_text.getStyle() & sf::Text::Bold };
     // Tabs are cases which have to be handled special, because the width is
     // not returned correctly by "advanced", so we calculate the width as 4
     // spaces
     if (c == '\t')
     {
-        cWidth = (font.getGlyph(' ', charSize, false).advance) * 4;
+        cWidth = (font.getGlyph(' ', charSize, isBold).advance) * 4;
     }
     else
     {
-        cWidth = font.getGlyph(c, charSize, false).advance;
+        cWidth = font.getGlyph(c, charSize, isBold).advance;
     }
     // Determine height of char
-    float cHeight{ font.getGlyph(c, charSize, false).bounds.height };
+    float cHeight{ font.getGlyph(c, charSize, isBold).bounds.height };
     return sf::Vector2f{ cWidth, cHeight };
 }
 

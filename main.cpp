@@ -20,6 +20,7 @@ void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt,
 
 int main()
 {
+
     unsigned int windowWidth{ 1280 };
     unsigned int windowHeight{ 720 };
     sf::RenderWindow window(sf::VideoMode{ windowWidth, windowHeight }, "GUI-SFML");
@@ -29,6 +30,7 @@ int main()
     {
         std::cout << "Error by loading Font" << std::endl;
     }
+
     sf::Text txtStatFPS;
     txtStatFPS.setFont(font);
     txtStatFPS.setCharacterSize(12);
