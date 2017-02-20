@@ -5,6 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "ButtonWidget.hpp"
+#include "ConsoleWidget.hpp"
 #include "GUIEnvironment.hpp"
 #include "ProgressWidget.hpp"
 #include "TextWidget.hpp"
@@ -190,6 +191,12 @@ int main()
     textInput1->setIsHorizontalScrollEnabled(false);
     textInput1->setText(L"Test Text HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH :)");
     guiEnvironment.addWidget(std::move(textInput1));
+
+    // Console Widget
+    std::unique_ptr<gsf::ConsoleWidget> console1{ 
+        std::make_unique<gsf::ConsoleWidget>(300.f, 200.f, font) };
+    console1->setPosition(600.f, 400.f);
+    guiEnvironment.addWidget(std::move(console1));
 
     while (window.isOpen())
     {
