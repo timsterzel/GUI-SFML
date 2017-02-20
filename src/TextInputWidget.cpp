@@ -230,7 +230,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
 
 void gsf::TextInputWidget::adjustShownText()
 {
-    if (!m_scrollable->isHorizontalScrollEnabled())
+    if (!m_scrollable->isHorizontalScrollEnabled() && m_currentText.size() > 0)
     {
         m_lBreaksBefCur = 0;
         std::wstring shownString{ L"" };
@@ -242,8 +242,21 @@ void gsf::TextInputWidget::adjustShownText()
         {
             wchar_t c{ m_currentText[i] };
             // Width of the current char
-            float cWidth { m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
-                    false).advance };
+            float cWidth{ 0.f }; 
+            // Tabs are cases which have to be handled special, because the width is
+            // not returned correctly by "advanced", so we calculate the width as 4
+            // spaces
+            if (c == '\t')
+            {
+                cWidth = (m_text->getFont().getGlyph(' ', m_text->getCharacterSize()
+                    , false).advance) * 4;
+            }
+            else
+            {
+                cWidth = m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
+                    false).advance ;
+            }
+                        
             lineWidth += cWidth;
             // When Text is out of scrollable widget, we have to add a new line 
             if (lineWidth > m_scrollable->getWidth())
@@ -259,7 +272,8 @@ void gsf::TextInputWidget::adjustShownText()
                 shownString += L"\n";
                 // add the char with which the line was to wide in the new line
                 shownString += c;
-                // We have added the char c in the new line, so we have now 1 char in the current line
+                // We have added the char c in the new line, 
+                // so we have now 1 char in the current line
                 charCntLine = 1;
                 lineWidth = cWidth;
             }
