@@ -122,17 +122,20 @@ int main()
             (200.f, 80.f, "TTTTTTTTTTTTTTTTTTTTTTClick me", font) };
     buttonWidget->setPosition(620.f , 360.f);
     buttonWidget->setOutlineThickness(8.f);
-    buttonWidget->setOnLeftClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
+    buttonWidget->setOnLeftClickListener(
+            [] (gsf::Widget* widget, sf::Vector2f mousePos)
             {
                 std::cout << "Button Left Click\n";
 
             });
-    buttonWidget->setOnRightClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
+    buttonWidget->setOnRightClickListener(
+            [] (gsf::Widget* widget, sf::Vector2f mousePos)
             {
                 std::cout << "Button Right Click\n";
 
             });
-    buttonWidget->setOnMiddleClickListener([] (gsf::Widget* widget, sf::Vector2f mousePos)
+    buttonWidget->setOnMiddleClickListener(
+            [] (gsf::Widget* widget, sf::Vector2f mousePos)
             {
                 std::cout << "Button Middle Click\n";
 
@@ -183,6 +186,7 @@ int main()
     textInput1->setPosition(320.f, 520.f);
     textInput1->setBackgroundColor(sf::Color::White);
     textInput1->setIsHorizontalScrollEnabled(false);
+    //textInput1->setText(L"Test Text HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH :)");
     guiEnvironment.addWidget(std::move(textInput1));
 
     while (window.isOpen())

@@ -41,9 +41,14 @@ bool gsf::TextInputWidget::isEditable() const
     return m_isEditable;
 }
 
-void gsf::TextInputWidget::setText(const std::string &text)
+void gsf::TextInputWidget::setText(const std::wstring &text)
 {
-    m_text->setText(text);
+    m_currentText = text;
+    m_text->setText(m_currentText);
+    // Move cursor to end of text
+    m_cursorPos = m_currentText.size();
+    // Adjust text so that it fits the scrollbar when horizontal scrolling is disabled
+    adjustShownText();
 }
 
 std::string gsf::TextInputWidget::getText() const
@@ -108,7 +113,7 @@ void gsf::TextInputWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
                     sf::RenderStates states) const
 {   
     // Draw cursor after children, so that children are not drawn over cursor
-    if (m_isCursorShown)
+    if (m_isCursorShown && m_isEditable)
     {
         target.draw(m_cursor, states);
     }
@@ -116,6 +121,12 @@ void gsf::TextInputWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
 
 void gsf::TextInputWidget::updateCurrent(float dt)
 {
+    if (!m_isEditable)
+    {
+        // Nothing to do
+        return;
+    }
+    
     // Update cursor stuff
     m_lastBlinkTime += dt;
     if (m_lastBlinkTime >= m_blinkFreq)
@@ -132,6 +143,11 @@ void gsf::TextInputWidget::updateCurrent(float dt)
 
 bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
 {
+    if (!m_isEditable)
+    {
+        // Nothing to do
+        return false;
+    }
     //bool handled{ ChildWidget::handleEvent(event) };/*|| 
       //  m_scrollable->handleEventWidget(event) };*/
     // Check if actual Widget is focused

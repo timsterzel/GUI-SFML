@@ -10,19 +10,37 @@ gsf::TextWidget::TextWidget()
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font)
 : Widget()
 {
-    init(text, font, 12, sf::Color::Black);
+    init(sf::String(text), font, 12, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font, int characterSize)
 : Widget()
 {
-    init(text, font, characterSize, sf::Color::Black);
+    init(sf::String(text), font, characterSize, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font, int characterSize, sf::Color color)
 : Widget()
 {
-    init(text, font, characterSize, color);
+    init(sf::String(text), font, characterSize, color);
+}
+
+gsf::TextWidget::TextWidget(std::wstring text, sf::Font &font)
+: Widget()
+{
+    init(sf::String(text), font, 12, sf::Color::Black);
+}
+
+gsf::TextWidget::TextWidget(std::wstring text, sf::Font &font, int characterSize)
+: Widget()
+{
+    init(sf::String(text), font, characterSize, sf::Color::Black);
+}
+
+gsf::TextWidget::TextWidget(std::wstring text, sf::Font &font, int characterSize, sf::Color color)
+: Widget()
+{
+    init(sf::String(text), font, characterSize, color);
 }
 
 void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize, 
