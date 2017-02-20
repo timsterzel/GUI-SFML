@@ -5,7 +5,9 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 : ChildWidget{ width, height }
 //, m_text{ "", font, 12, sf::Color::Black }
 , m_text{ nullptr }
-, m_cursor{ "|", font, 12 }
+, m_font{ font }
+, m_charSize{ 12 }
+, m_cursor{ "|", font, m_charSize }
 , m_scrollable{ nullptr }
 , m_isFocused{ false }
 , m_cursorPos{ 0 }
@@ -21,6 +23,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
         std::make_unique<ScrollableWidget>(width, height) };
     m_scrollable = scrollabe.get();
     m_text = text.get();
+    m_text->setCharacterSize(m_charSize);
     scrollabe->setBackgroundColor(sf::Color::Red);
     scrollabe->attachChild(std::move(text));
     //attachChild(std::move(text));
@@ -37,32 +40,34 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 
 void gsf::TextInputWidget::setText(const std::string &text)
 {
-   m_text->setText(text);
+    m_text->setText(text);
 }
 
 std::string gsf::TextInputWidget::getText() const
 {
-   return m_text->getText().toAnsiString();
+    return m_text->getText().toAnsiString();
 }
 
 void gsf::TextInputWidget::setCharacterSize(const unsigned int size)
 {
-   m_text->setCharacterSize(size);
+    m_text->setCharacterSize(size);
+    m_charSize = size;
+    m_cursor.setCharacterSize(size);
 }
 
 unsigned int gsf::TextInputWidget::getCharacterSize() const
 {
-   return m_text->getCharacterSize();
+    return m_charSize;
 }
 
 void gsf::TextInputWidget::setTextColor(const sf::Color color)
 {
-   m_text->setTextColor(color);
+    m_text->setTextColor(color);
 }
 
 sf::Color gsf::TextInputWidget::getTextColor() const
 {
-   return m_text->getTextColor();
+    return m_text->getTextColor();
 }
 
 bool gsf::TextInputWidget::isFocused() const
@@ -248,13 +253,11 @@ void gsf::TextInputWidget::adjustShownText()
             // spaces
             if (c == '\t')
             {
-                cWidth = (m_text->getFont().getGlyph(' ', m_text->getCharacterSize()
-                    , false).advance) * 4;
+                cWidth = (m_font.getGlyph(' ', m_charSize, false).advance) * 4;
             }
             else
             {
-                cWidth = m_text->getFont().getGlyph(c, m_text->getCharacterSize(),
-                    false).advance ;
+                cWidth = m_font.getGlyph(c, m_charSize, false).advance;
             }
                         
             lineWidth += cWidth;

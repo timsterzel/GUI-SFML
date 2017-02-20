@@ -13,6 +13,8 @@ namespace gsf
         private:
             //sf::Text m_text;
             TextWidget *m_text;
+            sf::Font &m_font;
+            unsigned int m_charSize;
             sf::Text m_cursor;
             ScrollableWidget *m_scrollable;            
             // The text which is stored in TextInput
