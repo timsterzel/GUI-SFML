@@ -15,6 +15,7 @@ namespace gsf
             TextWidget *m_text;
             sf::Font &m_font;
             unsigned int m_charSize;
+            bool m_isEditable;
             sf::Text m_cursor;
             ScrollableWidget *m_scrollable;            
             // The text which is stored in TextInput
@@ -34,13 +35,16 @@ namespace gsf
             float m_blinkFreq;
             // The time since the cursor was last shown or invisble in secods
             float m_lastBlinkTime;
-     
+
         protected:
             // The minimum amount if chars where a line breake was added
             unsigned int m_minBreakCharCnt;
 
         public:
             TextInputWidget(float width, float height, sf::Font &font);
+            
+            void setIsEditable(bool isEditable);
+            bool isEditable() const;
 
             void setText(const std::string &text);
             std::string getText() const;

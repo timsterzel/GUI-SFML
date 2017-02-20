@@ -7,6 +7,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 , m_text{ nullptr }
 , m_font{ font }
 , m_charSize{ 12 }
+, m_isEditable{ true }
 , m_cursor{ "|", font, m_charSize }
 , m_scrollable{ nullptr }
 , m_isFocused{ false }
@@ -18,24 +19,26 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 , m_minBreakCharCnt{ 0 }
 {
     std::unique_ptr<TextWidget> text{ 
-        std::make_unique<TextWidget>("", font, 12, sf::Color::Black) };
+        std::make_unique<TextWidget>("", font, m_charSize, sf::Color::Black) };
     std::unique_ptr<ScrollableWidget> scrollabe{ 
         std::make_unique<ScrollableWidget>(width, height) };
     m_scrollable = scrollabe.get();
     m_text = text.get();
-    m_text->setCharacterSize(m_charSize);
     scrollabe->setBackgroundColor(sf::Color::Red);
     scrollabe->attachChild(std::move(text));
     //attachChild(std::move(text));
     attachChild(std::move(scrollabe));
     m_cursor.setFillColor(sf::Color::Black);
+}
 
-    //m_text.setFont(font);
-    //m_text.setCharacterSize(12);
-    //m_text.setTextColor(sf::Color::Black);
-    //m_text.setOrigin(0.f, 0.f);
-    //m_text.setPosition(0.f, 0.f);
-    //m_scrollableWidget.attachChild();
+void gsf::TextInputWidget::setIsEditable(bool isEditable)
+{
+    m_isEditable = isEditable;
+}
+
+bool gsf::TextInputWidget::isEditable() const
+{
+    return m_isEditable;
 }
 
 void gsf::TextInputWidget::setText(const std::string &text)
