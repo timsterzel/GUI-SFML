@@ -42,6 +42,12 @@ namespace gsf
             sf::Color getTextColor() const;
 
             sf::Vector2f findCharacterPos(std::size_t index) const;
+            
+            // Returns the width and height of the given char which it have
+            // with the used character size and font
+            sf::Vector2f getWidthAndHeightOfChar(wchar_t c) const;
+            // Returns the local bounds of the char of the given index
+            sf::FloatRect getLocalBoundsOfChar(std::size_t i) const;
 
             virtual void drawWidget(sf::RenderTarget &target, 
                     sf::RenderStates states) const override;

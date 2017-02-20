@@ -266,19 +266,7 @@ void gsf::TextInputWidget::adjustShownText()
         {
             wchar_t c{ m_currentText[i] };
             // Width of the current char
-            float cWidth{ 0.f }; 
-            // Tabs are cases which have to be handled special, because the width is
-            // not returned correctly by "advanced", so we calculate the width as 4
-            // spaces
-            if (c == '\t')
-            {
-                cWidth = (m_font.getGlyph(' ', m_charSize, false).advance) * 4;
-            }
-            else
-            {
-                cWidth = m_font.getGlyph(c, m_charSize, false).advance;
-            }
-                        
+            float cWidth{ m_text->getWidthAndHeightOfChar(c).x }; 
             lineWidth += cWidth;
             // When Text is out of scrollable widget, we have to add a new line 
             if (lineWidth > m_scrollable->getWidth())
@@ -308,6 +296,43 @@ void gsf::TextInputWidget::adjustShownText()
         m_shownText = shownString;
         m_text->setText(m_shownText);
     }
+}
+
+// Use binary search to get the right position
+int gsf::TextInputWidget::findIndexOfCharOnPos(sf::Vector2f localPos) const
+{
+    return findCharOnPosBinary(localPos, 0, m_shownText.size() - 1);
+}
+
+int gsf::TextInputWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
+    std::size_t r) const
+{
+    // Get center as index
+    std::size_t i{ static_cast<std::size_t>( (r - l) / 2 )};
+    // Found char
+    if (isPosInCharOfText(localPos, i)) {
+        return i;
+    }
+
+    //if (pos.x == )
+}
+
+bool gsf::TextInputWidget::isPosInCharOfText(sf::Vector2f pos, std::size_t i) const 
+{
+    wchar_t c{ m_shownText[i] };
+    sf::Vector2f charPos{ m_text->findCharacterPos(i) };
+    float cWidth{ 0.f };
+    if (c == '\t')
+    {
+        cWidth = (m_font.getGlyph(' ', m_charSize, false).advance) * 4;
+    }
+    else
+    {
+        cWidth = m_font.getGlyph(c, m_charSize, false).advance;
+    }
+    float cHeight{ m_font.getGlyph(c, m_charSize, false).bounds.height };
+    sf::FloatRect rect{ charPos.x, charPos.y, cWidth, cHeight };
+    return rect.contains(pos);
 }
 
 void gsf::TextInputWidget::resetCursorStatus()

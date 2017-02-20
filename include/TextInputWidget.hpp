@@ -62,7 +62,6 @@ namespace gsf
             void setIsHorizontalScrollEnabled(bool isEnabled);
             bool isHorizontalScrollEnabled() const;
 
-
         protected:
 
             virtual void drawCurrent(sf::RenderTarget &target, 
@@ -75,6 +74,14 @@ namespace gsf
             // scroll is enabled add line breaks on the right positions
             void adjustShownText();
 
+            // Determine the index of the char which is on the given position.
+            // Returns -1 when there is no char
+            int findIndexOfCharOnPos(sf::Vector2f localPos) const;
+            int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
+                    std::size_t r) const;
+            // Returns true if the given position is inside the char 
+            // on given index of m_text 
+            bool isPosInCharOfText(sf::Vector2f pos, std::size_t i) const;
         private:
 
 

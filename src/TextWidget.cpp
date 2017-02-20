@@ -119,6 +119,48 @@ sf::Vector2f gsf::TextWidget::findCharacterPos(std::size_t index) const
     return m_text.findCharacterPos(index) + getPosition();    
 }
 
+sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
+{
+    const sf::Font &font{ *(m_text.getFont()) };
+    unsigned int charSize{ m_text.getCharacterSize() };
+    // Determine width of the char
+    float cWidth{ 0.f };
+    // Tabs are cases which have to be handled special, because the width is
+    // not returned correctly by "advanced", so we calculate the width as 4
+    // spaces
+    if (c == '\t')
+    {
+        cWidth = (font.getGlyph(' ', charSize, false).advance) * 4;
+    }
+    else
+    {
+        cWidth = font.getGlyph(c, charSize, false).advance;
+    }
+    // Determine height of char
+    float cHeight{ font.getGlyph(c, charSize, false).bounds.height };
+    return sf::Vector2f{ cWidth, cHeight };
+}
+
+sf::FloatRect gsf::TextWidget::getLocalBoundsOfChar(std::size_t i) const
+{
+    /*
+    wchar_t c{ m_shownText[i] };
+    sf::Vector2f charPos{ m_text->findCharacterPos(i) };
+    float cWidth{ 0.f };
+    if (c == '\t')
+    {
+        cWidth = (m_font.getGlyph(' ', m_charSize, false).advance) * 4;
+    }
+    else
+    {
+        cWidth = m_font.getGlyph(c, m_charSize, false).advance;
+    }
+    float cHeight{ m_font.getGlyph(c, m_charSize, false).bounds.height };
+    sf::FloatRect rect{ charPos.x, charPos.y, cWidth, cHeight };
+    */
+    return sf::FloatRect();
+}
+
 void gsf::TextWidget::drawWidget(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
