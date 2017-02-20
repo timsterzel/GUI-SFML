@@ -79,9 +79,6 @@ namespace gsf
             int findIndexOfCharOnPos(sf::Vector2f localPos) const;
             int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
                     std::size_t r) const;
-            // Returns true if the given position is inside the char 
-            // on given index of m_text 
-            bool isPosInCharOfText(sf::Vector2f pos, std::size_t i) const;
         private:
 
 

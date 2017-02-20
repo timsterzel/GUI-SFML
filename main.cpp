@@ -186,7 +186,7 @@ int main()
     textInput1->setPosition(320.f, 520.f);
     textInput1->setBackgroundColor(sf::Color::White);
     textInput1->setIsHorizontalScrollEnabled(false);
-    //textInput1->setText(L"Test Text HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH :)");
+    textInput1->setText(L"Test Text HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH :)");
     guiEnvironment.addWidget(std::move(textInput1));
 
     while (window.isOpen())

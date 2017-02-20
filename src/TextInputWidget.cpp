@@ -155,6 +155,11 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
     {        
         sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
+        
+        //sf::Vector2f localPos{ mousePos.x - getWorldPosition().x,
+        //    mousePos.y - getWorldPosition().y };
+        //std::cout << "pressed on: " << findIndexOfCharOnPos(localPos);
+
         bool isMouseInShownArea{ getShownArea().contains(mousePos) };
         bool intersecting{ isIntersecting(mousePos) };
         if (isMouseInShownArea && intersecting)
@@ -301,38 +306,47 @@ void gsf::TextInputWidget::adjustShownText()
 // Use binary search to get the right position
 int gsf::TextInputWidget::findIndexOfCharOnPos(sf::Vector2f localPos) const
 {
-    return findCharOnPosBinary(localPos, 0, m_shownText.size() - 1);
+    return findCharOnPosBinary(localPos, 0, m_text->getWideText().size() - 1);
 }
 
 int gsf::TextInputWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
     std::size_t r) const
 {
+    // Nothing found
+    if (r <= l)
+    {
+        return -1;
+    }
     // Get center as index
-    std::size_t i{ static_cast<std::size_t>( (r - l) / 2 )};
-    // Found char
-    if (isPosInCharOfText(localPos, i)) {
+    //std::size_t i{ static_cast<std::size_t>( (r - l) / 2 )};
+    int i = (r - l) / 2;
+    std::cout << "Index: " << i << std::endl;
+    sf::FloatRect cRect{ m_text->getLocalBoundsOfChar(i) };
+    
+    //    ++++++++
+    //    ++++c---
+    //    --------
+    //    
+    //    c : index of i
+    //    + : left of i
+    //    - : right of i
+    
+    // Found char (case c)
+    if (cRect.contains(localPos))
+    {
         return i;
     }
-
-    //if (pos.x == )
-}
-
-bool gsf::TextInputWidget::isPosInCharOfText(sf::Vector2f pos, std::size_t i) const 
-{
-    wchar_t c{ m_shownText[i] };
-    sf::Vector2f charPos{ m_text->findCharacterPos(i) };
-    float cWidth{ 0.f };
-    if (c == '\t')
+    // Left of i (case +)
+    if ( (localPos.x < cRect.left && localPos.y <= cRect.top + cRect.height) ||
+            (localPos.x > cRect.left && localPos.y < cRect.top) )
     {
-        cWidth = (m_font.getGlyph(' ', m_charSize, false).advance) * 4;
+        return findCharOnPosBinary(localPos, l, i - 1);
     }
+    // Right of i (case -)
     else
     {
-        cWidth = m_font.getGlyph(c, m_charSize, false).advance;
+        return findCharOnPosBinary(localPos, i + 1, r);
     }
-    float cHeight{ m_font.getGlyph(c, m_charSize, false).bounds.height };
-    sf::FloatRect rect{ charPos.x, charPos.y, cWidth, cHeight };
-    return rect.contains(pos);
 }
 
 void gsf::TextInputWidget::resetCursorStatus()
