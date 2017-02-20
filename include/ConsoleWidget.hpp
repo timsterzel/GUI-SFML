@@ -5,6 +5,7 @@
 #include "ScrollableWidget.hpp"
 #include "TextWidget.hpp"
 #include <string>
+#include <vector>
 #include "TextInputWidget.hpp"
 
 namespace gsf
@@ -14,12 +15,14 @@ namespace gsf
         private:
             TextInputWidget *m_textDisplay;
             TextInputWidget *m_textInput;
-            bool m_isFocused;
+            // Store inputs in console here
+            std::vector<std::wstring> m_inputHistory;
+            // With the arrow keys, the user can select inputs from histroy
+            // here we store the actual position in history
+            std::size_t m_inputHistoryIndex;
 
         public:
             ConsoleWidget(float width, float height, sf::Font &font);
-            
-            bool isFocused() const;
 
         protected:
 

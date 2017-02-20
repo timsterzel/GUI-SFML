@@ -49,7 +49,7 @@ namespace gsf
             bool isEditable() const;
 
             void setText(const std::wstring &text);
-            std::string getText() const;
+            std::wstring getText() const;
 
             void setCharacterSize(const unsigned int size);
             unsigned int getCharacterSize() const;

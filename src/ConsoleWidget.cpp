@@ -6,6 +6,7 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 : ChildWidget{ width , height }
 , m_textDisplay{ nullptr }
 , m_textInput{ nullptr }
+, m_inputHistoryIndex{ 0 }
 {
     std::unique_ptr<TextInputWidget> textDisplay{ 
         std::make_unique<TextInputWidget>(width, height - 20.f, font) };
@@ -27,10 +28,6 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
     attachChild(std::move(textInput));
 }
 
-bool gsf::ConsoleWidget::isFocused() const
-{
-    return m_isFocused;
-}
 
 void gsf::ConsoleWidget::drawCurrent(sf::RenderTarget &target, 
         sf::RenderStates states) const
@@ -57,9 +54,29 @@ bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
         (float) event.mouseButton.y };
 
     }
-    if (event.type == sf::Event::KeyPressed && m_isFocused)
+
+    if (event.type == sf::Event::TextEntered)
     {
-    
+        wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
+        switch (c)
+        {
+        // New line, enter key
+        case 13: 
+            if (m_textInput->isFocused())
+            {
+                std::cout << "entered 13" << std::endl;
+                // Add entered text to display
+                std::wstring displayText = m_textDisplay->getText();
+                if (displayText.size() > 0)
+                {
+                    displayText += L"\n";
+                }
+                std::wstring inputText{ m_textInput->getText() };
+                m_inputHistory.push_back(inputText);
+                m_textDisplay->setText(displayText + L">" + inputText);
+                m_textInput->setText(L"");
+            }
+        }
     }
     return false;
     //return handled;

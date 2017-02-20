@@ -50,11 +50,14 @@ void gsf::TextInputWidget::setText(const std::wstring &text)
     m_cursorPos = m_currentText.size();
     // Adjust text so that it fits the scrollbar when horizontal scrolling is disabled
     adjustShownText();
+    m_scrollable->recalculateScroll();
+    m_scrollable->scrollToBottom();
 }
 
-std::string gsf::TextInputWidget::getText() const
+std::wstring gsf::TextInputWidget::getText() const
 {
-    return m_text->getText().toAnsiString();
+    //return m_text->getText().toWideString();
+    return m_currentText;
 }
 
 void gsf::TextInputWidget::setCharacterSize(const unsigned int size)
@@ -253,7 +256,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             // Dont add new line, when new lines are not accepted
             if (!m_acceptNewLines)
             {
-                break;
+                return false;
             }
             m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++; 
             break;
