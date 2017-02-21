@@ -201,6 +201,9 @@ int main()
             {
                 std::wcout << "CommandEnteredListener command: " << inputText 
                     << std::endl;
+                gsf::ConsoleWidget *consoleWidget{ 
+                    static_cast<gsf::ConsoleWidget*>(widget) };
+                consoleWidget->addTextToDisplay(L"OK");
             }
     );
     guiEnvironment.addWidget(std::move(console1));

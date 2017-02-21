@@ -75,11 +75,11 @@ namespace gsf
             bool isWindowWidget() const;
 
             void setOnLeftClickListener(std::function<void(Widget *widget, 
-                        sf::Vector2f)> onLeftClickListener);
+                        sf::Vector2f)> listener);
             void setOnRightClickListener(std::function<void(Widget *widget, 
-                        sf::Vector2f)> onLeftClickListener);
+                        sf::Vector2f)> listener);
             void setOnMiddleClickListener(std::function<void(Widget *widget, 
-                        sf::Vector2f)> onLeftClickListener);
+                        sf::Vector2f)> listener);
             
             void setWidth(const float width);
             float getWidth() const;

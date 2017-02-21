@@ -31,6 +31,10 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 void gsf::ConsoleWidget::addTextToDisplay(std::wstring text)
 {
     std::wstring actualStr{ m_textDisplay->getText() };
+    if (actualStr.size() > 0)
+    {
+        actualStr += L"\n";
+    }
     m_textDisplay->setText(actualStr + text);
 }
 
@@ -104,10 +108,6 @@ bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
             {
                 std::cout << "entered 13" << std::endl;
                 // Add entered text to display
-                if (m_textDisplay->getText().size() > 0)
-                {
-                    addTextToDisplay(L"\n");
-                }
                 std::wstring inputText{ m_textInput->getText() };
                 // Store input in history
                 m_inputHistory.push_back(inputText);
