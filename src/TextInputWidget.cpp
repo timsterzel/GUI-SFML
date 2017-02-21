@@ -117,6 +117,15 @@ bool gsf::TextInputWidget::isHorizontalScrollEnabled() const
     return m_scrollable->isHorizontalScrollEnabled();
 }
 
+void gsf::TextInputWidget::setIsVerticalScrollbarDrawn(bool isDrawn)
+{
+    m_scrollable->setIsVerticalScrollbarDrawn(isDrawn);
+}
+
+void gsf::TextInputWidget::setIsHorizontalScrollbarDrawn(bool isDrawn)
+{
+    m_scrollable->setIsHorizontalScrollbarDrawn(isDrawn);
+}
 void gsf::TextInputWidget::drawCurrent(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {

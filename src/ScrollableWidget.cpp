@@ -149,7 +149,7 @@ void gsf::ScrollableWidget::setIsVerticalScrollbarDrawn(bool isDrawn)
     m_isVerticalScrollbarDrawn = isDrawn;
 }
 
-void gsf::ScrollableWidget::setIsHorizontalScrollbarDraw(bool isDrawn)
+void gsf::ScrollableWidget::setIsHorizontalScrollbarDrawn(bool isDrawn)
 {
     m_isHorizontalScrollbarDrawn = isDrawn;
 }

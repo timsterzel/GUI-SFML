@@ -23,6 +23,7 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
     m_textInput->setBackgroundColor(sf::Color::White);
     m_textInput->setPosition(0.f, height - 20.f);
     m_textInput->setIsNewLineAccepted(false);
+    m_textInput->setIsHorizontalScrollbarDrawn(false);
     
     attachChild(std::move(textDisplay));
     attachChild(std::move(textInput));

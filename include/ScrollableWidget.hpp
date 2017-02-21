@@ -13,8 +13,10 @@ namespace gsf
 
         private:
             // The total size, not the shown.
-            // A Scrollable can have a shown size (the size, the widget take on the screen)
-            // and a total size (the size with all the children widgets inside the scollable widget)
+            // A Scrollable can have a shown size 
+            // (the size, the widget take on the screen)
+            // and a total size (the size with all the children widgets 
+            // inside the scollable widget)
             float m_totalWidth;
             float m_totalHeight;
             // Store how much the children should by moved (scrolled) in the next
@@ -54,7 +56,8 @@ namespace gsf
             ScrollableWidget(float width, float height);
             virtual ~ScrollableWidget();
 
-            // ScrollableWidget only can handle one widget, so we have to implement the methods different
+            // ScrollableWidget only can handle one widget, so we have to 
+            // implement the methods different
             void attachChild(Ptr child) override;
 
             void calculateVerticalScrollbarSize();
@@ -68,7 +71,7 @@ namespace gsf
             bool isHorizontalScrollEnabled() const;
             
             void setIsVerticalScrollbarDrawn(bool isDrawn);
-            void setIsHorizontalScrollbarDraw(bool isDrawn);
+            void setIsHorizontalScrollbarDrawn(bool isDrawn);
 
             float getTotalWidth() const;
             float getTotalHeight() const;
@@ -86,14 +89,16 @@ namespace gsf
 
             //bool handleEvent(sf::Event &event) override;
 
-            virtual void drawWidget(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawWidget(sf::RenderTarget &target, 
+                    sf::RenderStates states) const override;
 
         private:
             void correctScrollBarPosition();
             
             void handleChildScroll();
 
-            virtual void drawCurrent(sf::RenderTarget &target, sf::RenderStates states) const override;
+            virtual void drawCurrent(sf::RenderTarget &target, 
+                    sf::RenderStates states) const override;
             virtual void updateCurrent(float dt);
 
             virtual void childAdded() override;
@@ -102,7 +107,8 @@ namespace gsf
 
         protected:
 
-            // Special Events are Events like scrolling (which have a higher priorety then the child events)
+            // Special Events are Events like scrolling 
+            // (which have a higher priorety then the child events)
             bool handleSpecialEvents(sf::Event &event);
 
             virtual bool handleEventCurrent(sf::Event &event) override;

@@ -67,6 +67,9 @@ namespace gsf
             void setIsHorizontalScrollEnabled(bool isEnabled);
             bool isHorizontalScrollEnabled() const;
 
+            void setIsVerticalScrollbarDrawn(bool isDrawn);
+            void setIsHorizontalScrollbarDrawn(bool isDrawn);
+
         protected:
 
             virtual void drawCurrent(sf::RenderTarget &target, 
