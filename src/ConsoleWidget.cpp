@@ -6,7 +6,7 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 : ChildWidget{ width , height }
 , m_textDisplay{ nullptr }
 , m_textInput{ nullptr }
-, m_inputHistoryIndex{ 0 }
+, m_inpHistoryCursPos{ 0 }
 {
     std::unique_ptr<TextInputWidget> textDisplay{ 
         std::make_unique<TextInputWidget>(width, height - 20.f, font) };
@@ -48,13 +48,40 @@ void gsf::ConsoleWidget::updateCurrent(float dt)
 
 bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
 {
+    /*
     if (event.type == sf::Event::MouseButtonPressed)
     {        
         sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
-
     }
-
+    */
+    if (event.type == sf::Event::KeyPressed)
+    {
+        switch (event.key.code)
+        {
+        case sf::Keyboard::Up:
+            std::cout << "size: " << m_inputHistory.size() << std::endl;
+            if (m_inputHistory.size() > 0 && 
+                    m_inpHistoryCursPos < m_inputHistory.size())
+            {
+                std::cout << "UPP" << std::endl;
+                m_inpHistoryCursPos++;
+                std::size_t i{ m_inputHistory.size() - m_inpHistoryCursPos };
+                m_textInput->setText(m_inputHistory[i]);
+            }
+            return true;
+        case sf::Keyboard::Down: 
+            if (m_inputHistory.size() > 0 && m_inpHistoryCursPos > 1)
+            {
+                m_inpHistoryCursPos--;
+                std::size_t i{ m_inputHistory.size() - m_inpHistoryCursPos };
+                m_textInput->setText(m_inputHistory[i]);
+            }
+            return true;
+        default:
+            break;
+        }
+    }
     if (event.type == sf::Event::TextEntered)
     {
         wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
@@ -72,9 +99,14 @@ bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
                     displayText += L"\n";
                 }
                 std::wstring inputText{ m_textInput->getText() };
+                // Store input in history
                 m_inputHistory.push_back(inputText);
+                // Set history cursor back to 0, so we start again at the beginning
+                // when going through history
+                m_inpHistoryCursPos = 0;
                 m_textDisplay->setText(displayText + L">" + inputText);
                 m_textInput->setText(L"");
+                return true;
             }
         }
     }

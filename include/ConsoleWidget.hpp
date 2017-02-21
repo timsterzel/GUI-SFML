@@ -19,7 +19,7 @@ namespace gsf
             std::vector<std::wstring> m_inputHistory;
             // With the arrow keys, the user can select inputs from histroy
             // here we store the actual position in history
-            std::size_t m_inputHistoryIndex;
+            std::size_t m_inpHistoryCursPos;
 
         public:
             ConsoleWidget(float width, float height, sf::Font &font);
