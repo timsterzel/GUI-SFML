@@ -17,6 +17,8 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_isHorizontalScrollNeeded{ true }
 , m_scrollbarHorizontal{ 0.f, m_scrollbarThickness }
 , m_scrollbarHorMoveActive{ false }
+, m_isVerticalScrollbarDrawn{ true }
+, m_isHorizontalScrollbarDrawn{ true }
 , SCROLLBAR_PAD{ 6.f }
 , PAD_BETTWEEN_SCROLLBARS{ 6.f }
 {
@@ -140,6 +142,16 @@ void gsf::ScrollableWidget::setIsHorizontalScrollEnabled(bool isEnabled)
 bool gsf::ScrollableWidget::isHorizontalScrollEnabled() const
 {
     return m_isHorizontalScrollEnabled;
+}
+
+void gsf::ScrollableWidget::setIsVerticalScrollbarDrawn(bool isDrawn)
+{
+    m_isVerticalScrollbarDrawn = isDrawn;
+}
+
+void gsf::ScrollableWidget::setIsHorizontalScrollbarDraw(bool isDrawn)
+{
+    m_isHorizontalScrollbarDrawn = isDrawn;
 }
 
 float gsf::ScrollableWidget::getTotalWidth() const
@@ -288,8 +300,14 @@ void gsf::ScrollableWidget::drawWidget(sf::RenderTarget &target,
         target.setView(defaultView);
         
         // Draw Scroll Elements
-        target.draw(m_scrollbarVertical, states);
-        target.draw(m_scrollbarHorizontal, states);
+        if (m_isVerticalScrollbarDrawn)
+        {
+            target.draw(m_scrollbarVertical, states);
+        }
+        if (m_isHorizontalScrollbarDrawn)
+        {
+            target.draw(m_scrollbarHorizontal, states);
+        }
 }
 
 void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, 

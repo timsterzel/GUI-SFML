@@ -114,9 +114,16 @@ sf::Color gsf::TextWidget::getTextColor() const
     return m_text.getFillColor();
 }
 
-sf::Vector2f gsf::TextWidget::findCharacterPos(std::size_t index) const
+sf::Vector2f gsf::TextWidget::findGlobalCharacterPos(std::size_t index) const
 {
     return m_text.findCharacterPos(index) + getPosition();    
+}
+
+sf::Vector2f gsf::TextWidget::findLocalCharacterPos(std::size_t index) const
+{
+    sf::FloatRect localBounds{ m_text.getLocalBounds() };
+    return m_text.findCharacterPos(index) 
+        + sf::Vector2f(localBounds.left, localBounds.top );    
 }
 
 sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
@@ -145,7 +152,7 @@ sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
 sf::FloatRect gsf::TextWidget::getLocalBoundsOfChar(std::size_t i) const
 {    
     wchar_t c{ m_text.getString().toWideString()[i] };
-    sf::Vector2f charPos{ m_text.findCharacterPos(i) };
+    sf::Vector2f charPos{ findLocalCharacterPos(i) };
     sf::Vector2f size{ getWidthAndHeightOfChar(c) };
     sf::FloatRect rect{ charPos.x, charPos.y, size.x, size.y };    
     return rect;
@@ -166,6 +173,22 @@ void gsf::TextWidget::update(float dt)
 bool gsf::TextWidget::handleEvent(sf::Event &event)
 {
     bool handled = Widget::handleEvent(event);
+    /* 
+    if (event.type == sf::Event::MouseButtonPressed)
+    {        
+        sf::Vector2f mousePos{ (float) event.mouseButton.x, 
+        (float) event.mouseButton.y };
+        if (!getShownArea().contains(mousePos))
+            return false;
+        sf::Vector2f localPos{ mousePos.x - getWorldPosition().x - getOrigin().x,
+            mousePos.y - getWorldPosition().y - getOrigin().y };
+        std::cout << "LocalPos: (" << localPos.x << "|" << localPos.y << ")\n";
+        std::cout << "I: (" << findLocalCharacterPos(0).x << "|" 
+            << findLocalCharacterPos(0).y << ")" << getLocalBoundsOfChar(0).height << "\n";
+        int index = findIndexOfCharOnPos(localPos);
+        std::cout << "pressed on: " << index << std::endl;
+    }
+    */
     return handled;
 }
 
@@ -178,3 +201,46 @@ void gsf::TextWidget::calculateSize()
     setHeight(localBounds.height + localBounds.top * 2);
     setWidth(localBounds.width + localBounds.left * 2);
 }
+
+/*
+// Use binary search to get the right position
+int gsf::TextWidget::findIndexOfCharOnPos(sf::Vector2f localPos) const
+{
+    return findCharOnPosBinary(localPos, 0, getWideText().size() - 1);
+}
+
+int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
+    std::size_t r) const
+{
+    // Nothing found
+    if (r < l)
+    {
+        return -1;
+    }
+    // Get center as index
+    //std::size_t i{ static_cast<std::size_t>( (r - l) / 2 )};
+    std::size_t i = (l + r) / 2;
+    std::cout << "Index: " << i << std::endl;
+    sf::FloatRect cRect{ getLocalBoundsOfChar(i) };
+    
+    //    ++++++++
+    //    ++++c---
+    //    --------
+    //    
+    //    c : index of i
+    //    + : left of i
+    //    - : right of i
+
+    // Left of i (case +)
+    if ( (localPos.x < cRect.left && localPos.y <= cRect.top + cRect.height) ||
+            (localPos.x > cRect.left && localPos.y < cRect.top) )
+    {
+        return findCharOnPosBinary(localPos, l, i - 1);
+    }
+    // Right of i (case -)
+    else
+    {
+        return findCharOnPosBinary(localPos, i + 1, r);
+    }
+}
+*/

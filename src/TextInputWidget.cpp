@@ -149,7 +149,7 @@ void gsf::TextInputWidget::updateCurrent(float dt)
         m_lastBlinkTime = 0.f;
     }
 
-    m_cursor.setPosition(m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
+    m_cursor.setPosition(m_text->findGlobalCharacterPos(m_cursorPos + m_lBreaksBefCur));
     //std::wstring text{ m_currentText };
     //std::wstring text{ m_shownText };
     //m_text->setText(text); 

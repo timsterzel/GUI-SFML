@@ -41,8 +41,8 @@ namespace gsf
             void setTextColor(const sf::Color color);
             sf::Color getTextColor() const;
 
-            sf::Vector2f findCharacterPos(std::size_t index) const;
-            
+            sf::Vector2f findGlobalCharacterPos(std::size_t index) const;
+            sf::Vector2f findLocalCharacterPos(std::size_t index) const;
             // Returns the width and height of the given char which it have
             // with the used character size and font
             sf::Vector2f getWidthAndHeightOfChar(wchar_t c) const;
@@ -53,8 +53,14 @@ namespace gsf
                     sf::RenderStates states) const override;
             virtual void update(float dt) override;
 
+            // Determine the index of the char which is on the given position.
+            // Returns -1 when there is no char
+            //int findIndexOfCharOnPos(sf::Vector2f localPos) const;
         protected:
             virtual bool handleEvent(sf::Event &event) override;
+
+            //int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
+            //        std::size_t r) const;
 
         private:
             void init(std::string text, sf::Font &font, int characterSize, 

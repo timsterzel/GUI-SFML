@@ -36,12 +36,16 @@ namespace gsf
             MoveableBlock m_scrollbarVertical;
             bool m_scrollbarVerMoveActive;
             sf::Vector2f m_scrollbarVerMoveModeRelPos;
+
             // Scrollbar Horizontal
             bool m_isHorizontalScrollNeeded;
             MoveableBlock m_scrollbarHorizontal;
             bool m_scrollbarHorMoveActive;
             sf::Vector2f m_scrollbarHorMoveModeRelPos;
 
+            bool m_isVerticalScrollbarDrawn;
+            bool m_isHorizontalScrollbarDrawn;
+            
             const float SCROLLBAR_PAD;
             // The two scrollbars dont overlap. The Scrollbars stops before
             // The other scrollbars top begin and have in addition this padding
@@ -62,6 +66,9 @@ namespace gsf
             bool isVerticalScrollEnabled() const;
             void setIsHorizontalScrollEnabled(bool isEnabled);
             bool isHorizontalScrollEnabled() const;
+            
+            void setIsVerticalScrollbarDrawn(bool isDrawn);
+            void setIsHorizontalScrollbarDraw(bool isDrawn);
 
             float getTotalWidth() const;
             float getTotalHeight() const;
