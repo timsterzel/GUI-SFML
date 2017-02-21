@@ -9,24 +9,15 @@ namespace gsf
     class ButtonWidget: public gsf::Widget
     {
         private:
-            //sf::Color m_outlineColor;
-            //float m_outlineThickness;
-            const sf::Font &m_font;
-            std::string m_text;
             // True when mouse hover over button
             bool m_isHovering;
             // The color of the widget when mouse hover over button
             sf::Color m_hoverFillColor;
         public:
-            ButtonWidget(const sf::Font &font);
-            ButtonWidget(float width, float height, const sf::Font &font);
-            ButtonWidget(float width, float height, const std::string &text, 
-                    const sf::Font &font);
+            ButtonWidget();
+            ButtonWidget(float width, float height);
 
             virtual ~ButtonWidget();
-
-            const std::string& getText() const;
-            void setText(const std::string &text);
             
             sf::Color getHoverFillColor() const;
             void setHoverFillColor(sf::Color color);

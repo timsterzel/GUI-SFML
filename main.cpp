@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "ButtonWidget.hpp"
+#include "TextButtonWidget.hpp"
 #include "ConsoleWidget.hpp"
 #include "GUIEnvironment.hpp"
 #include "ProgressWidget.hpp"
@@ -120,8 +120,8 @@ int main()
     guiEnvironment.addWidget(std::move(windowWidget3));
     
     // BUTTON TEST
-    std::unique_ptr<gsf::ButtonWidget> buttonWidget{ 
-        std::make_unique<gsf::ButtonWidget>
+    std::unique_ptr<gsf::TextButtonWidget> buttonWidget{ 
+        std::make_unique<gsf::TextButtonWidget>
             (200.f, 80.f, "TTTTTTTTTTTTTTTTTTTTTTClick me", font) };
     buttonWidget->setPosition(620.f , 360.f);
     buttonWidget->setOutlineThickness(8.f);
