@@ -300,6 +300,16 @@ void gsf::TextInputWidget::adjustShownText()
         for (unsigned int i{ 0 }; i < m_currentText.size(); i++)
         {
             wchar_t c{ m_currentText[i] };
+            // If we have a new line as char we can set the lineWidth and charCntLine
+            // to 0 because there is no need to handle the chars in this line
+            // (It is already handled by user width the new line char)
+            if (c == '\n')
+            {
+                lineWidth = 0.f;
+                charCntLine = 0;
+                shownString += c;
+                continue;
+            }
             // Width of the current char
             float cWidth{ m_text->getWidthAndHeightOfChar(c).x }; 
             lineWidth += cWidth;
