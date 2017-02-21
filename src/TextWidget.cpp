@@ -140,6 +140,10 @@ sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
     {
         cWidth = (font.getGlyph(' ', charSize, isBold).advance) * 4;
     }
+    else if (c == '\n')
+    {
+        cWidth = 0.f;
+    }
     else
     {
         cWidth = font.getGlyph(c, charSize, isBold).advance;

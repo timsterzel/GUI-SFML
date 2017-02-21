@@ -195,7 +195,7 @@ int main()
     // Console Widget
     std::unique_ptr<gsf::ConsoleWidget> console1{ 
         std::make_unique<gsf::ConsoleWidget>(500.f, 200.f, font) };
-    console1->setPosition(600.f, 400.f);
+    console1->setPosition(700.f, 400.f);
     console1->setOnCommandEnteredListener(
             [] (gsf::Widget *widget, std::wstring inputText)
             {
