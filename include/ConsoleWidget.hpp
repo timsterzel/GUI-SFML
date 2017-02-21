@@ -20,10 +20,16 @@ namespace gsf
             // With the arrow keys, the user can select inputs from histroy
             // here we store the actual position in history
             std::size_t m_inpHistoryCursPos;
-
+            // Is called when input was entered
+            std::function<void(Widget*, std::wstring)> 
+                m_onCommandEnteredListener;
         public:
             ConsoleWidget(float width, float height, sf::Font &font);
 
+            void addTextToDisplay(std::wstring text);
+            
+            void setOnCommandEnteredListener(std::function
+                    <void(Widget*, std::wstring)> listener);
         protected:
 
             virtual void drawCurrent(sf::RenderTarget &target, 

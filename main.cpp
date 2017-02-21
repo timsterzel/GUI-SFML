@@ -196,6 +196,13 @@ int main()
     std::unique_ptr<gsf::ConsoleWidget> console1{ 
         std::make_unique<gsf::ConsoleWidget>(500.f, 200.f, font) };
     console1->setPosition(600.f, 400.f);
+    console1->setOnCommandEnteredListener(
+            [] (gsf::Widget *widget, std::wstring inputText)
+            {
+                std::wcout << "CommandEnteredListener command: " << inputText 
+                    << std::endl;
+            }
+    );
     guiEnvironment.addWidget(std::move(console1));
 
     while (window.isOpen())

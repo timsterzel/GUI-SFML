@@ -28,6 +28,17 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
     attachChild(std::move(textInput));
 }
 
+void gsf::ConsoleWidget::addTextToDisplay(std::wstring text)
+{
+    std::wstring actualStr{ m_textDisplay->getText() };
+    m_textDisplay->setText(actualStr + text);
+}
+
+void gsf::ConsoleWidget::setOnCommandEnteredListener(std::function
+    <void(Widget*, std::wstring)> listener)
+{
+    m_onCommandEnteredListener = listener;
+}
 
 void gsf::ConsoleWidget::drawCurrent(sf::RenderTarget &target, 
         sf::RenderStates states) const
@@ -93,10 +104,9 @@ bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
             {
                 std::cout << "entered 13" << std::endl;
                 // Add entered text to display
-                std::wstring displayText = m_textDisplay->getText();
-                if (displayText.size() > 0)
+                if (m_textDisplay->getText().size() > 0)
                 {
-                    displayText += L"\n";
+                    addTextToDisplay(L"\n");
                 }
                 std::wstring inputText{ m_textInput->getText() };
                 // Store input in history
@@ -104,12 +114,15 @@ bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
                 // Set history cursor back to 0, so we start again at the beginning
                 // when going through history
                 m_inpHistoryCursPos = 0;
-                m_textDisplay->setText(displayText + L">" + inputText);
+                addTextToDisplay(L">" + inputText);
                 m_textInput->setText(L"");
+                if (m_onCommandEnteredListener)
+                {
+                    m_onCommandEnteredListener(this, inputText);
+                }
                 return true;
             }
         }
     }
     return false;
-    //return handled;
 }
