@@ -2,7 +2,6 @@
 #define GUIENVIRONMENT_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
-#include "TextureHolder.hpp"
 #include <vector>
 #include <memory>
 
@@ -19,7 +18,6 @@ namespace gsf
             // If it is enabled window can rought out of the Render Window
             //bool m_isWindowRoughOutEnabled;
         
-            TextureHolder m_textureHolder; 
         public:
             GUIEnvironment();
             virtual ~GUIEnvironment();
