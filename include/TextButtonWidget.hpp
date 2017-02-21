@@ -11,9 +11,8 @@ namespace gsf
         private:
             const sf::Font &m_font;
             std::string m_text;
-            // True when mouse hover over button
         public:
-            TextButtonWidget(const sf::Font &font);
+            explicit TextButtonWidget(const sf::Font &font);
             TextButtonWidget(float width, float height, const sf::Font &font);
             TextButtonWidget(float width, float height, const std::string &text, 
                     const sf::Font &font);

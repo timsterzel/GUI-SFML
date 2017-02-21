@@ -5,6 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "TextButtonWidget.hpp"
+#include "CheckBoxWidget.hpp"
 #include "ConsoleWidget.hpp"
 #include "GUIEnvironment.hpp"
 #include "ProgressWidget.hpp"
@@ -208,6 +209,11 @@ int main()
     );
     guiEnvironment.addWidget(std::move(console1));
 
+    // CheckBoxWidget
+    std::unique_ptr<gsf::CheckBoxWidget> checkBox1{ 
+        std::make_unique<gsf::CheckBoxWidget>(60, 60.f) };
+    checkBox1->setPosition(10.f, 620.f);
+    guiEnvironment.addWidget(std::move(checkBox1));
     while (window.isOpen())
     {
         determineFpsAndDeltaTime(txtStatFPS, dt, timePoint1);
