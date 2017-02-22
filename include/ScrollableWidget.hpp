@@ -25,6 +25,8 @@ namespace gsf
             float m_scrollOffsetY;
 
             float m_scrollSpeed;
+
+            sf::Color m_scrollBarColor;
             // Set by user (default: true)
             bool m_isVerticalScrollEnabled;
             bool m_isHorizontalScrollEnabled;
@@ -63,7 +65,9 @@ namespace gsf
             void calculateVerticalScrollbarSize();
             void calculateHorizontalScrollbarSize();
             void calculateScrollbarSizes();
-
+            
+            void setScrollBarColor(sf::Color color);
+            sf::Color getScrollBarColor() const;
 
             void setIsVerticalScrollEnabled(bool isEnabled);
             bool isVerticalScrollEnabled() const;

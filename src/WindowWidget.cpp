@@ -16,12 +16,11 @@ gsf::WindowWidget::WindowWidget(float width, float height, std::string title,
 
 void gsf::WindowWidget::init()
 {
+    setOutlineThickness(4.f);
     boundsChanged();
-}
-
-gsf::WindowWidget::~WindowWidget()
-{
-
+    setTopBarFillColor(sf::Color::Black);
+    setWindowTitleColor(sf::Color::White);
+    setCloseButtonFillColor(sf::Color::White);
 }
 
 sf::Color gsf::WindowWidget::getTopbarFillColor() const
@@ -87,8 +86,9 @@ sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target) const
     view.setSize(width, height);
     view.setCenter(left + (width / 2.f), top + (height / 2.f));
     // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
-        width / target.getSize().x, height / target.getSize().y));
+    view.setViewport(sf::FloatRect(left / target.getSize().x , 
+                top / target.getSize().y, width / target.getSize().x, 
+                height / target.getSize().y));
     return view;
 }
 
@@ -159,7 +159,8 @@ void gsf::WindowWidget::updateCurrent(float dt)
 bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
 {
     
-    sf::Vector2f mousePos{ (float) event.mouseButton.x , (float) event.mouseButton.y };
+    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
+        (float) event.mouseButton.y };
     sf::Vector2f localMousePoint{ mousePos.x - getWorldPosition().x, 
         mousePos.y - getWorldPosition().y };
     
@@ -219,14 +220,12 @@ void gsf::WindowWidget::boundsChanged()
     m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
     m_topBar.setPosition(-m_outlineThickness + m_topBar.getWidth() / 2.f, 
             -m_topBar.getHeight() + m_topBar.getHeight() / 2.f );
-    m_topBar.setFillColor(sf::Color::Magenta);
     
     m_btnClose.setWidth(m_topBar.getHeight() - 6.f);
     m_btnClose.setHeight(m_topBar.getHeight() - 6.f);
     m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
     m_btnClose.setPosition(m_topBar.getRight() - (m_btnClose.getWidth() / 2.f) - 6.f, 
             -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
-    m_btnClose.setFillColor(sf::Color::White);
 }
 
 void gsf::WindowWidget::arrangeChildren()

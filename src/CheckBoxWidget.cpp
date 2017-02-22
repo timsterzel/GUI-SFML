@@ -6,7 +6,7 @@ gsf::CheckBoxWidget::CheckBoxWidget()
 , m_isChecked{ false }
 , m_checkedShapeColor{ sf::Color::Black }
 {
-
+    init();
 }
 
 gsf::CheckBoxWidget::CheckBoxWidget
@@ -14,7 +14,12 @@ gsf::CheckBoxWidget::CheckBoxWidget
 : ButtonWidget{ width, height }
 , m_isChecked{ false }
 {
+    init();
+}
 
+void gsf::CheckBoxWidget::init()
+{
+    setHoverFillColor(sf::Color::White);
 }
 
 bool gsf::CheckBoxWidget::isChecked() const

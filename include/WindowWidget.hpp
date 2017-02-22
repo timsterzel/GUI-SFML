@@ -26,7 +26,6 @@ namespace gsf
             //WindowWidget();
             WindowWidget(float width, float height, std::string title, sf::Font &font);
             void init();
-            virtual ~WindowWidget();
 
             sf::Color getTopbarFillColor() const;
             void setTopBarFillColor(const sf::Color color);

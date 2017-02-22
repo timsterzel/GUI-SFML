@@ -17,6 +17,8 @@ namespace gsf
         public:
             CheckBoxWidget();
             CheckBoxWidget(float width, float height);
+            
+            void init();
 
             bool isChecked() const;
             void setIsChecked(bool isChecked);

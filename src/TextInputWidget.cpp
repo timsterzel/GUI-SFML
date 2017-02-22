@@ -30,6 +30,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
     //attachChild(std::move(text));
     attachChild(std::move(scrollabe));
     m_cursor.setFillColor(sf::Color::Black);
+    setOutlineThickness(4.f);
 }
 
 void gsf::TextInputWidget::setIsEditable(bool isEditable)

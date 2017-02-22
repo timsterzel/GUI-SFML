@@ -8,6 +8,7 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_scrollOffsetX{ 0.f }
 , m_scrollOffsetY{ 0.f }
 , m_scrollSpeed{ 6.0f }
+, m_scrollBarColor{ sf::Color::Black }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ true }
 , m_scrollbarThickness{ 16.f }
@@ -62,19 +63,23 @@ void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
     // Get proportion between the scrollable widget and its child 
     // (We need to note the scrollbar thickness so the
     // two scrollbars can not overlap
-    float proportionVer{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
+    float proportionVer{ 
+        (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
             /*- 2 * SCROLLBAR_PAD*/) / childrenHeight };
     // Calculate the scrollbar size
-    float scrollbarHeight{ (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
+    float scrollbarHeight{ 
+        (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
             /*- 2 * SCROLLBAR_PAD*/) * proportionVer };
     m_scrollbarVertical.setHeight(scrollbarHeight);
     
-    m_scrollbarVertical.setPosition(getWidth() - m_scrollbarVertical.getWidth() / 2.f 
+    m_scrollbarVertical.setPosition(getWidth() - m_scrollbarVertical.getWidth() / 2.f
             - SCROLLBAR_PAD, 0.f + m_scrollbarVertical.getHeight() / 2.f 
             + SCROLLBAR_PAD);
     
     m_scrollbarVertical.setOrigin(m_scrollbarVertical.getWidth() / 2.f, 
             m_scrollbarVertical.getHeight() / 2.f);
+
+    m_scrollbarVertical.setFillColor(m_scrollBarColor);
 }
 
 void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
@@ -93,7 +98,8 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
         m_isHorizontalScrollNeeded = childWidget->getLeft() < 0.f || 
             childWidget->getRight() > getWidth() ||
             childWidget->getWidth() > getWidth();
-        // Only show scrollbar when there is any need to scroll and scrolling is enabled
+        // Only show scrollbar when there is any need to scroll and 
+        // scrolling is enabled
         if (!m_isHorizontalScrollEnabled || !m_isHorizontalScrollNeeded) {
             m_scrollbarHorizontal.setWidth(0.f);
             return;
@@ -108,11 +114,14 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
                 - PAD_BETTWEEN_SCROLLBARS /*- 2 * SCROLLBAR_PAD*/) * proportionHor };
         m_scrollbarHorizontal.setWidth(scrollbarWidth);
         
-        m_scrollbarHorizontal.setPosition(0.f + m_scrollbarHorizontal.getWidth() / 2.f 
-                + SCROLLBAR_PAD, getHeight() - m_scrollbarHorizontal.getHeight() / 2.f 
+        m_scrollbarHorizontal.setPosition
+            (0.f + m_scrollbarHorizontal.getWidth() / 2.f 
+                + SCROLLBAR_PAD, getHeight() 
+                - m_scrollbarHorizontal.getHeight() / 2.f 
                 - SCROLLBAR_PAD);
         m_scrollbarHorizontal.setOrigin(m_scrollbarHorizontal.getWidth() / 2.f, 
                 m_scrollbarHorizontal.getHeight() / 2.f);
+        m_scrollbarHorizontal.setFillColor(m_scrollBarColor);
 }
 
 void gsf::ScrollableWidget::calculateScrollbarSizes()
@@ -123,6 +132,18 @@ void gsf::ScrollableWidget::calculateScrollbarSizes()
     }
     calculateVerticalScrollbarSize();
     calculateHorizontalScrollbarSize();
+}
+
+void gsf::ScrollableWidget::setScrollBarColor(sf::Color color)
+{
+    m_scrollBarColor = color;
+    m_scrollbarVertical.setFillColor(m_scrollBarColor);
+    m_scrollbarHorizontal.setFillColor(m_scrollBarColor);
+}
+
+sf::Color gsf::ScrollableWidget::getScrollBarColor() const
+{
+    return m_scrollBarColor;
 }
 
 void gsf::ScrollableWidget::setIsVerticalScrollEnabled(bool isEnabled)
@@ -238,20 +259,24 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
             - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS)
     {
         m_scrollbarVertical.setPosition(m_scrollbarVertical.getPosition().x, 
-            getHeight() - m_scrollbarVertical.getHeight() / 2.f - m_scrollbarThickness
+            getHeight() - m_scrollbarVertical.getHeight() / 2.f 
+            - m_scrollbarThickness
             - SCROLLBAR_PAD - PAD_BETTWEEN_SCROLLBARS);
     }
     // Horizontal
     if (m_scrollbarHorizontal.getLeft() < 0.f + SCROLLBAR_PAD)
     {
-        m_scrollbarHorizontal.setPosition(0.f + m_scrollbarHorizontal.getWidth() / 2.f 
+        m_scrollbarHorizontal.setPosition(0.f 
+                + m_scrollbarHorizontal.getWidth() / 2.f 
                 + SCROLLBAR_PAD, m_scrollbarHorizontal.getPosition().y);
     }
     else if (m_scrollbarHorizontal.getRight() > getWidth() - SCROLLBAR_PAD 
             - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS)
     {
-        m_scrollbarHorizontal.setPosition(getWidth() - m_scrollbarHorizontal.getWidth() 
-                / 2.f - m_scrollbarThickness - SCROLLBAR_PAD - PAD_BETTWEEN_SCROLLBARS,
+        m_scrollbarHorizontal.setPosition(getWidth() 
+                - m_scrollbarHorizontal.getWidth() 
+                / 2.f - m_scrollbarThickness 
+                - SCROLLBAR_PAD - PAD_BETTWEEN_SCROLLBARS,
                 m_scrollbarHorizontal.getPosition().y);
     }
 }
@@ -320,7 +345,8 @@ bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
 {
     // Is the mouse in the shown area of the widget
     bool isMouseInShownArea{ getShownArea().contains(
-            sf::Vector2f{ (float) event.mouseButton.x , (float) event.mouseButton.y }) };
+            sf::Vector2f{ (float) event.mouseButton.x, 
+            (float) event.mouseButton.y }) };
     if (event.type == sf::Event::MouseWheelMoved && 
         isMouseInShownArea &&
         m_isVerticalScrollNeeded &&

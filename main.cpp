@@ -93,7 +93,7 @@ int main()
     std::unique_ptr<gsf::WindowWidget> windowWidget{ 
         std::make_unique<gsf::WindowWidget>(300.f, 360.f, "", font) };
     windowWidget->setPosition(60.f , 40.f);
-    windowWidget->setBackgroundColor(sf::Color::White);
+    //windowWidget->setBackgroundColor(sf::Color::White);
     windowWidget->attachChild(std::move(scrollableWidget));
     windowWidget->setIsVisible(true);
     guiEnvironment.addWidget(std::move(windowWidget));
@@ -101,28 +101,27 @@ int main()
     std::unique_ptr<gsf::WindowWidget> windowWidget2{ 
         std::make_unique<gsf::WindowWidget>(300.f, 360.f, "", font) };
     windowWidget2->setPosition(240.f , 40.f);
-    windowWidget2->setBackgroundColor(sf::Color::Red);
-    windowWidget2->setTopBarFillColor(sf::Color::Green);
-    windowWidget2->setCloseButtonFillColor(sf::Color::Blue);
+    //windowWidget2->setBackgroundColor(sf::Color::Red);
+    //windowWidget2->setTopBarFillColor(sf::Color::Green);
+    //windowWidget2->setCloseButtonFillColor(sf::Color::Blue);
     windowWidget2->setWindowTitle("Test");
-    windowWidget2->setWindowTitleColor(sf::Color::Red);
+    //windowWidget2->setWindowTitleColor(sf::Color::Red);
     guiEnvironment.addWidget(std::move(windowWidget2));
 
     std::unique_ptr<gsf::WindowWidget> windowWidget3{ 
         std::make_unique<gsf::WindowWidget>
             (300.f, 360.f, "Test Window TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", font) };
     windowWidget3->setPosition(300.f , 60.f);
-    windowWidget3->setOutlineThickness(12.f);
-    windowWidget3->setOutlineColor(sf::Color::White);
-    windowWidget3->setBackgroundColor(sf::Color::Blue);
+    //windowWidget3->setOutlineThickness(12.f);
+    //windowWidget3->setOutlineColor(sf::Color::White);
+    //windowWidget3->setBackgroundColor(sf::Color::Blue);
     guiEnvironment.addWidget(std::move(windowWidget3));
     
     // BUTTON TEST
     std::unique_ptr<gsf::TextButtonWidget> buttonWidget{ 
         std::make_unique<gsf::TextButtonWidget>
             (200.f, 80.f, "TTTTTTTTTTTTTTTTTTTTTTClick me", font) };
-    buttonWidget->setPosition(620.f , 360.f);
-    buttonWidget->setOutlineThickness(8.f);
+    buttonWidget->setPosition(240.f , 360.f);
     buttonWidget->setOnLeftClickListener(
             [] (gsf::Widget* widget, sf::Vector2f mousePos)
             {
@@ -193,7 +192,7 @@ int main()
     // Console Widget
     std::unique_ptr<gsf::ConsoleWidget> console1{ 
         std::make_unique<gsf::ConsoleWidget>(500.f, 200.f, font) };
-    console1->setPosition(700.f, 400.f);
+    console1->setPosition(700.f, 200.f);
     console1->setOnCommandEnteredListener(
             [] (gsf::Widget *widget, std::wstring inputText)
             {

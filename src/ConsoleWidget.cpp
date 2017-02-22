@@ -9,14 +9,14 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 , m_inpHistoryCursPos{ 0 }
 {
     std::unique_ptr<TextInputWidget> textDisplay{ 
-        std::make_unique<TextInputWidget>(width, height - 20.f, font) };
+        std::make_unique<TextInputWidget>(width, height - 20.f - 4.f, font) };
     std::unique_ptr<TextInputWidget> textInput{ 
         std::make_unique<TextInputWidget>(width, 20.f, font) };
     m_textDisplay = textDisplay.get();
     m_textInput = textInput.get();
 
     m_textDisplay->setIsHorizontalScrollEnabled(false);
-    m_textDisplay->setBackgroundColor(sf::Color::Magenta);
+    m_textDisplay->setBackgroundColor(sf::Color::White);
     m_textDisplay->setIsEditable(false);
 
     m_textInput->setIsVerticalScrollEnabled(false);
@@ -24,7 +24,10 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
     m_textInput->setPosition(0.f, height - 20.f);
     m_textInput->setIsNewLineAccepted(false);
     m_textInput->setIsHorizontalScrollbarDrawn(false);
-    
+    m_textInput->setOutlineThickness(4.f);;
+
+    setOutlineThickness(4.f);
+
     attachChild(std::move(textDisplay));
     attachChild(std::move(textInput));
 }
