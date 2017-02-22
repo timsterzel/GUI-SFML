@@ -35,18 +35,18 @@ int main()
     sf::Text txtStatFPS;
     txtStatFPS.setFont(font);
     txtStatFPS.setCharacterSize(12);
-    txtStatFPS.setFillColor(sf::Color::White);
+    txtStatFPS.setFillColor(sf::Color::Black);
     float dt{ 0.f };
     CLOCK::time_point timePoint1{ CLOCK::now() };
 
     gsf::GUIEnvironment guiEnvironment;
     std::unique_ptr<gsf::TextWidget> textWidget{ 
     std::make_unique<gsf::TextWidget>
-        ("Im a TextTest", font) };
+        ("Im a TextTFF", font) };
     //textWidget->centerOrigin();
-    //textWidget->setBackgroundColor(sf::Color::Red);
+    textWidget->setBackgroundColor(sf::Color::Red);
     textWidget->setCharacterSize(60);
-    textWidget->setPosition(windowWidth / 2.f + 100.f, windowHeight / 2.f - 300.f);
+    textWidget->setPosition(windowWidth / 2.f + 100.f, windowHeight / 2.f - 330.f);
     guiEnvironment.addWidget(std::move(textWidget));
 
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget{ 
@@ -203,7 +203,7 @@ int main()
                 consoleWidget->addTextToDisplay(L"OK");
             }
     );
-    guiEnvironment.addWidget(std::move(console1));
+    //guiEnvironment.addWidget(std::move(console1));
 
     // CheckBoxWidget
     std::unique_ptr<gsf::CheckBoxWidget> checkBox1{ 

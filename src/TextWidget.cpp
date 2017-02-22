@@ -149,8 +149,9 @@ sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
     {
         cWidth = font.getGlyph(c, charSize, isBold).advance;
     }
-    // Determine height of char
-    float cHeight{ font.getGlyph(c, charSize, isBold).bounds.height };
+    // Set Height to lineSpacing
+    //float cHeight{ font.getGlyph(c, charSize, isBold).bounds.height };
+    float cHeight{ font.getLineSpacing(charSize) };
     return sf::Vector2f{ cWidth, cHeight };
 }
 
@@ -178,22 +179,36 @@ void gsf::TextWidget::update(float dt)
 bool gsf::TextWidget::handleEvent(sf::Event &event)
 {
     bool handled = Widget::handleEvent(event);
-    /* 
+     
     if (event.type == sf::Event::MouseButtonPressed)
     {        
         sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
         if (!getShownArea().contains(mousePos))
             return false;
+        const sf::Font& font{ *(m_text.getFont()) };
+        unsigned int charSize{ m_text.getCharacterSize() };
         sf::Vector2f localPos{ mousePos.x - getWorldPosition().x - getOrigin().x,
             mousePos.y - getWorldPosition().y - getOrigin().y };
         std::cout << "LocalPos: (" << localPos.x << "|" << localPos.y << ")\n";
-        std::cout << "I: (" << findLocalCharacterPos(0).x << "|" 
-            << findLocalCharacterPos(0).y << ")" << getLocalBoundsOfChar(0).height << "\n";
+        std::cout << "Font LineSpacing: " << font.getLineSpacing(charSize) << "\n";
+        std::cout << "Pos (0) : (" << m_text.findCharacterPos(0).x << "|"
+            << m_text.findCharacterPos(0).y << ")\n";
+
+        std::cout << "Pos (10) : (" << m_text.findCharacterPos(10).x << "|"
+            << m_text.findCharacterPos(10).y << ")\n";
+        
+        std::cout << "Pos (13) : (" << m_text.findCharacterPos(13).x << "|"
+            << m_text.findCharacterPos(13).y << ")\n";
         int index = findIndexOfCharOnPos(localPos);
-        std::cout << "pressed on: " << index << std::endl;
+        std::cout << "Clicked on index: " << index << std::endl;
+        std::cout << "-------------------------------------------------\n";
+        //std::cout << "I: (" << findLocalCharacterPos(0).x << "|" 
+        //    << findLocalCharacterPos(0).y << ")" 
+        //    << getLocalBoundsOfChar(0).height << "\n";
+        //std::cout << "pressed on: " << index << std::endl;
     }
-    */
+    
     return handled;
 }
 
@@ -203,11 +218,25 @@ void gsf::TextWidget::calculateSize()
     // Top and left of the bounds are not allways 0, 
     // so we add the twice amound of this,
     // so the text is centered in the widget
+    // Original
+    /*
     setHeight(localBounds.height + localBounds.top * 2);
     setWidth(localBounds.width + localBounds.left * 2);
+    */
+
+
+    setHeight(localBounds.height + localBounds.top * 2);
+    setWidth(localBounds.width + localBounds.left * 2);
+    //m_text.setPosition(-localBounds.left, -localBounds.top);
+
+    // Without margin on top and left
+    /*
+    setHeight(localBounds.height); //+ localBounds.top * 2);
+    setWidth(localBounds.width); //+ localBounds.left * 2);
+    m_text.setPosition(-localBounds.left, -localBounds.top);
+    */
 }
 
-/*
 // Use binary search to get the right position
 int gsf::TextWidget::findIndexOfCharOnPos(sf::Vector2f localPos) const
 {
@@ -235,8 +264,26 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     //    c : index of i
     //    + : left of i
     //    - : right of i
+    
+    // Works for one line
+    /*
+    if (cRect.contains(localPos))
+    {
+        return i;
+    }
+    
+    if (localPos.x < cRect.left)
+    {
+        return findCharOnPosBinary(localPos, l, i - 1);
+    }
+    else
+    {
+        return findCharOnPosBinary(localPos, i + 1, r);
+    }
+    */
 
     // Left of i (case +)
+    /*
     if ( (localPos.x < cRect.left && localPos.y <= cRect.top + cRect.height) ||
             (localPos.x > cRect.left && localPos.y < cRect.top) )
     {
@@ -247,5 +294,6 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     {
         return findCharOnPosBinary(localPos, i + 1, r);
     }
+    */
 }
-*/
+

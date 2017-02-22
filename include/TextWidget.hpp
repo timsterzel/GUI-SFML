@@ -55,12 +55,12 @@ namespace gsf
 
             // Determine the index of the char which is on the given position.
             // Returns -1 when there is no char
-            //int findIndexOfCharOnPos(sf::Vector2f localPos) const;
+            int findIndexOfCharOnPos(sf::Vector2f localPos) const;
         protected:
             virtual bool handleEvent(sf::Event &event) override;
 
-            //int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
-            //        std::size_t r) const;
+            int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
+                    std::size_t r) const;
 
         private:
             void init(std::string text, sf::Font &font, int characterSize, 
