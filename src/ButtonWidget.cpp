@@ -4,26 +4,23 @@
 gsf::ButtonWidget::ButtonWidget()
 : Widget{  }
 , m_isHovering{ false }
-, m_hoverFillColor{ sf::Color::Blue }
+, m_hoverFillColor{ sf::Color::Black }
 {
-    m_bgColor = sf::Color::Red;
-    m_outlineThickness = 2.f;
-    m_outlineColor = sf::Color::White;
+    init();
 }
 
 gsf::ButtonWidget::ButtonWidget(float width, float height)
 : Widget(width, height)
 , m_isHovering{ false }
-, m_hoverFillColor{ sf::Color::Blue }
+, m_hoverFillColor{ sf::Color::Black }
 {
-    m_bgColor = sf::Color::Red;
-    m_outlineThickness = 2.f;
-    m_outlineColor = sf::Color::White;
+    init();
 }
 
-gsf::ButtonWidget::~ButtonWidget()
+void gsf::ButtonWidget::init()
 {
-
+    m_outlineThickness = 2.f;
+    m_outlineColor = sf::Color::Black;
 }
 
 sf::Color gsf::ButtonWidget::getHoverFillColor() const

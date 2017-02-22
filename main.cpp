@@ -229,7 +229,7 @@ int main()
         guiEnvironment.update(dt);
 
 
-        window.clear();
+        window.clear(sf::Color::White);
         window.draw(guiEnvironment);
         window.draw(txtStatFPS);
         window.display();
