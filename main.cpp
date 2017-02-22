@@ -36,15 +36,15 @@ int main()
     txtStatFPS.setFont(font);
     txtStatFPS.setCharacterSize(12);
     txtStatFPS.setFillColor(sf::Color::White);
-    float dt{0.f};
+    float dt{ 0.f };
     CLOCK::time_point timePoint1{ CLOCK::now() };
 
     gsf::GUIEnvironment guiEnvironment;
     std::unique_ptr<gsf::TextWidget> textWidget{ 
     std::make_unique<gsf::TextWidget>
-        ("Im a TextTest", font, 12, sf::Color::White) };
+        ("Im a TextTest", font) };
     //textWidget->centerOrigin();
-    textWidget->setBackgroundColor(sf::Color::Red);
+    //textWidget->setBackgroundColor(sf::Color::Red);
     textWidget->setCharacterSize(60);
     textWidget->setPosition(windowWidth / 2.f + 100.f, windowHeight / 2.f - 300.f);
     guiEnvironment.addWidget(std::move(textWidget));
@@ -61,9 +61,6 @@ int main()
     std::unique_ptr<gsf::ProgressWidget> progressWidget{ 
         std::make_unique<gsf::ProgressWidget>(260, 40) };
     progressWidget->setPosition(460, 460);
-    progressWidget->setBackgroundColor(sf::Color::White);
-    progressWidget->setOutlineThickness(5.f);
-    progressWidget->setOutlineColor(sf::Color::Blue);
     progressWidget->setProgress(50);
     guiEnvironment.addWidget(std::move(progressWidget));
 

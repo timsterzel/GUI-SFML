@@ -50,6 +50,7 @@ void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize,
     m_text.setFont(font);
 	m_text.setCharacterSize(characterSize);
 	m_text.setFillColor(color);
+    setBackgroundColor(sf::Color::Transparent);
 	calculateSize();
 }
 

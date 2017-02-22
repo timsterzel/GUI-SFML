@@ -3,25 +3,25 @@
 
 gsf::ProgressWidget::ProgressWidget()
 : Widget()
-, m_progessColor{ sf::Color::Red }
+, m_progessColor{ sf::Color::Black }
 , m_progressMargin{ 5.f }
 , m_progress{ 0 }
 {
-
+    init();
 }
 
 gsf::ProgressWidget::ProgressWidget(float width, float height)
 : Widget(width, height)
-, m_progessColor{ sf::Color::Red }
+, m_progessColor{ sf::Color::Black }
 , m_progressMargin{ 5.f }
 , m_progress{ 0 }
 {
-
+    init();
 }
 
-gsf::ProgressWidget::~ProgressWidget()
+void gsf::ProgressWidget::init()
 {
-
+    setOutlineThickness(4.f);
 }
 
 sf::Color gsf::ProgressWidget::getProgressColor() const

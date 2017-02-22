@@ -19,8 +19,8 @@ namespace gsf
         public:
             ProgressWidget();
             ProgressWidget(float width, float height);
-
-            virtual ~ProgressWidget();
+            
+            void init();
 
             sf::Color getProgressColor() const;
             void setProgressColor(sf::Color color);

@@ -6,7 +6,7 @@ gsf::TextButtonWidget::TextButtonWidget(const sf::Font &font)
 , m_font{ font }
 , m_textColor{ sf::Color::Black }
 , m_hoverTextColor{ sf::Color::White }
-, m_charSize{ 13 }
+, m_charSize{ 12 }
 {
     init();
 }
@@ -17,7 +17,7 @@ gsf::TextButtonWidget::TextButtonWidget
 , m_font{ font }
 , m_textColor{ sf::Color::Black }
 , m_hoverTextColor{ sf::Color::White }
-, m_charSize{ 13 }
+, m_charSize{ 12 }
 {
     init();
 }
@@ -28,7 +28,7 @@ gsf::TextButtonWidget::TextButtonWidget(float width,float height,
 , m_text{ text }
 , m_textColor{ sf::Color::Black }
 , m_hoverTextColor{ sf::Color::White }
-, m_charSize{ 13 }
+, m_charSize{ 12 }
 {
     init();
 }
