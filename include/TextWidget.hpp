@@ -60,7 +60,7 @@ namespace gsf
             virtual bool handleEvent(sf::Event &event) override;
 
             int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
-                    std::size_t r) const;
+                    std::size_t r, std::size_t totalLength) const;
 
         private:
             void init(std::string text, sf::Font &font, int characterSize, 

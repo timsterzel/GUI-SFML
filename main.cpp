@@ -121,7 +121,7 @@ int main()
     // BUTTON TEST
     std::unique_ptr<gsf::TextButtonWidget> buttonWidget{ 
         std::make_unique<gsf::TextButtonWidget>
-            (200.f, 80.f, "TTTTTTTTTTTTTTTTTTTTTTClick me", font) };
+            (200.f, 80.f, "CABBBBBTTTTTTTTTTTTTTTTTTTTTTClick me", font) };
     buttonWidget->setPosition(240.f , 360.f);
     buttonWidget->setOnLeftClickListener(
             [] (gsf::Widget* widget, sf::Vector2f mousePos)
@@ -204,7 +204,7 @@ int main()
                 consoleWidget->addTextToDisplay(L"OK");
             }
     );
-    //guiEnvironment.addWidget(std::move(console1));
+    guiEnvironment.addWidget(std::move(console1));
 
     // CheckBoxWidget
     std::unique_ptr<gsf::CheckBoxWidget> checkBox1{ 
