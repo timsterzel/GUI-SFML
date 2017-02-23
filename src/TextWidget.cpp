@@ -218,16 +218,8 @@ void gsf::TextWidget::calculateSize()
     // Top and left of the bounds are not allways 0, 
     // so we add the twice amound of this,
     // so the text is centered in the widget
-    // Original
-    /*
     setHeight(localBounds.height + localBounds.top * 2);
     setWidth(localBounds.width + localBounds.left * 2);
-    */
-
-
-    setHeight(localBounds.height + localBounds.top * 2);
-    setWidth(localBounds.width + localBounds.left * 2);
-    //m_text.setPosition(-localBounds.left, -localBounds.top);
 
     // Without margin on top and left
     /*
@@ -257,7 +249,6 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     // Get center as index
     //std::size_t i{ static_cast<std::size_t>( (r - l) / 2 )};
     std::size_t i = (l + r) / 2;
-    std::cout << "Index: " << i << std::endl;
     sf::FloatRect cRect{ getLocalBoundsOfChar(i) };
     
     //    ++++++++
