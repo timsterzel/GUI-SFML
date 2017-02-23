@@ -243,6 +243,9 @@ int gsf::TextWidget::findIndexOfCharOnPos(sf::Vector2f localPos) const
     return findCharOnPosBinary(localPos, 0, getWideText().size() - 1);
 }
 
+// Use binary search to find the clicked position. At the beginnig we test if 
+// the clicked position is in the char of the middle of the text.
+// If so we are done. Else we have only search left or right of the string
 int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
     std::size_t r) const
 {
@@ -265,25 +268,12 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     //    + : left of i
     //    - : right of i
     
-    // Works for one line
-    /*
     if (cRect.contains(localPos))
     {
         return i;
     }
-    
-    if (localPos.x < cRect.left)
-    {
-        return findCharOnPosBinary(localPos, l, i - 1);
-    }
-    else
-    {
-        return findCharOnPosBinary(localPos, i + 1, r);
-    }
-    */
 
     // Left of i (case +)
-    /*
     if ( (localPos.x < cRect.left && localPos.y <= cRect.top + cRect.height) ||
             (localPos.x > cRect.left && localPos.y < cRect.top) )
     {
@@ -293,7 +283,6 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     else
     {
         return findCharOnPosBinary(localPos, i + 1, r);
-    }
-    */
+    }    
 }
 

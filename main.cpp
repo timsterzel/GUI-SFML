@@ -42,7 +42,8 @@ int main()
     gsf::GUIEnvironment guiEnvironment;
     std::unique_ptr<gsf::TextWidget> textWidget{ 
     std::make_unique<gsf::TextWidget>
-        ("Im a TextTFF", font) };
+        //012345678 9012345 678901 23456
+        ("IM A TEXT\nTESTA\nTESTB\nTESTC\nS", font) };
     //textWidget->centerOrigin();
     textWidget->setBackgroundColor(sf::Color::Red);
     textWidget->setCharacterSize(60);

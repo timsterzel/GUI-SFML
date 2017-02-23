@@ -180,15 +180,34 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
         
-        //sf::Vector2f localPos{ mousePos.x - getWorldPosition().x,
-        //    mousePos.y - getWorldPosition().y };
-        //std::cout << "pressed on: " << findIndexOfCharOnPos(localPos);
+        sf::Vector2f localPos{ mousePos.x - getWorldPosition().x,
+            mousePos.y - getWorldPosition().y };
 
         bool isMouseInShownArea{ getShownArea().contains(mousePos) };
         bool intersecting{ isIntersecting(mousePos) };
         if (isMouseInShownArea && intersecting)
         {
             m_isFocused = true;
+            
+            // Put cursor to clicked postion           
+            // Get the index of the char where the mouse has clicked
+            int clickedCharIndex{ m_text->findIndexOfCharOnPos(localPos) };
+            std::cout << "TextInputWidget clicked index: " << clickedCharIndex 
+                << "\n";
+            // Clicked on a char?
+            if (clickedCharIndex > -1)
+            {
+                std::cout << "AddedBr: " << 
+                    getAddedLineBreaksUpToIndex(clickedCharIndex) << "\n";
+                // The index is the index of m_shownText, but we need the index of
+                // the char in m_currentText, so we have to remove the automatic
+                // added line breaks.
+                unsigned int autoAddedLineBreaks{ 
+                    getAddedLineBreaksUpToIndex(clickedCharIndex) };
+                m_cursorPos = clickedCharIndex - autoAddedLineBreaks; 
+                m_lBreaksBefCur = autoAddedLineBreaks;
+
+            }
         }
         else
         {
@@ -271,7 +290,8 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
             m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++; 
             break;
         // Add char to text
-        default: m_currentText.insert(m_cursorPos, std::wstring() + c); m_cursorPos++;
+        default: m_currentText.insert(m_cursorPos, std::wstring() + c);
+                 m_cursorPos++;
         }
         resetCursorStatus();
         m_shownText = m_currentText;
@@ -293,6 +313,7 @@ void gsf::TextInputWidget::adjustShownText()
     if (!m_scrollable->isHorizontalScrollEnabled() && m_currentText.size() > 0)
     {
         m_lBreaksBefCur = 0;
+        m_lBreakIndexes.clear();
         std::wstring shownString{ L"" };
         // The chars which are in the actual line
         unsigned int charCntLine{ 0 };
@@ -326,6 +347,9 @@ void gsf::TextInputWidget::adjustShownText()
                 //shownString += m_currentText.substr(i - charCntLine, charCntLine);
                 // Add new line
                 shownString += L"\n";
+                // Store the position (of the shown text) 
+                // where the new line was added
+                m_lBreakIndexes.push_back(i + 1);
                 // add the char with which the line was to wide in the new line
                 shownString += c;
                 // We have added the char c in the new line, 
@@ -344,54 +368,27 @@ void gsf::TextInputWidget::adjustShownText()
     }
 }
 
-// Use binary search to get the right position
-int gsf::TextInputWidget::findIndexOfCharOnPos(sf::Vector2f localPos) const
-{
-    return findCharOnPosBinary(localPos, 0, m_text->getWideText().size() - 1);
-}
-
-int gsf::TextInputWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
-    std::size_t r) const
-{
-    // Nothing found
-    if (r <= l)
-    {
-        return -1;
-    }
-    // Get center as index
-    //std::size_t i{ static_cast<std::size_t>( (r - l) / 2 )};
-    int i = (r - l) / 2;
-    std::cout << "Index: " << i << std::endl;
-    sf::FloatRect cRect{ m_text->getLocalBoundsOfChar(i) };
-    
-    //    ++++++++
-    //    ++++c---
-    //    --------
-    //    
-    //    c : index of i
-    //    + : left of i
-    //    - : right of i
-    
-    // Found char (case c)
-    if (cRect.contains(localPos))
-    {
-        return i;
-    }
-    // Left of i (case +)
-    if ( (localPos.x < cRect.left && localPos.y <= cRect.top + cRect.height) ||
-            (localPos.x > cRect.left && localPos.y < cRect.top) )
-    {
-        return findCharOnPosBinary(localPos, l, i - 1);
-    }
-    // Right of i (case -)
-    else
-    {
-        return findCharOnPosBinary(localPos, i + 1, r);
-    }
-}
-
 void gsf::TextInputWidget::resetCursorStatus()
 {
     m_lastBlinkTime = 0.f;
     m_isCursorShown = true;
+}
+
+unsigned int gsf::TextInputWidget::getAddedLineBreaksUpToIndex
+    (unsigned int index) const
+{
+    unsigned int cnt{ 0 };
+
+    for (unsigned int lBreakIndex : m_lBreakIndexes)
+    {    
+        if (lBreakIndex < index)
+        {
+            cnt++;
+        }
+        else
+        {
+            return cnt;
+        }
+    }
+    return cnt;
 }

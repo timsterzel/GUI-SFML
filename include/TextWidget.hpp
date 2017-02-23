@@ -54,7 +54,7 @@ namespace gsf
             virtual void update(float dt) override;
 
             // Determine the index of the char which is on the given position.
-            // Returns -1 when there is no char
+            // Returns -1 when there is no char on the given position
             int findIndexOfCharOnPos(sf::Vector2f localPos) const;
         protected:
             virtual bool handleEvent(sf::Event &event) override;

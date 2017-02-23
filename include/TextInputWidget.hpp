@@ -30,6 +30,9 @@ namespace gsf
             unsigned int m_cursorPos;
             // The cnt of added line breaks in m_shownText before the cursor pos
             unsigned int m_lBreaksBefCur;
+            // The indexes of the added new lines (index in m_shownText 
+            // not m_currentText) 
+            std::vector<unsigned int> m_lBreakIndexes;
             // When its true the cursor get drawn. The frequrency of the visibility
             // change is set by the m_blinkFreq member
             bool m_isCursorShown;
@@ -82,18 +85,15 @@ namespace gsf
             // scroll is enabled add line breaks on the right positions
             void adjustShownText();
 
-            // Determine the index of the char which is on the given position.
-            // Returns -1 when there is no char
-            int findIndexOfCharOnPos(sf::Vector2f localPos) const;
-            int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
-                    std::size_t r) const;
         private:
-
 
             virtual void updateCurrent(float dt) override;
             // Reset cursor status means, that m_lastBlinkTime is set to 0 and
             // m_isCursorShown to true
             void resetCursorStatus();
+            // Get the cnt of added line breaks by adjusting text up to the given
+            // index
+            unsigned int getAddedLineBreaksUpToIndex(unsigned int index) const;
 
     };
 
