@@ -274,15 +274,19 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     }
 
     // Left of i (case +)
-    if ( (localPos.x < cRect.left && localPos.y <= cRect.top + cRect.height) ||
-            (localPos.x > cRect.left && localPos.y < cRect.top) )
+    if ( ((localPos.x < cRect.left && localPos.y <= cRect.top + cRect.height) ||
+            (localPos.x > cRect.left && localPos.y < cRect.top))
+            // When i is smaller then 0 we are in no text are
+            && i > 0)
     {
         return findCharOnPosBinary(localPos, l, i - 1);
     }
     // Right of i (case -)
-    else
+    // First check if we in text area
+    else if (i < m_text.getString().toWideString().length() - 1)
     {
         return findCharOnPosBinary(localPos, i + 1, r);
-    }    
+    }
+    return -1;
 }
 
