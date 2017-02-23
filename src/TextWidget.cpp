@@ -179,7 +179,7 @@ void gsf::TextWidget::update(float dt)
 bool gsf::TextWidget::handleEvent(sf::Event &event)
 {
     bool handled = Widget::handleEvent(event);
-     
+    /*    
     if (event.type == sf::Event::MouseButtonPressed)
     {        
         sf::Vector2f mousePos{ (float) event.mouseButton.x, 
@@ -208,7 +208,7 @@ bool gsf::TextWidget::handleEvent(sf::Event &event)
         //    << getLocalBoundsOfChar(0).height << "\n";
         //std::cout << "pressed on: " << index << std::endl;
     }
-    
+    */
     return handled;
 }
 

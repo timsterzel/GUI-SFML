@@ -172,9 +172,11 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         // Nothing to do
         return false;
     }
+    
     //bool handled{ ChildWidget::handleEvent(event) };/*|| 
       //  m_scrollable->handleEventWidget(event) };*/
     // Check if actual Widget is focused
+    bool handled{ false };
     if (event.type == sf::Event::MouseButtonPressed)
     {        
         sf::Vector2f mousePos{ (float) event.mouseButton.x, 
@@ -188,7 +190,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         if (isMouseInShownArea && intersecting)
         {
             m_isFocused = true;
-            
+            handled = true;
             // Put cursor to clicked postion           
             // Get the index of the char where the mouse has clicked
             int clickedCharIndex{ m_text->findIndexOfCharOnPos(localPos) };
@@ -304,8 +306,7 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
         m_scrollable->scrollToBottom();
         return true;
     }
-    return false;
-    //return handled;
+    return handled;
 }
 
 void gsf::TextInputWidget::adjustShownText()
