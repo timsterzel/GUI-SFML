@@ -48,5 +48,5 @@ bin/
 .nvimrc
 Makefile
 GUI_SFML_DOC_TMP.txt
-
+del_ext.sh
 
