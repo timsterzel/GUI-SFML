@@ -77,9 +77,21 @@ void gsf::TextButtonWidget::setCharacterSize(unsigned int size)
     m_charSize = size;
 }
 
-void gsf::TextButtonWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
+bool gsf::TextButtonWidget::handleEventCurrentAfterChildren(sf::Event &event)
 {
-    ButtonWidget::drawWidget(target, states);
+    bool handled{ ButtonWidget::handleEventCurrentAfterChildren(event) };
+    return handled;
+}
+
+void gsf::TextButtonWidget::updateCurrentAfterChildren(float dt)
+{
+    ButtonWidget::updateCurrentAfterChildren(dt);
+}
+
+void gsf::TextButtonWidget::drawCurrentAfterChildren
+    (sf::RenderTarget &target, sf::RenderStates states) const
+{
+    ButtonWidget::drawCurrentAfterChildren(target, states);
     // Draw text
     sf::Text text{ m_text, m_font };
     text.setCharacterSize(m_charSize);
@@ -89,16 +101,4 @@ void gsf::TextButtonWidget::drawWidget(sf::RenderTarget &target, sf::RenderState
     text.setOrigin(rect.left + rect.width / 2.f, rect.top + rect.height / 2.f);
     text.setPosition(getWidth() / 2.f, getHeight() / 2.f);
     target.draw(text, states);
-}
-
-void gsf::TextButtonWidget::update(float dt)
-{
-    ButtonWidget::update(dt);
-}
-
-bool gsf::TextButtonWidget::handleEvent(sf::Event &event)
-{
-    bool handled = ButtonWidget::handleEvent(event);
-
-    return handled;
 }

@@ -2,7 +2,7 @@
 #include <iostream>
 
 gsf::ScrollableWidget::ScrollableWidget(float width, float height)
-: ChildWidget(width, height)
+: Widget(width, height)
 , m_totalWidth{ width }
 , m_totalHeight{ height }
 , m_scrollOffsetX{ 0.f }
@@ -23,19 +23,19 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , SCROLLBAR_PAD{ 6.f }
 , PAD_BETTWEEN_SCROLLBARS{ 6.f }
 {
-    calculateScrollbarSizes();
+    init();
 }
 
-gsf::ScrollableWidget::~ScrollableWidget()
+void gsf::ScrollableWidget::init()
 {
-
+    calculateScrollbarSizes();
 }
 
 void gsf::ScrollableWidget::attachChild(Ptr child)
 {
     // Remove old widgets
     m_children.clear();
-    ChildWidget::attachChild(std::move(child));
+    Widget::attachChild(std::move(child));
 }
 
 void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
@@ -309,39 +309,17 @@ void gsf::ScrollableWidget::handleChildScroll()
     m_scrollOffsetX = 0.f;
 }
 
-void gsf::ScrollableWidget::drawWidget(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+void gsf::ScrollableWidget::childAdded()
 {
-        drawCurrent(target, states);
-
-        // We change the view of the target, 
-        // so that only the area of the widget and its child
-        // which are in its shown area are drawn on the RenderTarget
-        sf::View defaultView{ target.getView() };
-        sf::View view{ getShownAreaView(target) };
-
-        target.setView(view);
-        drawChildren(target, states);
-        target.setView(defaultView);
-        
-        // Draw Scroll Elements
-        if (m_isVerticalScrollbarDrawn)
-        {
-            target.draw(m_scrollbarVertical, states);
-        }
-        if (m_isHorizontalScrollbarDrawn)
-        {
-            target.draw(m_scrollbarHorizontal, states);
-        }
+    calculateScrollbarSizes();
 }
 
-void gsf::ScrollableWidget::drawCurrent(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+void gsf::ScrollableWidget::childRemoved()
 {
-
+    calculateScrollbarSizes();
 }
 
-bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
+bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
 {
     // Is the mouse in the shown area of the widget
     bool isMouseInShownArea{ getShownArea().contains(
@@ -459,39 +437,39 @@ bool gsf::ScrollableWidget::handleSpecialEvents(sf::Event &event)
     return false;
 }
 
-bool gsf::ScrollableWidget::handleEventCurrent(sf::Event &event)
+bool gsf::ScrollableWidget::handleEventCurrentAfterChildren(sf::Event &event)
 {
-    return false;
+    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    return handled;
 }
-/*
-bool gsf::ScrollableWidget::handleEventChildren(sf::Event &event)
-{
-    // Only handle child Events if the event is in the are of the
-    // shown area (Not the real area)
-    if (!isIntersecting(sf::Vector2f(event.mouseButton.x , event.mouseButton.y))) {
-        return false;
-    }
-    for (const Ptr &child : m_children)
-    {
-        if (child->handleEventWidget(event))
-        {
-            return true;
-        }
-    }
-    return false;
-}
-*/
-void gsf::ScrollableWidget::updateCurrent(float dt)
+
+void gsf::ScrollableWidget::updateCurrentAfterChildren(float dt)
 {
     handleChildScroll();
 }
 
-void gsf::ScrollableWidget::childAdded()
+void gsf::ScrollableWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+        sf::RenderStates states) const
 {
-    calculateScrollbarSizes();
-}
+        //drawCurrent(target, states);
 
-void gsf::ScrollableWidget::childRemoved()
-{
-    calculateScrollbarSizes();
+        // We change the view of the target, 
+        // so that only the area of the widget and its child
+        // which are in its shown area are drawn on the RenderTarget
+        sf::View defaultView{ target.getView() };
+        sf::View view{ getShownAreaView(target) };
+
+        target.setView(view);
+        drawChildren(target, states);
+        target.setView(defaultView);
+        
+        // Draw Scroll Elements
+        if (m_isVerticalScrollbarDrawn)
+        {
+            target.draw(m_scrollbarVertical, states);
+        }
+        if (m_isHorizontalScrollbarDrawn)
+        {
+            target.draw(m_scrollbarHorizontal, states);
+        }
 }

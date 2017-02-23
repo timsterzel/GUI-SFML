@@ -42,30 +42,9 @@ void gsf::CheckBoxWidget::setCheckedShapeColor(sf::Color color)
     m_checkedShapeColor = color;
 }
 
-void gsf::CheckBoxWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
+bool gsf::CheckBoxWidget::handleEventCurrentAfterChildren(sf::Event &event)
 {
-    ButtonWidget::drawWidget(target, states);
-    // Draw checked
-    if (m_isChecked)
-    {
-        // If the CheckBox is checked, it is shown by a rectangle in the center of
-        // the box which have 80% of the checkboxs width and height
-        sf::RectangleShape shape{ { getWidth() * 0.8f, getHeight() * 0.8f } };
-        // Center
-        shape.setPosition(getWidth() * 0.1, getHeight() * 0.1);
-        shape.setFillColor(m_checkedShapeColor);
-        target.draw(shape, states);
-    }
-}
-
-void gsf::CheckBoxWidget::update(float dt)
-{
-    ButtonWidget::update(dt);
-}
-
-bool gsf::CheckBoxWidget::handleEvent(sf::Event &event)
-{
-    bool handled = ButtonWidget::handleEvent(event);
+    bool handled{ ButtonWidget::handleEventCurrentAfterChildren(event) };
     sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
     bool isMouseInShownArea{ getShownArea().contains(mousePos) };
@@ -78,4 +57,25 @@ bool gsf::CheckBoxWidget::handleEvent(sf::Event &event)
         }
     }
     return handled;
+}
+void gsf::CheckBoxWidget::updateCurrentAfterChildren(float dt)
+{
+    ButtonWidget::updateCurrentAfterChildren(dt);
+}
+
+void gsf::CheckBoxWidget::drawCurrentAfterChildren
+    (sf::RenderTarget &target, sf::RenderStates states) const
+{
+    ButtonWidget::drawCurrentAfterChildren(target, states);
+    // Draw checked
+    if (m_isChecked)
+    {
+        // If the CheckBox is checked, it is shown by a rectangle in the center of
+        // the box which have 80% of the checkboxs width and height
+        sf::RectangleShape shape{ { getWidth() * 0.8f, getHeight() * 0.8f } };
+        // Center
+        shape.setPosition(getWidth() * 0.1, getHeight() * 0.1);
+        shape.setFillColor(m_checkedShapeColor);
+        target.draw(shape, states);
+    }
 }

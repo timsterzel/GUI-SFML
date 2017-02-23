@@ -2,7 +2,7 @@
 #include <iostream>
 
 gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
-: ChildWidget{ width, height }
+: Widget{ width, height }
 //, m_text{ "", font, 12, sf::Color::Black }
 , m_text{ nullptr }
 , m_font{ font }
@@ -19,10 +19,15 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 , m_lastBlinkTime{ 0.f }
 , m_minBreakCharCnt{ 0 }
 {
+    init();
+}
+
+void gsf::TextInputWidget::init()
+{
     std::unique_ptr<TextWidget> text{ 
-        std::make_unique<TextWidget>("", font, m_charSize, sf::Color::Black) };
+        std::make_unique<TextWidget>("", m_font, m_charSize, sf::Color::Black) };
     std::unique_ptr<ScrollableWidget> scrollabe{ 
-        std::make_unique<ScrollableWidget>(width, height) };
+        std::make_unique<ScrollableWidget>(m_width, m_height) };
     m_scrollable = scrollabe.get();
     m_text = text.get();
     scrollabe->setBackgroundColor(sf::Color::Transparent);
@@ -127,56 +132,105 @@ void gsf::TextInputWidget::setIsHorizontalScrollbarDrawn(bool isDrawn)
 {
     m_scrollable->setIsHorizontalScrollbarDrawn(isDrawn);
 }
-void gsf::TextInputWidget::drawCurrent(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+
+void gsf::TextInputWidget::adjustShownText()
 {
-
-}
-
-void gsf::TextInputWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-                    sf::RenderStates states) const
-{   
-    // Draw cursor after children, so that children are not drawn over cursor
-    if (m_isCursorShown && m_isEditable)
+    if (!m_scrollable->isHorizontalScrollEnabled() && m_currentText.size() > 0)
     {
-        target.draw(m_cursor, states);
+        m_lBreaksBefCur = 0;
+        m_lBreakIndexes.clear();
+        std::wstring shownString{ L"" };
+        // The chars which are in the actual line
+        unsigned int charCntLine{ 0 };
+        // The total width of all chars in the current line
+        float lineWidth{ 0.f };
+        for (unsigned int i{ 0 }; i < m_currentText.size(); i++)
+        {
+            wchar_t c{ m_currentText[i] };
+            // If we have a new line as char we can set the lineWidth and charCntLine
+            // to 0 because there is no need to handle the chars in this line
+            // (It is already handled by user width the new line char)
+            if (c == '\n')
+            {
+                lineWidth = 0.f;
+                charCntLine = 0;
+                shownString += c;
+                continue;
+            }
+            // Width of the current char
+            float cWidth{ m_text->getWidthAndHeightOfChar(c).x }; 
+            lineWidth += cWidth;
+            // When Text is out of scrollable widget, we have to add a new line 
+            if (lineWidth > m_scrollable->getWidth())
+            {
+                if (i < m_cursorPos)
+                {
+                    // We have to increase the "line breaks befor cursor" counter
+                    // so we add the cursor later on the right position
+                    m_lBreaksBefCur++;
+                }
+                //shownString += m_currentText.substr(i - charCntLine, charCntLine);
+                // Add new line
+                shownString += L"\n";
+                // Store the position (of the shown text) 
+                // where the new line was added
+                m_lBreakIndexes.push_back(i + 1);
+                // add the char with which the line was to wide in the new line
+                shownString += c;
+                // We have added the char c in the new line, 
+                // so we have now 1 char in the current line
+                charCntLine = 1;
+                lineWidth = cWidth;
+            }
+            else
+            {
+                charCntLine++;
+                shownString += c;
+            }
+        }
+        m_shownText = shownString;
+        m_text->setText(m_shownText);
     }
 }
 
-void gsf::TextInputWidget::updateCurrent(float dt)
+void gsf::TextInputWidget::resetCursorStatus()
 {
+    m_lastBlinkTime = 0.f;
+    m_isCursorShown = true;
+}
+
+unsigned int gsf::TextInputWidget::getAddedLineBreaksUpToIndex
+    (unsigned int index) const
+{
+    unsigned int cnt{ 0 };
+
+    for (unsigned int lBreakIndex : m_lBreakIndexes)
+    {    
+        if (lBreakIndex < index)
+        {
+            cnt++;
+        }
+        else
+        {
+            return cnt;
+        }
+    }
+    return cnt;
+}
+
+bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event)
+{
+
+    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
     if (!m_isEditable)
     {
         // Nothing to do
-        return;
-    }
-    
-    // Update cursor stuff
-    m_lastBlinkTime += dt;
-    if (m_lastBlinkTime >= m_blinkFreq)
-    {
-        m_isCursorShown = !m_isCursorShown;
-        m_lastBlinkTime = 0.f;
-    }
-
-    m_cursor.setPosition(m_text->findGlobalCharacterPos(m_cursorPos + m_lBreaksBefCur));
-    //std::wstring text{ m_currentText };
-    //std::wstring text{ m_shownText };
-    //m_text->setText(text); 
-}
-
-bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
-{
-    if (!m_isEditable)
-    {
-        // Nothing to do
-        return false;
+        return handled;
     }
     
     //bool handled{ ChildWidget::handleEvent(event) };/*|| 
       //  m_scrollable->handleEventWidget(event) };*/
     // Check if actual Widget is focused
-    bool handled{ false };
     if (event.type == sf::Event::MouseButtonPressed)
     {        
         sf::Vector2f mousePos{ (float) event.mouseButton.x, 
@@ -309,87 +363,35 @@ bool gsf::TextInputWidget::handleEventCurrent(sf::Event &event)
     return handled;
 }
 
-void gsf::TextInputWidget::adjustShownText()
+void gsf::TextInputWidget::updateCurrentAfterChildren(float dt)
 {
-    if (!m_scrollable->isHorizontalScrollEnabled() && m_currentText.size() > 0)
+    if (!m_isEditable)
     {
-        m_lBreaksBefCur = 0;
-        m_lBreakIndexes.clear();
-        std::wstring shownString{ L"" };
-        // The chars which are in the actual line
-        unsigned int charCntLine{ 0 };
-        // The total width of all chars in the current line
-        float lineWidth{ 0.f };
-        for (unsigned int i{ 0 }; i < m_currentText.size(); i++)
-        {
-            wchar_t c{ m_currentText[i] };
-            // If we have a new line as char we can set the lineWidth and charCntLine
-            // to 0 because there is no need to handle the chars in this line
-            // (It is already handled by user width the new line char)
-            if (c == '\n')
-            {
-                lineWidth = 0.f;
-                charCntLine = 0;
-                shownString += c;
-                continue;
-            }
-            // Width of the current char
-            float cWidth{ m_text->getWidthAndHeightOfChar(c).x }; 
-            lineWidth += cWidth;
-            // When Text is out of scrollable widget, we have to add a new line 
-            if (lineWidth > m_scrollable->getWidth())
-            {
-                if (i < m_cursorPos)
-                {
-                    // We have to increase the "line breaks befor cursor" counter
-                    // so we add the cursor later on the right position
-                    m_lBreaksBefCur++;
-                }
-                //shownString += m_currentText.substr(i - charCntLine, charCntLine);
-                // Add new line
-                shownString += L"\n";
-                // Store the position (of the shown text) 
-                // where the new line was added
-                m_lBreakIndexes.push_back(i + 1);
-                // add the char with which the line was to wide in the new line
-                shownString += c;
-                // We have added the char c in the new line, 
-                // so we have now 1 char in the current line
-                charCntLine = 1;
-                lineWidth = cWidth;
-            }
-            else
-            {
-                charCntLine++;
-                shownString += c;
-            }
-        }
-        m_shownText = shownString;
-        m_text->setText(m_shownText);
+        // Nothing to do
+        return;
     }
+    
+    // Update cursor stuff
+    m_lastBlinkTime += dt;
+    if (m_lastBlinkTime >= m_blinkFreq)
+    {
+        m_isCursorShown = !m_isCursorShown;
+        m_lastBlinkTime = 0.f;
+    }
+
+    m_cursor.setPosition(
+            m_text->findGlobalCharacterPos(m_cursorPos + m_lBreaksBefCur));
+    //std::wstring text{ m_currentText };
+    //std::wstring text{ m_shownText };
+    //m_text->setText(text); 
 }
 
-void gsf::TextInputWidget::resetCursorStatus()
-{
-    m_lastBlinkTime = 0.f;
-    m_isCursorShown = true;
-}
-
-unsigned int gsf::TextInputWidget::getAddedLineBreaksUpToIndex
-    (unsigned int index) const
-{
-    unsigned int cnt{ 0 };
-
-    for (unsigned int lBreakIndex : m_lBreakIndexes)
-    {    
-        if (lBreakIndex < index)
-        {
-            cnt++;
-        }
-        else
-        {
-            return cnt;
-        }
+void gsf::TextInputWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+                    sf::RenderStates states) const
+{   
+    // Draw cursor after children, so that children are not drawn over cursor
+    if (m_isCursorShown && m_isEditable)
+    {
+        target.draw(m_cursor, states);
     }
-    return cnt;
 }

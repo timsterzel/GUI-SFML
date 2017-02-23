@@ -3,7 +3,7 @@
 
 gsf::WindowWidget::WindowWidget(float width, float height, std::string title, 
         sf::Font &font)
-: ChildWidget(width, height)
+: Widget{ width, height }
 //, m_topBar{ width, 20.f }
 //, m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
 , m_windowTitle{ title }
@@ -111,106 +111,6 @@ sf::View gsf::WindowWidget::getTopBarView(sf::RenderTarget &target) const
     return view;
 }
 
-
-void gsf::WindowWidget::drawWidget(sf::RenderTarget &target, 
-        sf::RenderStates states) const
-{
-        drawCurrent(target, states);
-
-        // We change the view of the target, so that only the area of the 
-        // widget and its child
-        // which are in its shown area are drawn on the RenderTarget
-
-        drawChildren(target, states);
-}
-
-void gsf::WindowWidget::drawCurrent(sf::RenderTarget &target, 
-        sf::RenderStates states) const
-{
-    sf::View defaultView{ target.getView() };
-    // Draw Topbar
-    sf::View viewTopBar{ getTopBarView(target) };
-    target.setView(viewTopBar);
-    target.draw(m_topBar, states);
-    // Draw close Button
-    target.draw(m_btnClose, states);
-
-    // Draw window title
-    sf::View viewTitle{ getWindowTitleView(target) };
-    target.setView(viewTitle);
-
-    sf::Text title;
-    title.setFont(m_windowTitleFont);
-    title.setString(m_windowTitle);
-    title.setCharacterSize(m_topBar.getHeight() - 6.f);
-    title.setFillColor(m_windowTitleColor);
-    title.setStyle(sf::Text::Bold);
-    title.setPosition(6.f, -m_topBar.getHeight());
-    target.draw(title, states);
-    
-    target.setView(defaultView);
-}
-
-void gsf::WindowWidget::updateCurrent(float dt)
-{
-    // Do nothing by default
-}
-
-bool gsf::WindowWidget::handleSpecialEvents(sf::Event &event)
-{
-    
-    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
-    sf::Vector2f localMousePoint{ mousePos.x - getWorldPosition().x, 
-        mousePos.y - getWorldPosition().y };
-    
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        if (event.mouseButton.button == sf::Mouse::Left && 
-                m_topBar.isPointIntersecting(localMousePoint))
-        {
-            // Check if close button was pressed. We have to map the mouse coordinate 
-            // to local widget coordinates
-            if (m_btnClose.isPointIntersecting(localMousePoint))
-            {
-                setIsRemoveable(true);
-            }
-            m_moveModeActive = true;
-            m_moveModeRelMousePos.x = event.mouseButton.x - getWorldPosition().x;
-            m_moveModeRelMousePos.y = event.mouseButton.y - getWorldPosition().y;
-            // Window should now be shown in the foreground
-            setMoveToForground(true);
-            return true;
-        }
-        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(mousePos))
-        {
-            setMoveToForground(true);
-            return false;
-        }
-
-    }
-    else if (event.type == sf::Event::MouseButtonReleased)
-    {
-        if (event.mouseButton.button == sf::Mouse::Left && m_moveModeActive)
-        {
-            m_moveModeActive = false;
-            return true;
-        }
-    }
-    return false;
-}
-
-bool gsf::WindowWidget::handleEventCurrent(sf::Event &event)
-{
-    bool handled{ ChildWidget::handleEventCurrent(event) };
-    if (event.type == sf::Event::MouseMoved && m_moveModeActive)
-    {
-        setPosition(event.mouseMove.x - getOrigin().x - m_moveModeRelMousePos.x, 
-                event.mouseMove.y - getOrigin().y - m_moveModeRelMousePos.y);
-    }
-    return handled;
-}
-
 void gsf::WindowWidget::boundsChanged()
 {    
     m_topBar.setWidth(getLocalBounds().width);
@@ -240,4 +140,91 @@ void gsf::WindowWidget::arrangeChildren()
     }
     calculateSize();
     */
+}
+
+bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event)
+{
+    bool handled{ Widget::handleEventCurrentBeforeChildren(event) };
+    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
+        (float) event.mouseButton.y };
+    sf::Vector2f localMousePoint{ mousePos.x - getWorldPosition().x, 
+        mousePos.y - getWorldPosition().y };
+    
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left && 
+                m_topBar.isPointIntersecting(localMousePoint))
+        {
+            // Check if close button was pressed. 
+            // We have to map the mouse coordinate to local widget coordinates
+            if (m_btnClose.isPointIntersecting(localMousePoint))
+            {
+                setIsRemoveable(true);
+            }
+            m_moveModeActive = true;
+            m_moveModeRelMousePos.x = event.mouseButton.x - getWorldPosition().x;
+            m_moveModeRelMousePos.y = event.mouseButton.y - getWorldPosition().y;
+            // Window should now be shown in the foreground
+            setMoveToForground(true);
+            return true;
+        }
+        if (event.mouseButton.button == sf::Mouse::Left && isIntersecting(mousePos))
+        {
+            setMoveToForground(true);
+            return false;
+        }
+
+    }
+    else if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left && m_moveModeActive)
+        {
+            m_moveModeActive = false;
+            return true;
+        }
+    }
+    return handled;
+}
+
+bool gsf::WindowWidget::handleEventCurrentAfterChildren(sf::Event &event)
+{
+    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    if (event.type == sf::Event::MouseMoved && m_moveModeActive)
+    {
+        setPosition(event.mouseMove.x - getOrigin().x - m_moveModeRelMousePos.x, 
+                event.mouseMove.y - getOrigin().y - m_moveModeRelMousePos.y);
+    }
+    return handled;
+}
+
+void gsf::WindowWidget::updateCurrentAfterChildren(float dt)
+{
+    // Do nothing by default
+}
+
+void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+        sf::RenderStates states) const
+{
+    sf::View defaultView{ target.getView() };
+    // Draw Topbar
+    sf::View viewTopBar{ getTopBarView(target) };
+    target.setView(viewTopBar);
+    target.draw(m_topBar, states);
+    // Draw close Button
+    target.draw(m_btnClose, states);
+
+    // Draw window title
+    sf::View viewTitle{ getWindowTitleView(target) };
+    target.setView(viewTitle);
+
+    sf::Text title;
+    title.setFont(m_windowTitleFont);
+    title.setString(m_windowTitle);
+    title.setCharacterSize(m_topBar.getHeight() - 6.f);
+    title.setFillColor(m_windowTitleColor);
+    title.setStyle(sf::Text::Bold);
+    title.setPosition(6.f, -m_topBar.getHeight());
+    target.draw(title, states);
+    
+    target.setView(defaultView);
 }

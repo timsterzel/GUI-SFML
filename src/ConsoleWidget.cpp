@@ -3,15 +3,20 @@
 #include <iostream>
 
 gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
-: ChildWidget{ width , height }
+: Widget{ width , height }
 , m_textDisplay{ nullptr }
 , m_textInput{ nullptr }
 , m_inpHistoryCursPos{ 0 }
 {
+    init(font);
+}
+
+void gsf::ConsoleWidget::init(sf::Font &font)
+{
     std::unique_ptr<TextInputWidget> textDisplay{ 
-        std::make_unique<TextInputWidget>(width, height - 20.f - 4.f, font) };
+        std::make_unique<TextInputWidget>(m_width, m_height - 20.f - 4.f, font) };
     std::unique_ptr<TextInputWidget> textInput{ 
-        std::make_unique<TextInputWidget>(width, 20.f, font) };
+        std::make_unique<TextInputWidget>(m_width, 20.f, font) };
     m_textDisplay = textDisplay.get();
     m_textInput = textInput.get();
 
@@ -21,7 +26,7 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 
     m_textInput->setIsVerticalScrollEnabled(false);
     m_textInput->setBackgroundColor(sf::Color::White);
-    m_textInput->setPosition(0.f, height - 20.f);
+    m_textInput->setPosition(0.f, m_height - 20.f);
     m_textInput->setIsNewLineAccepted(false);
     m_textInput->setIsHorizontalScrollbarDrawn(false);
     m_textInput->setOutlineThickness(4.f);;
@@ -48,25 +53,9 @@ void gsf::ConsoleWidget::setOnCommandEnteredListener(std::function
     m_onCommandEnteredListener = listener;
 }
 
-void gsf::ConsoleWidget::drawCurrent(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event)
 {
-
-}
-
-void gsf::ConsoleWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-                    sf::RenderStates states) const
-{
-
-}
-
-void gsf::ConsoleWidget::updateCurrent(float dt)
-{
-
-}
-
-bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
-{
+    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
     /*
     if (event.type == sf::Event::MouseButtonPressed)
     {        
@@ -128,5 +117,16 @@ bool gsf::ConsoleWidget::handleEventCurrent(sf::Event &event)
             }
         }
     }
-    return false;
+    return handled;
+}
+
+void gsf::ConsoleWidget::updateCurrentAfterChildren(float dt)
+{
+
+}
+
+void gsf::ConsoleWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+                    sf::RenderStates states) const
+{
+
 }

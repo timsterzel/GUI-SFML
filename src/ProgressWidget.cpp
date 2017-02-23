@@ -56,7 +56,18 @@ void gsf::ProgressWidget::setProgress(int progress)
     m_progress = progress;
 }
 
-void gsf::ProgressWidget::drawWidget(sf::RenderTarget &target, 
+bool gsf::ProgressWidget::handleEventCurrentAfterChildren(sf::Event &event)
+{
+    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    return handled;
+}
+
+void gsf::ProgressWidget::updateCurrentAfterChildren(float dt)
+{
+    // Do nothing by default
+}
+
+void gsf::ProgressWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
     // Draw progress rect
@@ -68,15 +79,4 @@ void gsf::ProgressWidget::drawWidget(sf::RenderTarget &target,
     progressShape.setFillColor(m_progessColor);
     target.draw(progressShape, states);
     //target.draw(m_text, states);
-}
-
-void gsf::ProgressWidget::update(float dt)
-{
-    // Do nothing by default
-}
-
-bool gsf::ProgressWidget::handleEvent(sf::Event &event)
-{
-    bool handled{ Widget::handleEvent(event) };
-    return handled;
 }

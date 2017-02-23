@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CONSOLEWIDGET_HPP
 #define CONSOLEWIDGET_HPP
 #include <SFML/Graphics.hpp>
@@ -10,38 +11,33 @@
 
 namespace gsf
 {
-    class ConsoleWidget: public gsf::ChildWidget
+    class ConsoleWidget: public gsf::Widget
     {
-        private:
-            TextInputWidget *m_textDisplay;
-            TextInputWidget *m_textInput;
-            // Store inputs in console here
-            std::vector<std::wstring> m_inputHistory;
-            // With the arrow keys, the user can select inputs from histroy
-            // here we store the actual position in history
-            std::size_t m_inpHistoryCursPos;
-            // Is called when input was entered
-            std::function<void(Widget*, std::wstring)> 
-                m_onCommandEnteredListener;
-        public:
-            ConsoleWidget(float width, float height, sf::Font &font);
+    private:
+        TextInputWidget *m_textDisplay;
+        TextInputWidget *m_textInput;
+        // Store inputs in console here
+        std::vector<std::wstring> m_inputHistory;
+        // With the arrow keys, the user can select inputs from histroy
+        // here we store the actual position in history
+        std::size_t m_inpHistoryCursPos;
+        // Is called when input was entered
+        std::function<void(Widget*, std::wstring)> 
+            m_onCommandEnteredListener;
+    public:
+        ConsoleWidget(float width, float height, sf::Font &font);
 
-            void addTextToDisplay(std::wstring text);
+        void addTextToDisplay(std::wstring text);
             
-            void setOnCommandEnteredListener(std::function
+        void setOnCommandEnteredListener(std::function
                     <void(Widget*, std::wstring)> listener);
-        protected:
-
-            virtual void drawCurrent(sf::RenderTarget &target, 
+    protected:
+        virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
+        virtual void updateCurrentAfterChildren(float dt) override;
+        virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                     sf::RenderStates states) const override;
-
-            virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
-                    sf::RenderStates states) const;
-            virtual bool handleEventCurrent(sf::Event &event) override;
-        private:
-
-            virtual void updateCurrent(float dt) override;
-
+    private:
+        void init(sf::Font &font);
     };
 
 }

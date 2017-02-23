@@ -55,7 +55,13 @@ int main()
     textWidget->setCharacterSize(60);
     textWidget->setPosition(windowWidth / 2.f + 100.f, windowHeight / 2.f - 330.f);
     guiEnvironment.addWidget(std::move(textWidget));
-
+    
+    std::unique_ptr<gsf::ProgressWidget> progressWidget{ 
+        std::make_unique<gsf::ProgressWidget>(260, 40) };
+    progressWidget->setPosition(460, 460);
+    progressWidget->setProgress(50);
+    guiEnvironment.addWidget(std::move(progressWidget));
+    
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget{ 
         std::make_unique<gsf::ScrollableWidget>(300, 200) };
     scrollableWidget->setBackgroundColor(sf::Color::Blue);
@@ -64,13 +70,7 @@ int main()
         std::make_unique<gsf::VerticalLayout>() };
     layout->setPosition(0.f , 0.f);
     layout->setBackgroundColor(sf::Color::Cyan);
-
-    std::unique_ptr<gsf::ProgressWidget> progressWidget{ 
-        std::make_unique<gsf::ProgressWidget>(260, 40) };
-    progressWidget->setPosition(460, 460);
-    progressWidget->setProgress(50);
-    guiEnvironment.addWidget(std::move(progressWidget));
-
+    
     for (int i{ 0 }; i != 6; i++)
     {
         std::string textString{ "Text Num " + std::to_string(i) };
@@ -104,7 +104,7 @@ int main()
     windowWidget->attachChild(std::move(scrollableWidget));
     windowWidget->setIsVisible(true);
     guiEnvironment.addWidget(std::move(windowWidget));
-
+    
     std::unique_ptr<gsf::WindowWidget> windowWidget2{ 
         std::make_unique<gsf::WindowWidget>(300.f, 360.f, "", font) };
     windowWidget2->setPosition(240.f , 40.f);
@@ -148,7 +148,7 @@ int main()
 
             });
     guiEnvironment.addWidget(std::move(buttonWidget));
-
+    
     // SCROLLBAR TEST
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget3{ 
         std::make_unique<gsf::ScrollableWidget>(300, 200) };
@@ -195,7 +195,7 @@ int main()
     textInput1->setIsHorizontalScrollEnabled(false);
     textInput1->setText(L"Test Text HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH :)");
     guiEnvironment.addWidget(std::move(textInput1));
-
+    
     // Console Widget
     std::unique_ptr<gsf::ConsoleWidget> console1{ 
         std::make_unique<gsf::ConsoleWidget>(500.f, 200.f, font) };
@@ -211,12 +211,13 @@ int main()
             }
     );
     guiEnvironment.addWidget(std::move(console1));
-
+    
     // CheckBoxWidget
     std::unique_ptr<gsf::CheckBoxWidget> checkBox1{ 
         std::make_unique<gsf::CheckBoxWidget>(60, 60.f) };
     checkBox1->setPosition(10.f, 620.f);
     guiEnvironment.addWidget(std::move(checkBox1));
+    
     while (window.isOpen())
     {
         determineFpsAndDeltaTime(txtStatFPS, dt, averageFpsTime, fpsInSec, fpsCnt, 

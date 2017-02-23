@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CHECKBOXWIDGET_HPP
 #define CHECKBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
@@ -8,34 +9,29 @@ namespace gsf
 {
     class CheckBoxWidget: public gsf::ButtonWidget
     {
-        private:
-            bool m_isChecked;
-            // If CheckBox is checked a rect is drawn. This member
-            // variable specifies its color
-            sf::Color m_checkedShapeColor;
+    private:
+        bool m_isChecked;
+        // If CheckBox is checked a rect is drawn. This member
+        // variable specifies its color
+        sf::Color m_checkedShapeColor;
 
-        public:
-            CheckBoxWidget();
-            CheckBoxWidget(float width, float height);
-            
-            void init();
+    public:
+        CheckBoxWidget();
+        CheckBoxWidget(float width, float height);
 
-            bool isChecked() const;
-            void setIsChecked(bool isChecked);
+        bool isChecked() const;
+        void setIsChecked(bool isChecked);
 
-            sf::Color getCheckedShapeColor() const;
-            void setCheckedShapeColor(sf::Color color);
-            
-            virtual void update(float dt) override;
-        protected:
-            virtual bool handleEvent(sf::Event &event) override;
-            
-        private:
-
-            virtual void drawWidget(sf::RenderTarget &target, 
-                    sf::RenderStates states) const override;
+        sf::Color getCheckedShapeColor() const;
+        void setCheckedShapeColor(sf::Color color);
+    protected:
+        virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
+        virtual void updateCurrentAfterChildren(float dt) override;
+        virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
+                sf::RenderStates states) const override;
+    private:
+        void init();
     };
-
 }
 
 #endif // !CHECKBOXWIDGET_HPP

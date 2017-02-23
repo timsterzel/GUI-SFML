@@ -33,29 +33,9 @@ void gsf::ButtonWidget::setHoverFillColor(sf::Color color)
     m_hoverFillColor = color;
 }
 
-void gsf::ButtonWidget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
+bool gsf::ButtonWidget::handleEventCurrentAfterChildren(sf::Event &event)
 {
-    // Draw hover color as background color if button is in hover mode
-    // To do (maybe): Let it handle from widget class. Instead of drawing the hover
-    // background over the normal background, we can set the normal background to the
-    // hover fill color. But it is necessary to store the normal color inside this
-    // class so it can get restored after hovering ends
-    if (m_isHovering)
-    {
-        sf::RectangleShape shape{ { getWidth(), getHeight() } };
-        shape.setFillColor(m_hoverFillColor);
-        target.draw(shape, states);
-    }
-}
-
-void gsf::ButtonWidget::update(float dt)
-{
-    // Do nothing by default
-}
-
-bool gsf::ButtonWidget::handleEvent(sf::Event &event)
-{
-    bool handled = Widget::handleEvent(event);
+    bool handled = Widget::handleEventCurrentAfterChildren(event);
     if (event.type == sf::Event::MouseMoved)
     {
         sf::Vector2f mousePos{ (float) event.mouseMove.x, (float) event.mouseMove.y };
@@ -71,4 +51,25 @@ bool gsf::ButtonWidget::handleEvent(sf::Event &event)
         }
     }
     return handled;
+}
+
+void gsf::ButtonWidget::updateCurrentAfterChildren(float dt)
+{
+    // Do nothing by default
+}
+
+void gsf::ButtonWidget::drawCurrentAfterChildren
+    (sf::RenderTarget &target, sf::RenderStates states) const
+{
+    // Draw hover color as background color if button is in hover mode
+    // To do (maybe): Let it handle from widget class. Instead of drawing the hover
+    // background over the normal background, we can set the normal background to the
+    // hover fill color. But it is necessary to store the normal color inside this
+    // class so it can get restored after hovering ends
+    if (m_isHovering)
+    {
+        sf::RectangleShape shape{ { getWidth(), getHeight() } };
+        shape.setFillColor(m_hoverFillColor);
+        target.draw(shape, states);
+    }
 }

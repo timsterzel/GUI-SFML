@@ -34,11 +34,34 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 
 }
 
-gsf::Widget::~Widget()
-{
+void gsf::Widget::attachChild(Ptr child)
+{    
+    child->setParent(this);
+    m_children.push_back(std::move(child));
 
+    childAdded();
+    arrangeChildren();
+    calculateSize();
 }
 
+gsf::Widget::Ptr gsf::Widget::detachChild(const Widget& node)
+{
+    auto found = std::find_if(m_children.begin(), m_children.end(), 
+            [&] (Ptr &p) -> bool { return p.get() == &node; });
+    // There is an error when we try to detach a child which does not exists, 
+    // so stop execution in debug mode
+    assert(found != m_children.end());
+
+    Ptr result{ std::move(*found) };
+    result->setParent(nullptr);
+    m_children.erase(found);
+
+    childRemoved();
+    arrangeChildren();
+    calculateSize();
+
+    return result;
+}
 sf::Color gsf::Widget::getOutlineColor() const
 {
     return m_outlineColor;
@@ -217,90 +240,6 @@ void gsf::Widget::centerOrigin()
     setOrigin(getWidth() / 2.f, getHeight() / 2.f);
 }
 
-void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    if (m_isVisible)
-    {
-        states.transform *= getTransform();
-        // Draw basic shape (background and outline)
-        sf::RectangleShape basicShape{ sf::Vector2f(m_width, m_height) };
-        basicShape.setFillColor(m_bgColor);
-        basicShape.setOutlineThickness(m_outlineThickness);
-        basicShape.setOutlineColor(m_outlineColor);
-        target.draw(basicShape, states);
-
-        // Set the targets to the view which is only the area of the widget, 
-        // based on its with, height and position
-        sf::View defaultView{ target.getView() };
-        sf::View view{ getShownAreaView(target) };
-        target.setView(view);
-
-        drawWidget(target, states);
-        target.setView(defaultView);
-    }
-}
-
-void gsf::Widget::drawWidget(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    // Do nothing by default
-}
-
-bool gsf::Widget::handleEventWidget(sf::Event &event)
-{
-    if(!isVisible())
-    {
-        return false;
-    }
-    return handleEvent(event);
-}
-
-bool gsf::Widget::handleEvent(sf::Event &event)
-{
-
-    // Is the mouse in the shown area of the widget
-    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
-    bool isMouseInShownArea{ getShownArea().contains(mousePos) };
-    bool intersecting{ isIntersecting(mousePos) };
-    if (isMouseInShownArea)
-    {
-        if (event.type == sf::Event::MouseButtonPressed && intersecting)
-        {
-            switch (event.mouseButton.button)
-            {
-                case sf::Mouse::Left: 
-                    if (m_onLeftClickListener) 
-                    { 
-                        m_onLeftClickListener(this, mousePos);
-                        return true;
-                    }
-                    break;
-                case sf::Mouse::Right: 
-                    if (m_onRightClickListener)
-                    {
-                        m_onRightClickListener(this, mousePos); 
-                        return true;
-                    }
-                    break;
-                case sf::Mouse::Middle:
-                    if (m_onMiddleClickListener)
-                    {
-                        m_onMiddleClickListener(this, mousePos);
-                        return true;
-                    }
-                    break;
-                default: break;
-            }
-        }
-    }
-    return false;
-}
-
-void gsf::Widget::update(float dt)
-{
-    // Do nothing by default
-}
-
 sf::Transform gsf::Widget::getWorldTransform() const
 {
     sf::Transform trform{ sf::Transform::Identity };
@@ -397,6 +336,170 @@ bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
 }
 
 void gsf::Widget::calculateSize()
+{
+    // Do nothing by default
+}
+
+void gsf::Widget::arrangeChildren()
+{
+    // Do nothing by default
+}
+
+void gsf::Widget::childAdded()
+{
+    // Do nothing by default
+}
+
+void gsf::Widget::childRemoved()
+{
+    // Do nothing by default
+}
+bool gsf::Widget::handleEvent(sf::Event &event)
+{
+    bool handled{ false };
+    if(!isVisible())
+    {
+        return false;
+    }
+
+    if (handleEventCurrentBeforeChildren(event))
+    {
+        return true;
+    }
+    if (!handleEventChildren(event))
+    {
+        return handleEventCurrentAfterChildren(event);
+    }
+    return handled;
+}
+
+bool gsf::Widget::handleEventCurrentBeforeChildren(sf::Event &event)
+{
+    return false;
+}
+
+bool gsf::Widget::handleEventChildren(sf::Event &event)
+{
+    for (const Ptr &child : m_children)
+    {
+        if (child->handleEvent(event))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool gsf::Widget::handleEventCurrentAfterChildren(sf::Event &event)
+{
+    // Is the mouse in the shown area of the widget
+    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
+        (float) event.mouseButton.y };
+    bool isMouseInShownArea{ getShownArea().contains(mousePos) };
+    bool intersecting{ isIntersecting(mousePos) };
+    if (isMouseInShownArea)
+    {
+        if (event.type == sf::Event::MouseButtonPressed && intersecting)
+        {
+            switch (event.mouseButton.button)
+            {
+                case sf::Mouse::Left: 
+                    if (m_onLeftClickListener) 
+                    { 
+                        m_onLeftClickListener(this, mousePos);
+                        return true;
+                    }
+                    break;
+                case sf::Mouse::Right: 
+                    if (m_onRightClickListener)
+                    {
+                        m_onRightClickListener(this, mousePos); 
+                        return true;
+                    }
+                    break;
+                case sf::Mouse::Middle:
+                    if (m_onMiddleClickListener)
+                    {
+                        m_onMiddleClickListener(this, mousePos);
+                        return true;
+                    }
+                    break;
+                default: break;
+            }
+        }
+    }
+    return false;
+}
+
+
+void gsf::Widget::update(float dt)
+{
+    updateCurrentBeforeChildren(dt);
+    updateChildren(dt);
+    updateCurrentAfterChildren(dt);
+}
+
+void gsf::Widget::updateCurrentBeforeChildren(float dt)
+{
+    // Do nothing by default
+}
+
+void gsf::Widget::updateChildren(float dt)
+{
+    for (const Ptr &child : m_children)
+    {
+        child->update(dt);
+    }
+}
+
+void gsf::Widget::updateCurrentAfterChildren(float dt)
+{
+    // Do nothing by default
+}
+
+void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    if (m_isVisible)
+    {
+        states.transform *= getTransform();
+        // Draw basic shape (background and outline)
+        sf::RectangleShape basicShape{ sf::Vector2f(m_width, m_height) };
+        basicShape.setFillColor(m_bgColor);
+        basicShape.setOutlineThickness(m_outlineThickness);
+        basicShape.setOutlineColor(m_outlineColor);
+        target.draw(basicShape, states);
+
+        // Set the targets to the view which is only the area of the widget, 
+        // based on its with, height and position
+        sf::View defaultView{ target.getView() };
+        sf::View view{ getShownAreaView(target) };
+        target.setView(view);
+
+        drawCurrentBeforeChildren(target, states);
+        drawChildren(target, states);
+        drawCurrentAfterChildren(target, states);
+
+        target.setView(defaultView);
+    }
+}
+
+void gsf::Widget::drawCurrentBeforeChildren(sf::RenderTarget &target, 
+    sf::RenderStates states) const
+{
+    // Do nothing by default
+}
+
+void gsf::Widget::drawChildren(sf::RenderTarget &target, 
+        sf::RenderStates states) const
+{
+    for (const Ptr &child : m_children)
+    {
+        child->draw(target, states);
+    }
+}
+
+void gsf::Widget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+    sf::RenderStates states) const
 {
     // Do nothing by default
 }

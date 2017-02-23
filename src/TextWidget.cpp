@@ -2,43 +2,43 @@
 #include <iostream>
 
 gsf::TextWidget::TextWidget()
-: Widget()
+: Widget{  }
 {
 
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font)
-: Widget()
+: Widget{  }
 {
     init(sf::String(text), font, 12, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font, int characterSize)
-: Widget()
+: Widget{  }
 {
     init(sf::String(text), font, characterSize, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::string text, sf::Font &font, int characterSize, sf::Color color)
-: Widget()
+: Widget{  }
 {
     init(sf::String(text), font, characterSize, color);
 }
 
 gsf::TextWidget::TextWidget(std::wstring text, sf::Font &font)
-: Widget()
+: Widget{  }
 {
     init(sf::String(text), font, 12, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::wstring text, sf::Font &font, int characterSize)
-: Widget()
+: Widget{  }
 {
     init(sf::String(text), font, characterSize, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(std::wstring text, sf::Font &font, int characterSize, sf::Color color)
-: Widget()
+: Widget{  }
 {
     init(sf::String(text), font, characterSize, color);
 }
@@ -52,11 +52,6 @@ void gsf::TextWidget::init(std::string text, sf::Font &font, int characterSize,
 	m_text.setFillColor(color);
     setBackgroundColor(sf::Color::Transparent);
 	calculateSize();
-}
-
-gsf::TextWidget::~TextWidget()
-{
-
 }
 
 void gsf::TextWidget::setText(const sf::String &text)
@@ -164,54 +159,6 @@ sf::FloatRect gsf::TextWidget::getLocalBoundsOfChar(std::size_t i) const
     return rect;
 }
 
-void gsf::TextWidget::drawWidget(sf::RenderTarget &target, 
-        sf::RenderStates states) const
-{
-    // Draw text
-    target.draw(m_text, states);
-}
-
-void gsf::TextWidget::update(float dt)
-{
-    // Do nothing by default
-}
-
-bool gsf::TextWidget::handleEvent(sf::Event &event)
-{
-    bool handled = Widget::handleEvent(event);
-    /*    
-    if (event.type == sf::Event::MouseButtonPressed)
-    {        
-        sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
-        if (!getShownArea().contains(mousePos))
-            return false;
-        const sf::Font& font{ *(m_text.getFont()) };
-        unsigned int charSize{ m_text.getCharacterSize() };
-        sf::Vector2f localPos{ mousePos.x - getWorldPosition().x - getOrigin().x,
-            mousePos.y - getWorldPosition().y - getOrigin().y };
-        std::cout << "LocalPos: (" << localPos.x << "|" << localPos.y << ")\n";
-        std::cout << "Font LineSpacing: " << font.getLineSpacing(charSize) << "\n";
-        std::cout << "Pos (0) : (" << m_text.findCharacterPos(0).x << "|"
-            << m_text.findCharacterPos(0).y << ")\n";
-
-        std::cout << "Pos (10) : (" << m_text.findCharacterPos(10).x << "|"
-            << m_text.findCharacterPos(10).y << ")\n";
-        
-        std::cout << "Pos (13) : (" << m_text.findCharacterPos(13).x << "|"
-            << m_text.findCharacterPos(13).y << ")\n";
-        int index = findIndexOfCharOnPos(localPos);
-        std::cout << "Clicked on index: " << index << std::endl;
-        std::cout << "-------------------------------------------------\n";
-        //std::cout << "I: (" << findLocalCharacterPos(0).x << "|" 
-        //    << findLocalCharacterPos(0).y << ")" 
-        //    << getLocalBoundsOfChar(0).height << "\n";
-        //std::cout << "pressed on: " << index << std::endl;
-    }
-    */
-    return handled;
-}
-
 void gsf::TextWidget::calculateSize()
 {
     sf::FloatRect localBounds{ m_text.getLocalBounds() };
@@ -286,3 +233,48 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     return -1;
 }
 
+bool gsf::TextWidget::handleEventCurrentAfterChildren(sf::Event &event)
+{
+    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    /*    
+    if (event.type == sf::Event::MouseButtonPressed)
+    {        
+        sf::Vector2f mousePos{ (float) event.mouseButton.x, 
+        (float) event.mouseButton.y };
+        if (!getShownArea().contains(mousePos))
+            return false;
+        const sf::Font& font{ *(m_text.getFont()) };
+        unsigned int charSize{ m_text.getCharacterSize() };
+        sf::Vector2f localPos{ mousePos.x - getWorldPosition().x - getOrigin().x,
+            mousePos.y - getWorldPosition().y - getOrigin().y };
+        std::cout << "LocalPos: (" << localPos.x << "|" << localPos.y << ")\n";
+        std::cout << "Font LineSpacing: " << font.getLineSpacing(charSize) << "\n";
+        std::cout << "Pos (0) : (" << m_text.findCharacterPos(0).x << "|"
+            << m_text.findCharacterPos(0).y << ")\n";
+
+        std::cout << "Pos (10) : (" << m_text.findCharacterPos(10).x << "|"
+            << m_text.findCharacterPos(10).y << ")\n";
+        
+        std::cout << "Pos (13) : (" << m_text.findCharacterPos(13).x << "|"
+            << m_text.findCharacterPos(13).y << ")\n";
+        int index = findIndexOfCharOnPos(localPos);
+        std::cout << "Clicked on index: " << index << std::endl;
+        std::cout << "-------------------------------------------------\n";
+        //std::cout << "I: (" << findLocalCharacterPos(0).x << "|" 
+        //    << findLocalCharacterPos(0).y << ")" 
+        //    << getLocalBoundsOfChar(0).height << "\n";
+        //std::cout << "pressed on: " << index << std::endl;
+    }
+    */
+    return handled;
+}
+void gsf::TextWidget::updateCurrentAfterChildren(float dt)
+{
+    // Do nothing by default
+}
+void gsf::TextWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
+        sf::RenderStates states) const
+{
+    // Draw text
+    target.draw(m_text, states);
+}
