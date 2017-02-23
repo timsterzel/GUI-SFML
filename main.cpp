@@ -18,6 +18,8 @@
 typedef std::chrono::high_resolution_clock CLOCK;
 
 void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt, 
+        float &averageFpsTime, float &fpsInSec, int &fpsCnt, 
+        int &averageFpsInOneSec,
         CLOCK::time_point &timePoint1);
 
 int main()
@@ -37,6 +39,10 @@ int main()
     txtStatFPS.setCharacterSize(12);
     txtStatFPS.setFillColor(sf::Color::Black);
     float dt{ 0.f };
+    float averageFpsTime{ 0.f };
+    float fpsInSec{ 0.f };
+    int fpsCnt{ 0 };
+    int averageFpsInOneSec{ 0 };
     CLOCK::time_point timePoint1{ CLOCK::now() };
 
     gsf::GUIEnvironment guiEnvironment;
@@ -213,7 +219,8 @@ int main()
     guiEnvironment.addWidget(std::move(checkBox1));
     while (window.isOpen())
     {
-        determineFpsAndDeltaTime(txtStatFPS, dt, timePoint1);
+        determineFpsAndDeltaTime(txtStatFPS, dt, averageFpsTime, fpsInSec, fpsCnt, 
+            averageFpsInOneSec, timePoint1);
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -235,8 +242,10 @@ int main()
     return 0;
 }
 
-void determineFpsAndDeltaTime(sf::Text &txtStatFPS, 
-        float &dt, CLOCK::time_point &timePoint1)
+void determineFpsAndDeltaTime(sf::Text &txtStatFPS, float &dt, 
+        float &averageFpsTime, float &fpsInSec, int &fpsCnt, 
+        int &averageFpsInOneSec,
+        CLOCK::time_point &timePoint1)
 {
     CLOCK::time_point timePoint2{ CLOCK::now() };
     std::chrono::duration<float> timeSpan{ timePoint2 - timePoint1 };
@@ -245,5 +254,18 @@ void determineFpsAndDeltaTime(sf::Text &txtStatFPS,
     dt = std::chrono::duration_cast<std::chrono::duration<float,std::ratio<1>>> 
         (timeSpan).count();
     float fps{ 1.f / dt };
-    txtStatFPS.setString("FPS: " + std::to_string(fps));
+    
+    averageFpsTime += dt;
+    fpsInSec += fps;
+    fpsCnt++;
+    if (averageFpsTime >= 1.f)
+    {
+        averageFpsInOneSec = fpsInSec / fpsCnt;
+        averageFpsTime = 0.f;
+        fpsInSec = 0.f;
+        fpsCnt = 0;
+    }
+
+    txtStatFPS.setString("FPS: " + std::to_string(averageFpsInOneSec) + " (" 
+            + std::to_string(fps) + ")");
 }
