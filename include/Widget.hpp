@@ -94,12 +94,12 @@ namespace gsf
         sf::FloatRect getGlobalBounds() const;
         sf::FloatRect getLocalBounds() const;
         // The total bounds without the outline
-        sf::FloatRect getGlobalBoundsWithoutOutline() const;
-        virtual sf::FloatRect getLocalBoundsWithoutOutline() const;
+        //sf::FloatRect getGlobalBoundsWithoutOutline() const;
+        //virtual sf::FloatRect getLocalBoundsWithoutOutline() const;
         // The bounds of the content area(This is he area where child widget
         // content is drawn)
-        sf::FloatRect getGlobalContentBounds() const;
-        virtual sf::FloatRect getLocalContentBounds() const;
+        //sf::FloatRect getGlobalContentBounds() const;
+        //virtual sf::FloatRect getLocalContentBounds() const;
         
         void setBackgroundColor(const sf::Color color);
         sf::Color getBackgroundColor() const;
@@ -143,16 +143,16 @@ namespace gsf
         // Returns a view in which only the shown area of the widget is shown 
         // by drawing. This includes the outline
         //sf::View getOutlineShownAreaView(sf::RenderTarget &target) const;
-        sf::FloatRect getShownAreaWithoutOutline() const;
-        sf::FloatRect getContentShownArea() const;
+        //sf::FloatRect getShownAreaWithoutOutline() const;
+        //sf::FloatRect getContentShownArea() const;
 
         // The shown area with the outline 
         sf::View getShownAreaView(sf::RenderTarget &target) const;
         // The shown area without the outline
-        sf::View getShownAreaViewWithoutOutline(sf::RenderTarget &target) const;
+        //sf::View getShownAreaViewWithoutOutline(sf::RenderTarget &target) const;
         // The shown of the content. This is only the area where child widgets 
         // are shown
-        sf::View getContentShownAreaView(sf::RenderTarget &target) const;
+        //sf::View getContentShownAreaView(sf::RenderTarget &target) const;
         
         // Is called when the bounds of the widget changes (e.g. width, height
         // outlineThickness) so necessary things can get changed

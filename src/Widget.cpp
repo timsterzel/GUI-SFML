@@ -217,26 +217,33 @@ sf::FloatRect gsf::Widget::getGlobalBounds() const
     rect.height += 2 * m_outlineThickness;
     return rect;
     */
+
+    /*
     sf::FloatRect rect{ getLocalBounds() };
     rect.left += getWorldPosition().x;
     rect.top += getWorldPosition().y;
     return rect;
+    */
+
+    float left{ getWorldLeft() - m_outlineThickness };
+    float top{ getWorldTop() - m_outlineThickness };
+    float width{ m_width + 2 * m_outlineThickness };
+    float height{ m_height + 2 * m_outlineThickness };
+    return sf::FloatRect{ left, top, width, height };
 }
 
 sf::FloatRect gsf::Widget::getLocalBounds() const
 {
-    sf::FloatRect rect{ getLocalBoundsWithoutOutline() };
-    rect.left -= m_outlineThickness;
-    rect.top -= m_outlineThickness;
-    rect.width += 2 * m_outlineThickness;
-    rect.height += 2 * m_outlineThickness;
-    return rect;
+    float left{ getLeft() - m_outlineThickness };
+    float top{ getTop() - m_outlineThickness };
+    float width{ m_width + 2 * m_outlineThickness };
+    float height{ m_height + 2 * m_outlineThickness };
+    return sf::FloatRect{ left, top, width, height };
 }
 
-
+/*
 sf::FloatRect gsf::Widget::getGlobalBoundsWithoutOutline() const
 {
-
     sf::FloatRect rect{ getLocalBoundsWithoutOutline() };
     rect.left += getWorldPosition().x;
     rect.top += getWorldPosition().y;
@@ -266,6 +273,7 @@ sf::FloatRect gsf::Widget::getLocalContentBounds() const
     float height{ m_height };
     return sf::FloatRect{ left, top, width, height };
 }
+*/
 
 void gsf::Widget::setBackgroundColor(const sf::Color color)
 {
@@ -366,7 +374,7 @@ sf::FloatRect gsf::Widget::getShownArea() const
     }
     return rectThis;
 }
-
+/*
 sf::FloatRect gsf::Widget::getShownAreaWithoutOutline() const
 {
     sf::FloatRect rectThis{ getGlobalBoundsWithoutOutline() };
@@ -374,7 +382,7 @@ sf::FloatRect gsf::Widget::getShownAreaWithoutOutline() const
     {
          // We have to get the parents shown screen area to calculate 
          // the overlapping rect
-        sf::FloatRect rectParent{ m_parent->getShownAreaWithoutOutline() };
+        sf::FloatRect rectParent{ m_parent->getContentShownArea() };
         return getOverlappingArea(rectThis, rectParent);
     }
     return rectThis;
@@ -386,18 +394,18 @@ sf::FloatRect gsf::Widget::getContentShownArea() const
     {
          // We have to get the parents shown screen area to calculate 
          // the overlapping rect
-        sf::FloatRect rectParent{ m_parent->getShownArea() };
+        sf::FloatRect rectParent{ m_parent->getContentShownArea() };
         return getOverlappingArea(rectThis, rectParent);
     }
     return rectThis;
 }
-
+*/
 sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
 {
     sf::FloatRect shownAreaRect{ getShownArea() };
     return createViewFromRect(shownAreaRect, target);
 }
-
+/*
 sf::View gsf::Widget::getShownAreaViewWithoutOutline(sf::RenderTarget &target) const
 {
     sf::FloatRect shownAreaRect{ getShownAreaWithoutOutline() };
@@ -409,6 +417,7 @@ sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target) const
     sf::FloatRect shownAreaRect{ getContentShownArea() };
     return createViewFromRect(shownAreaRect, target);
 }
+*/
 void gsf::Widget::boundsChanged()
 {
     // Do nothing by default
@@ -555,7 +564,7 @@ void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
         basicShape.setOutlineColor(m_outlineColor);
         target.draw(basicShape, states);
 
-        // Set the targets to the view which is only the area of the widget, 
+        // Set the target to the view which is only the area of the widget, 
         // based on its with, height and position
         sf::View defaultView{ target.getView() };
         sf::View view{ getShownAreaView(target) };
