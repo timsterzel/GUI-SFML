@@ -127,6 +127,13 @@ namespace gsf
                 sf::RenderStates states) const final override;
 
     protected:
+        // The view which result in the parent area and the actual area
+        sf::FloatRect getOverlappingArea(sf::FloatRect rectThis, 
+                sf::FloatRect rectParent) const;
+        // Creates a view which only shows the given rect area
+        sf::View createViewFromRect(sf::FloatRect rect, 
+                sf::RenderTarget &target) const;
+
         // Get the shown area of the widget. The Shown area is the width and 
         // height of the widget,
         // with left and top coordinates (top-left corner), but is affected by 
@@ -135,14 +142,20 @@ namespace gsf
         sf::FloatRect getShownArea() const;
         // Returns a view in which only the shown area of the widget is shown 
         // by drawing. This includes the outline
-        sf::View getOutlineShownAreaView(sf::RenderTarget &target) const;
-        // The shown area without the outline 
+        //sf::View getOutlineShownAreaView(sf::RenderTarget &target) const;
+        sf::FloatRect getShownAreaWithoutOutline() const;
+        sf::FloatRect getContentShownArea() const;
+
+        // The shown area with the outline 
         sf::View getShownAreaView(sf::RenderTarget &target) const;
+        // The shown area without the outline
+        sf::View getShownAreaViewWithoutOutline(sf::RenderTarget &target) const;
         // The shown of the content. This is only the area where child widgets 
         // are shown
         sf::View getContentShownAreaView(sf::RenderTarget &target) const;
+        
         // Is called when the bounds of the widget changes (e.g. width, height
-        // outlineThickness) so necessary things can get changed    
+        // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();
         
         virtual bool handleEventCurrentBeforeChildren(sf::Event &event);

@@ -300,86 +300,9 @@ sf::Vector2f gsf::Widget::getWorldPosition() const
     return (getWorldTransform() * sf::Vector2f()) + getOrigin();
 }
 
-
-sf::View gsf::Widget::getOutlineShownAreaView(sf::RenderTarget &target) const
+sf::FloatRect gsf::Widget::getOverlappingArea(sf::FloatRect rectThis, 
+    sf::FloatRect rectParent) const
 {
-    sf::FloatRect shownAreaRect{ getShownArea() };
-    float left{ shownAreaRect.left };
-    float top{ shownAreaRect.top };
-    float width{ shownAreaRect.width };
-    float height{ shownAreaRect.height };
-
-    sf::View view;
-    // The view should have the same size as the widgets shown area,
-    // so the shown area of the widget is never bigger than the size of the widget,
-    // although when containing widgets of the widget are bigger.
-    view.setSize(width , height);
-
-    view.setCenter(left + (width / 2.f), top + (height / 2.f) );
-
-    // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
-                width / target.getSize().x, height / target.getSize().y));
-    return view;
-}
-
-sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
-{
-    sf::FloatRect shownAreaRect{ getShownArea() };
-    float left{ shownAreaRect.left };
-    float top{ shownAreaRect.top };
-    float width{ shownAreaRect.width };
-    float height{ shownAreaRect.height };
-
-    sf::View view;
-    // The view should have the same size as the widgets shown area,
-    // so the shown area of the widget is never bigger than the size of the widget,
-    // although when containing widgets of the widget are bigger.
-    view.setSize(width , height);
-
-    view.setCenter(left + (width / 2.f), top + (height / 2.f) );
-
-    // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
-                width / target.getSize().x, height / target.getSize().y));
-    return view;
-}
-
-sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target) const
-{
-    sf::FloatRect shownAreaRect{ getShownArea() };
-    float left{ shownAreaRect.left };
-    float top{ shownAreaRect.top };
-    float width{ shownAreaRect.width };
-    float height{ shownAreaRect.height };
-
-    sf::View view;
-    // The view should have the same size as the widgets shown area,
-    // so the shown area of the widget is never bigger than the size of the widget,
-    // although when containing widgets of the widget are bigger.
-    view.setSize(width , height);
-
-    view.setCenter(left + (width / 2.f), top + (height / 2.f) );
-
-    // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
-                width / target.getSize().x, height / target.getSize().y));
-    return view;
-}
-
-sf::FloatRect gsf::Widget::getShownArea() const
-{
-    // Without outline thickness
-    //sf::FloatRect rectThis
-        // { getWorldLeft(), getWorldTop(), getWidth(), getHeight() };
-    // With outline thickness in ShownArea
-    sf::FloatRect rectThis{ getGlobalBounds() };
-    if (m_parent)
-    {
-         // We have to get the parents shown screen area to calculate 
-         // the overlapping rect
-        sf::FloatRect rectParent{ m_parent->getShownArea() };
-
         // Data of this widget
         float leftA{ rectThis.left };
         float rightA{ rectThis.left + rectThis.width };
@@ -406,10 +329,86 @@ sf::FloatRect gsf::Widget::getShownArea() const
         float overlapY{ std::max(0.f, std::min(bottomA, bottomB) 
                 - std::max(topA, topB)) };
         return sf::FloatRect{ leftAB, topAB, overlapX, overlapY };
+}
+
+sf::View gsf::Widget::createViewFromRect(sf::FloatRect rect, 
+        sf::RenderTarget &target) const
+{
+    float left{ rect.left };
+    float top{ rect.top };
+    float width{ rect.width };
+    float height{ rect.height };
+    sf::View view;
+    // The view should have the same size as the widgets shown area,
+    // so the shown area of the widget is never bigger than the size of the widget,
+    // although when containing widgets of the widget are bigger.
+    view.setSize(width , height);
+
+    view.setCenter(left + (width / 2.f), top + (height / 2.f) );
+
+    // The viewport is the area where the widget is on screen
+    view.setViewport(sf::FloatRect(left / target.getSize().x, 
+                top / target.getSize().y,
+                width / target.getSize().x, 
+                height / target.getSize().y));
+    return view;
+}
+
+sf::FloatRect gsf::Widget::getShownArea() const
+{
+    sf::FloatRect rectThis{ getGlobalBounds() };
+    if (m_parent)
+    {
+         // We have to get the parents shown screen area to calculate 
+         // the overlapping rect
+        sf::FloatRect rectParent{ m_parent->getShownArea() };
+        return getOverlappingArea(rectThis, rectParent);
     }
     return rectThis;
 }
 
+sf::FloatRect gsf::Widget::getShownAreaWithoutOutline() const
+{
+    sf::FloatRect rectThis{ getGlobalBoundsWithoutOutline() };
+    if (m_parent)
+    {
+         // We have to get the parents shown screen area to calculate 
+         // the overlapping rect
+        sf::FloatRect rectParent{ m_parent->getShownAreaWithoutOutline() };
+        return getOverlappingArea(rectThis, rectParent);
+    }
+    return rectThis;
+}
+sf::FloatRect gsf::Widget::getContentShownArea() const
+{
+    sf::FloatRect rectThis{ getGlobalContentBounds() };
+    if (m_parent)
+    {
+         // We have to get the parents shown screen area to calculate 
+         // the overlapping rect
+        sf::FloatRect rectParent{ m_parent->getShownArea() };
+        return getOverlappingArea(rectThis, rectParent);
+    }
+    return rectThis;
+}
+
+sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
+{
+    sf::FloatRect shownAreaRect{ getShownArea() };
+    return createViewFromRect(shownAreaRect, target);
+}
+
+sf::View gsf::Widget::getShownAreaViewWithoutOutline(sf::RenderTarget &target) const
+{
+    sf::FloatRect shownAreaRect{ getShownAreaWithoutOutline() };
+    return createViewFromRect(shownAreaRect, target);
+}
+
+sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target) const
+{
+    sf::FloatRect shownAreaRect{ getContentShownArea() };
+    return createViewFromRect(shownAreaRect, target);
+}
 void gsf::Widget::boundsChanged()
 {
     // Do nothing by default
