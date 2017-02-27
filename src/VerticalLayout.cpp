@@ -26,8 +26,8 @@ void gsf::VerticalLayout::calculateSize()
             width = childWidth;
         }
     }
-    m_height = height;
-    m_width = width;
+    setHeight(height);
+    setWidth(width);
 }
 
 void gsf::VerticalLayout::arrangeChildren()

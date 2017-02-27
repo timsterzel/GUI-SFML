@@ -4,15 +4,15 @@
 #include <iostream>
 
 gsf::Widget::Widget(bool isWindowWidget)
-: m_width{ 0.f }
-, m_height{ 0.f }
-, m_outlineColor{ sf::Color::Black }
+: m_outlineColor{ sf::Color::Black }
 , m_outlineThickness{ 0.f }
 , m_bgColor{ sf::Color::White }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
+, m_width{ 0.f }
+, m_height{ 0.f }
 , m_isWindowWidget{ isWindowWidget }
 {
 
@@ -20,15 +20,15 @@ gsf::Widget::Widget(bool isWindowWidget)
 
 
 gsf::Widget::Widget(float width, float height, bool isWindowWidget)
-: m_width{ width }
-, m_height{ height }
-, m_outlineColor{ sf::Color::Black }
+: m_outlineColor{ sf::Color::Black }
 , m_outlineThickness{ 0.f }
 , m_bgColor{ sf::Color::White }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
+, m_width{ width }
+, m_height{ height }
 , m_isWindowWidget{ isWindowWidget }
 {
 

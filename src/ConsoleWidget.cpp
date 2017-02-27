@@ -14,9 +14,10 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 void gsf::ConsoleWidget::init(sf::Font &font)
 {
     std::unique_ptr<TextInputWidget> textDisplay{ 
-        std::make_unique<TextInputWidget>(m_width, m_height - 20.f - 4.f, font) };
+        std::make_unique<TextInputWidget>(getWidth(), 
+                getHeight() - 20.f - 4.f, font) };
     std::unique_ptr<TextInputWidget> textInput{ 
-        std::make_unique<TextInputWidget>(m_width, 20.f, font) };
+        std::make_unique<TextInputWidget>(getWidth(), 20.f, font) };
     m_textDisplay = textDisplay.get();
     m_textInput = textInput.get();
 
@@ -26,7 +27,7 @@ void gsf::ConsoleWidget::init(sf::Font &font)
 
     m_textInput->setIsVerticalScrollEnabled(false);
     m_textInput->setBackgroundColor(sf::Color::White);
-    m_textInput->setPosition(0.f, m_height - 20.f);
+    m_textInput->setPosition(0.f, getHeight() - 20.f);
     m_textInput->setIsNewLineAccepted(false);
     m_textInput->setIsHorizontalScrollbarDrawn(false);
     m_textInput->setOutlineThickness(4.f);;

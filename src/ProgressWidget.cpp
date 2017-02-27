@@ -72,8 +72,8 @@ void gsf::ProgressWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
 {
     // Draw progress rect
     // Calc acutal width of progress rect
-    float widthProg{ (m_width - 2 * m_progressMargin) * (m_progress / 100.f) };
-    float heightProg{ (m_height - 2 * m_progressMargin) };
+    float widthProg{ (getWidth() - 2 * m_progressMargin) * (m_progress / 100.f) };
+    float heightProg{ (getHeight() - 2 * m_progressMargin) };
     sf::RectangleShape progressShape{ { widthProg, heightProg } };
     progressShape.setPosition(m_progressMargin, m_progressMargin);
     progressShape.setFillColor(m_progessColor);

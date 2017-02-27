@@ -14,8 +14,6 @@ namespace gsf
     protected:
         // The width and height is the size of the "content" the real
         // size can differ. (E.g. a window have a topbar or there can be a outline)
-        float m_width;
-        float m_height;
 
         std::vector<Ptr> m_children;
         
@@ -37,10 +35,11 @@ namespace gsf
         std::function<void(Widget*, sf::Vector2f)> m_onRightClickListener;
         std::function<void(Widget*, sf::Vector2f)> m_onMiddleClickListener;
     private:
+        float m_width;
+        float m_height;
         // Window Widgets are special, so we store the information if
         // the widget is a window here
         bool m_isWindowWidget;
-        
     public:
         Widget(bool isWindowWidget = false);
         Widget(float width, float height, bool isWindowWidget = false);
