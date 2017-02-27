@@ -35,8 +35,10 @@ namespace gsf
         std::function<void(Widget*, sf::Vector2f)> m_onRightClickListener;
         std::function<void(Widget*, sf::Vector2f)> m_onMiddleClickListener;
     private:
-        float m_width;
-        float m_height;
+        // The area of the content. That is the area where child widgets are drawn too
+        sf::FloatRect m_contentArea;
+        //float m_width;
+        //float m_height;
         // Window Widgets are special, so we store the information if
         // the widget is a window here
         bool m_isWindowWidget;

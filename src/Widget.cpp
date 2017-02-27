@@ -11,8 +11,9 @@ gsf::Widget::Widget(bool isWindowWidget)
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
-, m_width{ 0.f }
-, m_height{ 0.f }
+//, m_width{ 0.f }
+//, m_height{ 0.f }
+, m_contentArea{ 0.f, 0.f, 0.f, 0.f }
 , m_isWindowWidget{ isWindowWidget }
 {
 
@@ -27,8 +28,9 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
-, m_width{ width }
-, m_height{ height }
+//, m_width{ width }
+//, m_height{ height }
+, m_contentArea{ 0.f, 0.f, width, height }
 , m_isWindowWidget{ isWindowWidget }
 {
 
@@ -147,24 +149,28 @@ void gsf::Widget::setOnMiddleClickListener(std::function
 
 void gsf::Widget::setWidth(const float width)
 {
-    m_width = width;
+    m_contentArea.width = width;
+    //m_width = width;
     boundsChanged();
 }
 
 float gsf::Widget::getWidth() const
 {
-    return m_width;
+    return m_contentArea.width;
+    //return m_width;
 }
 
 void gsf::Widget::setHeight(const float height)
 {
-    m_height = height;
+    m_contentArea.height = height;
+    //m_height = height;
     boundsChanged();
 }
 
 float gsf::Widget::getHeight() const
 {
-    return m_height;
+    return m_contentArea.height;
+    //return m_height;
 }
 
 float gsf::Widget::getLeft() const
@@ -227,8 +233,8 @@ sf::FloatRect gsf::Widget::getGlobalBounds() const
 
     float left{ getWorldLeft() - m_outlineThickness };
     float top{ getWorldTop() - m_outlineThickness };
-    float width{ m_width + 2 * m_outlineThickness };
-    float height{ m_height + 2 * m_outlineThickness };
+    float width{ getWidth() + 2 * m_outlineThickness };
+    float height{ getHeight() + 2 * m_outlineThickness };
     return sf::FloatRect{ left, top, width, height };
 }
 
@@ -236,8 +242,8 @@ sf::FloatRect gsf::Widget::getLocalBounds() const
 {
     float left{ getLeft() - m_outlineThickness };
     float top{ getTop() - m_outlineThickness };
-    float width{ m_width + 2 * m_outlineThickness };
-    float height{ m_height + 2 * m_outlineThickness };
+    float width{ getWidth() + 2 * m_outlineThickness };
+    float height{ getHeight() + 2 * m_outlineThickness };
     return sf::FloatRect{ left, top, width, height };
 }
 
@@ -558,7 +564,7 @@ void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         states.transform *= getTransform();
         // Draw basic shape (background and outline)
-        sf::RectangleShape basicShape{ sf::Vector2f(m_width, m_height) };
+        sf::RectangleShape basicShape{ sf::Vector2f(getWidth(), getHeight()) };
         basicShape.setFillColor(m_bgColor);
         basicShape.setOutlineThickness(m_outlineThickness);
         basicShape.setOutlineColor(m_outlineColor);
