@@ -12,9 +12,11 @@ namespace gsf
         typedef std::pair<Widget*, Widget*> Pair;
 
     protected:
+        // The width and height is the size of the "content" the real
+        // size can differ. (E.g. a window have a topbar or there can be a outline)
         float m_width;
         float m_height;
-            
+
         std::vector<Ptr> m_children;
         
         sf::Color m_outlineColor;
@@ -90,8 +92,14 @@ namespace gsf
         // bounds. So the width and height can has higher values then the 
         // widgets height and width
         sf::FloatRect getGlobalBounds() const;
-        // Same as getGlobalBounds, but with local coordinates for left and top
         sf::FloatRect getLocalBounds() const;
+        // The total bounds without the outline
+        sf::FloatRect getGlobalBoundsWithoutOutline() const;
+        virtual sf::FloatRect getLocalBoundsWithoutOutline() const;
+        // The bounds of the content area(This is he area where child widget
+        // content is drawn)
+        sf::FloatRect getGlobalContentBounds() const;
+        virtual sf::FloatRect getLocalContentBounds() const;
         
         void setBackgroundColor(const sf::Color color);
         sf::Color getBackgroundColor() const;
@@ -126,9 +134,13 @@ namespace gsf
         // area off the widget and all its parents
         sf::FloatRect getShownArea() const;
         // Returns a view in which only the shown area of the widget is shown 
-        // by drawing
+        // by drawing. This includes the outline
+        sf::View getOutlineShownAreaView(sf::RenderTarget &target) const;
+        // The shown area without the outline 
         sf::View getShownAreaView(sf::RenderTarget &target) const;
-            
+        // The shown of the content. This is only the area where child widgets 
+        // are shown
+        sf::View getContentShownAreaView(sf::RenderTarget &target) const;
         // Is called when the bounds of the widget changes (e.g. width, height
         // outlineThickness) so necessary things can get changed    
         virtual void boundsChanged();

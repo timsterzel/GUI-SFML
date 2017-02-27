@@ -209,19 +209,61 @@ float gsf::Widget::getWorldBottom() const
 
 sf::FloatRect gsf::Widget::getGlobalBounds() const
 {
-    float left{ getWorldLeft() - m_outlineThickness };
-    float top{ getWorldTop() - m_outlineThickness };
-    float width{ m_width + 2 * m_outlineThickness };
-    float height{ m_height + 2 * m_outlineThickness };
-    return sf::FloatRect{ left, top, width, height };
+    /*
+    sf::FloatRect rect{ getGlobalBoundsWithoutOutline() };
+    rect.left -= m_outlineThickness;
+    rect.top -= m_outlineThickness;
+    rect.width += 2 * m_outlineThickness;
+    rect.height += 2 * m_outlineThickness;
+    return rect;
+    */
+    sf::FloatRect rect{ getLocalBounds() };
+    rect.left += getWorldPosition().x;
+    rect.top += getWorldPosition().y;
+    return rect;
 }
 
 sf::FloatRect gsf::Widget::getLocalBounds() const
 {
-    float left{ getLeft() - m_outlineThickness };
-    float top{ getTop() - m_outlineThickness };
-    float width{ m_width + 2 * m_outlineThickness };
-    float height{ m_height + 2 * m_outlineThickness };
+    sf::FloatRect rect{ getLocalBoundsWithoutOutline() };
+    rect.left -= m_outlineThickness;
+    rect.top -= m_outlineThickness;
+    rect.width += 2 * m_outlineThickness;
+    rect.height += 2 * m_outlineThickness;
+    return rect;
+}
+
+
+sf::FloatRect gsf::Widget::getGlobalBoundsWithoutOutline() const
+{
+
+    sf::FloatRect rect{ getLocalBoundsWithoutOutline() };
+    rect.left += getWorldPosition().x;
+    rect.top += getWorldPosition().y;
+    return rect;
+}
+
+sf::FloatRect gsf::Widget::getLocalBoundsWithoutOutline() const
+{
+    // By default its the same as the content area
+    return getLocalContentBounds();
+}
+
+sf::FloatRect gsf::Widget::getGlobalContentBounds() const
+{
+
+    sf::FloatRect rect{ getLocalContentBounds() };
+    rect.left += getWorldPosition().x;
+    rect.top += getWorldPosition().y;
+    return rect;
+}
+
+sf::FloatRect gsf::Widget::getLocalContentBounds() const
+{
+    float left{ getLeft() };
+    float top{ getTop() };
+    float width{ m_width };
+    float height{ m_height };
     return sf::FloatRect{ left, top, width, height };
 }
 
@@ -258,7 +300,52 @@ sf::Vector2f gsf::Widget::getWorldPosition() const
     return (getWorldTransform() * sf::Vector2f()) + getOrigin();
 }
 
+
+sf::View gsf::Widget::getOutlineShownAreaView(sf::RenderTarget &target) const
+{
+    sf::FloatRect shownAreaRect{ getShownArea() };
+    float left{ shownAreaRect.left };
+    float top{ shownAreaRect.top };
+    float width{ shownAreaRect.width };
+    float height{ shownAreaRect.height };
+
+    sf::View view;
+    // The view should have the same size as the widgets shown area,
+    // so the shown area of the widget is never bigger than the size of the widget,
+    // although when containing widgets of the widget are bigger.
+    view.setSize(width , height);
+
+    view.setCenter(left + (width / 2.f), top + (height / 2.f) );
+
+    // The viewport is the area where the widget is on screen
+    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
+                width / target.getSize().x, height / target.getSize().y));
+    return view;
+}
+
 sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
+{
+    sf::FloatRect shownAreaRect{ getShownArea() };
+    float left{ shownAreaRect.left };
+    float top{ shownAreaRect.top };
+    float width{ shownAreaRect.width };
+    float height{ shownAreaRect.height };
+
+    sf::View view;
+    // The view should have the same size as the widgets shown area,
+    // so the shown area of the widget is never bigger than the size of the widget,
+    // although when containing widgets of the widget are bigger.
+    view.setSize(width , height);
+
+    view.setCenter(left + (width / 2.f), top + (height / 2.f) );
+
+    // The viewport is the area where the widget is on screen
+    view.setViewport(sf::FloatRect(left / target.getSize().x , top / target.getSize().y,
+                width / target.getSize().x, height / target.getSize().y));
+    return view;
+}
+
+sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target) const
 {
     sf::FloatRect shownAreaRect{ getShownArea() };
     float left{ shownAreaRect.left };

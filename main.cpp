@@ -99,7 +99,7 @@ int main()
 
     std::unique_ptr<gsf::WindowWidget> windowWidget{ 
         std::make_unique<gsf::WindowWidget>(300.f, 360.f, "", font) };
-    windowWidget->setPosition(60.f , 40.f);
+    windowWidget->setPosition(0.f , 0.f);
     //windowWidget->setBackgroundColor(sf::Color::White);
     windowWidget->attachChild(std::move(scrollableWidget));
     windowWidget->setIsVisible(true);
