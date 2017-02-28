@@ -71,16 +71,29 @@ void gsf::ScrollableWidget::createVerticalScrollbar()
     }
     // Add vertical scroll thickness to full area
     m_fullArea.width += m_scrollbarThickness;
-    std::cout << "Create vertical\n";
     // Create Buttons
     m_scrollUpBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     // Set position x direct after the content area and y to top
-    m_scrollUpBtn.setPosition(0.f, getWidth());
+    m_scrollUpBtn.setPosition(getWidth(), 0.f);
     m_scrollUpBtn.setFillColor(sf::Color::Red);
-
+    
+    m_scrollDownBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
+    // Set position x direct after the content area and y to top
+    m_scrollDownBtn.setPosition(getWidth(), getHeight() - m_scrollbarThickness);
+    m_scrollDownBtn.setFillColor(sf::Color::Red);
+    
     // Get proportion between the scrollable widget and its child 
     // (We need to note the scrollbar thickness so the
-    // two scrollbars can not overlap
+    // two scrollbars can not overlap)
+    float scrollAreaHeight{ getHeight() 
+        - m_scrollUpBtn.getHeight() - m_scrollDownBtn.getHeight() };
+    float prop{ scrollAreaHeight / childrenHeight };
+    // Calculate the scrollbar height
+    float scrollbarHeight{ scrollAreaHeight * prop };
+    m_scrollbarVertical.setHeight(scrollbarHeight);
+    m_scrollbarVertical.setWidth(m_scrollbarThickness);
+    m_scrollbarVertical.setPosition(getWidth(), m_scrollUpBtn.getHeight());
+    m_scrollbarVertical.setFillColor(m_scrollBarColor);
 }
 
 void gsf::ScrollableWidget::attachChild(Ptr child)
@@ -303,18 +316,15 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
 {
     // If scrollbar is out of widget, correct its position
     // Vertical
-    if (m_scrollbarVertical.getTop() < 0.f + SCROLLBAR_PAD)
+    if (m_scrollbarVertical.getTop() < m_scrollUpBtn.getBottom())
     {
         m_scrollbarVertical.setPosition(m_scrollbarVertical.getPosition().x, 
-                0.f + m_scrollbarVertical.getHeight() / 2.f + SCROLLBAR_PAD);
+                m_scrollUpBtn.getBottom());
     }
-    else if (m_scrollbarVertical.getBottom() > getHeight() - SCROLLBAR_PAD 
-            - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS)
+    else if (m_scrollbarVertical.getBottom() > m_scrollDownBtn.getTop())
     {
         m_scrollbarVertical.setPosition(m_scrollbarVertical.getPosition().x, 
-            getHeight() - m_scrollbarVertical.getHeight() / 2.f 
-            - m_scrollbarThickness
-            - SCROLLBAR_PAD - PAD_BETTWEEN_SCROLLBARS);
+            m_scrollDownBtn.getTop() - m_scrollbarVertical.getHeight());
     }
     // Horizontal
     if (m_scrollbarHorizontal.getLeft() < 0.f + SCROLLBAR_PAD)
@@ -516,6 +526,7 @@ void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target,
         //rec.setFillColor(sf::Color::Green);
         //target.draw(rec, states);
         target.draw(m_scrollUpBtn, states);
+        target.draw(m_scrollDownBtn, states);
         target.draw(m_scrollbarVertical, states);
     }
     if (m_isHorizontalScrollbarDrawn)
