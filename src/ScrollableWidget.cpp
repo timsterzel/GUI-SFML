@@ -512,10 +512,9 @@ void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target,
     // Draw Scroll Elements
     if (m_isVerticalScrollbarDrawn)
     {
-        sf::RectangleShape rec({10000.f, 10000.f});
-        rec.setFillColor(sf::Color::Green);
-
-        target.draw(rec, states);
+        //sf::RectangleShape rec({10000.f, 10000.f});
+        //rec.setFillColor(sf::Color::Green);
+        //target.draw(rec, states);
         target.draw(m_scrollUpBtn, states);
         target.draw(m_scrollbarVertical, states);
     }

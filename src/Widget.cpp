@@ -395,7 +395,7 @@ sf::FloatRect gsf::Widget::getShownArea() const
     {
          // We have to get the parents shown screen area to calculate 
          // the overlapping rect
-        sf::FloatRect rectParent{ m_parent->getShownArea() };
+        sf::FloatRect rectParent{ m_parent->getContentShownArea() };
         return getOverlappingArea(rectThis, rectParent);
     }
     return rectThis;
