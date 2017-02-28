@@ -38,6 +38,17 @@ sf::Vector2f gsf::MoveableBlock::getLastPosition() const
     return m_lastPos;
 }
 
+void gsf::MoveableBlock::setSize(float width, float height)
+{
+    setWidth(width);
+    setHeight(height);
+}
+
+void gsf::MoveableBlock::setSize(sf::Vector2f size)
+{
+    setSize(size.x, size.y);
+}
+
 float gsf::MoveableBlock::getWidth() const
 {
     return m_width;

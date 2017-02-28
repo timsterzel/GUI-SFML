@@ -28,7 +28,59 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 
 void gsf::ScrollableWidget::init()
 {
-    calculateScrollbarSizes();
+    //calculateScrollbarSizes();
+    boundsChanged();
+}
+
+
+void gsf::ScrollableWidget::createScrollbars()
+{
+    // _____________________
+    // | CONTENT          |^|<- Button to Scroll up
+    // |                  | |
+    // |                  |S|
+    // |                  |S| <- Vertical Scrollbar
+    // |__________________|v|
+    // <               SSS>x| <- 'x' is a buffer area where is nothing
+    // ----------------------
+    //                   ^
+    //                   | Horizontal Scrollbar
+    if (m_children.size() < 1)
+    {
+        return;
+    }
+    createVerticalScrollbar();
+
+}
+
+void gsf::ScrollableWidget::createVerticalScrollbar()
+{
+    // Get first element
+    Widget *childWidget{ m_children.at(0).get() };
+    float childrenHeight{ childWidget->getHeight() };
+
+    // Check if there is any need for scrolling 
+    // (Child is higher then ScrollableWidgets height or outside)
+    m_isVerticalScrollNeeded = childWidget->getTop() < 0.f || 
+        childWidget->getBottom() > getHeight() ||
+        childWidget->getHeight() > getHeight();
+    // Only show scrollbar when there is any need to scroll and scrolling is enabled
+    if (!m_isVerticalScrollEnabled || !m_isVerticalScrollNeeded) {
+        m_scrollbarVertical.setHeight(0.f);
+        return;
+    }
+    // Add vertical scroll thickness to full area
+    m_fullArea.width += m_scrollbarThickness;
+    std::cout << "Create vertical\n";
+    // Create Buttons
+    m_scrollUpBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
+    // Set position x direct after the content area and y to top
+    m_scrollUpBtn.setPosition(0.f, getWidth());
+    m_scrollUpBtn.setFillColor(sf::Color::Red);
+
+    // Get proportion between the scrollable widget and its child 
+    // (We need to note the scrollbar thickness so the
+    // two scrollbars can not overlap
 }
 
 void gsf::ScrollableWidget::attachChild(Ptr child)
@@ -37,7 +89,7 @@ void gsf::ScrollableWidget::attachChild(Ptr child)
     m_children.clear();
     Widget::attachChild(std::move(child));
 }
-
+/*
 void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
 {
     if (m_children.size() < 1)
@@ -65,11 +117,11 @@ void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
     // two scrollbars can not overlap
     float proportionVer{ 
         (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
-            /*- 2 * SCROLLBAR_PAD*/) / childrenHeight };
+             / childrenHeight };
     // Calculate the scrollbar size
     float scrollbarHeight{ 
         (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
-            /*- 2 * SCROLLBAR_PAD*/) * proportionVer };
+             * proportionVer };
     m_scrollbarVertical.setHeight(scrollbarHeight);
     
     m_scrollbarVertical.setPosition(getWidth() - m_scrollbarVertical.getWidth() / 2.f
@@ -108,10 +160,10 @@ void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
         // (We need to note the scrollbar thickness so the 
         // two scrollbars can not overlap)
         float proportionHor{ (getWidth() - m_scrollbarThickness 
-                - PAD_BETTWEEN_SCROLLBARS /*- 2 * SCROLLBAR_PAD*/) / childrenWidth };
+                - PAD_BETTWEEN_SCROLLBARS  / childrenWidth };
         // Calculate the scrollbar size
         float scrollbarWidth{ (getWidth() - m_scrollbarThickness 
-                - PAD_BETTWEEN_SCROLLBARS /*- 2 * SCROLLBAR_PAD*/) * proportionHor };
+                - PAD_BETTWEEN_SCROLLBARS  * proportionHor };
         m_scrollbarHorizontal.setWidth(scrollbarWidth);
         
         m_scrollbarHorizontal.setPosition
@@ -133,7 +185,7 @@ void gsf::ScrollableWidget::calculateScrollbarSizes()
     calculateVerticalScrollbarSize();
     calculateHorizontalScrollbarSize();
 }
-
+*/
 void gsf::ScrollableWidget::setScrollBarColor(sf::Color color)
 {
     m_scrollBarColor = color;
@@ -187,7 +239,8 @@ float gsf::ScrollableWidget::getTotalHeight() const
 
 void gsf::ScrollableWidget::recalculateScroll()
 {
-    calculateScrollbarSizes();
+    //calculateScrollbarSizes();
+    createScrollbars();
 }
 
 void gsf::ScrollableWidget::scrollToLeft()
@@ -311,12 +364,17 @@ void gsf::ScrollableWidget::handleChildScroll()
 
 void gsf::ScrollableWidget::childAdded(Widget &child)
 {
-    calculateScrollbarSizes();
+    createScrollbars();
 }
 
 void gsf::ScrollableWidget::childRemoved()
 {
-    calculateScrollbarSizes();
+    createScrollbars();
+}
+
+void gsf::ScrollableWidget::boundsChanged()
+{
+    createScrollbars();
 }
 
 bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
@@ -448,28 +506,39 @@ void gsf::ScrollableWidget::updateCurrentAfterChildren(float dt)
     handleChildScroll();
 }
 
+void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target, 
+        sf::RenderStates states) const
+{        
+    // Draw Scroll Elements
+    if (m_isVerticalScrollbarDrawn)
+    {
+        sf::RectangleShape rec({10000.f, 10000.f});
+        rec.setFillColor(sf::Color::Green);
+
+        target.draw(rec, states);
+        target.draw(m_scrollUpBtn, states);
+        target.draw(m_scrollbarVertical, states);
+    }
+    if (m_isHorizontalScrollbarDrawn)
+    {
+        target.draw(m_scrollbarHorizontal, states);
+    }
+}
 void gsf::ScrollableWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
         sf::RenderStates states) const
-{
-        //drawCurrent(target, states);
+{        
+    // Draw Scroll Elements
+    if (m_isVerticalScrollbarDrawn)
+    {
+        //sf::RectangleShape rec({10000.f, 10000.f});
+        //rec.setFillColor(sf::Color::Green);
 
-        // We change the view of the target, 
-        // so that only the area of the widget and its child
-        // which are in its shown area are drawn on the RenderTarget
-        sf::View defaultView{ target.getView() };
-        sf::View view{ getShownAreaView(target) };
-
-        target.setView(view);
-        drawChildren(target, states);
-        target.setView(defaultView);
-        
-        // Draw Scroll Elements
-        if (m_isVerticalScrollbarDrawn)
-        {
-            target.draw(m_scrollbarVertical, states);
-        }
-        if (m_isHorizontalScrollbarDrawn)
-        {
-            target.draw(m_scrollbarHorizontal, states);
-        }
+        //target.draw(rec, states);
+        //target.draw(m_scrollUpBtn, states);
+        //target.draw(m_scrollbarVertical, states);
+    }
+    if (m_isHorizontalScrollbarDrawn)
+    {
+        target.draw(m_scrollbarHorizontal, states);
+    }
 }

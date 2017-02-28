@@ -270,25 +270,25 @@ sf::FloatRect gsf::Widget::getLocalBoundsWithoutOutline() const
     float height{ m_fullArea.height };
     return sf::FloatRect{ left, top, width, height };
 }
-/*
+
 sf::FloatRect gsf::Widget::getGlobalContentBounds() const
 {
-
-    sf::FloatRect rect{ getLocalContentBounds() };
-    rect.left += getWorldPosition().x;
-    rect.top += getWorldPosition().y;
-    return rect;
+    float left{ m_contentArea.left + getWorldLeft() };
+    float top{ m_contentArea.top + getWorldTop() };
+    float width{ m_contentArea.width };
+    float height{ m_contentArea.height };
+    return sf::FloatRect{ left, top, width, height };
 }
 
 sf::FloatRect gsf::Widget::getLocalContentBounds() const
 {
-    float left{ getLeft() };
-    float top{ getTop() };
-    float width{ m_width };
-    float height{ m_height };
+    float left{ m_contentArea.left };
+    float top{ m_contentArea.top };
+    float width{ m_contentArea.width };
+    float height{ m_contentArea.height };
     return sf::FloatRect{ left, top, width, height };
 }
-*/
+
 
 void gsf::Widget::setBackgroundColor(const sf::Color color)
 {
@@ -413,6 +413,7 @@ sf::FloatRect gsf::Widget::getShownAreaWithoutOutline() const
     }
     return rectThis;
 }
+*/
 sf::FloatRect gsf::Widget::getContentShownArea() const
 {
     sf::FloatRect rectThis{ getGlobalContentBounds() };
@@ -425,7 +426,7 @@ sf::FloatRect gsf::Widget::getContentShownArea() const
     }
     return rectThis;
 }
-*/
+
 sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
 {
     sf::FloatRect shownAreaRect{ getShownArea() };
@@ -437,13 +438,13 @@ sf::View gsf::Widget::getShownAreaViewWithoutOutline(sf::RenderTarget &target) c
     sf::FloatRect shownAreaRect{ getShownAreaWithoutOutline() };
     return createViewFromRect(shownAreaRect, target);
 }
-
+*/
 sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target) const
 {
     sf::FloatRect shownAreaRect{ getContentShownArea() };
     return createViewFromRect(shownAreaRect, target);
 }
-*/
+
 void gsf::Widget::boundsChanged()
 {
     m_fullArea.width = getWidth();
@@ -615,10 +616,15 @@ void gsf::Widget::drawCurrentBeforeChildren(sf::RenderTarget &target,
 void gsf::Widget::drawChildren(sf::RenderTarget &target, 
         sf::RenderStates states) const
 {
+    // Children are only drawn in content view
+    sf::View defaultView{ target.getView() };
+    sf::View view{ getContentShownAreaView(target) };
+    target.setView(view);
     for (const Ptr &child : m_children)
     {
         child->draw(target, states);
     }
+    target.setView(defaultView);
 }
 
 void gsf::Widget::drawCurrentAfterChildren(sf::RenderTarget &target, 

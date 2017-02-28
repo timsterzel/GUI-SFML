@@ -25,7 +25,9 @@ namespace gsf
             void setPositionAndStoreOld(float x, float y);
             void setPositionAndStoreOld(sf::Vector2f pos);
             sf::Vector2f getLastPosition() const;
-
+            
+            void setSize(float width, float height);
+            void setSize(sf::Vector2f size);
             float getWidth() const;
             void setWidth(float width);
             float getHeight() const;

@@ -31,12 +31,15 @@ namespace gsf
         // Set by user (default: true)
         bool m_isVerticalScrollEnabled;
         bool m_isHorizontalScrollEnabled;
-        // the thickness of the scrollbars. By Verticalscrollbar the width and
-        // bei horizontal scrolling the height
+        // The thickness of the scrollbars. By Verticalscrollbar its the width and
+        // by horizontal scrolling its the height
         float m_scrollbarThickness;
+
         // Scrollbar Vertical
         // Only scroll when there is a need to scrolling
         // (child is not shown fully in widget)
+        MoveableBlock m_scrollUpBtn;
+        MoveableBlock m_scrollDownBtn;
         bool m_isVerticalScrollNeeded;
         MoveableBlock m_scrollbarVertical;
         bool m_scrollbarVerMoveActive;
@@ -57,14 +60,11 @@ namespace gsf
         const float PAD_BETTWEEN_SCROLLBARS;
     public:
         ScrollableWidget(float width, float height);
-
+        
         // ScrollableWidget only can handle one widget, so we have to 
         // implement the methods different
         void attachChild(Ptr child) override;
 
-        void calculateVerticalScrollbarSize();
-        void calculateHorizontalScrollbarSize();
-        void calculateScrollbarSizes();
 
         void setScrollBarColor(sf::Color color);
         sf::Color getScrollBarColor() const;
@@ -98,15 +98,24 @@ namespace gsf
         virtual void childAdded(Widget &child) override;
         virtual void childRemoved() override;
     protected:
+        virtual void boundsChanged() override;
+
         // Special Events are Events like scrolling 
         // (which have a higher priorety then the child events)
         virtual bool handleEventCurrentBeforeChildren(sf::Event &event) override;
         virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
         virtual void updateCurrentAfterChildren(float dt);
+        virtual void drawCurrentBeforeChildren(sf::RenderTarget &target, 
+                sf::RenderStates states) const override;
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                 sf::RenderStates states) const override;
     private:
         void init();
+        void createScrollbars();
+        void createVerticalScrollbar();
+        //void calculateVerticalScrollbarSize();
+        //void calculateHorizontalScrollbarSize();
+        //void calculateScrollbarSizes();
     };
 }
 
