@@ -10,6 +10,7 @@ namespace gsf
     class WindowWidget: public gsf::Widget
     {
     private:
+        float m_topBarHeight;
         MoveableBlock m_topBar;
         MoveableBlock m_btnClose;
         std::string m_windowTitle;
@@ -51,11 +52,12 @@ namespace gsf
     private:
         void init();
         // Get the view for drawing Topbar 
-        sf::View getTopBarView(sf::RenderTarget &target) const;
+        //sf::View getTopBarView(sf::RenderTarget &target) const;
         // Get a view which only draw in title area
         sf::View getWindowTitleView(sf::RenderTarget &target) const;
 
         virtual void arrangeChildren() override;
+        virtual void childAdded(Widget &child);
     };
 }
 

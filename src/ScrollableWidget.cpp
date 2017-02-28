@@ -309,7 +309,7 @@ void gsf::ScrollableWidget::handleChildScroll()
     m_scrollOffsetX = 0.f;
 }
 
-void gsf::ScrollableWidget::childAdded()
+void gsf::ScrollableWidget::childAdded(Widget &child)
 {
     calculateScrollbarSizes();
 }

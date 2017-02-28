@@ -95,7 +95,7 @@ namespace gsf
 
         void handleChildScroll();
 
-        virtual void childAdded() override;
+        virtual void childAdded(Widget &child) override;
         virtual void childRemoved() override;
     protected:
         // Special Events are Events like scrolling 

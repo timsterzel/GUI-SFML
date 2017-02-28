@@ -4,16 +4,17 @@
 #include <iostream>
 
 gsf::Widget::Widget(bool isWindowWidget)
-: m_outlineColor{ sf::Color::Black }
+//, m_width{ 0.f }
+//, m_height{ 0.f }
+: m_contentArea{ 0.f, 0.f, 0.f, 0.f }
+, m_fullArea{ 0.f, 0.f, 0.f, 0.f }
+, m_outlineColor{ sf::Color::Black }
 , m_outlineThickness{ 0.f }
 , m_bgColor{ sf::Color::White }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
-//, m_width{ 0.f }
-//, m_height{ 0.f }
-, m_contentArea{ 0.f, 0.f, 0.f, 0.f }
 , m_isWindowWidget{ isWindowWidget }
 {
 
@@ -21,16 +22,17 @@ gsf::Widget::Widget(bool isWindowWidget)
 
 
 gsf::Widget::Widget(float width, float height, bool isWindowWidget)
-: m_outlineColor{ sf::Color::Black }
+//, m_width{ width }
+//, m_height{ height }
+: m_contentArea{ 0.f, 0.f, width, height }
+, m_fullArea{ 0.f, 0.f, width, height }
+, m_outlineColor{ sf::Color::Black }
 , m_outlineThickness{ 0.f }
 , m_bgColor{ sf::Color::White }
 , m_parent{ nullptr }
 , m_moveToForeground{ false }
 , m_isRemoveable{ false }
 , m_isVisible{ true }
-//, m_width{ width }
-//, m_height{ height }
-, m_contentArea{ 0.f, 0.f, width, height }
 , m_isWindowWidget{ isWindowWidget }
 {
 
@@ -39,9 +41,10 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 void gsf::Widget::attachChild(Ptr child)
 {    
     child->setParent(this);
+    Widget &childRef{ *child.get() };
     m_children.push_back(std::move(child));
-
-    childAdded();
+   
+    childAdded(childRef);
     arrangeChildren();
     calculateSize();
 }
@@ -200,7 +203,8 @@ float gsf::Widget::getWorldLeft() const
 
 float gsf::Widget::getWorldRight() const
 {
-    return getWorldPosition().x - getOrigin().x + getWidth();
+    //return getWorldPosition().x - getOrigin().x + getWidth();
+    return getWorldPosition().x - getOrigin().x + m_fullArea.width;
 }
 
 float gsf::Widget::getWorldTop() const
@@ -210,7 +214,8 @@ float gsf::Widget::getWorldTop() const
 
 float gsf::Widget::getWorldBottom() const
 {
-    return getWorldPosition().y - getOrigin().y + getHeight();
+    //return getWorldPosition().y - getOrigin().y + getHeight();
+    return getWorldPosition().y - getOrigin().y + m_fullArea.height;
 }
 
 sf::FloatRect gsf::Widget::getGlobalBounds() const
@@ -233,8 +238,8 @@ sf::FloatRect gsf::Widget::getGlobalBounds() const
 
     float left{ getWorldLeft() - m_outlineThickness };
     float top{ getWorldTop() - m_outlineThickness };
-    float width{ getWidth() + 2 * m_outlineThickness };
-    float height{ getHeight() + 2 * m_outlineThickness };
+    float width{ m_fullArea.width + 2 * m_outlineThickness };
+    float height{ m_fullArea.height + 2 * m_outlineThickness };
     return sf::FloatRect{ left, top, width, height };
 }
 
@@ -242,26 +247,30 @@ sf::FloatRect gsf::Widget::getLocalBounds() const
 {
     float left{ getLeft() - m_outlineThickness };
     float top{ getTop() - m_outlineThickness };
-    float width{ getWidth() + 2 * m_outlineThickness };
-    float height{ getHeight() + 2 * m_outlineThickness };
+    float width{ m_fullArea.width + 2 * m_outlineThickness };
+    float height{ m_fullArea.height + 2 * m_outlineThickness };
     return sf::FloatRect{ left, top, width, height };
 }
 
-/*
+
 sf::FloatRect gsf::Widget::getGlobalBoundsWithoutOutline() const
 {
-    sf::FloatRect rect{ getLocalBoundsWithoutOutline() };
-    rect.left += getWorldPosition().x;
-    rect.top += getWorldPosition().y;
-    return rect;
+    float left{ getWorldLeft() };
+    float top{ getWorldTop() };
+    float width{ m_fullArea.width };
+    float height{ m_fullArea.height };
+    return sf::FloatRect{ left, top, width, height };
 }
 
 sf::FloatRect gsf::Widget::getLocalBoundsWithoutOutline() const
 {
-    // By default its the same as the content area
-    return getLocalContentBounds();
+    float left{ getLeft() };
+    float top{ getTop() };
+    float width{ m_fullArea.width };
+    float height{ m_fullArea.height };
+    return sf::FloatRect{ left, top, width, height };
 }
-
+/*
 sf::FloatRect gsf::Widget::getGlobalContentBounds() const
 {
 
@@ -312,6 +321,17 @@ sf::Vector2f gsf::Widget::getWorldPosition() const
     // (the position is every time the one in the upper left corner)
     // so we add the origin here.
     return (getWorldTransform() * sf::Vector2f()) + getOrigin();
+}
+
+sf::Vector2f gsf::Widget::convertToLocalPoint(sf::Vector2f globalPoint) const
+{
+    return sf::Vector2f{ globalPoint.x - getWorldPosition().x, 
+        globalPoint.y - getWorldPosition().y };
+}
+
+sf::FloatRect gsf::Widget::getFullAreaRect() const
+{
+    return m_fullArea;
 }
 
 sf::FloatRect gsf::Widget::getOverlappingArea(sf::FloatRect rectThis, 
@@ -370,7 +390,7 @@ sf::View gsf::Widget::createViewFromRect(sf::FloatRect rect,
 
 sf::FloatRect gsf::Widget::getShownArea() const
 {
-    sf::FloatRect rectThis{ getGlobalBounds() };
+    sf::FloatRect rectThis{ getGlobalBoundsWithoutOutline() };
     if (m_parent)
     {
          // We have to get the parents shown screen area to calculate 
@@ -426,7 +446,8 @@ sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target) const
 */
 void gsf::Widget::boundsChanged()
 {
-    // Do nothing by default
+    m_fullArea.width = getWidth();
+    m_fullArea.height = getHeight();
 }
 
 bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
@@ -446,7 +467,7 @@ void gsf::Widget::arrangeChildren()
     // Do nothing by default
 }
 
-void gsf::Widget::childAdded()
+void gsf::Widget::childAdded(Widget &widget)
 {
     // Do nothing by default
 }
@@ -564,7 +585,8 @@ void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
     {
         states.transform *= getTransform();
         // Draw basic shape (background and outline)
-        sf::RectangleShape basicShape{ sf::Vector2f(getWidth(), getHeight()) };
+        sf::RectangleShape basicShape{ sf::Vector2f(m_fullArea.width, 
+                m_fullArea.height) };
         basicShape.setFillColor(m_bgColor);
         basicShape.setOutlineThickness(m_outlineThickness);
         basicShape.setOutlineColor(m_outlineColor);

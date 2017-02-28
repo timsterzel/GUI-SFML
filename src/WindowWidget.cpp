@@ -6,6 +6,7 @@ gsf::WindowWidget::WindowWidget(float width, float height, std::string title,
 : Widget{ width, height }
 //, m_topBar{ width, 20.f }
 //, m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
+, m_topBarHeight{ 20.f }
 , m_windowTitle{ title }
 , m_windowTitleFont{ font }
 , m_windowTitleColor{ sf::Color::White }
@@ -78,7 +79,7 @@ sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target) const
     sf::View view;
 
     float left{ getGlobalBounds().left };
-    float top{ getWorldTop() - m_topBar.getHeight() };
+    float top{ getWorldTop() };
     // Only draw in the toolbar from left til the close button (with little margin)
     float width{ getWidth() - (getWidth() - m_btnClose.getLeft()) - 12.f  };
     float height{ m_topBar.getHeight() };
@@ -91,7 +92,7 @@ sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target) const
                 height / target.getSize().y));
     return view;
 }
-
+/*
 sf::View gsf::WindowWidget::getTopBarView(sf::RenderTarget &target) const
 {
     sf::View view;
@@ -110,36 +111,50 @@ sf::View gsf::WindowWidget::getTopBarView(sf::RenderTarget &target) const
         width / target.getSize().x, height / target.getSize().y));
     return view;
 }
-
+*/
 void gsf::WindowWidget::boundsChanged()
-{    
+{
+    // The full area is not only the width and heigt of the content area but also
+    // the height of the topBar
+    m_fullArea.width = getWidth();
+    m_fullArea.height = getHeight() + m_topBarHeight;
+    // The content area not include the topbar, so its starts after the topbar
+    m_contentArea.top = m_topBarHeight;
+    
+    m_topBar.setPosition(0.f, 0.f);
     m_topBar.setWidth(getLocalBounds().width);
-    m_topBar.setHeight(20.f);
+    m_topBar.setHeight(m_topBarHeight);
     // The Topbar is drawn over the real area of the widget
     // So the topbar dont hide child elements
-    m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
-    m_topBar.setPosition(-m_outlineThickness + m_topBar.getWidth() / 2.f, 
-            -m_topBar.getHeight() + m_topBar.getHeight() / 2.f );
+    //m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
+    
+    //m_topBar.setPosition(-m_outlineThickness + m_topBar.getWidth() / 2.f, 
+    //        -m_topBar.getHeight() + m_topBar.getHeight() / 2.f );
     
     m_btnClose.setWidth(m_topBar.getHeight() - 6.f);
     m_btnClose.setHeight(m_topBar.getHeight() - 6.f);
-    m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
-    m_btnClose.setPosition(m_topBar.getRight() - (m_btnClose.getWidth() / 2.f) - 6.f, 
-            -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
+    //m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
+    
+    m_btnClose.setPosition(m_topBar.getRight() 
+            - m_btnClose.getWidth() 
+            - getOutlineThickness() - 6.f, 
+            m_topBarHeight - getOutlineThickness()
+            - m_btnClose.getHeight()
+            );
+    //m_btnClose.setPosition(m_topBar.getRight() - (m_btnClose.getWidth() / 2.f) - 6.f,       -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
+}
+
+void gsf::WindowWidget::childAdded(Widget &child)
+{
+    // Move child widget by the topbars height down so it is at the 
+    // upper left corner when its position is (0.f, 0.f). 
+    // (At the real (0.f, 0.f) local point there is the topBar)
+    child.move(0.f, m_topBarHeight);
 }
 
 void gsf::WindowWidget::arrangeChildren()
 {
-    /*
-    float distance = 0.f;
-    for (const Ptr &child : m_children)
-    {
-        //child->centerOrigin();
-        child->setPosition(0.f + child->getOrigin().x, distance + child->getOrigin().y);
-        distance += child->getHeight();
-    }
-    calculateSize();
-    */
+
 }
 
 bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event)
@@ -147,9 +162,8 @@ bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event)
     bool handled{ Widget::handleEventCurrentBeforeChildren(event) };
     sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
-    sf::Vector2f localMousePoint{ mousePos.x - getWorldPosition().x, 
-        mousePos.y - getWorldPosition().y };
-    
+    sf::Vector2f localMousePoint{ convertToLocalPoint({ mousePos.x, 
+            mousePos.y }) };
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && 
@@ -207,8 +221,8 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
 {
     sf::View defaultView{ target.getView() };
     // Draw Topbar
-    sf::View viewTopBar{ getTopBarView(target) };
-    target.setView(viewTopBar);
+    //sf::View viewTopBar{ getTopBarView(target) };
+    //target.setView(viewTopBar);
     target.draw(m_topBar, states);
     // Draw close Button
     target.draw(m_btnClose, states);
@@ -223,7 +237,8 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
     title.setCharacterSize(m_topBar.getHeight() - 6.f);
     title.setFillColor(m_windowTitleColor);
     title.setStyle(sf::Text::Bold);
-    title.setPosition(6.f, -m_topBar.getHeight());
+    //title.setPosition(6.f, -m_topBar.getHeight());
+    title.setPosition(6.f, 0.f);
     target.draw(title, states);
     
     target.setView(defaultView);

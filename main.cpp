@@ -98,7 +98,7 @@ int main()
     scrollableWidget->attachChild(std::move(layout));
 
     std::unique_ptr<gsf::WindowWidget> windowWidget{ 
-        std::make_unique<gsf::WindowWidget>(300.f, 360.f, "", font) };
+        std::make_unique<gsf::WindowWidget>(300.f, 200.f, "", font) };
     windowWidget->setPosition(0.f , 0.f);
     //windowWidget->setBackgroundColor(sf::Color::White);
     windowWidget->attachChild(std::move(scrollableWidget));

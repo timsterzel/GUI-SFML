@@ -12,6 +12,14 @@ namespace gsf
         typedef std::pair<Widget*, Widget*> Pair;
 
     protected:
+        // The area of the content. That is the area where child widgets are drawn too
+        sf::FloatRect m_contentArea;
+        // The full area of the widget without the outline. By default ist the same as
+        // the contentArea but in some widgets it can differ (E.g. a WindowWidget has
+        // a topbar, but child widgets are only drawn in the contentArea)
+        sf::FloatRect m_fullArea;
+        //float m_width;
+        //float m_height;
         // The width and height is the size of the "content" the real
         // size can differ. (E.g. a window have a topbar or there can be a outline)
 
@@ -35,10 +43,6 @@ namespace gsf
         std::function<void(Widget*, sf::Vector2f)> m_onRightClickListener;
         std::function<void(Widget*, sf::Vector2f)> m_onMiddleClickListener;
     private:
-        // The area of the content. That is the area where child widgets are drawn too
-        sf::FloatRect m_contentArea;
-        //float m_width;
-        //float m_height;
         // Window Widgets are special, so we store the information if
         // the widget is a window here
         bool m_isWindowWidget;
@@ -95,8 +99,8 @@ namespace gsf
         sf::FloatRect getGlobalBounds() const;
         sf::FloatRect getLocalBounds() const;
         // The total bounds without the outline
-        //sf::FloatRect getGlobalBoundsWithoutOutline() const;
-        //virtual sf::FloatRect getLocalBoundsWithoutOutline() const;
+        sf::FloatRect getGlobalBoundsWithoutOutline() const;
+        sf::FloatRect getLocalBoundsWithoutOutline() const;
         // The bounds of the content area(This is he area where child widget
         // content is drawn)
         //sf::FloatRect getGlobalContentBounds() const;
@@ -128,6 +132,9 @@ namespace gsf
                 sf::RenderStates states) const final override;
 
     protected:
+        sf::Vector2f convertToLocalPoint(sf::Vector2f globalPoint) const;
+
+        sf::FloatRect getFullAreaRect() const;
         // The view which result in the parent area and the actual area
         sf::FloatRect getOverlappingArea(sf::FloatRect rectThis, 
                 sf::FloatRect rectParent) const;
@@ -181,7 +188,7 @@ namespace gsf
         // Place Children in this Widget
         virtual void arrangeChildren();
         // Things which should get done when a child was added
-        virtual void childAdded();
+        virtual void childAdded(Widget &child);
         // Things which should get done when a child was removed
         virtual void childRemoved();
     };

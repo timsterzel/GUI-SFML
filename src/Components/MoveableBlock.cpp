@@ -75,7 +75,7 @@ float gsf::MoveableBlock::getLeft() const
 
 float gsf::MoveableBlock::getRight() const
 {
-    return getPosition().x + getOrigin().x;
+    return getPosition().x + getWidth();
 }
 
 float gsf::MoveableBlock::getTop() const
@@ -85,7 +85,7 @@ float gsf::MoveableBlock::getTop() const
 
 float gsf::MoveableBlock::getBottom() const
 {
-    return getPosition().y + getOrigin().y;
+    return getPosition().y + getHeight();
 }
 
 void gsf::MoveableBlock::moveAndStoreOldPos(float x, float y)
