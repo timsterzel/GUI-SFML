@@ -51,7 +51,7 @@ int main()
         //012345678 9012345 678901 23456
         ("IM A TEXT\nTESTA\nTESTB\nTESTC\nS", font) };
     //textWidget->centerOrigin();
-    textWidget->setBackgroundColor(sf::Color::Red);
+    textWidget->setBackgroundColor(sf::Color{ 192, 192, 192 });
     textWidget->setCharacterSize(60);
     textWidget->setPosition(windowWidth / 2.f + 100.f, windowHeight / 2.f - 330.f);
     guiEnvironment.addWidget(std::move(textWidget));
@@ -64,12 +64,11 @@ int main()
     
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget{ 
         std::make_unique<gsf::ScrollableWidget>(300, 200) };
-    scrollableWidget->setBackgroundColor(sf::Color::Blue);
+    scrollableWidget->setBackgroundColor(sf::Color{ 162, 162, 162 });
 
     std::unique_ptr<gsf::VerticalLayout> layout{ 
         std::make_unique<gsf::VerticalLayout>() };
     layout->setPosition(0.f , 0.f);
-    layout->setBackgroundColor(sf::Color::Cyan);
     
     for (int i{ 0 }; i != 6; i++)
     {
@@ -78,11 +77,11 @@ int main()
                 (textString, font, 40, sf::Color::White) };
         if (i % 2 == 0)
         {
-            text->setBackgroundColor(sf::Color::Green);
+            text->setBackgroundColor(sf::Color{ 192, 192, 192 });
         }
         else
         {
-            text->setBackgroundColor(sf::Color::Magenta);
+            text->setBackgroundColor(sf::Color{ 128, 128, 128 });
         }
         std::function<void(gsf::Widget*, sf::Vector2f)> leftClickListener = 
             [] (gsf::Widget* widget, sf::Vector2f mousePos)
