@@ -24,6 +24,7 @@ namespace gsf
 
         sf::Color m_scrollBarColor;
         sf::Color m_scrollBtnColor;
+        sf::Color m_scrollBtnSymbolColor;
         // Set by user (default: true)
         bool m_isVerticalScrollEnabled;
         bool m_isHorizontalScrollEnabled;
@@ -36,6 +37,8 @@ namespace gsf
         // (child is not shown fully in widget)
         MoveableBlock m_scrollUpBtn;
         MoveableBlock m_scrollDownBtn;
+        sf::ConvexShape m_scrollUpBtnSymbol;
+        sf::ConvexShape m_scrollDownBtnSymbol;
         bool m_isVerticalScrollNeeded;
         MoveableBlock m_scrollbarVertical;
         bool m_scrollbarVerMoveActive;
@@ -44,6 +47,8 @@ namespace gsf
         // Scrollbar Horizontal
         MoveableBlock m_scrollRightBtn;
         MoveableBlock m_scrollLeftBtn;
+        sf::ConvexShape m_scrollRightBtnSymbol;
+        sf::ConvexShape m_scrollLeftBtnSymbol;
         bool m_isHorizontalScrollNeeded;
         MoveableBlock m_scrollbarHorizontal;
         bool m_scrollbarHorMoveActive;
@@ -63,9 +68,10 @@ namespace gsf
         
         void setScrollBarColor(sf::Color color);
         sf::Color getScrollBarColor() const;
-        
         void setScrollBtnColor(sf::Color color);
         sf::Color getScrollBtnColor() const;
+        void setScrollBtnSymbolColor(sf::Color color);
+        sf::Color getScrollBtnSymbolColor() const;
 
         void setIsVerticalScrollEnabled(bool isEnabled);
         bool isVerticalScrollEnabled() const;
@@ -91,7 +97,8 @@ namespace gsf
         void createScrollbars();
         void createVerticalScrollbar();
         void createHorizontalScrollbar();
-        
+        sf::ConvexShape createBtnSymbol(sf::Vector2f pos, float rotation = 0.f) const;
+
         void correctScrollBarPosition();
         // Correct the position of the childs when there are out of the bounds 
         // and scrolling is needed

@@ -6,9 +6,10 @@ const float gsf::ScrollableWidget::SCROLLBAR_THICKNESS{ 16.f };
 gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 : Widget(width, height)
 , m_childWidget{ nullptr }
-, m_scrollSpeed{ 6.0f }
+, m_scrollSpeed{ 16.0f }
 , m_scrollBarColor{ sf::Color::Black }
 , m_scrollBtnColor{ sf::Color{ 192, 192, 192 } }
+, m_scrollBtnSymbolColor{ sf::Color::Black }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ true }
 , m_scrollbarThickness{ SCROLLBAR_THICKNESS }
@@ -71,11 +72,18 @@ void gsf::ScrollableWidget::createVerticalScrollbar()
     // Set position x direct after the content area and y to top
     m_scrollUpBtn.setPosition(getWidth(), 0.f);
     m_scrollUpBtn.setFillColor(m_scrollBtnColor);
+    // Create symbol
+    m_scrollUpBtnSymbol = createBtnSymbol(sf::Vector2f{ 
+            getWidth() + m_scrollbarThickness / 2.f, m_scrollbarThickness / 2.f });
     
     m_scrollDownBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     // Set position x direct after the content area and y to top
     m_scrollDownBtn.setPosition(getWidth(), getHeight() - m_scrollbarThickness);
     m_scrollDownBtn.setFillColor(m_scrollBtnColor);
+    // Create symbol
+    m_scrollDownBtnSymbol = createBtnSymbol(sf::Vector2f{ 
+            getWidth() + m_scrollbarThickness / 2.f, 
+            getHeight() - m_scrollbarThickness / 2.f }, 180.f);
     
     // Get proportion between the scrollable widget and its child 
     // (We need to note the scrollbar thickness so the
@@ -111,10 +119,17 @@ void gsf::ScrollableWidget::createHorizontalScrollbar()
     m_scrollLeftBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     m_scrollLeftBtn.setPosition(0.f, getHeight());
     m_scrollLeftBtn.setFillColor(m_scrollBtnColor);
+    m_scrollLeftBtnSymbol = createBtnSymbol(sf::Vector2f{ 
+            m_scrollbarThickness / 2.f, getHeight() + m_scrollbarThickness / 2.f }, 
+            -90.f);
+    
     m_scrollRightBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     m_scrollRightBtn.setPosition(getWidth() - m_scrollbarThickness, 
             getHeight());
     m_scrollRightBtn.setFillColor(m_scrollBtnColor);
+    m_scrollRightBtnSymbol = createBtnSymbol(sf::Vector2f{ 
+            getWidth() - m_scrollbarThickness / 2.f, 
+            getHeight() + m_scrollbarThickness / 2.f }, 90.f);
     
     // Get proportion between the scrollable widget and its child 
     // (We need to note the scrollbar thickness so the
@@ -129,6 +144,22 @@ void gsf::ScrollableWidget::createHorizontalScrollbar()
     m_scrollbarHorizontal.setPosition(m_scrollLeftBtn.getRight(), 
             getHeight());
     m_scrollbarHorizontal.setFillColor(m_scrollBarColor);
+}
+
+sf::ConvexShape gsf::ScrollableWidget::createBtnSymbol(sf::Vector2f pos, 
+        float rotation) const
+{
+    float symbolSize{ m_scrollbarThickness - 4.f };
+    sf::ConvexShape shape{ 3 };
+    shape.setPoint(0, sf::Vector2f{ symbolSize / 2.f, 0.f });
+    shape.setPoint(1, sf::Vector2f{ symbolSize, symbolSize });
+    shape.setPoint(2, sf::Vector2f{ 0.f, symbolSize });
+    shape.setOrigin(shape.getGlobalBounds().width / 2.f,
+            shape.getGlobalBounds().height / 2.f);
+    shape.setPosition(pos.x, pos.y);
+    shape.setFillColor(m_scrollBtnSymbolColor);
+    shape.rotate(rotation);
+    return shape;
 }
 
 void gsf::ScrollableWidget::attachChild(Ptr child)
@@ -161,11 +192,29 @@ sf::Color gsf::ScrollableWidget::getScrollBarColor() const
 void gsf::ScrollableWidget::setScrollBtnColor(sf::Color color)
 {
     m_scrollBtnColor = color;
+    m_scrollUpBtn.setFillColor(color);
+    m_scrollDownBtn.setFillColor(color);
+    m_scrollLeftBtn.setFillColor(color);
+    m_scrollRightBtn.setFillColor(color);
 }
 
 sf::Color gsf::ScrollableWidget::getScrollBtnColor() const
 {
     return m_scrollBtnColor;
+}
+
+void gsf::ScrollableWidget::setScrollBtnSymbolColor(sf::Color color)
+{
+    m_scrollBtnSymbolColor = color;
+    m_scrollUpBtnSymbol.setFillColor(color);
+    m_scrollDownBtnSymbol.setFillColor(color);
+    m_scrollLeftBtnSymbol.setFillColor(color);
+    m_scrollRightBtnSymbol.setFillColor(color);
+}
+
+sf::Color gsf::ScrollableWidget::getScrollBtnSymbolColor() const
+{
+    return m_scrollBtnSymbolColor;
 }
 
 void gsf::ScrollableWidget::setIsVerticalScrollEnabled(bool isEnabled)
@@ -409,7 +458,6 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
         m_isVerticalScrollNeeded &&
         m_isVerticalScrollEnabled)
     {
-        //m_scrollOffsetY = event.mouseWheel.delta * m_scrollSpeed;
         float scrollOffsetY{ event.mouseWheel.delta * m_scrollSpeed };
         // We have to move the scrollbar too when we scroll with the scroll wheel
         if (m_childWidget)
@@ -417,13 +465,6 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
             m_childWidget->move(0.f, scrollOffsetY);
             correctChildWidgetPosition();
             adjustVerticalScrollbarPosToChildWidgetPos();
-            // get first element
-            //Widget *widget{ m_children.at(0).get() };
-            //float childHeight{ widget->getHeight() };
-            // Calculate the offset
-            //float moveScr{ -(m_scrollOffsetY * getHeight()) / childHeight };
-            //m_scrollbarVertical.moveAndStoreOldPos(0.f, moveScr);
-            //correctScrollBarPosition();
         }
         return true;
     }
@@ -460,6 +501,54 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
                 - m_scrollbarHorizontal.getPosition().y;
             return true;
         }
+        // Up Scroll Btn
+        if (event.mouseButton.button == sf::Mouse::Left &&
+            m_scrollUpBtn.isPointIntersecting(
+                { localMousePos.x , localMousePos.y }) &&
+            m_isVerticalScrollNeeded &&
+            m_isVerticalScrollEnabled)
+        {
+            m_childWidget->move(0.f, m_scrollSpeed);
+            correctChildWidgetPosition();
+            adjustVerticalScrollbarPosToChildWidgetPos();
+            return true;
+        }
+        // Down Scroll Btn
+        if (event.mouseButton.button == sf::Mouse::Left &&
+            m_scrollDownBtn.isPointIntersecting(
+                { localMousePos.x , localMousePos.y }) &&
+            m_isVerticalScrollNeeded &&
+            m_isVerticalScrollEnabled)
+        {
+            m_childWidget->move(0.f, -m_scrollSpeed);
+            correctChildWidgetPosition();
+            adjustVerticalScrollbarPosToChildWidgetPos();
+            return true;
+        }
+        // Left Scroll Btn
+        if (event.mouseButton.button == sf::Mouse::Left &&
+            m_scrollLeftBtn.isPointIntersecting(
+                { localMousePos.x , localMousePos.y }) &&
+            m_isHorizontalScrollNeeded &&
+            m_isHorizontalScrollEnabled)
+        {
+            m_childWidget->move(m_scrollSpeed, 0.f);
+            correctChildWidgetPosition();
+            adjustHorizontalScrollbarPosToChildWidgetPos();
+            return true;
+        }
+        // Right Scroll Btn
+        if (event.mouseButton.button == sf::Mouse::Left &&
+            m_scrollRightBtn.isPointIntersecting(
+                { localMousePos.x , localMousePos.y }) &&
+            m_isHorizontalScrollNeeded &&
+            m_isHorizontalScrollEnabled)
+        {
+            m_childWidget->move(-m_scrollSpeed, 0.f);
+            correctChildWidgetPosition();
+            adjustHorizontalScrollbarPosToChildWidgetPos();
+            return true;
+        }
     }
     else if (event.type == sf::Event::MouseButtonReleased)
     {
@@ -483,21 +572,6 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
             correctScrollBarPosition();
             adjustVerticalChildWidgetPosToScrollbarPos();
             return true;
-            /*
-            // Only ste a offset when there is a child to move
-            if (m_children.size() > 0)
-            {
-                // get first element
-                Widget *widget{ m_children.at(0).get() };
-                float childrenHeight{ widget->getHeight() };
-                // Calculate the offset
-                m_scrollOffsetY = ( (m_scrollbarVertical.getLastPosition().y 
-                        - m_scrollbarVertical.getPosition().y)
-                        / (getHeight() - 2 * SCROLLBAR_PAD - m_scrollbarThickness) ) 
-                        * childrenHeight;
-                return true;
-            }
-            */
         }
         if (m_scrollbarHorMoveActive)
         {
@@ -508,6 +582,7 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
                     m_scrollbarHorizontal.getPosition().y);
             correctScrollBarPosition();
             adjustHorizontalChildWidgetPosToScrollbarPos();
+            return true;
         }
     }
     return false;
@@ -531,13 +606,17 @@ void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target,
     if (m_isVerticalScrollbarDrawn)
     {
         target.draw(m_scrollUpBtn, states);
+        target.draw(m_scrollUpBtnSymbol, states);
         target.draw(m_scrollDownBtn, states);
+        target.draw(m_scrollDownBtnSymbol, states);
         target.draw(m_scrollbarVertical, states);
     }
     if (m_isHorizontalScrollbarDrawn)
     {
         target.draw(m_scrollLeftBtn, states);
+        target.draw(m_scrollLeftBtnSymbol, states);
         target.draw(m_scrollRightBtn, states);
+        target.draw(m_scrollRightBtnSymbol, states);
         target.draw(m_scrollbarHorizontal, states);
     }
 }
