@@ -6,10 +6,9 @@ const float gsf::ScrollableWidget::SCROLLBAR_THICKNESS{ 16.f };
 gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 : Widget(width, height)
 , m_childWidget{ nullptr }
-, m_scrollOffsetX{ 0.f }
-, m_scrollOffsetY{ 0.f }
 , m_scrollSpeed{ 6.0f }
 , m_scrollBarColor{ sf::Color::Black }
+, m_scrollBtnColor{ sf::Color{ 192, 192, 192 } }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ true }
 , m_scrollbarThickness{ SCROLLBAR_THICKNESS }
@@ -21,15 +20,12 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_scrollbarHorMoveActive{ false }
 , m_isVerticalScrollbarDrawn{ true }
 , m_isHorizontalScrollbarDrawn{ true }
-, SCROLLBAR_PAD{ 6.f }
-, PAD_BETTWEEN_SCROLLBARS{ 6.f }
 {
     init();
 }
 
 void gsf::ScrollableWidget::init()
 {
-    //calculateScrollbarSizes();
     boundsChanged();
 }
 
@@ -74,12 +70,12 @@ void gsf::ScrollableWidget::createVerticalScrollbar()
     m_scrollUpBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     // Set position x direct after the content area and y to top
     m_scrollUpBtn.setPosition(getWidth(), 0.f);
-    m_scrollUpBtn.setFillColor(sf::Color::Red);
+    m_scrollUpBtn.setFillColor(m_scrollBtnColor);
     
     m_scrollDownBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     // Set position x direct after the content area and y to top
     m_scrollDownBtn.setPosition(getWidth(), getHeight() - m_scrollbarThickness);
-    m_scrollDownBtn.setFillColor(sf::Color::Red);
+    m_scrollDownBtn.setFillColor(m_scrollBtnColor);
     
     // Get proportion between the scrollable widget and its child 
     // (We need to note the scrollbar thickness so the
@@ -114,12 +110,11 @@ void gsf::ScrollableWidget::createHorizontalScrollbar()
     // Create Buttons
     m_scrollLeftBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     m_scrollLeftBtn.setPosition(0.f, getHeight());
-    m_scrollLeftBtn.setFillColor(sf::Color::Red);
-    std::cout << "Right: " << getRight() << "\n";
+    m_scrollLeftBtn.setFillColor(m_scrollBtnColor);
     m_scrollRightBtn.setSize(m_scrollbarThickness, m_scrollbarThickness);
     m_scrollRightBtn.setPosition(getWidth() - m_scrollbarThickness, 
             getHeight());
-    m_scrollRightBtn.setFillColor(sf::Color::Red);
+    m_scrollRightBtn.setFillColor(m_scrollBtnColor);
     
     // Get proportion between the scrollable widget and its child 
     // (We need to note the scrollbar thickness so the
@@ -135,6 +130,7 @@ void gsf::ScrollableWidget::createHorizontalScrollbar()
             getHeight());
     m_scrollbarHorizontal.setFillColor(m_scrollBarColor);
 }
+
 void gsf::ScrollableWidget::attachChild(Ptr child)
 {
     // Remove old widgets
@@ -149,103 +145,7 @@ float gsf::ScrollableWidget::getScrollbarThickness() const
 {
     return m_scrollbarThickness;
 }
-/*
-void gsf::ScrollableWidget::calculateVerticalScrollbarSize()
-{
-    if (m_children.size() < 1)
-    {
-        return;
-    }
 
-    // Get first element
-    Widget *childWidget{ m_children.at(0).get() };
-    float childrenHeight{ childWidget->getHeight() };
-
-    // Vertical Scrollbar
-    // check if there is any need for scrolling 
-    // (Child is higher then ScrollableWidgets height or outside)
-    m_isVerticalScrollNeeded = childWidget->getTop() < 0.f || 
-        childWidget->getBottom() > getHeight() ||
-        childWidget->getHeight() > getHeight();
-    // Only show scrollbar when there is any need to scroll and scrolling is enabled
-    if (!m_isVerticalScrollEnabled || !m_isVerticalScrollNeeded) {
-        m_scrollbarVertical.setHeight(0.f);
-        return;
-    }
-    // Get proportion between the scrollable widget and its child 
-    // (We need to note the scrollbar thickness so the
-    // two scrollbars can not overlap
-    float proportionVer{ 
-        (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
-             / childrenHeight };
-    // Calculate the scrollbar size
-    float scrollbarHeight{ 
-        (getHeight() - m_scrollbarThickness - PAD_BETTWEEN_SCROLLBARS
-             * proportionVer };
-    m_scrollbarVertical.setHeight(scrollbarHeight);
-    
-    m_scrollbarVertical.setPosition(getWidth() - m_scrollbarVertical.getWidth() / 2.f
-            - SCROLLBAR_PAD, 0.f + m_scrollbarVertical.getHeight() / 2.f 
-            + SCROLLBAR_PAD);
-    
-    m_scrollbarVertical.setOrigin(m_scrollbarVertical.getWidth() / 2.f, 
-            m_scrollbarVertical.getHeight() / 2.f);
-
-    m_scrollbarVertical.setFillColor(m_scrollBarColor);
-}
-
-void gsf::ScrollableWidget::calculateHorizontalScrollbarSize()
-{
-        if (m_children.size() < 1)
-        {
-            return;
-        }
-        
-
-        // get first element
-        Widget *childWidget{ m_children.at(0).get() };
-        float childrenWidth{ childWidget->getWidth() };
-
-        // Horizontal Scrollbar
-        m_isHorizontalScrollNeeded = childWidget->getLeft() < 0.f || 
-            childWidget->getRight() > getWidth() ||
-            childWidget->getWidth() > getWidth();
-        // Only show scrollbar when there is any need to scroll and 
-        // scrolling is enabled
-        if (!m_isHorizontalScrollEnabled || !m_isHorizontalScrollNeeded) {
-            m_scrollbarHorizontal.setWidth(0.f);
-            return;
-        }
-        // Get proportion between the scrollable widget and its child 
-        // (We need to note the scrollbar thickness so the 
-        // two scrollbars can not overlap)
-        float proportionHor{ (getWidth() - m_scrollbarThickness 
-                - PAD_BETTWEEN_SCROLLBARS  / childrenWidth };
-        // Calculate the scrollbar size
-        float scrollbarWidth{ (getWidth() - m_scrollbarThickness 
-                - PAD_BETTWEEN_SCROLLBARS  * proportionHor };
-        m_scrollbarHorizontal.setWidth(scrollbarWidth);
-        
-        m_scrollbarHorizontal.setPosition
-            (0.f + m_scrollbarHorizontal.getWidth() / 2.f 
-                + SCROLLBAR_PAD, getHeight() 
-                - m_scrollbarHorizontal.getHeight() / 2.f 
-                - SCROLLBAR_PAD);
-        m_scrollbarHorizontal.setOrigin(m_scrollbarHorizontal.getWidth() / 2.f, 
-                m_scrollbarHorizontal.getHeight() / 2.f);
-        m_scrollbarHorizontal.setFillColor(m_scrollBarColor);
-}
-
-void gsf::ScrollableWidget::calculateScrollbarSizes()
-{
-    if (m_children.size() < 1)
-    {
-        return;
-    }
-    calculateVerticalScrollbarSize();
-    calculateHorizontalScrollbarSize();
-}
-*/
 void gsf::ScrollableWidget::setScrollBarColor(sf::Color color)
 {
     m_scrollBarColor = color;
@@ -256,6 +156,16 @@ void gsf::ScrollableWidget::setScrollBarColor(sf::Color color)
 sf::Color gsf::ScrollableWidget::getScrollBarColor() const
 {
     return m_scrollBarColor;
+}
+
+void gsf::ScrollableWidget::setScrollBtnColor(sf::Color color)
+{
+    m_scrollBtnColor = color;
+}
+
+sf::Color gsf::ScrollableWidget::getScrollBtnColor() const
+{
+    return m_scrollBtnColor;
 }
 
 void gsf::ScrollableWidget::setIsVerticalScrollEnabled(bool isEnabled)
@@ -297,12 +207,8 @@ void gsf::ScrollableWidget::scrollToLeft()
 {
     if (!m_isHorizontalScrollNeeded || !m_childWidget)
         return;
-    m_scrollOffsetX = getLeft() - m_childWidget->getLeft();
-    // Move scrollbar by widgets width, because its always more then the scrollbar
-    // can get, so the correctScrollBarPosition() method correct its postion then
-    m_scrollbarHorizontal.move(-getWidth() , 0);
-    correctScrollBarPosition();
-    handleChildScroll();
+    m_childWidget->setPosition(getLeft(), m_childWidget->getPosition().y);
+    adjustHorizontalScrollbarPosToChildWidgetPos();
 }
 
 void gsf::ScrollableWidget::scrollToRight()
@@ -310,12 +216,9 @@ void gsf::ScrollableWidget::scrollToRight()
     if (!m_isHorizontalScrollNeeded || !m_isHorizontalScrollEnabled
             || !m_childWidget)
         return;
-    m_scrollOffsetX = -getRight() - m_childWidget->getRight();
-    // Move scrollbar by widgets width, because its always more then the scrollbar
-    // can get, so the correctScrollBarPosition() method correct its postion then
-    m_scrollbarHorizontal.move(getWidth() , 0);
-    correctScrollBarPosition();
-    handleChildScroll();
+    m_childWidget->setPosition(getRight() - m_childWidget->getWidth(), 
+            m_childWidget->getPosition().y);
+    adjustHorizontalScrollbarPosToChildWidgetPos();
 }
 
 void gsf::ScrollableWidget::scrollToTop()
@@ -324,12 +227,9 @@ void gsf::ScrollableWidget::scrollToTop()
     if (!m_isVerticalScrollNeeded || !m_isVerticalScrollEnabled 
             || !m_childWidget)
         return;
-    m_scrollOffsetY = getTop() - m_childWidget->getTop();
-    // Move scrollbar by widgets height, because its always more then the scrollbar
-    // can get, so the correctScrollBarPosition() method correct its postion then
-    m_scrollbarVertical.move(-0.f , -getHeight());
-    correctScrollBarPosition();
-    handleChildScroll();
+    m_childWidget->setPosition(m_childWidget->getPosition().x, 
+            getTop());
+    adjustVerticalScrollbarPosToChildWidgetPos();
 }
 
 void gsf::ScrollableWidget::scrollToBottom()
@@ -337,12 +237,9 @@ void gsf::ScrollableWidget::scrollToBottom()
     if (!m_isVerticalScrollNeeded || !m_isVerticalScrollEnabled 
             || !m_childWidget)
         return;
-    m_scrollOffsetY = -getBottom() - m_childWidget->getBottom();
-    // Move scrollbar by widgets height, because its always more then the scrollbar
-    // can get, so the correctScrollBarPosition() method correct its postion then
-    m_scrollbarVertical.move(0.f , getHeight());
-    correctScrollBarPosition();
-    handleChildScroll();
+    m_childWidget->setPosition(m_childWidget->getPosition().x, 
+            getBottom() - m_childWidget->getHeight());
+    adjustVerticalScrollbarPosToChildWidgetPos();
 }
 
 void gsf::ScrollableWidget::correctScrollBarPosition()
@@ -371,37 +268,6 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
                 - m_scrollbarHorizontal.getWidth(),
                 m_scrollbarHorizontal.getPosition().y);
     }
-}
-
-void gsf::ScrollableWidget::handleChildScroll()
-{
-    if (!m_childWidget)
-    {
-        return;
-    }
-    Widget *child{ m_childWidget };
-    child->move(m_scrollOffsetX, m_scrollOffsetY);
-    // Correct the position of the childs when there are out of the bounds 
-    // and scrolling is needed
-    if (child->getBottom() <= getHeight() && m_isVerticalScrollNeeded)
-    {
-        child->move(0.f, getHeight() - child->getBottom() );
-    }
-    if (child->getTop() > 0.f && m_isVerticalScrollNeeded)
-    {
-        child->move(0.f, 0.f - child->getTop() );
-    }
-    if (child->getRight() <= getWidth() && m_isHorizontalScrollNeeded)
-    {
-        child->move(getWidth() - child->getRight(), 0.f);
-    }
-    if (child->getLeft() > 0.f && m_isHorizontalScrollNeeded)
-    {
-        child->move(0.f - child->getLeft(), 0.f);
-    }
-    // Scrolling handled
-    m_scrollOffsetY = 0.f;
-    m_scrollOffsetX = 0.f;
 }
 
 void gsf::ScrollableWidget::childAdded(Widget &child)
@@ -655,7 +521,7 @@ bool gsf::ScrollableWidget::handleEventCurrentAfterChildren(sf::Event &event)
 
 void gsf::ScrollableWidget::updateCurrentAfterChildren(float dt)
 {
-    handleChildScroll();
+
 }
 
 void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target, 

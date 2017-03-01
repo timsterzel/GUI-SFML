@@ -154,7 +154,7 @@ int main()
     std::unique_ptr<gsf::ScrollableWidget> scrollableWidget3{ 
         std::make_unique<gsf::ScrollableWidget>(300, 200) };
     scrollableWidget3->setPosition(820.f, 420.f);
-    scrollableWidget3->setBackgroundColor(sf::Color::Yellow);
+    scrollableWidget3->setBackgroundColor(sf::Color{ 128,  128, 128 });
 
     std::unique_ptr<gsf::VerticalLayout> layout4{ 
         std::make_unique<gsf::VerticalLayout>() };

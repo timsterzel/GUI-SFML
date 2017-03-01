@@ -17,12 +17,13 @@ namespace gsf
         Widget *m_childWidget;
         // Store how much the children should by moved (scrolled) in the next
         // update step
-        float m_scrollOffsetX;
-        float m_scrollOffsetY;
+        //float m_scrollOffsetX;
+        //float m_scrollOffsetY;
 
         float m_scrollSpeed;
 
         sf::Color m_scrollBarColor;
+        sf::Color m_scrollBtnColor;
         // Set by user (default: true)
         bool m_isVerticalScrollEnabled;
         bool m_isHorizontalScrollEnabled;
@@ -51,10 +52,6 @@ namespace gsf
         bool m_isVerticalScrollbarDrawn;
         bool m_isHorizontalScrollbarDrawn;
             
-        const float SCROLLBAR_PAD;
-        // The two scrollbars dont overlap. The Scrollbars stops before
-        // The other scrollbars top begin and have in addition this padding
-        const float PAD_BETTWEEN_SCROLLBARS;
     public:
         ScrollableWidget(float width, float height);
         
@@ -66,6 +63,9 @@ namespace gsf
         
         void setScrollBarColor(sf::Color color);
         sf::Color getScrollBarColor() const;
+        
+        void setScrollBtnColor(sf::Color color);
+        sf::Color getScrollBtnColor() const;
 
         void setIsVerticalScrollEnabled(bool isEnabled);
         bool isVerticalScrollEnabled() const;
@@ -96,7 +96,6 @@ namespace gsf
         // Correct the position of the childs when there are out of the bounds 
         // and scrolling is needed
         void correctChildWidgetPosition();
-        void handleChildScroll();
         // Adjust the position of the scrollbar so that it matches the position of
         // the childwidget and vise versa
         void adjustVerticalScrollbarPosToChildWidgetPos();
