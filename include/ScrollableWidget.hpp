@@ -10,7 +10,8 @@ namespace gsf
 {
     class ScrollableWidget: public gsf::Widget
     {
-    protected:
+    public:
+        static const float SCROLLBAR_THICKNESS;
 
     private:
         Widget *m_childWidget;

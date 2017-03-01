@@ -1,6 +1,8 @@
 #include "ScrollableWidget.hpp"
 #include <iostream>
 
+const float gsf::ScrollableWidget::SCROLLBAR_THICKNESS{ 16.f };
+
 gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 : Widget(width, height)
 , m_childWidget{ nullptr }
@@ -10,7 +12,7 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 , m_scrollBarColor{ sf::Color::Black }
 , m_isVerticalScrollEnabled{ true }
 , m_isHorizontalScrollEnabled{ true }
-, m_scrollbarThickness{ 16.f }
+, m_scrollbarThickness{ SCROLLBAR_THICKNESS }
 , m_isVerticalScrollNeeded{ true }
 , m_scrollbarVertical{ m_scrollbarThickness, 0.f }
 , m_scrollbarVerMoveActive{ false }
