@@ -100,7 +100,9 @@ namespace gsf
         // the childwidget and vise versa
         void adjustVerticalScrollbarPosToChildWidgetPos();
         void adjustVerticalChildWidgetPosToScrollbarPos();
-
+        void adjustHorizontalScrollbarPosToChildWidgetPos();
+        void adjustHorizontalChildWidgetPosToScrollbarPos();
+        
         virtual void childAdded(Widget &child) override;
         virtual void childRemoved() override;
     protected:
