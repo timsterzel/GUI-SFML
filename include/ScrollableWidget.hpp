@@ -40,6 +40,8 @@ namespace gsf
         sf::Vector2f m_scrollbarVerMoveModeRelPos;
 
         // Scrollbar Horizontal
+        MoveableBlock m_scrollRightBtn;
+        MoveableBlock m_scrollLeftBtn;
         bool m_isHorizontalScrollNeeded;
         MoveableBlock m_scrollbarHorizontal;
         bool m_scrollbarHorMoveActive;
@@ -59,6 +61,8 @@ namespace gsf
         // implement the methods different
         virtual void attachChild(Ptr child) override;
 
+        float getScrollbarThickness() const;
+        
         void setScrollBarColor(sf::Color color);
         sf::Color getScrollBarColor() const;
 
@@ -70,8 +74,6 @@ namespace gsf
         void setIsVerticalScrollbarDrawn(bool isDrawn);
         void setIsHorizontalScrollbarDrawn(bool isDrawn);
 
-        float getTotalWidth() const;
-        float getTotalHeight() const;
         // Call when the scrollbar etc should get recalucated
         void recalculateScroll();
 
@@ -84,6 +86,11 @@ namespace gsf
         void scrollToTop();
         void scrollToBottom();
     private:
+        void init();
+        void createScrollbars();
+        void createVerticalScrollbar();
+        void createHorizontalScrollbar();
+        
         void correctScrollBarPosition();
         // Correct the position of the childs when there are out of the bounds 
         // and scrolling is needed
@@ -108,13 +115,6 @@ namespace gsf
                 sf::RenderStates states) const override;
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                 sf::RenderStates states) const override;
-    private:
-        void init();
-        void createScrollbars();
-        void createVerticalScrollbar();
-        //void calculateVerticalScrollbarSize();
-        //void calculateHorizontalScrollbarSize();
-        //void calculateScrollbarSizes();
     };
 }
 
