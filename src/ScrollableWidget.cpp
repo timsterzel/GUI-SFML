@@ -47,10 +47,26 @@ void gsf::ScrollableWidget::createScrollbars()
     {
         return;
     }
+    // Store actual state of the scrollNeeded members so we can later check if there
+    // has changed
+    bool isVerticalScrollNeededOld{ m_isVerticalScrollNeeded };
+    bool isHorizontalScrollNeededOld{ m_isHorizontalScrollNeeded };
     createVerticalScrollbar();
     createHorizontalScrollbar();
+    // Call listeners when scrollNeeded members have changed
+    if (m_onVerticalScrollNeededChangedListener && 
+            isVerticalScrollNeededOld != m_isVerticalScrollNeeded)
+    {
+        m_onVerticalScrollNeededChangedListener(this, m_isVerticalScrollNeeded);
+    }
+    if (m_onHorizontalScrollNeededChangedListener && 
+            isHorizontalScrollNeededOld != m_isHorizontalScrollNeeded)
+    {
+        m_onHorizontalScrollNeededChangedListener(this, m_isHorizontalScrollNeeded);
+    }
 }
 
+// To Do: Use the real bounds with the outline thickness of the child
 void gsf::ScrollableWidget::createVerticalScrollbar()
 {
     float childrenHeight{ m_childWidget->getHeight() };
@@ -244,6 +260,17 @@ void gsf::ScrollableWidget::setIsVerticalScrollbarDrawn(bool isDrawn)
 void gsf::ScrollableWidget::setIsHorizontalScrollbarDrawn(bool isDrawn)
 {
     m_isHorizontalScrollbarDrawn = isDrawn;
+}
+void gsf::ScrollableWidget::setOnVerticalScrollNeededChangedListener(std::function
+    <void(Widget*, bool)> listener)
+{
+    m_onVerticalScrollNeededChangedListener = listener;
+}
+
+void gsf::ScrollableWidget::setOnHorizontalScrollNeededChangedListener(std::function
+    <void(Widget*, bool)> listener)
+{
+    m_onHorizontalScrollNeededChangedListener = listener;
 }
 
 void gsf::ScrollableWidget::recalculateScroll()
@@ -603,7 +630,8 @@ void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target,
         sf::RenderStates states) const
 {        
     // Draw Scroll Elements
-    if (m_isVerticalScrollbarDrawn)
+    if (m_isVerticalScrollbarDrawn && m_isVerticalScrollEnabled && 
+            m_isVerticalScrollNeeded)
     {
         target.draw(m_scrollUpBtn, states);
         target.draw(m_scrollUpBtnSymbol, states);
@@ -611,7 +639,8 @@ void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target,
         target.draw(m_scrollDownBtnSymbol, states);
         target.draw(m_scrollbarVertical, states);
     }
-    if (m_isHorizontalScrollbarDrawn)
+    if (m_isHorizontalScrollbarDrawn && m_isHorizontalScrollEnabled &&
+            m_isHorizontalScrollNeeded)
     {
         target.draw(m_scrollLeftBtn, states);
         target.draw(m_scrollLeftBtnSymbol, states);

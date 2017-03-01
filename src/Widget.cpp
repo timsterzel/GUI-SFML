@@ -218,6 +218,49 @@ float gsf::Widget::getWorldBottom() const
     return getWorldPosition().y - getOrigin().y + m_fullArea.height;
 }
 
+float gsf::Widget::getRealLeft() const
+{
+    return getLocalBounds().left;
+}
+
+float gsf::Widget::getRealRight() const
+{
+    sf::FloatRect bounds{ getLocalBounds() };
+    return bounds.left + bounds.width;
+}
+
+float gsf::Widget::getRealTop() const
+{
+    return getLocalBounds().top;
+}
+
+float gsf::Widget::getRealBottom() const
+{
+    sf::FloatRect bounds{ getLocalBounds() };
+    return bounds.top + bounds.height;
+}
+
+float gsf::Widget::getWorldRealLeft() const
+{
+    return getGlobalBounds().left;
+}
+
+float gsf::Widget::getWorldRealRight() const
+{
+    sf::FloatRect bounds{ getGlobalBounds() };
+    return bounds.left + bounds.width;
+}
+
+float gsf::Widget::getWorldRealTop() const
+{
+    return getGlobalBounds().top;
+}
+
+float gsf::Widget::getWorldRealBottom() const
+{
+    sf::FloatRect bounds{ getGlobalBounds() };
+    return bounds.top + bounds.height;
+}
 sf::FloatRect gsf::Widget::getGlobalBounds() const
 {
     /*

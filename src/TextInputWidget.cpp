@@ -27,16 +27,35 @@ void gsf::TextInputWidget::init()
 {
     std::unique_ptr<TextWidget> text{ 
         std::make_unique<TextWidget>("", m_font, m_charSize, sf::Color::Black) };
-    std::unique_ptr<ScrollableWidget> scrollabe{ 
+    std::unique_ptr<ScrollableWidget> scrollable{ 
         std::make_unique<ScrollableWidget>(
                 getWidth(), 
                 getHeight()) };
-    m_scrollable = scrollabe.get();
+    m_scrollable = scrollable.get();
     m_text = text.get();
-    scrollabe->setBackgroundColor(sf::Color::Transparent);
-    scrollabe->attachChild(std::move(text));
-    //attachChild(std::move(text));
-    attachChild(std::move(scrollabe));
+    scrollable->setBackgroundColor(sf::Color::Transparent);
+    scrollable->attachChild(std::move(text));
+    // Change content area so that the scrollbar fits in the TextInputWidget when
+    // necassary.
+    scrollable->setOnVerticalScrollNeededChangedListener(
+            [](Widget* widget, bool isNeeded)
+            {
+                // Vertical Scrollbar is needed so we reduce the width of the content
+                // area, so that the scrollbar fits in the TextInputWidget
+                if (isNeeded)
+                {
+                    widget->setWidth(widget->getWidth() 
+                            - ScrollableWidget::SCROLLBAR_THICKNESS);
+                }
+                // Vertical Scrollbar is no longer so we can make the 
+                // reductoion undone
+                else
+                {                    
+                    widget->setWidth(widget->getWidth() 
+                            + ScrollableWidget::SCROLLBAR_THICKNESS);
+                }
+            });
+    attachChild(std::move(scrollable));
     m_cursor.setFillColor(m_cursorColor);
     setOutlineThickness(4.f);
 }
@@ -72,6 +91,7 @@ void gsf::TextInputWidget::setText(const std::wstring &text)
     adjustShownText();
     m_scrollable->recalculateScroll();
     m_scrollable->scrollToBottom();
+    m_scrollable->scrollToLeft();
 }
 
 std::wstring gsf::TextInputWidget::getText() const
@@ -262,13 +282,9 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event)
             // Put cursor to clicked postion           
             // Get the index of the char where the mouse has clicked
             int clickedCharIndex{ m_text->findIndexOfCharOnPos(localPos) };
-            std::cout << "TextInputWidget clicked index: " << clickedCharIndex 
-                << "\n";
             // Clicked on a char?
             if (clickedCharIndex > -1)
             {
-                std::cout << "AddedBr: " << 
-                    getAddedLineBreaksUpToIndex(clickedCharIndex) << "\n";
                 // The index is the index of m_shownText, but we need the index of
                 // the char in m_currentText, so we have to remove the automatic
                 // added line breaks.
@@ -276,7 +292,6 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event)
                     getAddedLineBreaksUpToIndex(clickedCharIndex) };
                 m_cursorPos = clickedCharIndex - autoAddedLineBreaks; 
                 m_lBreaksBefCur = autoAddedLineBreaks;
-
             }
         }
         else
@@ -357,7 +372,7 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event)
             {
                 return false;
             }
-            m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++; 
+            m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++;
             break;
         // Add char to text
         default: m_currentText.insert(m_cursorPos, std::wstring() + c);

@@ -56,7 +56,13 @@ namespace gsf
 
         bool m_isVerticalScrollbarDrawn;
         bool m_isHorizontalScrollbarDrawn;
-            
+        // Listener are called when the state of the members m_isVerticalScrollNeeded
+        // and m_isHorizontalScrollNeeded changed
+        // First paremeter: Actual Widget
+        // Second parameter: the new state of the isScrollNeeded member
+        std::function<void(Widget*, bool)> m_onVerticalScrollNeededChangedListener;
+        std::function<void(Widget*, bool)> m_onHorizontalScrollNeededChangedListener;
+
     public:
         ScrollableWidget(float width, float height);
         
@@ -80,6 +86,11 @@ namespace gsf
 
         void setIsVerticalScrollbarDrawn(bool isDrawn);
         void setIsHorizontalScrollbarDrawn(bool isDrawn);
+
+        void setOnVerticalScrollNeededChangedListener(std::function
+                <void(Widget*, bool)> listener);
+        void setOnHorizontalScrollNeededChangedListener(std::function
+                <void(Widget*, bool)> listener);
 
         // Call when the scrollbar etc should get recalucated
         void recalculateScroll();

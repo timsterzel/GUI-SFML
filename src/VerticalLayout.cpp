@@ -19,8 +19,8 @@ void gsf::VerticalLayout::calculateSize()
     float width{ 0.f };
     for (const Ptr &child : m_children)
     {
-        height += child->getHeight();
-        float childWidth{ child->getWidth() };
+        height += child->getLocalBounds().height;
+        float childWidth{ child->getLocalBounds().width };
         if (childWidth > width)
         {
             width = childWidth;
@@ -35,10 +35,9 @@ void gsf::VerticalLayout::arrangeChildren()
     float distance{ 0.f };
     for (const Ptr &child : m_children)
     {
-        //child->centerOrigin();
         child->setPosition(0.f + child->getOrigin().x, 
                 distance + child->getOrigin().y);
-        distance += child->getHeight();
+        distance += child->getLocalBounds().height;
     }
     calculateSize();
 }

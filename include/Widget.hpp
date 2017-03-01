@@ -83,7 +83,7 @@ namespace gsf
         float getWidth() const;
         void setHeight(const float height);
         float getHeight() const;
-
+        // The bounds of the content area
         float getLeft() const;
         float getRight() const;
         float getTop() const;
@@ -92,7 +92,15 @@ namespace gsf
         float getWorldRight() const;
         float getWorldTop() const;
         float getWorldBottom() const;
-            
+        // The real bounds with outline
+        float getRealLeft() const;
+        float getRealRight() const;
+        float getRealTop() const;
+        float getRealBottom() const;
+        float getWorldRealLeft() const;
+        float getWorldRealRight() const;
+        float getWorldRealTop() const;
+        float getWorldRealBottom() const;
         // The global bounds of the widget. Here the outline thickniss is in the
         // bounds. So the width and height can has higher values then the 
         // widgets height and width
