@@ -3,8 +3,7 @@
 
 gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 : Widget(width, height)
-, m_totalWidth{ width }
-, m_totalHeight{ height }
+, m_childWidget{ nullptr }
 , m_scrollOffsetX{ 0.f }
 , m_scrollOffsetY{ 0.f }
 , m_scrollSpeed{ 6.0f }
@@ -45,7 +44,7 @@ void gsf::ScrollableWidget::createScrollbars()
     // ----------------------
     //                   ^
     //                   | Horizontal Scrollbar
-    if (m_children.size() < 1)
+    if (!m_childWidget)
     {
         return;
     }
@@ -55,15 +54,13 @@ void gsf::ScrollableWidget::createScrollbars()
 
 void gsf::ScrollableWidget::createVerticalScrollbar()
 {
-    // Get first element
-    Widget *childWidget{ m_children.at(0).get() };
-    float childrenHeight{ childWidget->getHeight() };
+    float childrenHeight{ m_childWidget->getHeight() };
 
     // Check if there is any need for scrolling 
     // (Child is higher then ScrollableWidgets height or outside)
-    m_isVerticalScrollNeeded = childWidget->getTop() < 0.f || 
-        childWidget->getBottom() > getHeight() ||
-        childWidget->getHeight() > getHeight();
+    m_isVerticalScrollNeeded = m_childWidget->getTop() < 0.f || 
+        m_childWidget->getBottom() > getHeight() ||
+        m_childWidget->getHeight() > getHeight();
     // Only show scrollbar when there is any need to scroll and scrolling is enabled
     if (!m_isVerticalScrollEnabled || !m_isVerticalScrollNeeded) {
         m_scrollbarVertical.setHeight(0.f);
@@ -102,6 +99,7 @@ void gsf::ScrollableWidget::attachChild(Ptr child)
     m_children.clear();
     child->setOrigin(0.f, 0.f);
     child->setPosition(0.f, 0.f);
+    m_childWidget = child.get();
     Widget::attachChild(std::move(child));
 }
 /*
@@ -242,16 +240,6 @@ void gsf::ScrollableWidget::setIsHorizontalScrollbarDrawn(bool isDrawn)
     m_isHorizontalScrollbarDrawn = isDrawn;
 }
 
-float gsf::ScrollableWidget::getTotalWidth() const
-{
-    return m_totalWidth;
-}
-
-float gsf::ScrollableWidget::getTotalHeight() const
-{
-    return m_totalHeight;
-}
-
 void gsf::ScrollableWidget::recalculateScroll()
 {
     //calculateScrollbarSizes();
@@ -260,10 +248,9 @@ void gsf::ScrollableWidget::recalculateScroll()
 
 void gsf::ScrollableWidget::scrollToLeft()
 {
-    if (!m_isHorizontalScrollNeeded || m_children.size() < 1)
+    if (!m_isHorizontalScrollNeeded || !m_childWidget)
         return;
-    Widget* child = m_children.at(0).get();
-    m_scrollOffsetX = getLeft() - child->getLeft();
+    m_scrollOffsetX = getLeft() - m_childWidget->getLeft();
     // Move scrollbar by widgets width, because its always more then the scrollbar
     // can get, so the correctScrollBarPosition() method correct its postion then
     m_scrollbarHorizontal.move(-getWidth() , 0);
@@ -274,10 +261,9 @@ void gsf::ScrollableWidget::scrollToLeft()
 void gsf::ScrollableWidget::scrollToRight()
 {
     if (!m_isHorizontalScrollNeeded || !m_isHorizontalScrollEnabled
-            || m_children.size() < 1)
+            || !m_childWidget)
         return;
-    Widget* child = m_children.at(0).get();
-    m_scrollOffsetX = -getRight() - child->getRight();
+    m_scrollOffsetX = -getRight() - m_childWidget->getRight();
     // Move scrollbar by widgets width, because its always more then the scrollbar
     // can get, so the correctScrollBarPosition() method correct its postion then
     m_scrollbarHorizontal.move(getWidth() , 0);
@@ -289,10 +275,9 @@ void gsf::ScrollableWidget::scrollToTop()
 {
 
     if (!m_isVerticalScrollNeeded || !m_isVerticalScrollEnabled 
-            || m_children.size() < 1)
+            || !m_childWidget)
         return;
-    Widget* child = m_children.at(0).get();
-    m_scrollOffsetY = getTop() - child->getTop();
+    m_scrollOffsetY = getTop() - m_childWidget->getTop();
     // Move scrollbar by widgets height, because its always more then the scrollbar
     // can get, so the correctScrollBarPosition() method correct its postion then
     m_scrollbarVertical.move(-0.f , -getHeight());
@@ -303,10 +288,9 @@ void gsf::ScrollableWidget::scrollToTop()
 void gsf::ScrollableWidget::scrollToBottom()
 {
     if (!m_isVerticalScrollNeeded || !m_isVerticalScrollEnabled 
-            || m_children.size() < 1)
+            || !m_childWidget)
         return;
-    Widget* child = m_children.at(0).get();
-    m_scrollOffsetY = -getBottom() - child->getBottom();
+    m_scrollOffsetY = -getBottom() - m_childWidget->getBottom();
     // Move scrollbar by widgets height, because its always more then the scrollbar
     // can get, so the correctScrollBarPosition() method correct its postion then
     m_scrollbarVertical.move(0.f , getHeight());
@@ -347,9 +331,12 @@ void gsf::ScrollableWidget::correctScrollBarPosition()
 }
 
 void gsf::ScrollableWidget::handleChildScroll()
-{    
-    Widget *child{ m_children.at(0).get() };
-    
+{
+    if (!m_childWidget)
+    {
+        return;
+    }
+    Widget *child{ m_childWidget };
     child->move(m_scrollOffsetX, m_scrollOffsetY);
     // Correct the position of the childs when there are out of the bounds 
     // and scrolling is needed
@@ -381,6 +368,7 @@ void gsf::ScrollableWidget::childAdded(Widget &child)
 
 void gsf::ScrollableWidget::childRemoved()
 {
+    m_childWidget = nullptr;
     createScrollbars();
 }
 
@@ -391,12 +379,12 @@ void gsf::ScrollableWidget::boundsChanged()
 
 void gsf::ScrollableWidget::correctChildWidgetPosition()
 {
-    if (m_children.size() < 1)
+    if (!m_childWidget)
     {
         return;
     }
     // Get child element
-    Widget *child{ m_children.at(0).get() };
+    Widget *child{ m_childWidget };
     // Correct the position of the childs when there are out of the bounds 
     // and scrolling is needed
     if (child->getBottom() <= getHeight() && m_isVerticalScrollNeeded)
@@ -419,17 +407,17 @@ void gsf::ScrollableWidget::correctChildWidgetPosition()
 
 void gsf::ScrollableWidget::adjustVerticalScrollbarPosToChildWidgetPos()
 {    
-    if (m_children.size() < 1)
+    if (!m_childWidget)
     {
         return;
     }
     // Get child element
-    Widget *child{ m_children.at(0).get() };
-
+    Widget *child{ m_childWidget };
+    // The height which is moveable
     float scrollableAreaWidget{ child->getHeight() - getHeight() };
     float moved{ child->getTop() };
     float prop{ moved / scrollableAreaWidget };
-    //float prop{ scrollableArea / moved };
+    
     float scrollAreaVertical{ getHeight() 
         - m_scrollUpBtn.getHeight() - m_scrollDownBtn.getHeight() };
     float realScrollableArea{ scrollAreaVertical 
@@ -443,13 +431,13 @@ void gsf::ScrollableWidget::adjustVerticalScrollbarPosToChildWidgetPos()
 
 void gsf::ScrollableWidget::adjustVerticalChildWidgetPosToScrollbarPos()
 {
-    if (m_children.size() < 1)
+    if (!m_childWidget)
     {
         return;
     }
 
     // Get child element
-    Widget *child{ m_children.at(0).get() };
+    Widget *child{ m_childWidget };
 
     float scrollAreaVertical{ getHeight() 
         - m_scrollUpBtn.getHeight() - m_scrollDownBtn.getHeight() };
@@ -461,16 +449,6 @@ void gsf::ScrollableWidget::adjustVerticalChildWidgetPosToScrollbarPos()
 
     float scrollableAreaWidget{ child->getHeight() - getHeight() };
     child->setPosition(child->getPosition().x, -scrollableAreaWidget * prop);
-
-    /*
-    // Get child element
-    Widget *child{ m_children.at(0).get() };
-    float scrollAreaHeight{ getHeight() 
-        - m_scrollUpBtn.getHeight() - m_scrollDownBtn.getHeight() };
-    float prop{ child->getHeight() / scrollAreaHeight };
-    float scrollBarDelta{ m_scrollUpBtn.getBottom() - m_scrollbarVertical.getTop() };
-    child->setPosition(child->getPosition().x, scrollBarDelta * prop);
-    */
 }
 
 bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
@@ -487,11 +465,9 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
         //m_scrollOffsetY = event.mouseWheel.delta * m_scrollSpeed;
         float scrollOffsetY = event.mouseWheel.delta * m_scrollSpeed;
         // We have to move the scrollbar too when we scroll with the scroll wheel
-        if (m_children.size() > 0)
+        if (m_childWidget)
         {
-
-            Widget *widget{ m_children.at(0).get() };
-            widget->move(0.f, scrollOffsetY);
+            m_childWidget->move(0.f, scrollOffsetY);
             correctChildWidgetPosition();
             adjustVerticalScrollbarPosToChildWidgetPos();
             // get first element
@@ -584,11 +560,10 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
                     m_scrollbarHorizontal.getPosition().y);
             correctScrollBarPosition();
             // Only ste a offset when there is a child to move
-            if (m_children.size() > 0)
+            if (m_childWidget)
             {
                 // get first element
-                Widget *widget{ m_children.at(0).get() };
-                float childrenWidth{ widget->getWidth() };
+                float childrenWidth{ m_childWidget->getWidth() };
                 // Calculate the offset
                 m_scrollOffsetX = ( (m_scrollbarHorizontal.getLastPosition().x 
                         - m_scrollbarHorizontal.getPosition().x) 

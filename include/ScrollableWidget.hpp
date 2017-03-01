@@ -13,13 +13,7 @@ namespace gsf
     protected:
 
     private:
-        // The total size, not the shown.
-        // A Scrollable can have a shown size 
-        // (the size, the widget take on the screen)
-        // and a total size (the size with all the children widgets 
-        // inside the scollable widget)
-        float m_totalWidth;
-        float m_totalHeight;
+        Widget *m_childWidget;
         // Store how much the children should by moved (scrolled) in the next
         // update step
         float m_scrollOffsetX;
@@ -63,8 +57,7 @@ namespace gsf
         
         // ScrollableWidget only can handle one widget, so we have to 
         // implement the methods different
-        void attachChild(Ptr child) override;
-
+        virtual void attachChild(Ptr child) override;
 
         void setScrollBarColor(sf::Color color);
         sf::Color getScrollBarColor() const;
