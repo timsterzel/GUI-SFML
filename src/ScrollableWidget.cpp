@@ -423,15 +423,6 @@ void gsf::ScrollableWidget::adjustVerticalScrollbarPosToChildWidgetPos()
     {
         return;
     }
-    /*
-    Widget *child{ m_children.at(0).get() };
-    float scrollAreaHeight{ getHeight() 
-        - m_scrollUpBtn.getHeight() - m_scrollDownBtn.getHeight() };
-    float prop{ scrollAreaHeight / child->getHeight() };
-    float childDelta{ child->getTop() };
-    m_scrollbarVertical.setPosition(m_scrollbarVertical.getPosition().x,
-            m_scrollUpBtn.getBottom() + (-childDelta * prop));
-    */
     // Get child element
     Widget *child{ m_children.at(0).get() };
 
@@ -456,6 +447,22 @@ void gsf::ScrollableWidget::adjustVerticalChildWidgetPosToScrollbarPos()
     {
         return;
     }
+
+    // Get child element
+    Widget *child{ m_children.at(0).get() };
+
+    float scrollAreaVertical{ getHeight() 
+        - m_scrollUpBtn.getHeight() - m_scrollDownBtn.getHeight() };
+    float realScrollableArea{ scrollAreaVertical 
+        - m_scrollbarVertical.getHeight() };
+    float moved{ m_scrollbarVertical.getTop() - m_scrollUpBtn.getBottom() };
+    float prop{ moved / realScrollableArea };
+    //float prop{ scrollableArea / moved };
+
+    float scrollableAreaWidget{ child->getHeight() - getHeight() };
+    child->setPosition(child->getPosition().x, -scrollableAreaWidget * prop);
+
+    /*
     // Get child element
     Widget *child{ m_children.at(0).get() };
     float scrollAreaHeight{ getHeight() 
@@ -463,6 +470,7 @@ void gsf::ScrollableWidget::adjustVerticalChildWidgetPosToScrollbarPos()
     float prop{ child->getHeight() / scrollAreaHeight };
     float scrollBarDelta{ m_scrollUpBtn.getBottom() - m_scrollbarVertical.getTop() };
     child->setPosition(child->getPosition().x, scrollBarDelta * prop);
+    */
 }
 
 bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
