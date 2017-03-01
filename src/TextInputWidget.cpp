@@ -28,7 +28,9 @@ void gsf::TextInputWidget::init()
     std::unique_ptr<TextWidget> text{ 
         std::make_unique<TextWidget>("", m_font, m_charSize, sf::Color::Black) };
     std::unique_ptr<ScrollableWidget> scrollabe{ 
-        std::make_unique<ScrollableWidget>(getWidth(), getHeight()) };
+        std::make_unique<ScrollableWidget>(
+                getWidth(), 
+                getHeight()) };
     m_scrollable = scrollabe.get();
     m_text = text.get();
     scrollabe->setBackgroundColor(sf::Color::Transparent);

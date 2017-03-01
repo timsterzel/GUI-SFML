@@ -44,6 +44,18 @@ void gsf::WindowWidget::setCloseButtonFillColor(const sf::Color color)
     m_btnClose.setFillColor(color);
 }
 
+sf::Color gsf::WindowWidget::getCloseButtonSymbolFillColor() const
+{
+    return m_btnCloseSymbolColor;
+}
+
+void gsf::WindowWidget::setCloseButtonSymbolFillColor(const sf::Color color)
+{
+    m_btnCloseSymbolColor = color;
+    m_btnCloseSymbolA.setFillColor(color);
+    m_btnCloseSymbolB.setFillColor(color);
+}
+
 const std::string& gsf::WindowWidget::getWindowTitle() const
 {
     return m_windowTitle;
@@ -141,7 +153,24 @@ void gsf::WindowWidget::boundsChanged()
             m_topBarHeight - getOutlineThickness()
             - m_btnClose.getHeight()
             );
-    //m_btnClose.setPosition(m_topBar.getRight() - (m_btnClose.getWidth() / 2.f) - 6.f,       -m_topBar.getHeight() + (m_btnClose.getHeight() / 2.f) + 3.f);
+    
+    float btnSymbolWidth{ m_btnClose.getHeight() - 2.f };
+    float btnSymbolHeight{ btnSymbolWidth / 6.f };
+    m_btnCloseSymbolA.setSize({ btnSymbolWidth, btnSymbolHeight });
+    m_btnCloseSymbolA.setOrigin( btnSymbolWidth / 2.f, btnSymbolHeight / 2.f); 
+    m_btnCloseSymbolA.setFillColor(m_btnCloseSymbolColor);
+    m_btnCloseSymbolA.setPosition(
+            m_btnClose.getLeft() + m_btnClose.getWidth() / 2.f,
+            m_btnClose.getTop() + m_btnClose.getHeight() / 2.f);
+    m_btnCloseSymbolA.setRotation(45.f);
+    
+    m_btnCloseSymbolB.setSize({ btnSymbolWidth, btnSymbolHeight });
+    m_btnCloseSymbolB.setOrigin( btnSymbolWidth / 2.f, btnSymbolHeight / 2.f); 
+    m_btnCloseSymbolB.setFillColor(m_btnCloseSymbolColor);
+    m_btnCloseSymbolB.setPosition(
+            m_btnClose.getLeft() + m_btnClose.getWidth() / 2.f,
+            m_btnClose.getTop() + m_btnClose.getHeight() / 2.f);
+    m_btnCloseSymbolB.setRotation(-45.f);
 }
 
 void gsf::WindowWidget::childAdded(Widget &child)
@@ -226,6 +255,8 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
     target.draw(m_topBar, states);
     // Draw close Button
     target.draw(m_btnClose, states);
+    target.draw(m_btnCloseSymbolA, states);
+    target.draw(m_btnCloseSymbolB, states);
 
     // Draw window title
     sf::View viewTitle{ getWindowTitleView(target) };

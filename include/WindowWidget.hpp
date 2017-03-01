@@ -13,10 +13,14 @@ namespace gsf
         float m_topBarHeight;
         MoveableBlock m_topBar;
         MoveableBlock m_btnClose;
+        // the two Symbol creates a X
+        sf::RectangleShape m_btnCloseSymbolA;
+        sf::RectangleShape m_btnCloseSymbolB;
+        sf::Color m_btnCloseSymbolColor;
         std::string m_windowTitle;
         sf::Font &m_windowTitleFont;
         sf::Color m_windowTitleColor;
-
+        
         bool m_moveModeActive;
         // The relative Mouse pos where the topbar is clicked by activating moving
         sf::Vector2f m_moveModeRelMousePos;
@@ -30,6 +34,9 @@ namespace gsf
         sf::Color getCloseButtonFillColor() const;
         void setCloseButtonFillColor(const sf::Color color);
 
+        sf::Color getCloseButtonSymbolFillColor() const;
+        void setCloseButtonSymbolFillColor(const sf::Color color);
+        
         const std::string& getWindowTitle() const;
         void setWindowTitle(const std::string &text);
 

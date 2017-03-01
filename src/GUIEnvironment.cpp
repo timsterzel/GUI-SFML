@@ -43,7 +43,8 @@ gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
 
 void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 {
-    if (event.type == sf::Event::MouseLeft || event.type == sf::Event::LostFocus)
+    /*
+    if (event.type == sf::Event::MouseLeft)
     {
         m_isMouseInWindow = false;
     }
@@ -59,6 +60,7 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
     {
         m_isWindowFocused = true;
     }
+    */
 
     // Dont handle mouse move events when mouse is not inside window or 
     // window is not focussed
