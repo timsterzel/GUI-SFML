@@ -92,8 +92,14 @@ namespace gsf
         void scrollToBottom();
     private:
         void correctScrollBarPosition();
-
+        // Correct the position of the childs when there are out of the bounds 
+        // and scrolling is needed
+        void correctChildWidgetPosition();
         void handleChildScroll();
+        // Adjust the position of the scrollbar so that it matches the position of
+        // the childwidget and vise versa
+        void adjustVerticalScrollbarPosToChildWidgetPos();
+        void adjustVerticalChildWidgetPosToScrollbarPos();
 
         virtual void childAdded(Widget &child) override;
         virtual void childRemoved() override;
