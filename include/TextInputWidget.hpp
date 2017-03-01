@@ -17,6 +17,7 @@ namespace gsf
         unsigned int m_charSize;
         bool m_isEditable;
         sf::Text m_cursor;
+        sf::Color m_cursorColor;
         ScrollableWidget *m_scrollable;            
         // The text which is stored in TextInput
         std::wstring m_currentText;
@@ -45,6 +46,9 @@ namespace gsf
         unsigned int m_minBreakCharCnt;
     public:
         TextInputWidget(float width, float height, sf::Font &font);
+        
+        void setCursorColor(sf::Color color);
+        sf::Color getCursorColor() const;
 
         void setIsEditable(bool isEditable);
         bool isEditable() const;

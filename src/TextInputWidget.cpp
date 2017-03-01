@@ -9,6 +9,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
 , m_charSize{ 12 }
 , m_isEditable{ true }
 , m_cursor{ "|", font, m_charSize }
+, m_cursorColor{ sf::Color::Black }
 , m_scrollable{ nullptr }
 , m_acceptNewLines{ true }
 , m_isFocused{ false }
@@ -34,8 +35,19 @@ void gsf::TextInputWidget::init()
     scrollabe->attachChild(std::move(text));
     //attachChild(std::move(text));
     attachChild(std::move(scrollabe));
-    m_cursor.setFillColor(sf::Color::Black);
+    m_cursor.setFillColor(m_cursorColor);
     setOutlineThickness(4.f);
+}
+
+void gsf::TextInputWidget::setCursorColor(sf::Color color)
+{
+    m_cursorColor = color;
+    m_cursor.setFillColor(color);
+}
+
+sf::Color gsf::TextInputWidget::getCursorColor() const
+{
+    return m_cursorColor;
 }
 
 void gsf::TextInputWidget::setIsEditable(bool isEditable)
