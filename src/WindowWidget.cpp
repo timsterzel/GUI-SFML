@@ -154,7 +154,7 @@ void gsf::WindowWidget::boundsChanged()
     //m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
     
     m_btnClose.setPosition(m_topBar.getRight() 
-            - m_btnClose.getWidth() - 6.f, 
+            - m_btnClose.getWidth() - 2.f, 
             m_topBarHeight - getOutlineThickness()
             - m_btnClose.getHeight()
             );
