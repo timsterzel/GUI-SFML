@@ -3,6 +3,20 @@
 #include <cassert>
 #include <iostream>
 
+gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget)
+{
+    gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>(isWindowWidget) };
+    return std::move(widget);
+}
+
+gsf::Widget::Ptr gsf::Widget::create(float width, float height, 
+        bool isWindowWidget)
+{
+    gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>(width, height, 
+            isWindowWidget) };
+    return std::move(widget);
+}
+
 gsf::Widget::Widget(bool isWindowWidget)
 //, m_width{ 0.f }
 //, m_height{ 0.f }
@@ -443,20 +457,7 @@ sf::FloatRect gsf::Widget::getShownArea() const
     }
     return rectThis;
 }
-/*
-sf::FloatRect gsf::Widget::getShownAreaWithoutOutline() const
-{
-    sf::FloatRect rectThis{ getGlobalBoundsWithoutOutline() };
-    if (m_parent)
-    {
-         // We have to get the parents shown screen area to calculate 
-         // the overlapping rect
-        sf::FloatRect rectParent{ m_parent->getContentShownArea() };
-        return getOverlappingArea(rectThis, rectParent);
-    }
-    return rectThis;
-}
-*/
+
 sf::FloatRect gsf::Widget::getContentShownArea() const
 {
     sf::FloatRect rectThis{ getGlobalContentBounds() };

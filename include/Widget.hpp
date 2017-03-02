@@ -47,9 +47,12 @@ namespace gsf
         // the widget is a window here
         bool m_isWindowWidget;
     public:
+        static Ptr create(bool isWindowWidget = false);
+        static Ptr create(float width, float height, bool isWindowWidget = false);
+        
         Widget(bool isWindowWidget = false);
         Widget(float width, float height, bool isWindowWidget = false);
-        
+
         virtual void attachChild(Ptr child);
         Widget::Ptr detachChild(const Widget& node);
         
