@@ -9,6 +9,8 @@ namespace gsf
 {
     class CheckBoxWidget: public gsf::ButtonWidget
     {
+    public:
+        typedef std::unique_ptr<CheckBoxWidget> Ptr;
     private:
         bool m_isChecked;
         // If CheckBox is checked a rect is drawn. This member
@@ -16,6 +18,8 @@ namespace gsf
         sf::Color m_checkedShapeColor;
 
     public:
+        static Ptr create();
+        static Ptr create(float width, float height); 
         CheckBoxWidget();
         CheckBoxWidget(float width, float height);
 

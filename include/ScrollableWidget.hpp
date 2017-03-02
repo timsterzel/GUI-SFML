@@ -11,8 +11,8 @@ namespace gsf
     class ScrollableWidget: public gsf::Widget
     {
     public:
+        typedef std::unique_ptr<ScrollableWidget> Ptr;
         static const float SCROLLBAR_THICKNESS;
-
     private:
         Widget *m_childWidget;
         // Store how much the children should by moved (scrolled) in the next
@@ -64,11 +64,14 @@ namespace gsf
         std::function<void(Widget*, bool)> m_onHorizontalScrollNeededChangedListener;
 
     public:
+        static Ptr create();
+        static Ptr create(float width, float height);
+        ScrollableWidget();
         ScrollableWidget(float width, float height);
         
         // ScrollableWidget only can handle one widget, so we have to 
         // implement the methods different
-        virtual void attachChild(Ptr child) override;
+        virtual void attachChild(Widget::Ptr child) override;
 
         float getScrollbarThickness() const;
         

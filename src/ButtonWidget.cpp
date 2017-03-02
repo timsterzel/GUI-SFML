@@ -1,6 +1,18 @@
 #include "ButtonWidget.hpp"
 #include <iostream>
 
+gsf::ButtonWidget::Ptr gsf::ButtonWidget::create()
+{
+    Ptr widget{ std::make_unique<ButtonWidget>() };
+    return std::move(widget);
+}
+
+gsf::ButtonWidget::Ptr gsf::ButtonWidget::create(float width, float height)
+{
+    Ptr widget{ std::make_unique<ButtonWidget>(width, height) };
+    return std::move(widget);
+}
+
 gsf::ButtonWidget::ButtonWidget()
 : Widget{  }
 , m_isHovering{ false }

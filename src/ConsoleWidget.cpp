@@ -2,6 +2,27 @@
 #include "TextInputWidget.hpp"
 #include <iostream>
 
+gsf::ConsoleWidget::Ptr gsf::ConsoleWidget::create(sf::Font &font)
+{
+    Ptr widget{ std::make_unique<ConsoleWidget>(font) };
+    return std::move(widget);
+}
+
+gsf::ConsoleWidget::Ptr gsf::ConsoleWidget::create(float width, float height, 
+        sf::Font &font)
+{
+    Ptr widget{ std::make_unique<ConsoleWidget>(width, height, font) };
+    return std::move(widget);
+}
+
+gsf::ConsoleWidget::ConsoleWidget(sf::Font &font)
+: Widget{  }
+, m_textDisplay{ nullptr }
+, m_textInput{ nullptr }
+, m_inpHistoryCursPos{ 0 }
+{
+    init(font);
+}
 gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 : Widget{ width , height }
 , m_textDisplay{ nullptr }

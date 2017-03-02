@@ -13,6 +13,8 @@ namespace gsf
 {
     class ConsoleWidget: public gsf::Widget
     {
+    public:
+        typedef std::unique_ptr<ConsoleWidget> Ptr;
     private:
         TextInputWidget *m_textDisplay;
         TextInputWidget *m_textInput;
@@ -25,6 +27,9 @@ namespace gsf
         std::function<void(Widget*, std::wstring)> 
             m_onCommandEnteredListener;
     public:
+        static Ptr create(sf::Font &font);
+        static Ptr create(float width, float height, sf::Font &font);
+        ConsoleWidget(sf::Font &font);
         ConsoleWidget(float width, float height, sf::Font &font);
 
         void addTextToDisplay(std::wstring text);

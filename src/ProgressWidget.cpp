@@ -1,6 +1,18 @@
 #include "ProgressWidget.hpp"
 #include <iostream>
 
+gsf::ProgressWidget::Ptr gsf::ProgressWidget::create()
+{
+    Ptr widget{ std::make_unique<ProgressWidget>() };
+    return std::move(widget);
+}
+
+gsf::ProgressWidget::Ptr gsf::ProgressWidget::create(float width, float height)
+{
+    Ptr widget{ std::make_unique<ProgressWidget>(width, height) };
+    return std::move(widget);
+}
+
 gsf::ProgressWidget::ProgressWidget()
 : Widget()
 , m_progessColor{ sf::Color::Black }

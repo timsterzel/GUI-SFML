@@ -3,8 +3,41 @@
 
 const float gsf::ScrollableWidget::SCROLLBAR_THICKNESS{ 16.f };
 
+gsf::ScrollableWidget::Ptr gsf::ScrollableWidget::create()
+{
+    Ptr widget{ std::make_unique<ScrollableWidget>() };
+    return std::move(widget);
+}
+
+gsf::ScrollableWidget::Ptr gsf::ScrollableWidget::create(float width, float height)
+{
+    Ptr widget{ std::make_unique<ScrollableWidget>(width, height) };
+    return std::move(widget);
+}
+
+gsf::ScrollableWidget::ScrollableWidget()
+: Widget{  }
+, m_childWidget{ nullptr }
+, m_scrollSpeed{ 16.0f }
+, m_scrollBarColor{ sf::Color::Black }
+, m_scrollBtnColor{ sf::Color{ 192, 192, 192 } }
+, m_scrollBtnSymbolColor{ sf::Color::Black }
+, m_isVerticalScrollEnabled{ true }
+, m_isHorizontalScrollEnabled{ true }
+, m_scrollbarThickness{ SCROLLBAR_THICKNESS }
+, m_isVerticalScrollNeeded{ true }
+, m_scrollbarVertical{ m_scrollbarThickness, 0.f }
+, m_scrollbarVerMoveActive{ false }
+, m_isHorizontalScrollNeeded{ true }
+, m_scrollbarHorizontal{ 0.f, m_scrollbarThickness }
+, m_scrollbarHorMoveActive{ false }
+, m_isVerticalScrollbarDrawn{ true }
+, m_isHorizontalScrollbarDrawn{ true }
+{
+    init();
+}
 gsf::ScrollableWidget::ScrollableWidget(float width, float height)
-: Widget(width, height)
+: Widget{ width, height }
 , m_childWidget{ nullptr }
 , m_scrollSpeed{ 16.0f }
 , m_scrollBarColor{ sf::Color::Black }
@@ -178,7 +211,7 @@ sf::ConvexShape gsf::ScrollableWidget::createBtnSymbol(sf::Vector2f pos,
     return shape;
 }
 
-void gsf::ScrollableWidget::attachChild(Ptr child)
+void gsf::ScrollableWidget::attachChild(Widget::Ptr child)
 {
     // Remove old widgets
     m_children.clear();

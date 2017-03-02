@@ -9,6 +9,8 @@ namespace gsf
 {
     class ButtonWidget: public gsf::Widget
     {
+    public:
+        typedef std::unique_ptr<ButtonWidget> Ptr;
     protected:
         // True when mouse hover over button
         bool m_isHovering;
@@ -16,6 +18,8 @@ namespace gsf
         // The color of the widget when mouse hover over button
         sf::Color m_hoverFillColor;
     public:
+        static Ptr create();
+        static Ptr create(float width, float height);
         ButtonWidget();
         ButtonWidget(float width, float height);
 

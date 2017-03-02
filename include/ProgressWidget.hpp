@@ -9,6 +9,8 @@ namespace gsf
 {
     class ProgressWidget: public gsf::Widget
     {
+    public:
+        typedef std::unique_ptr<ProgressWidget> Ptr;
     private:
         sf::Color m_progessColor;
         // Set margin of the progressbar
@@ -18,6 +20,8 @@ namespace gsf
         int m_progress;
 
     public:
+        static Ptr create();
+        static Ptr create(float width, float height);
         ProgressWidget();
         ProgressWidget(float width, float height);
 
