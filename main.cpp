@@ -46,10 +46,8 @@ int main()
     CLOCK::time_point timePoint1{ CLOCK::now() };
 
     gsf::GUIEnvironment guiEnvironment;
-    std::unique_ptr<gsf::TextWidget> textWidget{ 
-    std::make_unique<gsf::TextWidget>
-        //012345678 9012345 678901 23456
-        ("IM A TEXT\nTESTA\nTESTB\nTESTC\nS", font) };
+    gsf::TextWidget::Ptr textWidget{ 
+        gsf::TextWidget::create("IM A TEXT\nTESTA\nTESTB\nTESTC\nS", font) };
     //textWidget->centerOrigin();
     textWidget->setBackgroundColor(sf::Color{ 192, 192, 192 });
     textWidget->setCharacterSize(60);
