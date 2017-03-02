@@ -1,6 +1,13 @@
 #include "WindowWidget.hpp"
 #include <iostream>
 
+gsf::WindowWidget::Ptr gsf::WindowWidget::create(float width, float height, 
+        std::wstring title, sf::Font &font)
+{
+    Ptr widget{ std::make_unique<WindowWidget>(width, height, title, font) };
+    return std::move(widget);
+}
+
 gsf::WindowWidget::WindowWidget(float width, float height, std::wstring title, 
         sf::Font &font)
 : Widget{ width, height }

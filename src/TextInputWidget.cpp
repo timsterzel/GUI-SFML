@@ -1,7 +1,42 @@
 #include "TextInputWidget.hpp"
 #include <iostream>
 
-gsf::TextInputWidget::TextInputWidget(float width, float height, sf::Font &font)
+gsf::TextInputWidget::Ptr gsf::TextInputWidget::create(sf::Font &font)
+{
+    Ptr widget{ std::make_unique<TextInputWidget>(font) };
+    return widget;
+}
+
+gsf::TextInputWidget::Ptr gsf::TextInputWidget::create(float width, float height, 
+        sf::Font &font)
+{
+    Ptr widget{ std::make_unique<TextInputWidget>(width, height, font) };
+    return widget;
+}
+
+gsf::TextInputWidget::TextInputWidget(sf::Font &font)
+: Widget{ }
+//, m_text{ "", font, 12, sf::Color::Black }
+, m_text{ nullptr }
+, m_font{ font }
+, m_charSize{ 12 }
+, m_isEditable{ true }
+, m_cursor{ "|", font, m_charSize }
+, m_cursorColor{ sf::Color::Black }
+, m_scrollable{ nullptr }
+, m_acceptNewLines{ true }
+, m_isFocused{ false }
+, m_cursorPos{ 0 }
+, m_lBreaksBefCur{ 0 }
+, m_isCursorShown{ true }
+, m_blinkFreq{ 0.8f }
+, m_lastBlinkTime{ 0.f }
+, m_minBreakCharCnt{ 0 }
+{
+    init();
+}
+gsf::TextInputWidget::TextInputWidget(float width, float height, 
+        sf::Font &font)
 : Widget{ width, height }
 //, m_text{ "", font, 12, sf::Color::Black }
 , m_text{ nullptr }

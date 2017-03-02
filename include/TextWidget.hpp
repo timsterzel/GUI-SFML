@@ -9,9 +9,20 @@ namespace gsf
 {
     class TextWidget: public gsf::Widget
     {
+    public:
+        typedef std::unique_ptr<TextWidget> Ptr;
     private:
         sf::Text m_text;
     public:
+        static Ptr create();
+        static Ptr create(std::string text, sf::Font &font);
+        static Ptr create(std::string text, sf::Font &font, int characterSize);
+        static Ptr create(std::string text, sf::Font &font, int characterSize, 
+                sf::Color color);
+        static Ptr create(std::wstring text, sf::Font &font);
+        static Ptr create(std::wstring text, sf::Font &font, int characterSize);
+        static Ptr create(std::wstring text, sf::Font &font, int characterSize, 
+                sf::Color color);
         TextWidget();
         TextWidget(std::string text, sf::Font &font);
         TextWidget(std::string text, sf::Font &font, int characterSize);

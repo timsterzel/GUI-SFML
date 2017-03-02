@@ -1,6 +1,52 @@
 #include "TextWidget.hpp"
 #include <iostream>
 
+gsf::TextWidget::Ptr gsf::TextWidget::create()
+{
+    Ptr widget{ std::make_unique<TextWidget>() };
+    return std::move(widget);
+}
+
+gsf::TextWidget::Ptr gsf::TextWidget::create(std::string text, sf::Font &font)
+{
+    Ptr widget{ std::make_unique<TextWidget>(text, font) };
+    return std::move(widget);
+}
+
+gsf::TextWidget::Ptr gsf::TextWidget::create(std::string text, sf::Font &font, 
+        int characterSize)
+{
+    Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize) };
+    return std::move(widget);
+}
+
+gsf::TextWidget::Ptr gsf::TextWidget::create(std::string text, sf::Font &font, 
+        int characterSize, sf::Color color)
+{
+    Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize, color) };
+    return std::move(widget);
+}
+
+gsf::TextWidget::Ptr gsf::TextWidget::create(std::wstring text, sf::Font &font)
+{
+    Ptr widget{ std::make_unique<TextWidget>(text, font) };
+    return std::move(widget);
+}
+
+gsf::TextWidget::Ptr gsf::TextWidget::create(std::wstring text, sf::Font &font, 
+        int characterSize)
+{
+    Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize) };
+    return std::move(widget);
+}
+
+gsf::TextWidget::Ptr gsf::TextWidget::create(std::wstring text, sf::Font &font, 
+        int characterSize, sf::Color color)
+{
+    Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize, color) };
+    return std::move(widget);
+}
+
 gsf::TextWidget::TextWidget()
 : Widget{  }
 {

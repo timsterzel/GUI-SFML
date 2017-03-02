@@ -10,6 +10,10 @@ namespace gsf
     class VerticalLayout: public gsf::Widget
     {
     public:
+        typedef std::unique_ptr<VerticalLayout> Ptr;
+    public:
+        static Ptr create();
+        static Ptr create(float width, float height);
         VerticalLayout();
         VerticalLayout(float width, float height);
     private:

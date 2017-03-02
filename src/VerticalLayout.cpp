@@ -1,6 +1,18 @@
 #include "VerticalLayout.hpp"
 #include <iostream>
 
+gsf::VerticalLayout::Ptr gsf::VerticalLayout::create()
+{
+    Ptr widget{ std::make_unique<VerticalLayout>() };
+    return widget;
+}
+
+gsf::VerticalLayout::Ptr gsf::VerticalLayout::create(float width, float height)
+{
+    Ptr widget{ std::make_unique<VerticalLayout>(width, height) };
+    return widget;
+}
+
 gsf::VerticalLayout::VerticalLayout()
 : Widget{  }
 {
@@ -17,7 +29,7 @@ void gsf::VerticalLayout::calculateSize()
 {
     float height{ 0.f };
     float width{ 0.f };
-    for (const Ptr &child : m_children)
+    for (const Widget::Ptr &child : m_children)
     {
         height += child->getLocalBounds().height;
         float childWidth{ child->getLocalBounds().width };
@@ -33,7 +45,7 @@ void gsf::VerticalLayout::calculateSize()
 void gsf::VerticalLayout::arrangeChildren()
 {
     float distance{ 0.f };
-    for (const Ptr &child : m_children)
+    for (const Widget::Ptr &child : m_children)
     {
         child->setPosition(0.f + child->getOrigin().x, 
                 distance + child->getOrigin().y);

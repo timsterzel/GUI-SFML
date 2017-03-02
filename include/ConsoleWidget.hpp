@@ -29,7 +29,7 @@ namespace gsf
     public:
         static Ptr create(sf::Font &font);
         static Ptr create(float width, float height, sf::Font &font);
-        ConsoleWidget(sf::Font &font);
+        explicit ConsoleWidget(sf::Font &font);
         ConsoleWidget(float width, float height, sf::Font &font);
 
         void addTextToDisplay(std::wstring text);

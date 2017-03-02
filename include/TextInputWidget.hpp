@@ -11,6 +11,8 @@ namespace gsf
 {
     class TextInputWidget: public gsf::Widget
     {
+    public:
+        typedef std::unique_ptr<TextInputWidget> Ptr;
     private:
         TextWidget *m_text;
         sf::Font &m_font;
@@ -45,6 +47,9 @@ namespace gsf
         // The minimum amount if chars where a line breake was added
         unsigned int m_minBreakCharCnt;
     public:
+        static Ptr create(sf::Font &font);
+        static Ptr create(float width, float height, sf::Font &font);
+        explicit TextInputWidget(sf::Font &font);
         TextInputWidget(float width, float height, sf::Font &font);
         
         void setCursorColor(sf::Color color);

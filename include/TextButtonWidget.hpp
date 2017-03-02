@@ -9,6 +9,8 @@ namespace gsf
 {
     class TextButtonWidget: public gsf::ButtonWidget
     {
+    public:
+        typedef std::unique_ptr<TextButtonWidget> Ptr;
     private:
         const sf::Font &m_font;
         std::string m_text;
@@ -16,6 +18,10 @@ namespace gsf
         sf::Color m_hoverTextColor;
         unsigned int m_charSize;
     public:
+        static Ptr create(const sf::Font &font);
+        static Ptr create(float width, float height, const sf::Font &font);
+        static Ptr create(float width, float height, const std::string &text, 
+                const sf::Font &font);
         explicit TextButtonWidget(const sf::Font &font);
         TextButtonWidget(float width, float height, const sf::Font &font);
         TextButtonWidget(float width, float height, const std::string &text, 

@@ -9,6 +9,8 @@ namespace gsf
 {
     class WindowWidget: public gsf::Widget
     {
+    public:
+        typedef std::unique_ptr<WindowWidget> Ptr;
     private:
         float m_topBarHeight;
         MoveableBlock m_topBar;
@@ -27,6 +29,8 @@ namespace gsf
         // The relative Mouse pos where the topbar is clicked by activating moving
         sf::Vector2f m_moveModeRelMousePos;
     public:
+        static Ptr create(float width, float height, std::wstring title, 
+                sf::Font &font);
         WindowWidget(float width, float height, std::wstring title, 
                 sf::Font &font);
 
