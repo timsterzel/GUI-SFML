@@ -70,7 +70,6 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
     {
         return;
     }
-
     // Iterate backwards, because the widgets which are shown at the front of 
     // the window have a higher priority forevent handling
     // (Widgets drawn at the front are the ones which are at the end of the vector)

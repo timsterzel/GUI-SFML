@@ -99,26 +99,26 @@ int main()
     std::unique_ptr<gsf::WindowWidget> windowWidget{ 
         std::make_unique<gsf::WindowWidget>(
                 scrollableWidget->getGlobalBounds().width,
-                scrollableWidget->getGlobalBounds().height, "", font) };
-    windowWidget->setPosition(0.f , 0.f);
+                scrollableWidget->getGlobalBounds().height, L"", font) };
+    windowWidget->setPosition(200.f , 200.f);
     //windowWidget->setBackgroundColor(sf::Color::White);
     windowWidget->attachChild(std::move(scrollableWidget));
     windowWidget->setIsVisible(true);
     guiEnvironment.addWidget(std::move(windowWidget));
     
     std::unique_ptr<gsf::WindowWidget> windowWidget2{ 
-        std::make_unique<gsf::WindowWidget>(300.f, 360.f, "", font) };
+        std::make_unique<gsf::WindowWidget>(300.f, 360.f, L"", font) };
     windowWidget2->setPosition(240.f , 40.f);
     //windowWidget2->setBackgroundColor(sf::Color::Red);
     //windowWidget2->setTopBarFillColor(sf::Color::Green);
     //windowWidget2->setCloseButtonFillColor(sf::Color::Blue);
-    windowWidget2->setWindowTitle("Test");
+    windowWidget2->setWindowTitle(L"Test");
     //windowWidget2->setWindowTitleColor(sf::Color::Red);
     guiEnvironment.addWidget(std::move(windowWidget2));
 
     std::unique_ptr<gsf::WindowWidget> windowWidget3{ 
         std::make_unique<gsf::WindowWidget>
-            (300.f, 360.f, "Test Window TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", font) };
+            (300.f, 360.f, L"Test Window TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", font) };
     windowWidget3->setPosition(300.f , 60.f);
     //windowWidget3->setOutlineThickness(12.f);
     //windowWidget3->setOutlineColor(sf::Color::White);

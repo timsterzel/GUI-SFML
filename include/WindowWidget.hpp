@@ -17,7 +17,9 @@ namespace gsf
         sf::RectangleShape m_btnCloseSymbolA;
         sf::RectangleShape m_btnCloseSymbolB;
         sf::Color m_btnCloseSymbolColor;
-        std::string m_windowTitle;
+        sf::Text m_windowTitle;
+        //std::string m_windowTitle;
+
         sf::Font &m_windowTitleFont;
         sf::Color m_windowTitleColor;
         
@@ -25,7 +27,7 @@ namespace gsf
         // The relative Mouse pos where the topbar is clicked by activating moving
         sf::Vector2f m_moveModeRelMousePos;
     public:
-        WindowWidget(float width, float height, std::string title, 
+        WindowWidget(float width, float height, std::wstring title, 
                 sf::Font &font);
 
         sf::Color getTopbarFillColor() const;
@@ -37,8 +39,8 @@ namespace gsf
         sf::Color getCloseButtonSymbolFillColor() const;
         void setCloseButtonSymbolFillColor(const sf::Color color);
         
-        const std::string& getWindowTitle() const;
-        void setWindowTitle(const std::string &text);
+        std::wstring getWindowTitle() const;
+        void setWindowTitle(const std::wstring &text);
 
         sf::Font getWindowTitleFont() const;
         void setWindowTitleFont(sf::Font &font);

@@ -1,13 +1,13 @@
 #include "WindowWidget.hpp"
 #include <iostream>
 
-gsf::WindowWidget::WindowWidget(float width, float height, std::string title, 
+gsf::WindowWidget::WindowWidget(float width, float height, std::wstring title, 
         sf::Font &font)
 : Widget{ width, height }
 //, m_topBar{ width, 20.f }
 //, m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
 , m_topBarHeight{ 20.f }
-, m_windowTitle{ title }
+, m_windowTitle{ title, font }
 , m_windowTitleFont{ font }
 , m_windowTitleColor{ sf::Color::White }
 , m_moveModeActive{ false }
@@ -18,6 +18,8 @@ gsf::WindowWidget::WindowWidget(float width, float height, std::string title,
 void gsf::WindowWidget::init()
 {
     setOutlineThickness(4.f);
+    m_windowTitle.setFillColor(m_windowTitleColor);
+    m_windowTitle.setStyle(sf::Text::Bold);
     boundsChanged();
     setTopBarFillColor(sf::Color::Black);
     setWindowTitleColor(sf::Color::White);
@@ -56,14 +58,16 @@ void gsf::WindowWidget::setCloseButtonSymbolFillColor(const sf::Color color)
     m_btnCloseSymbolB.setFillColor(color);
 }
 
-const std::string& gsf::WindowWidget::getWindowTitle() const
+std::wstring gsf::WindowWidget::getWindowTitle() const
 {
-    return m_windowTitle;
+    return m_windowTitle.getString().toWideString();
+    //return m_windowTitle;
 }
 
-void gsf::WindowWidget::setWindowTitle(const std::string &text)
+void gsf::WindowWidget::setWindowTitle(const std::wstring &text)
 {
-    m_windowTitle = text;
+    m_windowTitle.setString(text);
+    //m_windowTitle = text;
 }
 
 sf::Font gsf::WindowWidget::getWindowTitleFont() const
@@ -134,8 +138,10 @@ void gsf::WindowWidget::boundsChanged()
     m_contentArea.top = m_topBarHeight;
     
     m_topBar.setPosition(0.f, 0.f);
-    m_topBar.setWidth(getLocalBounds().width);
+    m_topBar.setWidth(getLocalContentBounds().width);
     m_topBar.setHeight(m_topBarHeight);
+    m_windowTitle.setCharacterSize(m_topBar.getHeight() - 6.f);
+    m_windowTitle.setPosition(6.f, 0.f);
     // The Topbar is drawn over the real area of the widget
     // So the topbar dont hide child elements
     //m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
@@ -148,8 +154,7 @@ void gsf::WindowWidget::boundsChanged()
     //m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
     
     m_btnClose.setPosition(m_topBar.getRight() 
-            - m_btnClose.getWidth() 
-            - getOutlineThickness() - 6.f, 
+            - m_btnClose.getWidth() - 6.f, 
             m_topBarHeight - getOutlineThickness()
             - m_btnClose.getHeight()
             );
@@ -261,7 +266,7 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
     // Draw window title
     sf::View viewTitle{ getWindowTitleView(target) };
     target.setView(viewTitle);
-
+    /*
     sf::Text title;
     title.setFont(m_windowTitleFont);
     title.setString(m_windowTitle);
@@ -271,6 +276,7 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
     //title.setPosition(6.f, -m_topBar.getHeight());
     title.setPosition(6.f, 0.f);
     target.draw(title, states);
-    
+    */
+    target.draw(m_windowTitle, states);
     target.setView(defaultView);
 }
