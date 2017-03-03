@@ -31,6 +31,8 @@ gsf::TextInputWidget::TextInputWidget(sf::Font &font)
 , m_isCursorShown{ true }
 , m_blinkFreq{ 0.8f }
 , m_lastBlinkTime{ 0.f }
+, m_whiteListChars{ L"" }
+, m_blackListChars{ L"" }
 , m_minBreakCharCnt{ 0 }
 {
     init();
@@ -53,6 +55,8 @@ gsf::TextInputWidget::TextInputWidget(float width, float height,
 , m_isCursorShown{ true }
 , m_blinkFreq{ 0.8f }
 , m_lastBlinkTime{ 0.f }
+, m_whiteListChars{ L"" }
+, m_blackListChars{ L"" }
 , m_minBreakCharCnt{ 0 }
 {
     init();
@@ -200,6 +204,26 @@ void gsf::TextInputWidget::setIsVerticalScrollbarDrawn(bool isDrawn)
 void gsf::TextInputWidget::setIsHorizontalScrollbarDrawn(bool isDrawn)
 {
     m_scrollable->setIsHorizontalScrollbarDrawn(isDrawn);
+}
+
+std::wstring gsf::TextInputWidget::getBlackListChars() const
+{
+    return m_blackListChars;
+}
+
+void gsf::TextInputWidget::setBlackListChars(std::wstring chars)
+{
+    m_blackListChars = chars;
+}
+
+std::wstring gsf::TextInputWidget::getWhiteListChars() const
+{
+    return m_whiteListChars;
+}
+
+void gsf::TextInputWidget::setWhiteListChars(std::wstring chars)
+{
+    m_whiteListChars = chars;
 }
 
 void gsf::TextInputWidget::adjustShownText()
@@ -410,7 +434,20 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event)
             m_currentText.insert(m_cursorPos, L"\n"); m_cursorPos++;
             break;
         // Add char to text
-        default: m_currentText.insert(m_cursorPos, std::wstring() + c);
+        default:
+            // If there are white listed chars specified, check if char is in it.
+            // If not return
+            if (m_whiteListChars.length() > 0 && 
+                    m_whiteListChars.find(c) == std::wstring::npos)
+            {
+                return false;
+            }
+            // Check if char is black listed, if so return
+            if(m_blackListChars.find(c) != std::wstring::npos)
+            {
+                return false;
+            }
+            m_currentText.insert(m_cursorPos, std::wstring() + c);
                  m_cursorPos++;
         }
         resetCursorStatus();

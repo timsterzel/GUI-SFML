@@ -43,6 +43,10 @@ namespace gsf
         float m_blinkFreq;
         // The time since the cursor was last shown or invisble in secods
         float m_lastBlinkTime;
+
+        std::wstring m_whiteListChars;
+        std::wstring m_blackListChars;
+
     protected:
         // The minimum amount if chars where a line breake was added
         unsigned int m_minBreakCharCnt;
@@ -79,6 +83,13 @@ namespace gsf
 
         void setIsVerticalScrollbarDrawn(bool isDrawn);
         void setIsHorizontalScrollbarDrawn(bool isDrawn);
+        
+        // Note: Black and Whitelisted chars are only checked by mnauell TextInput.
+        // There are ignored by addinf Text via setText method or constructor.
+        std::wstring getBlackListChars() const;
+        void setBlackListChars(std::wstring chars);
+        std::wstring getWhiteListChars() const;
+        void setWhiteListChars(std::wstring chars);
     protected:
         virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
         virtual void updateCurrentAfterChildren(float dt) override;

@@ -193,6 +193,7 @@ int main()
     textInput1->setBackgroundColor(sf::Color::White);
     textInput1->setIsHorizontalScrollEnabled(false);
     textInput1->setText(L"Test Text HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH :)");
+    textInput1->setWhiteListChars(L"0123456789");
     guiEnvironment.addWidget(std::move(textInput1));
     
     // Console Widget
