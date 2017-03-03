@@ -409,27 +409,23 @@ void gsf::ScrollableWidget::correctChildWidgetPosition()
     // and scrolling is needed
     if (child->getRealBottom() <= getHeight() && m_isVerticalScrollNeeded)
     {
-        //child->move(0.f, getHeight() - child->getRealBottom());
         child->setPosition(child->getPosition().x, 
                 getHeight() - m_childWidget->getLocalBounds().height 
                 + m_childWidget->getOutlineThickness());  
     }
     if (child->getRealTop() > 0.f && m_isVerticalScrollNeeded)
     {
-        //child->move(0.f, 0.f - child->getRealTop());
         child->setPosition(child->getPosition().x, 0.f 
                 + m_childWidget->getOutlineThickness());
     }
     if (child->getRealRight() <= getWidth() && m_isHorizontalScrollNeeded)
     {
-        //child->move(getWidth() - child->getRealRight(), 0.f);
         child->setPosition(getWidth() - m_childWidget->getLocalBounds().width
                 + m_childWidget->getOutlineThickness(), 
                 m_childWidget->getPosition().y);
     }
     if (child->getRealLeft() > 0.f && m_isHorizontalScrollNeeded)
     {
-        //child->move(0.f - child->getRealLeft(), 0.f);
         child->setPosition(0.f + m_childWidget->getOutlineThickness(), 
                 m_childWidget->getOutlineThickness());
     }
