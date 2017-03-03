@@ -102,13 +102,14 @@ void gsf::ScrollableWidget::createScrollbars()
 // To Do: Use the real bounds with the outline thickness of the child
 void gsf::ScrollableWidget::createVerticalScrollbar()
 {
-    float childrenHeight{ m_childWidget->getHeight() };
+    // Its important to use localBound, because there is the outlineThickiss in
+    float childHeight{ m_childWidget->getLocalBounds().height };
 
     // Check if there is any need for scrolling 
     // (Child is higher then ScrollableWidgets height or outside)
-    m_isVerticalScrollNeeded = m_childWidget->getTop() < 0.f || 
-        m_childWidget->getBottom() > getHeight() ||
-        m_childWidget->getHeight() > getHeight();
+    m_isVerticalScrollNeeded = m_childWidget->getRealTop() < 0.f || 
+        m_childWidget->getRealBottom() > getHeight() ||
+        childHeight > getHeight();
     // Only show scrollbar when there is any need to scroll and scrolling is enabled
     if (!m_isVerticalScrollEnabled || !m_isVerticalScrollNeeded) {
         m_scrollbarVertical.setHeight(0.f);
@@ -139,7 +140,7 @@ void gsf::ScrollableWidget::createVerticalScrollbar()
     // two scrollbars can not overlap)
     float scrollAreaHeight{ getHeight() 
         - m_scrollUpBtn.getHeight() - m_scrollDownBtn.getHeight() };
-    float prop{ scrollAreaHeight / childrenHeight };
+    float prop{ scrollAreaHeight / childHeight };
     // Calculate the scrollbar height
     float scrollbarHeight{ scrollAreaHeight * prop };
     m_scrollbarVertical.setHeight(scrollbarHeight);
@@ -150,12 +151,12 @@ void gsf::ScrollableWidget::createVerticalScrollbar()
 
 void gsf::ScrollableWidget::createHorizontalScrollbar()
 {
-    float childrenWidth{ m_childWidget->getWidth() };
+    float childWidth{ m_childWidget->getLocalBounds().width };
 
     // Horizontal Scrollbar
-    m_isHorizontalScrollNeeded = m_childWidget->getLeft() < 0.f || 
-        m_childWidget->getRight() > getWidth() ||
-        m_childWidget->getWidth() > getWidth();
+    m_isHorizontalScrollNeeded = m_childWidget->getRealLeft() < 0.f || 
+        m_childWidget->getRealRight() > getWidth() ||
+        childWidth > getWidth();
     // Only show scrollbar when there is any need to scroll and 
     // scrolling is enabled
     if (!m_isHorizontalScrollEnabled || !m_isHorizontalScrollNeeded) {
@@ -185,7 +186,7 @@ void gsf::ScrollableWidget::createHorizontalScrollbar()
     // two scrollbars can not overlap)
     float scrollAreaWidth{ getWidth() 
         - m_scrollLeftBtn.getWidth() - m_scrollRightBtn.getWidth() };
-    float prop{ scrollAreaWidth / childrenWidth };
+    float prop{ scrollAreaWidth / childWidth };
     // Calculate the scrollbar height
     float scrollbarWidth{ scrollAreaWidth * prop };
     m_scrollbarHorizontal.setWidth(scrollbarWidth);
@@ -216,7 +217,8 @@ void gsf::ScrollableWidget::attachChild(Widget::Ptr child)
     // Remove old widgets
     m_children.clear();
     child->setOrigin(0.f, 0.f);
-    child->setPosition(0.f, 0.f);
+    float childOutline{ child->getOutlineThickness() };
+    child->setPosition(0.f + childOutline, 0.f + childOutline);
     m_childWidget = child.get();
     Widget::attachChild(std::move(child));
 }
@@ -405,21 +407,31 @@ void gsf::ScrollableWidget::correctChildWidgetPosition()
     Widget *child{ m_childWidget };
     // Correct the position of the childs when there are out of the bounds 
     // and scrolling is needed
-    if (child->getBottom() <= getHeight() && m_isVerticalScrollNeeded)
+    if (child->getRealBottom() <= getHeight() && m_isVerticalScrollNeeded)
     {
-        child->move(0.f, getHeight() - child->getBottom() );
+        //child->move(0.f, getHeight() - child->getRealBottom());
+        child->setPosition(child->getPosition().x, 
+                getHeight() - m_childWidget->getLocalBounds().height 
+                + m_childWidget->getOutlineThickness());  
     }
-    if (child->getTop() > 0.f && m_isVerticalScrollNeeded)
+    if (child->getRealTop() > 0.f && m_isVerticalScrollNeeded)
     {
-        child->move(0.f, 0.f - child->getTop() );
+        //child->move(0.f, 0.f - child->getRealTop());
+        child->setPosition(child->getPosition().x, 0.f 
+                + m_childWidget->getOutlineThickness());
     }
-    if (child->getRight() <= getWidth() && m_isHorizontalScrollNeeded)
+    if (child->getRealRight() <= getWidth() && m_isHorizontalScrollNeeded)
     {
-        child->move(getWidth() - child->getRight(), 0.f);
+        //child->move(getWidth() - child->getRealRight(), 0.f);
+        child->setPosition(getWidth() - m_childWidget->getLocalBounds().width
+                + m_childWidget->getOutlineThickness(), 
+                m_childWidget->getPosition().y);
     }
-    if (child->getLeft() > 0.f && m_isHorizontalScrollNeeded)
+    if (child->getRealLeft() > 0.f && m_isHorizontalScrollNeeded)
     {
-        child->move(0.f - child->getLeft(), 0.f);
+        //child->move(0.f - child->getRealLeft(), 0.f);
+        child->setPosition(0.f + m_childWidget->getOutlineThickness(), 
+                m_childWidget->getOutlineThickness());
     }
 }
 
@@ -432,8 +444,8 @@ void gsf::ScrollableWidget::adjustVerticalScrollbarPosToChildWidgetPos()
     // Get child element
     Widget *child{ m_childWidget };
     // The height which is moveable
-    float scrollableAreaWidget{ child->getHeight() - getHeight() };
-    float moved{ child->getTop() };
+    float scrollableAreaWidget{ child->getLocalBounds().height - getHeight() };
+    float moved{ child->getRealTop() };
     float prop{ moved / scrollableAreaWidget };
     
     float scrollArea{ getHeight() 
@@ -461,8 +473,9 @@ void gsf::ScrollableWidget::adjustVerticalChildWidgetPosToScrollbarPos()
     float prop{ moved / realScrollableArea };
     //float prop{ scrollableArea / moved };
 
-    float scrollableAreaWidget{ child->getHeight() - getHeight() };
-    child->setPosition(child->getPosition().x, -scrollableAreaWidget * prop);
+    float scrollableAreaWidget{ child->getLocalBounds().height - getHeight() };
+    child->setPosition(child->getPosition().x, -scrollableAreaWidget * prop 
+            + m_childWidget->getOutlineThickness());
 }
 void gsf::ScrollableWidget::adjustHorizontalScrollbarPosToChildWidgetPos()
 {    
@@ -473,8 +486,8 @@ void gsf::ScrollableWidget::adjustHorizontalScrollbarPosToChildWidgetPos()
     // Get child element
     Widget *child{ m_childWidget };
     // The height which is moveable
-    float scrollableAreaWidget{ child->getWidth() - getWidth() };
-    float moved{ child->getLeft() };
+    float scrollableAreaWidget{ child->getLocalBounds().width - getWidth() };
+    float moved{ child->getRealLeft() };
     float prop{ moved / scrollableAreaWidget };
     
     float scrollArea{ getWidth() 
@@ -502,8 +515,9 @@ void gsf::ScrollableWidget::adjustHorizontalChildWidgetPosToScrollbarPos()
     float moved{ m_scrollbarHorizontal.getLeft() - m_scrollLeftBtn.getRight() };
     float prop{ moved / realScrollableArea };
 
-    float scrollableAreaWidget{ child->getWidth() - getWidth() };
-    child->setPosition(-scrollableAreaWidget * prop, child->getPosition().y);
+    float scrollableAreaWidget{ child->getLocalBounds().width - getWidth() };
+    child->setPosition(-scrollableAreaWidget * prop 
+            + m_childWidget->getOutlineThickness(), child->getPosition().y);
 }
 
 

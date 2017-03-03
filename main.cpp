@@ -66,7 +66,8 @@ int main()
 
     std::unique_ptr<gsf::VerticalLayout> layout{ 
         std::make_unique<gsf::VerticalLayout>() };
-    layout->setPosition(0.f , 0.f);
+    layout->setOutlineThickness(8.f);
+    layout->setOutlineColor(sf::Color::Yellow);
     
     for (int i{ 0 }; i != 6; i++)
     {
@@ -93,7 +94,7 @@ int main()
         
         layout->attachChild(std::move(text));
         */
-        gsf::ProgressWidget::Ptr prog{ gsf::ProgressWidget::create(260.f, 40.f) };
+        gsf::ProgressWidget::Ptr prog{ gsf::ProgressWidget::create(360.f, 40.f) };
         if (i % 2 == 0)
         {
             prog->setOutlineColor(sf::Color::Red);
