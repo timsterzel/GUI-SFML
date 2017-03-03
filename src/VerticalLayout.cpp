@@ -47,8 +47,10 @@ void gsf::VerticalLayout::arrangeChildren()
     float distance{ 0.f };
     for (const Widget::Ptr &child : m_children)
     {
-        child->setPosition(0.f + child->getOrigin().x, 
-                distance + child->getOrigin().y);
+        // Its important to add the outline thickness to the position so the whole
+        // widget is visible
+        child->setPosition(0.f + child->getOrigin().x + child->getOutlineThickness(), 
+                distance + child->getOrigin().y + child->getOutlineThickness());
         distance += child->getLocalBounds().height;
     }
     calculateSize();

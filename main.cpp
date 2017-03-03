@@ -70,6 +70,7 @@ int main()
     
     for (int i{ 0 }; i != 6; i++)
     {
+        /*
         std::string textString{ "Text Num " + std::to_string(i) };
         std::unique_ptr<gsf::TextWidget> text{ std::make_unique<gsf::TextWidget>
                 (textString, font, 40, sf::Color::White) };
@@ -89,7 +90,19 @@ int main()
                 << textWidget->getText().toAnsiString() << std::endl;
         };
         text->setOnLeftClickListener(leftClickListener);
+        
         layout->attachChild(std::move(text));
+        */
+        gsf::ProgressWidget::Ptr prog{ gsf::ProgressWidget::create(260.f, 40.f) };
+        if (i % 2 == 0)
+        {
+            prog->setOutlineColor(sf::Color::Red);
+        }
+        else
+        {
+            prog->setOutlineColor(sf::Color::Blue);
+        }
+        layout->attachChild(std::move(prog));
     }
 
     scrollableWidget->attachChild(std::move(layout));
