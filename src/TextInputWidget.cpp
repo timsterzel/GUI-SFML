@@ -488,7 +488,7 @@ void gsf::TextInputWidget::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::TextInputWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-                    sf::RenderStates states) const
+                    sf::RenderStates states, sf::View defaultView) const
 {   
     // Draw cursor after children, so that children are not drawn over cursor
     if (m_isCursorShown && m_isEditable)

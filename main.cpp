@@ -247,6 +247,23 @@ int main()
             {
                 window.close();
             }
+            else if (event.type == sf::Event::Resized)
+            {
+                std::cout << "new width: " << event.size.width << std::endl;
+                std::cout << "new height: " << event.size.height << std::endl;
+                sf::View currentView{ window.getView() };
+                sf::FloatRect currentViewport{ currentView.getViewport() };
+                std::cout << "ViewSize: width: " << currentView.getSize().x
+                    << " height: " << currentView.getSize().y
+                    << "\n Viewport: left: " << currentViewport.left << " top: "
+                    << currentViewport.top << " width: " << currentViewport.width
+                    << " height: " << currentViewport.height 
+                    << "\n-------------------------------------------\n";
+                sf::FloatRect newRect( 0, 0, event.size.width, event.size.height );
+                sf::View newView(newRect);
+                window.setView(newView);
+
+            }
             guiEnvironment.handleEvent(event);
         }
         guiEnvironment.update(dt);

@@ -80,7 +80,7 @@ void gsf::ProgressWidget::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::ProgressWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+        sf::RenderStates states, sf::View defaultView) const
 {
     // Draw progress rect
     // Calc acutal width of progress rect

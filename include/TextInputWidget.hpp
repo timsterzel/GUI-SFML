@@ -94,7 +94,7 @@ namespace gsf
         virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
         virtual void updateCurrentAfterChildren(float dt) override;
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
-                sf::RenderStates states) const;
+                sf::RenderStates states, sf::View defaultView) const;
         // Adjust the Text so that it fit in the Widget. E.g. when only vertical
         // scroll is enabled add line breaks on the right positions
         void adjustShownText();

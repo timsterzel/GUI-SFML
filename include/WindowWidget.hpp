@@ -64,13 +64,14 @@ namespace gsf
         virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
         virtual void updateCurrentAfterChildren(float dt) override;
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
-                sf::RenderStates states) const override;
+                sf::RenderStates states, sf::View defaultView) const override;
     private:
         void init();
         // Get the view for drawing Topbar 
         //sf::View getTopBarView(sf::RenderTarget &target) const;
         // Get a view which only draw in title area
-        sf::View getWindowTitleView(sf::RenderTarget &target) const;
+        sf::View getWindowTitleView(sf::RenderTarget &target, 
+                sf::View defaultView) const;
 
         virtual void arrangeChildren() override;
         virtual void childAdded(Widget &child);

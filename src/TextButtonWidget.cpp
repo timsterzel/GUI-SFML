@@ -109,9 +109,9 @@ void gsf::TextButtonWidget::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::TextButtonWidget::drawCurrentAfterChildren
-    (sf::RenderTarget &target, sf::RenderStates states) const
+    (sf::RenderTarget &target, sf::RenderStates states, sf::View defaultView) const
 {
-    ButtonWidget::drawCurrentAfterChildren(target, states);
+    ButtonWidget::drawCurrentAfterChildren(target, states, defaultView);
     // Draw text
     sf::Text text{ m_text, m_font };
     text.setCharacterSize(m_charSize);

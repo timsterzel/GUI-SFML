@@ -147,9 +147,11 @@ namespace gsf
         // dt is the delta time
         virtual void update(float dt);
         
-        virtual void draw(sf::RenderTarget &target, 
-                sf::RenderStates states) const final override;
+        //virtual void draw(sf::RenderTarget &target, 
+        //        sf::RenderStates states) const final override;
 
+        void draw(sf::RenderTarget &target, 
+            sf::RenderStates states, sf::View defaultView) const;
     protected:
         virtual void attachChild(Ptr child);
         virtual Widget::Ptr detachChild(const Widget& node);
@@ -162,7 +164,7 @@ namespace gsf
                 sf::FloatRect rectParent) const;
         // Creates a view which only shows the given rect area
         sf::View createViewFromRect(sf::FloatRect rect, 
-                sf::RenderTarget &target) const;
+                sf::RenderTarget &target, sf::View defaultView) const;
 
         // Get the shown area of the widget. The Shown area is the width and 
         // height of the widget,
@@ -173,11 +175,13 @@ namespace gsf
         sf::FloatRect getContentShownArea() const;
 
         // The shown area with the outline 
-        sf::View getShownAreaView(sf::RenderTarget &target) const;
+        sf::View getShownAreaView(sf::RenderTarget &target, 
+                sf::View defaultView) const;
         // The shown of the content. This is only the area where child widgets 
         // are shown
-        sf::View getContentShownAreaView(sf::RenderTarget &target) const;
-        
+        sf::View getContentShownAreaView(sf::RenderTarget &target, 
+                sf::View defaultView) const;
+
         // Is called when the bounds of the widget changes (e.g. width, height
         // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();
@@ -191,12 +195,14 @@ namespace gsf
         virtual void updateCurrentAfterChildren(float dt);
         
         virtual void drawCurrentBeforeChildren(sf::RenderTarget &target, 
-                sf::RenderStates states) const;
+                sf::RenderStates states, sf::View defaultView) const;
         virtual void drawChildren(sf::RenderTarget &target, 
-                sf::RenderStates states) const;
+                sf::RenderStates states, sf::View defaultView) const;
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
-                sf::RenderStates states) const;
-    private:
+                sf::RenderStates states, sf::View defaultView) const;
+    private:  
+        virtual void draw(sf::RenderTarget &target, 
+                sf::RenderStates states) const final override;
 
         // Calculate the size of the current widget
         virtual void calculateSize();

@@ -463,7 +463,7 @@ sf::FloatRect gsf::Widget::getOverlappingArea(sf::FloatRect rectThis,
 }
 
 sf::View gsf::Widget::createViewFromRect(sf::FloatRect rect, 
-        sf::RenderTarget &target) const
+        sf::RenderTarget &target, sf::View defaultView) const
 {
     float left{ rect.left };
     float top{ rect.top };
@@ -476,12 +476,21 @@ sf::View gsf::Widget::createViewFromRect(sf::FloatRect rect,
     view.setSize(width , height);
 
     view.setCenter(left + (width / 2.f), top + (height / 2.f) );
-
-    // The viewport is the area where the widget is on screen
+    
+    // The viewport is the area where the widget is on screen    
+    sf::Vector2f oldViewSize{ defaultView.getSize() };
+    //std::cout << "DeafultView size: width: " << oldViewSize.x << " height: " << oldViewSize.y << "\n"; 
+    view.setViewport(sf::FloatRect(left / oldViewSize.x, 
+                top / oldViewSize.y,
+                width / oldViewSize.x, 
+                height / oldViewSize.y));
+    
+    /*
     view.setViewport(sf::FloatRect(left / target.getSize().x, 
                 top / target.getSize().y,
                 width / target.getSize().x, 
                 height / target.getSize().y));
+    */
     return view;
 }
 
@@ -512,10 +521,10 @@ sf::FloatRect gsf::Widget::getContentShownArea() const
     return rectThis;
 }
 
-sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target) const
+sf::View gsf::Widget::getShownAreaView(sf::RenderTarget &target, sf::View defaultView) const
 {
     sf::FloatRect shownAreaRect{ getShownArea() };
-    return createViewFromRect(shownAreaRect, target);
+    return createViewFromRect(shownAreaRect, target,defaultView);
 }
 /*
 sf::View gsf::Widget::getShownAreaViewWithoutOutline(sf::RenderTarget &target) const
@@ -524,10 +533,11 @@ sf::View gsf::Widget::getShownAreaViewWithoutOutline(sf::RenderTarget &target) c
     return createViewFromRect(shownAreaRect, target);
 }
 */
-sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target) const
+sf::View gsf::Widget::getContentShownAreaView(sf::RenderTarget &target, 
+        sf::View defaultView) const
 {
     sf::FloatRect shownAreaRect{ getContentShownArea() };
-    return createViewFromRect(shownAreaRect, target);
+    return createViewFromRect(shownAreaRect, target, defaultView);
 }
 
 void gsf::Widget::boundsChanged()
@@ -667,6 +677,12 @@ void gsf::Widget::updateCurrentAfterChildren(float dt)
 
 void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    // Do nothing
+}
+//void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states, 
+        sf::View defaultView) const
+{
     if (m_isVisible)
     {
         states.transform *= getTransform();
@@ -680,40 +696,40 @@ void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
         // Set the target to the view which is only the area of the widget, 
         // based on its with, height and position
-        sf::View defaultView{ target.getView() };
-        sf::View view{ getShownAreaView(target) };
+        sf::View oldView{ target.getView() };
+        sf::View view{ getShownAreaView(target, defaultView) };
         target.setView(view);
 
-        drawCurrentBeforeChildren(target, states);
-        drawChildren(target, states);
-        drawCurrentAfterChildren(target, states);
+        drawCurrentBeforeChildren(target, states, defaultView);
+        drawChildren(target, states, defaultView);
+        drawCurrentAfterChildren(target, states, defaultView);
 
-        target.setView(defaultView);
+        target.setView(oldView);
     }
 }
 
 void gsf::Widget::drawCurrentBeforeChildren(sf::RenderTarget &target, 
-    sf::RenderStates states) const
+    sf::RenderStates states, sf::View defaultView) const
 {
     // Do nothing by default
 }
 
 void gsf::Widget::drawChildren(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+        sf::RenderStates states, sf::View defaultView) const
 {
     // Children are only drawn in content view
-    sf::View defaultView{ target.getView() };
-    sf::View view{ getContentShownAreaView(target) };
+    sf::View oldView{ target.getView() };
+    sf::View view{ getContentShownAreaView(target, defaultView) };
     target.setView(view);
     for (const Ptr &child : m_children)
     {
-        child->draw(target, states);
+        child->draw(target, states, defaultView);
     }
-    target.setView(defaultView);
+    target.setView(oldView);
 }
 
 void gsf::Widget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-    sf::RenderStates states) const
+    sf::RenderStates states, sf::View defaultView) const
 {
     // Do nothing by default
 }

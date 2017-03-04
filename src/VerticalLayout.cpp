@@ -90,7 +90,7 @@ void gsf::VerticalLayout::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::VerticalLayout::drawCurrentAfterChildren(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+        sf::RenderStates states, sf::View defaultView) const
 {
     // Do nothing by default
 }

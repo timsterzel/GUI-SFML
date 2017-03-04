@@ -76,9 +76,9 @@ void gsf::CheckBoxWidget::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::CheckBoxWidget::drawCurrentAfterChildren
-    (sf::RenderTarget &target, sf::RenderStates states) const
+    (sf::RenderTarget &target, sf::RenderStates states, sf::View defaultView) const
 {
-    ButtonWidget::drawCurrentAfterChildren(target, states);
+    ButtonWidget::drawCurrentAfterChildren(target, states, defaultView);
     // Draw checked
     if (m_isChecked)
     {

@@ -148,7 +148,7 @@ void gsf::ConsoleWidget::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::ConsoleWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-                    sf::RenderStates states) const
+                    sf::RenderStates states, sf::View defaultView) const
 {
 
 }

@@ -63,9 +63,9 @@ namespace gsf
                 std::size_t r, std::size_t totalLength) const;
 
         virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
-        virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
-                sf::RenderStates states) const override;
         virtual void updateCurrentAfterChildren(float dt) override;
+        virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
+                sf::RenderStates states, sf::View defaultView) const override;
     private:
         void init(std::string text, sf::Font &font, int characterSize, 
                 sf::Color color);

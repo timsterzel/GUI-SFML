@@ -107,7 +107,8 @@ void gsf::WindowWidget::setWindowTitleColor(sf::Color color)
     m_windowTitleColor = color;
 }
 
-sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target) const
+sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target, 
+        sf::View defaultView) const
 {
     sf::View view;
 
@@ -268,9 +269,9 @@ void gsf::WindowWidget::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+        sf::RenderStates states, sf::View defaultView) const
 {
-    sf::View defaultView{ target.getView() };
+    sf::View oldView{ target.getView() };
     // Draw Topbar
     //sf::View viewTopBar{ getTopBarView(target) };
     //target.setView(viewTopBar);
@@ -281,7 +282,7 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
     target.draw(m_btnCloseSymbolB, states);
 
     // Draw window title
-    sf::View viewTitle{ getWindowTitleView(target) };
+    sf::View viewTitle{ getWindowTitleView(target, defaultView) };
     target.setView(viewTitle);
     /*
     sf::Text title;
@@ -295,5 +296,5 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
     target.draw(title, states);
     */
     target.draw(m_windowTitle, states);
-    target.setView(defaultView);
+    target.setView(oldView);
 }

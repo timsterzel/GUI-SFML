@@ -123,6 +123,6 @@ void gsf::GUIEnvironment::draw(sf::RenderTarget &target,
 {
     for (const Widget::Ptr &widget : m_widgets)
     {
-        widget->draw(target, states);
+        widget->draw(target, states, target.getView());
     }
 }

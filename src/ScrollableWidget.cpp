@@ -670,7 +670,7 @@ void gsf::ScrollableWidget::updateCurrentAfterChildren(float dt)
 }
 
 void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+        sf::RenderStates states, sf::View defaultView) const
 {        
     // Draw Scroll Elements
     if (m_isVerticalScrollbarDrawn && m_isVerticalScrollEnabled && 
@@ -693,7 +693,7 @@ void gsf::ScrollableWidget::drawCurrentBeforeChildren(sf::RenderTarget &target,
     }
 }
 void gsf::ScrollableWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+        sf::RenderStates states, sf::View defaultView) const
 {
 
 }

@@ -319,7 +319,7 @@ void gsf::TextWidget::updateCurrentAfterChildren(float dt)
     // Do nothing by default
 }
 void gsf::TextWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
-        sf::RenderStates states) const
+        sf::RenderStates states, sf::View defaultView) const
 {
     // Draw text
     target.draw(m_text, states);
