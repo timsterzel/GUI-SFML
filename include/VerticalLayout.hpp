@@ -16,6 +16,9 @@ namespace gsf
         static Ptr create(float width, float height);
         VerticalLayout();
         VerticalLayout(float width, float height);
+
+        virtual void attachChild(Widget::Ptr child) override;
+        virtual Widget::Ptr detachChild(const Widget& node);
     private:
         // Calculate the size of the current View
         virtual void calculateSize() override;

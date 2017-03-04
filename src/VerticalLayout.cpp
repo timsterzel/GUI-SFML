@@ -25,6 +25,16 @@ gsf::VerticalLayout::VerticalLayout(float width, float height)
 
 }
 
+void gsf::VerticalLayout::attachChild(Widget::Ptr child)
+{
+    Widget::attachChild(std::move(child));
+}
+
+gsf::Widget::Ptr gsf::VerticalLayout::detachChild(const Widget& node)
+{
+    return Widget::detachChild(node);
+}
+
 void gsf::VerticalLayout::calculateSize()
 {
     float height{ 0.f };

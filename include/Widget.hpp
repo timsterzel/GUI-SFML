@@ -53,8 +53,6 @@ namespace gsf
         Widget(bool isWindowWidget = false);
         Widget(float width, float height, bool isWindowWidget = false);
 
-        virtual void attachChild(Ptr child);
-        Widget::Ptr detachChild(const Widget& node);
         
         sf::Color getOutlineColor() const;
         void setOutlineColor(sf::Color color);
@@ -143,6 +141,9 @@ namespace gsf
                 sf::RenderStates states) const final override;
 
     protected:
+        virtual void attachChild(Ptr child);
+        virtual Widget::Ptr detachChild(const Widget& node);
+        
         sf::Vector2f convertToLocalPoint(sf::Vector2f globalPoint) const;
 
         sf::FloatRect getFullAreaRect() const;

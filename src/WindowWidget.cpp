@@ -33,6 +33,16 @@ void gsf::WindowWidget::init()
     setCloseButtonFillColor(sf::Color::White);
 }
 
+void gsf::WindowWidget::attachChild(Widget::Ptr child)
+{
+    Widget::attachChild(std::move(child));
+}
+
+gsf::Widget::Ptr gsf::WindowWidget::detachChild(const Widget& node)
+{
+    return Widget::detachChild(node);
+}
+
 sf::Color gsf::WindowWidget::getTopbarFillColor() const
 {
     return m_topBar.getFillColor();

@@ -34,6 +34,9 @@ namespace gsf
         WindowWidget(float width, float height, std::wstring title, 
                 sf::Font &font);
 
+        virtual void attachChild(Widget::Ptr child) override;
+        virtual Widget::Ptr detachChild(const Widget& node);
+        
         sf::Color getTopbarFillColor() const;
         void setTopBarFillColor(const sf::Color color);
 

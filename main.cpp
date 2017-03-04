@@ -58,7 +58,6 @@ int main()
         std::make_unique<gsf::ProgressWidget>(260, 40) };
     progressWidget->setPosition(460, 460);
     progressWidget->setProgress(50);
-    progressWidget->setOutlineThickness(10.f);
     progressWidget->setOnLeftClickListener([](gsf::Widget *widget, sf::Vector2f pos) 
             {
                 std::cout << "Clicked Progress \n";
