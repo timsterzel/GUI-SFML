@@ -674,11 +674,12 @@ void gsf::Widget::updateCurrentAfterChildren(float dt)
 {
     // Do nothing by default
 }
-
+/*
 void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     // Do nothing
 }
+*/
 //void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void gsf::Widget::draw(sf::RenderTarget &target, sf::RenderStates states, 
         sf::View defaultView) const

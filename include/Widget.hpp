@@ -5,7 +5,7 @@
 
 namespace gsf
 {
-    class Widget: protected sf::Transformable, public sf::Drawable
+    class Widget: protected sf::Transformable
     {
     public:
         typedef std::unique_ptr<Widget> Ptr;
@@ -201,8 +201,8 @@ namespace gsf
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                 sf::RenderStates states, sf::View defaultView) const;
     private:  
-        virtual void draw(sf::RenderTarget &target, 
-                sf::RenderStates states) const final override;
+        //virtual void draw(sf::RenderTarget &target, 
+               // sf::RenderStates states) const final override;
 
         // Calculate the size of the current widget
         virtual void calculateSize();
