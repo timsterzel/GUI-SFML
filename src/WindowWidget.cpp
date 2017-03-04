@@ -117,35 +117,10 @@ sf::View gsf::WindowWidget::getWindowTitleView(sf::RenderTarget &target,
     // Only draw in the toolbar from left til the close button (with little margin)
     float width{ getWidth() - (getWidth() - m_btnClose.getLeft()) - 12.f  };
     float height{ m_topBar.getHeight() };
-
-    view.setSize(width, height);
-    view.setCenter(left + (width / 2.f), top + (height / 2.f));
-    // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , 
-                top / target.getSize().y, width / target.getSize().x, 
-                height / target.getSize().y));
-    return view;
+    sf::FloatRect viewRect{ left, top, width, height };
+    return createViewFromRect(viewRect, target, defaultView);
 }
-/*
-sf::View gsf::WindowWidget::getTopBarView(sf::RenderTarget &target) const
-{
-    sf::View view;
-    
-    float left{ getGlobalBounds().left };
-    float top{ getWorldTop() - m_topBar.getHeight() };
-    // Only draw in the toolbar from left til the close button (with little margin)
-    float width{ m_topBar.getWidth() };
-    float height{ m_topBar.getHeight() };
 
-    view.setSize(width, height);
-    view.setCenter(left + (width / 2.f), top + (height / 2.f));
-    // The viewport is the area where the widget is on screen
-    view.setViewport(sf::FloatRect(left / target.getSize().x , 
-                top / target.getSize().y,
-        width / target.getSize().x, height / target.getSize().y));
-    return view;
-}
-*/
 void gsf::WindowWidget::boundsChanged()
 {
     // The full area is not only the width and heigt of the content area but also

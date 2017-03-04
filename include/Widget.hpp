@@ -149,7 +149,8 @@ namespace gsf
         
         //virtual void draw(sf::RenderTarget &target, 
         //        sf::RenderStates states) const final override;
-
+        // The draw method needs the default view of the window, so we can
+        // calculate the proportion of custom views correct later
         void draw(sf::RenderTarget &target, 
             sf::RenderStates states, sf::View defaultView) const;
     protected:

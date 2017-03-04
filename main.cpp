@@ -261,7 +261,7 @@ int main()
                     << "\n-------------------------------------------\n";
                 sf::FloatRect newRect( 0, 0, event.size.width, event.size.height );
                 sf::View newView(newRect);
-                window.setView(newView);
+                //window.setView(newView);
 
             }
             guiEnvironment.handleEvent(event);

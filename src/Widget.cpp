@@ -478,12 +478,11 @@ sf::View gsf::Widget::createViewFromRect(sf::FloatRect rect,
     view.setCenter(left + (width / 2.f), top + (height / 2.f) );
     
     // The viewport is the area where the widget is on screen    
-    sf::Vector2f oldViewSize{ defaultView.getSize() };
-    //std::cout << "DeafultView size: width: " << oldViewSize.x << " height: " << oldViewSize.y << "\n"; 
-    view.setViewport(sf::FloatRect(left / oldViewSize.x, 
-                top / oldViewSize.y,
-                width / oldViewSize.x, 
-                height / oldViewSize.y));
+    sf::Vector2f defaultViewSize{ defaultView.getSize() };
+    view.setViewport(sf::FloatRect(left / defaultViewSize.x, 
+                top / defaultViewSize.y,
+                width / defaultViewSize.x, 
+                height / defaultViewSize.y));
     
     /*
     view.setViewport(sf::FloatRect(left / target.getSize().x, 
