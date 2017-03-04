@@ -249,6 +249,7 @@ int main()
             }
             else if (event.type == sf::Event::Resized)
             {
+                /*
                 std::cout << "new width: " << event.size.width << std::endl;
                 std::cout << "new height: " << event.size.height << std::endl;
                 sf::View currentView{ window.getView() };
@@ -262,7 +263,7 @@ int main()
                 sf::FloatRect newRect( 0, 0, event.size.width, event.size.height );
                 sf::View newView(newRect);
                 //window.setView(newView);
-
+                */
             }
             guiEnvironment.handleEvent(event);
         }
