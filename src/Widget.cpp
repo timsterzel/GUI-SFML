@@ -52,6 +52,46 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 
 }
 
+void gsf::Widget::setPosition(float x, float y)
+{
+    sf::Transformable::setPosition(x, y);
+}
+
+void gsf::Widget::setPosition(const sf::Vector2f &position)
+{
+    sf::Transformable::setPosition(position);
+}
+
+const sf::Vector2f& gsf::Widget::getPosition() const
+{
+    return sf::Transformable::getPosition();
+}
+
+void gsf::Widget::setOrigin(float x, float y)
+{
+    sf::Transformable::setOrigin(x, y);
+}
+
+void gsf::Widget::setOrigin(const sf::Vector2f &origin)
+{
+    sf::Transformable::setOrigin(origin);
+}
+
+const sf::Vector2f& gsf::Widget::getOrigin() const
+{
+    return sf::Transformable::getOrigin();
+}
+
+void gsf::Widget::move(float offsetX, float offsetY)
+{
+    sf::Transformable::move(offsetX, offsetY);
+}
+
+void gsf::Widget::move(const sf::Vector2f &offset)
+{
+    sf::Transformable::move(offset);
+}
+
 void gsf::Widget::attachChild(Ptr child)
 {    
     child->setParent(this);

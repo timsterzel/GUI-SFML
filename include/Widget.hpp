@@ -5,7 +5,7 @@
 
 namespace gsf
 {
-    class Widget: public sf::Transformable, public sf::Drawable
+    class Widget: protected sf::Transformable, public sf::Drawable
     {
     public:
         typedef std::unique_ptr<Widget> Ptr;
@@ -52,8 +52,18 @@ namespace gsf
         
         Widget(bool isWindowWidget = false);
         Widget(float width, float height, bool isWindowWidget = false);
-
         
+        // Override some methods of sf::Transformable class, so there are accessible
+        // from outside the class
+        void setPosition(float x, float y);
+        void setPosition(const sf::Vector2f &position);
+        const sf::Vector2f& getPosition() const;
+        void setOrigin(float x, float y);
+        void setOrigin(const sf::Vector2f &origin);
+        const sf::Vector2f& getOrigin() const;
+        void move(float offsetX, float offsetY);
+        void move(const sf::Vector2f &offset);
+
         sf::Color getOutlineColor() const;
         void setOutlineColor(sf::Color color);
         float getOutlineThickness() const;
