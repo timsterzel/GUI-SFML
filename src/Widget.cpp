@@ -447,7 +447,8 @@ sf::View gsf::Widget::createViewFromRect(sf::FloatRect rect,
 
 sf::FloatRect gsf::Widget::getShownArea() const
 {
-    sf::FloatRect rectThis{ getGlobalBoundsWithoutOutline() };
+    //sf::FloatRect rectThis{ getGlobalBoundsWithoutOutline() };
+    sf::FloatRect rectThis{ getGlobalBounds() };
     if (m_parent)
     {
          // We have to get the parents shown screen area to calculate 
