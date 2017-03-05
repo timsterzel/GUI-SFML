@@ -2,8 +2,9 @@
 #include <iostream>
 #include <cassert>
 
-gsf::GUIEnvironment::GUIEnvironment()
-: m_isMouseInWindow{ true }
+gsf::GUIEnvironment::GUIEnvironment(const sf::RenderWindow &window)
+: m_window{ window } 
+, m_isMouseInWindow{ true }
 , m_isWindowFocused{ true }
 //, m_isWindowRoughOutEnabled{ false }
 {

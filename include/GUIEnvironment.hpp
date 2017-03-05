@@ -11,6 +11,7 @@ namespace gsf
     class GUIEnvironment : public sf::Drawable
     {
     private:
+        const sf::RenderWindow &m_window;
         std::vector<Widget::Ptr> m_widgets;
         // Is true when ever the mouse is inside the window and false
         // when the mouse is outside
@@ -19,7 +20,7 @@ namespace gsf
         // If it is enabled window can rought out of the Render Window
         //bool m_isWindowRoughOutEnabled;
     public:
-        GUIEnvironment();
+        explicit GUIEnvironment(const sf::RenderWindow &m_window);
 
         void addWidget(Widget::Ptr widget);
         Widget::Ptr removeWidget(const Widget& widget);
