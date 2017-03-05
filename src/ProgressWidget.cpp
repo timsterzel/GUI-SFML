@@ -68,9 +68,10 @@ void gsf::ProgressWidget::setProgress(int progress)
     m_progress = progress;
 }
 
-bool gsf::ProgressWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::ProgressWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     return handled;
 }
 

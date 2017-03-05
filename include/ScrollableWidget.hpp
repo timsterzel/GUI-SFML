@@ -131,8 +131,10 @@ namespace gsf
 
         // Special Events are Events like scrolling 
         // (which have a higher priorety then the child events)
-        virtual bool handleEventCurrentBeforeChildren(sf::Event &event) override;
-        virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
+        virtual bool handleEventCurrentBeforeChildren(sf::Event &event, 
+                const sf::RenderTarget &target) override;
+        virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
+                const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt);
         virtual void drawCurrentBeforeChildren(sf::RenderTarget &target, 
                 sf::RenderStates states, sf::View defaultView) const override;

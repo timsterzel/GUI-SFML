@@ -184,9 +184,10 @@ void gsf::WindowWidget::arrangeChildren()
 
 }
 
-bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event)
+bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled{ Widget::handleEventCurrentBeforeChildren(event) };
+    bool handled{ Widget::handleEventCurrentBeforeChildren(event, target) };
     sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
     sf::Vector2f localMousePoint{ convertToLocalPoint({ mousePos.x, 
@@ -227,9 +228,10 @@ bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event)
     return handled;
 }
 
-bool gsf::WindowWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::WindowWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     if (event.type == sf::Event::MouseMoved && m_moveModeActive)
     {
         setPosition(event.mouseMove.x - getOrigin().x - m_moveModeRelMousePos.x, 

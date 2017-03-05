@@ -143,7 +143,7 @@ namespace gsf
 
         // Returns true if widget has handled the event and children dont 
         // have to handle it
-        bool handleEvent(sf::Event &event);
+        bool handleEvent(sf::Event &event, const sf::RenderTarget &target);
         // dt is the delta time
         virtual void update(float dt);
         
@@ -187,9 +187,12 @@ namespace gsf
         // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();
         
-        virtual bool handleEventCurrentBeforeChildren(sf::Event &event);
-        virtual bool handleEventChildren(sf::Event &event);
-        virtual bool handleEventCurrentAfterChildren(sf::Event &event);
+        virtual bool handleEventCurrentBeforeChildren(sf::Event &event, 
+                const sf::RenderTarget &target);
+        virtual bool handleEventChildren(sf::Event &event, 
+                const sf::RenderTarget &target);
+        virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
+                const sf::RenderTarget &target);
         
         virtual void updateCurrentBeforeChildren(float dt);
         virtual void updateChildren(float dt);

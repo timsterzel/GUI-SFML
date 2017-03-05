@@ -75,9 +75,9 @@ void gsf::ConsoleWidget::setOnCommandEnteredListener(std::function
     m_onCommandEnteredListener = listener;
 }
 
-bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const sf::RenderTarget &target)
 {
-    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     /*
     if (event.type == sf::Event::MouseButtonPressed)
     {        

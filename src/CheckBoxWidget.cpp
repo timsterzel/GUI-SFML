@@ -54,9 +54,10 @@ void gsf::CheckBoxWidget::setCheckedShapeColor(sf::Color color)
     m_checkedShapeColor = color;
 }
 
-bool gsf::CheckBoxWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::CheckBoxWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled{ ButtonWidget::handleEventCurrentAfterChildren(event) };
+    bool handled{ ButtonWidget::handleEventCurrentAfterChildren(event, target) };
     sf::Vector2f mousePos{ (float) event.mouseButton.x, 
         (float) event.mouseButton.y };
     bool isMouseInShownArea{ getShownArea().contains(mousePos) };

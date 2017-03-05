@@ -91,7 +91,8 @@ namespace gsf
         std::wstring getWhiteListChars() const;
         void setWhiteListChars(std::wstring chars);
     protected:
-        virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
+        virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
+                const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                 sf::RenderStates states, sf::View defaultView) const;

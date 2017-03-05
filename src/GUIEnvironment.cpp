@@ -76,7 +76,7 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
     // (Widgets drawn at the front are the ones which are at the end of the vector)
     for (auto it = m_widgets.rbegin(); it != m_widgets.rend(); it++)
     {
-        if ((*it)->handleEvent(event))
+        if ((*it)->handleEvent(event, m_window))
         {
             // Event handled so we have nothing to handly anymore.
             // So we can ensure that a event is handled by the window in the front

@@ -311,10 +311,11 @@ unsigned int gsf::TextInputWidget::getAddedLineBreaksUpToIndex
     return cnt;
 }
 
-bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
 
-    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     if (!m_isEditable)
     {
         // Nothing to do

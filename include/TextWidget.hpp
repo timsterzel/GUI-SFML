@@ -62,7 +62,8 @@ namespace gsf
         int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
                 std::size_t r, std::size_t totalLength) const;
 
-        virtual bool handleEventCurrentAfterChildren(sf::Event &event) override;
+        virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
+                const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                 sf::RenderStates states, sf::View defaultView) const override;

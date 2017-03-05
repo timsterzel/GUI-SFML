@@ -97,9 +97,10 @@ void gsf::TextButtonWidget::setCharacterSize(unsigned int size)
     m_charSize = size;
 }
 
-bool gsf::TextButtonWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::TextButtonWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled{ ButtonWidget::handleEventCurrentAfterChildren(event) };
+    bool handled{ ButtonWidget::handleEventCurrentAfterChildren(event, target) };
     return handled;
 }
 

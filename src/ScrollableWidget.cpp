@@ -517,7 +517,8 @@ void gsf::ScrollableWidget::adjustHorizontalChildWidgetPosToScrollbarPos()
 }
 
 
-bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
+bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
     // Is the mouse in the shown area of the widget
     bool isMouseInShownArea{ getShownArea().contains(
@@ -658,9 +659,10 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event)
     return false;
 }
 
-bool gsf::ScrollableWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::ScrollableWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     return handled;
 }
 

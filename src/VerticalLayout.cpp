@@ -66,9 +66,10 @@ void gsf::VerticalLayout::arrangeChildren()
     calculateSize();
 }
 
-bool gsf::VerticalLayout::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::VerticalLayout::handleEventCurrentAfterChildren(sf::Event &event,
+        const sf::RenderTarget &target)
 {
-    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     // Is the mouse in the shown area of the widget
     bool isMouseInShownArea{ getShownArea().contains(
             sf::Vector2f(event.mouseButton.x, event.mouseButton.y)) };

@@ -279,9 +279,10 @@ int gsf::TextWidget::findCharOnPosBinary(sf::Vector2f localPos, std::size_t l,
     return -1;
 }
 
-bool gsf::TextWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::TextWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled{ Widget::handleEventCurrentAfterChildren(event) };
+    bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     /*    
     if (event.type == sf::Event::MouseButtonPressed)
     {        

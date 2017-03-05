@@ -571,7 +571,7 @@ void gsf::Widget::childRemoved()
 {
     // Do nothing by default
 }
-bool gsf::Widget::handleEvent(sf::Event &event)
+bool gsf::Widget::handleEvent(sf::Event &event, const sf::RenderTarget &target)
 {
     bool handled{ false };
     if(!isVisible())
@@ -579,27 +579,29 @@ bool gsf::Widget::handleEvent(sf::Event &event)
         return false;
     }
 
-    if (handleEventCurrentBeforeChildren(event))
+    if (handleEventCurrentBeforeChildren(event, target))
     {
         return true;
     }
-    if (!handleEventChildren(event))
+    if (!handleEventChildren(event, target))
     {
-        return handleEventCurrentAfterChildren(event);
+        return handleEventCurrentAfterChildren(event, target);
     }
     return handled;
 }
 
-bool gsf::Widget::handleEventCurrentBeforeChildren(sf::Event &event)
+bool gsf::Widget::handleEventCurrentBeforeChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
     return false;
 }
 
-bool gsf::Widget::handleEventChildren(sf::Event &event)
+bool gsf::Widget::handleEventChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
     for (const Ptr &child : m_children)
     {
-        if (child->handleEvent(event))
+        if (child->handleEvent(event, target))
         {
             return true;
         }
@@ -607,7 +609,8 @@ bool gsf::Widget::handleEventChildren(sf::Event &event)
     return false;
 }
 
-bool gsf::Widget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::Widget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
     // Is the mouse in the shown area of the widget
     sf::Vector2f mousePos{ (float) event.mouseButton.x, 

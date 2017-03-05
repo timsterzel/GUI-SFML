@@ -45,12 +45,14 @@ void gsf::ButtonWidget::setHoverFillColor(sf::Color color)
     m_hoverFillColor = color;
 }
 
-bool gsf::ButtonWidget::handleEventCurrentAfterChildren(sf::Event &event)
+bool gsf::ButtonWidget::handleEventCurrentAfterChildren(sf::Event &event, 
+        const sf::RenderTarget &target)
 {
-    bool handled = Widget::handleEventCurrentAfterChildren(event);
+    bool handled = Widget::handleEventCurrentAfterChildren(event, target);
     if (event.type == sf::Event::MouseMoved)
     {
-        sf::Vector2f mousePos{ (float) event.mouseMove.x, (float) event.mouseMove.y };
+        sf::Vector2f mousePos{ (float) event.mouseMove.x, 
+            (float) event.mouseMove.y };
         bool intersects{ isIntersecting(mousePos) };
         bool isInShownArea{ getShownArea().contains(mousePos) };
         if (intersects && isInShownArea)
