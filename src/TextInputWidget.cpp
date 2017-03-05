@@ -327,11 +327,9 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
     // Check if actual Widget is focused
     if (event.type == sf::Event::MouseButtonPressed)
     {        
-        sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
-        
-        sf::Vector2f localPos{ mousePos.x - getWorldPosition().x,
-            mousePos.y - getWorldPosition().y };
+        sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
+            event.mouseButton.y }) };
+        sf::Vector2f localPos{ convertToLocalPoint(mousePos) };
 
         bool isMouseInShownArea{ getShownArea().contains(mousePos) };
         bool intersecting{ isIntersecting(mousePos) };

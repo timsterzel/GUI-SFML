@@ -81,8 +81,8 @@ bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const
     /*
     if (event.type == sf::Event::MouseButtonPressed)
     {        
-        sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
+        sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
+            event.mouseButton.y }) };
     }
     */
     if (event.type == sf::Event::KeyPressed)
@@ -90,11 +90,9 @@ bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const
         switch (event.key.code)
         {
         case sf::Keyboard::Up:
-            std::cout << "size: " << m_inputHistory.size() << std::endl;
             if (m_inputHistory.size() > 0 && 
                     m_inpHistoryCursPos < m_inputHistory.size())
             {
-                std::cout << "UPP" << std::endl;
                 m_inpHistoryCursPos++;
                 std::size_t i{ m_inputHistory.size() - m_inpHistoryCursPos };
                 m_textInput->setText(m_inputHistory[i]);
@@ -121,7 +119,7 @@ bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const
         case 13: 
             if (m_textInput->isFocused())
             {
-                std::cout << "entered 13" << std::endl;
+                //std::cout << "entered 13" << std::endl;
                 // Add entered text to display
                 std::wstring inputText{ m_textInput->getText() };
                 // Store input in history

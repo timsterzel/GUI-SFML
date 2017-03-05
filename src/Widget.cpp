@@ -613,8 +613,8 @@ bool gsf::Widget::handleEventCurrentAfterChildren(sf::Event &event,
         const sf::RenderTarget &target)
 {
     // Is the mouse in the shown area of the widget
-    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
+    sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
+            event.mouseButton.y }) };
     bool isMouseInShownArea{ getShownArea().contains(mousePos) };
     bool intersecting{ isIntersecting(mousePos) };
     if (isMouseInShownArea)

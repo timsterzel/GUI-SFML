@@ -51,8 +51,9 @@ bool gsf::ButtonWidget::handleEventCurrentAfterChildren(sf::Event &event,
     bool handled = Widget::handleEventCurrentAfterChildren(event, target);
     if (event.type == sf::Event::MouseMoved)
     {
-        sf::Vector2f mousePos{ (float) event.mouseMove.x, 
-            (float) event.mouseMove.y };
+
+        sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseMove.x, 
+            event.mouseMove.y }) };
         bool intersects{ isIntersecting(mousePos) };
         bool isInShownArea{ getShownArea().contains(mousePos) };
         if (intersects && isInShownArea)

@@ -42,6 +42,7 @@ namespace gsf
         std::function<void(Widget*, sf::Vector2f)> m_onLeftClickListener;
         std::function<void(Widget*, sf::Vector2f)> m_onRightClickListener;
         std::function<void(Widget*, sf::Vector2f)> m_onMiddleClickListener;
+    
     private:
         // Window Widgets are special, so we store the information if
         // the widget is a window here

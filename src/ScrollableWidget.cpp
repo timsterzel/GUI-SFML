@@ -520,10 +520,11 @@ void gsf::ScrollableWidget::adjustHorizontalChildWidgetPosToScrollbarPos()
 bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event, 
         const sf::RenderTarget &target)
 {
+
+    sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
+            event.mouseButton.y }) };
     // Is the mouse in the shown area of the widget
-    bool isMouseInShownArea{ getShownArea().contains(
-            sf::Vector2f{ (float) event.mouseButton.x, 
-            (float) event.mouseButton.y }) };
+    bool isMouseInShownArea{ getShownArea().contains(mousePos) };
     if (event.type == sf::Event::MouseWheelMoved && 
         isMouseInShownArea &&
         m_isVerticalScrollNeeded &&
@@ -542,8 +543,7 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event,
     else if (event.type == sf::Event::MouseButtonPressed && isMouseInShownArea)
     {
         // We need the mouse pos as local position in the ScrollWidget
-        sf::Vector2f localMousePos{ event.mouseButton.x - getWorldLeft(), 
-            event.mouseButton.y - getWorldTop() };
+        sf::Vector2f localMousePos{ convertToLocalPoint(mousePos) };
         // Vertical scrollbar
         if (event.mouseButton.button == sf::Mouse::Left &&
             m_scrollbarVertical.isPointIntersecting(
@@ -632,8 +632,10 @@ bool gsf::ScrollableWidget::handleEventCurrentBeforeChildren(sf::Event &event,
     }
     else if (event.type == sf::Event::MouseMoved)
     {
-        sf::Vector2f localMousePos{ event.mouseMove.x - getWorldLeft(), 
-            event.mouseMove.y - getWorldTop() };
+
+        sf::Vector2f mouseMovePos{ target.mapPixelToCoords({ event.mouseMove.x, 
+            event.mouseMove.y }) };
+        sf::Vector2f localMousePos{ convertToLocalPoint(mouseMovePos) };
         if (m_scrollbarVerMoveActive)
         {
             // Move vertical scollbar by mouse movement

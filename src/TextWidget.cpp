@@ -283,36 +283,6 @@ bool gsf::TextWidget::handleEventCurrentAfterChildren(sf::Event &event,
         const sf::RenderTarget &target)
 {
     bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
-    /*    
-    if (event.type == sf::Event::MouseButtonPressed)
-    {        
-        sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
-        if (!getShownArea().contains(mousePos))
-            return false;
-        const sf::Font& font{ *(m_text.getFont()) };
-        unsigned int charSize{ m_text.getCharacterSize() };
-        sf::Vector2f localPos{ mousePos.x - getWorldPosition().x - getOrigin().x,
-            mousePos.y - getWorldPosition().y - getOrigin().y };
-        std::cout << "LocalPos: (" << localPos.x << "|" << localPos.y << ")\n";
-        std::cout << "Font LineSpacing: " << font.getLineSpacing(charSize) << "\n";
-        std::cout << "Pos (0) : (" << m_text.findCharacterPos(0).x << "|"
-            << m_text.findCharacterPos(0).y << ")\n";
-
-        std::cout << "Pos (10) : (" << m_text.findCharacterPos(10).x << "|"
-            << m_text.findCharacterPos(10).y << ")\n";
-        
-        std::cout << "Pos (13) : (" << m_text.findCharacterPos(13).x << "|"
-            << m_text.findCharacterPos(13).y << ")\n";
-        int index = findIndexOfCharOnPos(localPos);
-        std::cout << "Clicked on index: " << index << std::endl;
-        std::cout << "-------------------------------------------------\n";
-        //std::cout << "I: (" << findLocalCharacterPos(0).x << "|" 
-        //    << findLocalCharacterPos(0).y << ")" 
-        //    << getLocalBoundsOfChar(0).height << "\n";
-        //std::cout << "pressed on: " << index << std::endl;
-    }
-    */
     return handled;
 }
 void gsf::TextWidget::updateCurrentAfterChildren(float dt)

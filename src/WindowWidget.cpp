@@ -188,10 +188,9 @@ bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event,
         const sf::RenderTarget &target)
 {
     bool handled{ Widget::handleEventCurrentBeforeChildren(event, target) };
-    sf::Vector2f mousePos{ (float) event.mouseButton.x, 
-        (float) event.mouseButton.y };
-    sf::Vector2f localMousePoint{ convertToLocalPoint({ mousePos.x, 
-            mousePos.y }) };
+    sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
+            event.mouseButton.y }) };
+    sf::Vector2f localMousePoint{ convertToLocalPoint({ mousePos.x, mousePos.y }) };
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if (event.mouseButton.button == sf::Mouse::Left && 
@@ -204,8 +203,9 @@ bool gsf::WindowWidget::handleEventCurrentBeforeChildren(sf::Event &event,
                 setIsRemoveable(true);
             }
             m_moveModeActive = true;
-            m_moveModeRelMousePos.x = event.mouseButton.x - getWorldPosition().x;
-            m_moveModeRelMousePos.y = event.mouseButton.y - getWorldPosition().y;
+
+            m_moveModeRelMousePos.x = mousePos.x - getWorldPosition().x;
+            m_moveModeRelMousePos.y = mousePos.y - getWorldPosition().y;
             // Window should now be shown in the foreground
             setMoveToForground(true);
             return true;
@@ -234,8 +234,10 @@ bool gsf::WindowWidget::handleEventCurrentAfterChildren(sf::Event &event,
     bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     if (event.type == sf::Event::MouseMoved && m_moveModeActive)
     {
-        setPosition(event.mouseMove.x - getOrigin().x - m_moveModeRelMousePos.x, 
-                event.mouseMove.y - getOrigin().y - m_moveModeRelMousePos.y);
+        sf::Vector2f mouseMovePos{ target.mapPixelToCoords({ event.mouseMove.x, 
+            event.mouseMove.y }) };
+        setPosition(mouseMovePos.x - getOrigin().x - m_moveModeRelMousePos.x, 
+                mouseMovePos.y - getOrigin().y - m_moveModeRelMousePos.y);
     }
     return handled;
 }
