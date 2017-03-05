@@ -325,7 +325,8 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
     //bool handled{ ChildWidget::handleEvent(event) };/*|| 
       //  m_scrollable->handleEventWidget(event) };*/
     // Check if actual Widget is focused
-    if (event.type == sf::Event::MouseButtonPressed)
+    if (event.type == sf::Event::MouseButtonPressed && 
+            event.mouseButton.button == sf::Mouse::Left)
     {        
         sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
             event.mouseButton.y }) };
@@ -350,12 +351,6 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
                     getAddedLineBreaksUpToIndex(clickedCharIndex) };
                 m_cursorPos = clickedCharIndex - autoAddedLineBreaks; 
                 m_lBreaksBefCur = autoAddedLineBreaks;
-            }
-            // If there was no click on a char, move cursor to end
-            else
-            {
-
-                m_cursorPos = m_shownText.length();
             }
         }
         else
