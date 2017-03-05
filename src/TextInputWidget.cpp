@@ -29,7 +29,7 @@ gsf::TextInputWidget::TextInputWidget(sf::Font &font)
 , m_cursorPos{ 0 }
 , m_lBreaksBefCur{ 0 }
 , m_isCursorShown{ true }
-, m_blinkFreq{ 0.8f }
+, m_blinkFreq{ 0.6f }
 , m_lastBlinkTime{ 0.f }
 , m_whiteListChars{ L"" }
 , m_blackListChars{ L"" }
@@ -53,7 +53,7 @@ gsf::TextInputWidget::TextInputWidget(float width, float height,
 , m_cursorPos{ 0 }
 , m_lBreaksBefCur{ 0 }
 , m_isCursorShown{ true }
-, m_blinkFreq{ 0.8f }
+, m_blinkFreq{ 0.6f }
 , m_lastBlinkTime{ 0.f }
 , m_whiteListChars{ L"" }
 , m_blackListChars{ L"" }
@@ -481,7 +481,7 @@ void gsf::TextInputWidget::updateCurrentAfterChildren(float dt)
     }
 
     m_cursor.setPosition(
-            m_text->findGlobalCharacterPos(m_cursorPos + m_lBreaksBefCur));
+            m_text->findLocalCharacterPos(m_cursorPos + m_lBreaksBefCur));
     //std::wstring text{ m_currentText };
     //std::wstring text{ m_shownText };
     //m_text->setText(text); 
@@ -491,7 +491,7 @@ void gsf::TextInputWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
                     sf::RenderStates states, sf::View defaultView) const
 {   
     // Draw cursor after children, so that children are not drawn over cursor
-    if (m_isCursorShown && m_isEditable)
+    if (m_isFocused && m_isCursorShown && m_isEditable)
     {
         target.draw(m_cursor, states);
     }

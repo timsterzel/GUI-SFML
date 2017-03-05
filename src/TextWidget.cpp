@@ -158,14 +158,16 @@ sf::Color gsf::TextWidget::getTextColor() const
 
 sf::Vector2f gsf::TextWidget::findGlobalCharacterPos(std::size_t index) const
 {
-    return m_text.findCharacterPos(index) + getPosition();    
+    sf::FloatRect bounds{ getGlobalBounds() };
+    return m_text.findCharacterPos(index) 
+        + sf::Vector2f(bounds.left, bounds.top);    
 }
 
 sf::Vector2f gsf::TextWidget::findLocalCharacterPos(std::size_t index) const
 {
-    sf::FloatRect localBounds{ m_text.getLocalBounds() };
+    sf::FloatRect localBounds{ getLocalBounds() };
     return m_text.findCharacterPos(index) 
-        + sf::Vector2f(localBounds.left, localBounds.top );    
+        + sf::Vector2f(localBounds.left, localBounds.top);    
 }
 
 sf::Vector2f gsf::TextWidget::getWidthAndHeightOfChar(wchar_t c) const
