@@ -351,6 +351,12 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
                 m_cursorPos = clickedCharIndex - autoAddedLineBreaks; 
                 m_lBreaksBefCur = autoAddedLineBreaks;
             }
+            // If there was no click on a char, move cursor to end
+            else
+            {
+
+                m_cursorPos = m_shownText.length();
+            }
         }
         else
         {
