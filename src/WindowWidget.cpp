@@ -130,11 +130,12 @@ void gsf::WindowWidget::boundsChanged()
     // The content area not include the topbar, so its starts after the topbar
     m_contentArea.top = m_topBarHeight;
     
-    m_topBar.setPosition(0.f, 0.f);
-    m_topBar.setWidth(getLocalContentBounds().width);
-    m_topBar.setHeight(m_topBarHeight);
-    m_windowTitle.setCharacterSize(m_topBar.getHeight() - 6.f);
-    m_windowTitle.setPosition(6.f, 0.f);
+    float outlineThickness{ getOutlineThickness() };
+    m_topBar.setPosition(0.f - outlineThickness, 0.f - outlineThickness);
+    m_topBar.setWidth(getLocalContentBounds().width + 2 * outlineThickness);
+    m_topBar.setHeight(m_topBarHeight + outlineThickness);
+    m_windowTitle.setCharacterSize(m_topBar.getHeight() - 6.f - outlineThickness);
+    m_windowTitle.setPosition(6.f - outlineThickness, 0.f);
     // The Topbar is drawn over the real area of the widget
     // So the topbar dont hide child elements
     //m_topBar.setOrigin(m_topBar.getWidth() / 2.f, m_topBar.getHeight() / 2.f);
@@ -142,14 +143,12 @@ void gsf::WindowWidget::boundsChanged()
     //m_topBar.setPosition(-m_outlineThickness + m_topBar.getWidth() / 2.f, 
     //        -m_topBar.getHeight() + m_topBar.getHeight() / 2.f );
     
-    m_btnClose.setWidth(m_topBar.getHeight() - 6.f);
-    m_btnClose.setHeight(m_topBar.getHeight() - 6.f);
-    //m_btnClose.setOrigin(m_btnClose.getWidth() / 2.f, m_btnClose.getHeight() / 2.f);
-    
+    m_btnClose.setWidth(m_topBar.getHeight() - 6.f - outlineThickness);
+    m_btnClose.setHeight(m_topBar.getHeight() - 6.f - outlineThickness);
     m_btnClose.setPosition(m_topBar.getRight() 
-            - m_btnClose.getWidth() - 2.f, 
+            - m_btnClose.getWidth() - 2.f - outlineThickness, 
             m_topBarHeight - getOutlineThickness()
-            - m_btnClose.getHeight()
+            - m_btnClose.getHeight() - outlineThickness / 2.f
             );
     
     float btnSymbolWidth{ m_btnClose.getHeight() - 2.f };
@@ -250,7 +249,6 @@ void gsf::WindowWidget::updateCurrentAfterChildren(float dt)
 void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
         sf::RenderStates states, sf::View defaultView) const
 {
-    sf::View oldView{ target.getView() };
     // Draw Topbar
     //sf::View viewTopBar{ getTopBarView(target) };
     //target.setView(viewTopBar);
@@ -260,6 +258,7 @@ void gsf::WindowWidget::drawCurrentAfterChildren(sf::RenderTarget &target,
     target.draw(m_btnCloseSymbolA, states);
     target.draw(m_btnCloseSymbolB, states);
 
+    sf::View oldView{ target.getView() };
     // Draw window title
     sf::View viewTitle{ getWindowTitleView(target, defaultView) };
     target.setView(viewTitle);
