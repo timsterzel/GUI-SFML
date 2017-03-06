@@ -32,7 +32,7 @@ namespace gsf
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;
-        virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
+        virtual void drawCurrentBeforeChildren(sf::RenderTarget &target, 
                 sf::RenderStates states, sf::View defaultView) const override;
     private:
         void init();

@@ -3,6 +3,7 @@
 #define TEXTBUTTONWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "ButtonWidget.hpp"
+#include "TextWidget.hpp"
 #include <string>
 
 namespace gsf
@@ -13,22 +14,23 @@ namespace gsf
         typedef std::unique_ptr<TextButtonWidget> Ptr;
     private:
         const sf::Font &m_font;
-        std::string m_text;
+        std::wstring m_text;
         sf::Color m_textColor;
         sf::Color m_hoverTextColor;
         unsigned int m_charSize;
+        TextWidget *m_textWidget;
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
-        static Ptr create(float width, float height, const std::string &text, 
+        static Ptr create(float width, float height, const std::wstring &text, 
                 const sf::Font &font);
         explicit TextButtonWidget(const sf::Font &font);
         TextButtonWidget(float width, float height, const sf::Font &font);
-        TextButtonWidget(float width, float height, const std::string &text, 
+        TextButtonWidget(float width, float height, const std::wstring &text, 
                 const sf::Font &font);
 
-        const std::string& getText() const;
-        void setText(const std::string &text);
+        const std::wstring& getText() const;
+        void setText(const std::wstring &text);
 
         sf::Color getTextColor() const;
         void setTextColor(sf::Color color);
@@ -40,6 +42,9 @@ namespace gsf
         void setCharacterSize(unsigned int size);
 
     protected:
+        void placeText();
+        virtual void boundsChanged() override;
+
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;

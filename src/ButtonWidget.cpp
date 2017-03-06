@@ -73,7 +73,7 @@ void gsf::ButtonWidget::updateCurrentAfterChildren(float dt)
     // Do nothing by default
 }
 
-void gsf::ButtonWidget::drawCurrentAfterChildren
+void gsf::ButtonWidget::drawCurrentBeforeChildren
     (sf::RenderTarget &target, sf::RenderStates states, sf::View defaultView) const
 {
     // Draw hover color as background color if button is in hover mode
