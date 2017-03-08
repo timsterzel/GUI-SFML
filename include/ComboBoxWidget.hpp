@@ -5,6 +5,7 @@
 #include "Widget.hpp"
 #include "ScrollableWidget.hpp"
 #include "TextWidget.hpp"
+#include "VerticalLayout.hpp"
 
 namespace gsf
 {
@@ -16,8 +17,9 @@ namespace gsf
         std::vector<std::wstring> m_elements;
         int m_currentIndex;
         TextWidget *m_currentText;
-        ScrollableWidget *m_scrollableWidget;
+        ScrollableWidget::Ptr m_scrollableWidget;
         int m_charSize;
+        const sf::Font &m_font;
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
@@ -32,6 +34,7 @@ namespace gsf
 
     protected:
         virtual void boundsChanged() override;
+        void createScrollable();
 
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;

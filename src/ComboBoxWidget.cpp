@@ -17,9 +17,10 @@ gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(float width, float height,
 gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 : Widget{  }
 , m_currentIndex{ 0 }
-, m_scrollableWidget{ nullptr }
+, m_scrollableWidget{ ScrollableWidget::create(getWidth(), getHeight()) }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
+, m_font(font)
 {
     init(font);
 }
@@ -27,9 +28,10 @@ gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 gsf::ComboBoxWidget::ComboBoxWidget(float width, float height, const sf::Font &font)
 : Widget{ width, height }
 , m_currentIndex{ 0 }
-, m_scrollableWidget{ nullptr }
+, m_scrollableWidget{ ScrollableWidget::create(getWidth(), getHeight()) }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
+, m_font(font)
 {
     init(font);
 }
@@ -39,14 +41,14 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
 {
     setOutlineThickness(4.f);
     m_outlineColor = sf::Color::Black;
+    
+    m_scrollableWidget->setIsHorizontalScrollEnabled(false);
+    m_scrollableWidget->setIsVerticalScrollbarDrawn(false);
+
     TextWidget::Ptr currentText{ 
         TextWidget::create("", font) };
     m_currentText = currentText.get();
     attachChild(std::move(currentText));
-
-    ScrollableWidget::Ptr scrollable{ 
-        ScrollableWidget::create(getWidth(), getHeight()) };
-    m_scrollableWidget = scrollable.get();
     boundsChanged();
 }
 
@@ -59,6 +61,7 @@ void gsf::ComboBoxWidget::addElement(std::wstring element)
         m_currentIndex = 0;
         m_currentText->setText(m_elements[0]);
     }
+    createScrollable();
 }
 std::wstring gsf::ComboBoxWidget::getElement(int index) const
 {
@@ -89,6 +92,19 @@ void gsf::ComboBoxWidget::boundsChanged()
     }
 }
 
+void gsf::ComboBoxWidget::createScrollable()
+{
+    VerticalLayout::Ptr layout{ VerticalLayout::create() };
+    for (auto element : m_elements)
+    {
+        TextWidget::Ptr textWidget{ TextWidget::create(element, m_font) };
+        layout->attachChild(std::move(textWidget));
+    }
+    layout->setBackgroundColor(sf::Color::Red);
+    layout->setOutlineThickness(2.f);
+    m_scrollableWidget->attachChild(std::move(layout));
+}
+
 bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event, 
         const sf::RenderTarget &target)
 {
@@ -112,5 +128,11 @@ void gsf::ComboBoxWidget::updateCurrentAfterChildren(float dt)
 void gsf::ComboBoxWidget::drawCurrentAfterChildren
     (sf::RenderTarget &target, sf::RenderStates states, sf::View defaultView) const
 {
-    //m_currentText->draw(target, states, defaultView);
+    /*
+    sf::View oldView{ target.getView() };
+    target.setView(defaultView);
+    m_scrollableWidget->draw(target, states, defaultView);
+
+    target.setView(oldView);
+    */    
 }
