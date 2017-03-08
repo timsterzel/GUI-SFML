@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "TextButtonWidget.hpp"
 #include "CheckBoxWidget.hpp"
+#include "ComboBoxWidget.hpp"
 #include "ConsoleWidget.hpp"
 #include "GUIEnvironment.hpp"
 #include "ProgressWidget.hpp"
@@ -235,6 +236,13 @@ int main()
         std::make_unique<gsf::CheckBoxWidget>(60, 60.f) };
     checkBox1->setPosition(10.f, 620.f);
     guiEnvironment.addWidget(std::move(checkBox1));
+    
+    // ComboBoxWidget
+    gsf::ComboBoxWidget::Ptr comboBox{ 
+        gsf::ComboBoxWidget::create(80.f, 20.f, font) };
+    comboBox->setPosition(120.f, 620.f);
+    comboBox->addElement(L"Entry one");
+    guiEnvironment.addWidget(std::move(comboBox));
     
     while (window.isOpen())
     {
