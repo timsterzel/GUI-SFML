@@ -15,6 +15,7 @@
 #include "VerticalLayout.hpp"
 #include "ScrollableWidget.hpp"
 #include "WindowWidget.hpp"
+#include "ListBoxWidget.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
@@ -248,6 +249,23 @@ int main()
     comboBox->addElement(L"Entry Five");
     guiEnvironment.addWidget(std::move(comboBox));
     
+    // ListBoxWidget
+    gsf::ListBoxWidget::Ptr listBox{ 
+        gsf::ListBoxWidget::create(80.f, 100.f, font) };
+    listBox->setPosition(320.f, 590.f);
+    listBox->addElement(L"Entry One");
+    listBox->addElement(L"Entry Two");
+    listBox->addElement(L"Entry Three");
+    listBox->addElement(L"Entry Four");
+    listBox->addElement(L"Entry Five");
+    listBox->addElement(L"Entry Six");
+    listBox->addElement(L"Entry Seven");
+    listBox->addElement(L"Entry Eight");
+    listBox->addElement(L"Entry Nine");
+    listBox->addElement(L"Entry Ten");
+    listBox->addElement(L"Entry Eleven");
+    guiEnvironment.addWidget(std::move(listBox));
+
     while (window.isOpen())
     {
         determineFpsAndDeltaTime(txtStatFPS, dt, averageFpsTime, fpsInSec, fpsCnt, 
