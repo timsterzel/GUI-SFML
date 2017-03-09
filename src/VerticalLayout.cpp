@@ -15,12 +15,14 @@ gsf::VerticalLayout::Ptr gsf::VerticalLayout::create(float width, float height)
 
 gsf::VerticalLayout::VerticalLayout()
 : Widget{  }
+, m_autoDetermineWidth{ false }
 {
 
 }
 
 gsf::VerticalLayout::VerticalLayout(float width, float height)
 : Widget{ width, height }
+, m_autoDetermineWidth{ false }
 {
 
 }
@@ -35,6 +37,16 @@ gsf::Widget::Ptr gsf::VerticalLayout::detachChild(const Widget& node)
     return Widget::detachChild(node);
 }
 
+void gsf::VerticalLayout::enableAutoDetermineWidth()
+{
+    m_autoDetermineWidth = true;
+}
+
+void gsf::VerticalLayout::disableAutoDetermineWidth()
+{
+    m_autoDetermineWidth = false;
+}
+
 void gsf::VerticalLayout::calculateSize()
 {
     float height{ 0.f };
@@ -42,6 +54,7 @@ void gsf::VerticalLayout::calculateSize()
     for (const Widget::Ptr &child : m_children)
     {
         height += child->getLocalBounds().height;
+        
         float childWidth{ child->getLocalBounds().width };
         if (childWidth > width)
         {
@@ -49,7 +62,10 @@ void gsf::VerticalLayout::calculateSize()
         }
     }
     setHeight(height);
-    setWidth(width);
+    if (m_autoDetermineWidth)
+    {
+        setWidth(width);
+    }   
 }
 
 void gsf::VerticalLayout::arrangeChildren()

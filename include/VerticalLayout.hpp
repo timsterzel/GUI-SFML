@@ -11,6 +11,10 @@ namespace gsf
     {
     public:
         typedef std::unique_ptr<VerticalLayout> Ptr;
+    private:
+        // If its true the widht is calculated by the layout and is the maximal
+        // width of its children
+        bool m_autoDetermineWidth;    
     public:
         static Ptr create();
         static Ptr create(float width, float height);
@@ -19,6 +23,9 @@ namespace gsf
 
         virtual void attachChild(Widget::Ptr child) override;
         virtual Widget::Ptr detachChild(const Widget& node);
+
+        void enableAutoDetermineWidth();
+        void disableAutoDetermineWidth();
     private:
         // Calculate the size of the current View
         virtual void calculateSize() override;

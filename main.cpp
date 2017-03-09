@@ -72,6 +72,7 @@ int main()
 
     std::unique_ptr<gsf::VerticalLayout> layout{ 
         std::make_unique<gsf::VerticalLayout>() };
+    layout->enableAutoDetermineWidth();
     layout->setOutlineThickness(8.f);
     layout->setOutlineColor(sf::Color::Yellow);
     
@@ -176,6 +177,7 @@ int main()
 
     std::unique_ptr<gsf::VerticalLayout> layout4{ 
         std::make_unique<gsf::VerticalLayout>() };
+    layout4->enableAutoDetermineWidth();
     layout4->setBackgroundColor(sf::Color::Cyan);
 
     for (int i{0}; i != 10; i++)
