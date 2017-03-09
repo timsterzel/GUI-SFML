@@ -203,19 +203,19 @@ bool gsf::Widget::isWindowWidget() const
 }
 
 void gsf::Widget::setOnLeftClickListener(std::function
-        <void(Widget *widget, sf::Vector2f)> listener)
+        <void(Widget*, sf::Vector2f)> listener)
 {
     m_onLeftClickListener = listener;
 }
 
 void gsf::Widget::setOnRightClickListener(std::function
-        <void(Widget *widget, sf::Vector2f)> listener)
+        <void(Widget*, sf::Vector2f)> listener)
 {
     m_onRightClickListener = listener;
 }
 
 void gsf::Widget::setOnMiddleClickListener(std::function
-        <void(Widget *widget, sf::Vector2f)> listener)
+        <void(Widget*, sf::Vector2f)> listener)
 {
     m_onMiddleClickListener = listener;
 }
