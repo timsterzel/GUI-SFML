@@ -1,3 +1,4 @@
+#include "Widget.hpp"
 #include "GUIEnvironment.hpp"
 #include <iostream>
 #include <cassert>

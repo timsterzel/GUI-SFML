@@ -1,4 +1,5 @@
 #include "Widget.hpp"
+#include "GUIEnvironment.hpp"
 #include <algorithm>
 #include <cassert>
 #include <iostream>
@@ -20,7 +21,8 @@ gsf::Widget::Ptr gsf::Widget::create(float width, float height,
 gsf::Widget::Widget(bool isWindowWidget)
 //, m_width{ 0.f }
 //, m_height{ 0.f }
-: m_contentArea{ 0.f, 0.f, 0.f, 0.f }
+: m_context{ nullptr }
+, m_contentArea{ 0.f, 0.f, 0.f, 0.f }
 , m_fullArea{ 0.f, 0.f, 0.f, 0.f }
 , m_outlineColor{ sf::Color::Black }
 , m_outlineThickness{ 0.f }
@@ -31,14 +33,16 @@ gsf::Widget::Widget(bool isWindowWidget)
 , m_isVisible{ true }
 , m_isWindowWidget{ isWindowWidget }
 {
-
+    if (m_context)
+        m_context->update(2.f);
 }
 
 
 gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 //, m_width{ width }
 //, m_height{ height }
-: m_contentArea{ 0.f, 0.f, width, height }
+: m_context{ nullptr }
+, m_contentArea{ 0.f, 0.f, width, height }
 , m_fullArea{ 0.f, 0.f, width, height }
 , m_outlineColor{ sf::Color::Black }
 , m_outlineThickness{ 0.f }
@@ -49,8 +53,20 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 , m_isVisible{ true }
 , m_isWindowWidget{ isWindowWidget }
 {
-
+    if (m_context)
+        m_context->update(2.f);
 }
+
+void gsf::Widget::setContext(GUIEnvironment *context)
+{
+    m_context = context;
+}
+
+gsf::GUIEnvironment* gsf::Widget::getContext() const
+{
+    return m_context;
+}
+
 
 void gsf::Widget::setPosition(float x, float y)
 {

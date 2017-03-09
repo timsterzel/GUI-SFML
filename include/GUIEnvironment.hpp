@@ -2,12 +2,17 @@
 #ifndef GUIENVIRONMENT_HPP
 #define GUIENVIRONMENT_HPP
 #include <SFML/Graphics.hpp>
-#include "Widget.hpp"
 #include <vector>
 #include <memory>
 
 namespace gsf
 {
+    class Widget;
+}
+
+namespace gsf
+{
+
     class GUIEnvironment : public sf::Drawable
     {
     private:

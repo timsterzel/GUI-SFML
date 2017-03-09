@@ -5,6 +5,11 @@
 
 namespace gsf
 {
+    class GUIEnvironment;
+}
+
+namespace gsf
+{
     class Widget: protected sf::Transformable
     {
     public:
@@ -12,6 +17,7 @@ namespace gsf
         typedef std::pair<Widget*, Widget*> Pair;
 
     protected:
+        gsf::GUIEnvironment *m_context;
         // The area of the content. That is the area where child widgets are drawn too
         sf::FloatRect m_contentArea;
         // The full area of the widget without the outline. By default ist the same as
@@ -53,7 +59,9 @@ namespace gsf
         
         Widget(bool isWindowWidget = false);
         Widget(float width, float height, bool isWindowWidget = false);
-        
+
+        void setContext(GUIEnvironment *context);
+        gsf::GUIEnvironment* getContext() const;
         // Override some methods of sf::Transformable class, so there are accessible
         // from outside the class
         void setPosition(float x, float y);
