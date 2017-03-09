@@ -22,6 +22,8 @@ namespace gsf
         VerticalLayout *m_entryWidgetContainer;
         int m_charSize;
         const sf::Font &m_font;
+
+        std::function<void(Widget*, int)> m_onElementSelectedListener;
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
@@ -33,6 +35,9 @@ namespace gsf
         std::wstring currentText() const;
         int currentIndex() const;
         int count() const;
+
+
+        void setOnElementSelectedListener(std::function<void(Widget*, int)> listener);
 
     protected:
         virtual void boundsChanged() override;

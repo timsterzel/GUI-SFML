@@ -254,6 +254,12 @@ int main()
     // ListBoxWidget
     gsf::ListBoxWidget::Ptr listBox{ 
         gsf::ListBoxWidget::create(80.f, 100.f, font) };
+    listBox->setOnElementSelectedListener([](gsf::Widget* widget, int index)
+    {
+        gsf::ListBoxWidget *widgetList{ static_cast<gsf::ListBoxWidget*>(widget) };
+        std::wstring content{ widgetList->getElement(index) };
+        std::cout << "Index selected: " << index << std::endl;
+    });
     listBox->setPosition(320.f, 590.f);
     listBox->addElement(L"Entry One");
     listBox->addElement(L"Entry Two");

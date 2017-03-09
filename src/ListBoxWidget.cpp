@@ -49,7 +49,6 @@ void gsf::ListBoxWidget::init(const sf::Font &font)
     scrollableWidget->setIsHorizontalScrollEnabled(false);
     attachChild(std::move(scrollableWidget));
     
-    
     VerticalLayout::Ptr layout{ VerticalLayout::create(m_scrollableWidget->getWidth(),
             m_scrollableWidget->getHeight()) };
     m_entryWidgetContainer = layout.get();
@@ -95,6 +94,12 @@ int gsf::ListBoxWidget::count() const
     return m_elements.size();
 }
 
+void gsf::ListBoxWidget::setOnElementSelectedListener(std::function<void(Widget*, 
+            int)> listener)
+{
+    m_onElementSelectedListener = listener;
+}
+
 void gsf::ListBoxWidget::boundsChanged()
 {
     if (m_scrollableWidget)
@@ -130,11 +135,14 @@ bool gsf::ListBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
                             sf::Color::Transparent);
                     entry->setBackgroundColor(sf::Color::Green);
                     m_currentIndex = i;
+                    if (m_onElementSelectedListener)
+                    {
+                        m_onElementSelectedListener(this, m_currentIndex); 
+                    }
+                    return true;
                 }
-
             }
         }
-
     }
     return handled;
 }
