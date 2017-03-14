@@ -127,7 +127,7 @@ bool gsf::ListBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
             for (unsigned int i{ 0 }; i < m_entryWidgets.size(); i++)
             {
                 auto entry{ m_entryWidgets[i] };
-                if (entry->isIntersecting(mousePos))
+                if (entry->isIntersecting(mousePos) && m_currentIndex != i)
                 {
                     // If actual entry is already selected it gets deselected
                     // else it get selected
