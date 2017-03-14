@@ -39,12 +39,23 @@ gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
     assert(found != m_widgets.end());
 
     Widget::Ptr result = std::move(*found);
-    m_widgets.erase(found);
     result->removeContext();
+    m_widgets.erase(found);
     return result;
 }
+/*
+void gsf::GUIEnvironment::addSpecialWidget(Widget *widget)
+{
+    m_specialWidgets.push_back(widget);
+}
 
-
+void gsf::GUIEnvironment::removeSpecialWidget(const Widget *widget)
+{
+    m_specialWidgets.erase(std::remove(
+                m_specialWidgets.begin(), m_specialWidgets.end(), widget)
+            , m_specialWidgets.end());
+}
+*/
 void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 {
     /*
@@ -74,6 +85,20 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
     {
         return;
     }
+    /*
+    // First check the special widgets, because there have a higher priorety
+    for (auto it = m_widgets.rbegin(); it != m_widgets.rend(); it++)
+    {
+        if ((*it)->handleEvent(event, m_window))
+        {
+
+            // If a Special Widget handled a event, there is no need to let the
+            // other Widgets handle it, so we can remove the method
+            return;
+        }
+    }
+    */
+
     // Iterate backwards, because the widgets which are shown at the front of 
     // the window have a higher priority forevent handling
     // (Widgets drawn at the front are the ones which are at the end of the vector)

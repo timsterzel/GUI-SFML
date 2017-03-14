@@ -18,6 +18,9 @@ namespace gsf
     private:
         const sf::RenderWindow &m_window;
         std::vector<Widget::Ptr> m_widgets;
+        // Special Widgets are widgets which belongs to other widgets and are parts
+        // of them (e.g. a ComboBoxWidget shows a ListBoxWidget when it was clicked)
+        //std::vector<Widget*> m_specialWidgets;
         // Is true when ever the mouse is inside the window and false
         // when the mouse is outside
         bool m_isMouseInWindow;
@@ -29,7 +32,10 @@ namespace gsf
 
         void addWidget(Widget::Ptr widget);
         Widget::Ptr removeWidget(const Widget& widget);
-
+        /*
+        void addSpecialWidget(Widget *widget);
+        void removeSpecialWidget(const Widget *widget);
+        */
         //void setIsWindowRoughOutEnabled(bool isEnabled);
         //bool isWindowRoughOutEnabled() const;
 

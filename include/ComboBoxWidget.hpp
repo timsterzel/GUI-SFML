@@ -12,6 +12,7 @@ namespace gsf
     public:
         typedef std::unique_ptr<ComboBoxWidget> Ptr;
     private:
+        ListBoxWidget::Ptr m_listBoxWidgetUnique;
         ListBoxWidget *m_listBoxWidget;
         TextWidget *m_currentText;
         int m_charSize;
@@ -30,8 +31,10 @@ namespace gsf
         int count() const;
 
     protected:
+        virtual void contextSet() override;
+        virtual void contextRemoved() override;
         virtual void boundsChanged() override;
-
+        
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;

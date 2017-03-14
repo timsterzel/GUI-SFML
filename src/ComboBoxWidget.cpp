@@ -1,4 +1,5 @@
 #include "ComboBoxWidget.hpp"
+#include "GUIEnvironment.hpp"
 #include <iostream>
 
 gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(const sf::Font &font)
@@ -16,7 +17,8 @@ gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(float width, float height,
 
 gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 : Widget{  }
-, m_listBoxWidget{ nullptr }
+, m_listBoxWidgetUnique{ ListBoxWidget::create(0.f, 100.f, font) }
+, m_listBoxWidget{ m_listBoxWidgetUnique.get() }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
 , m_font(font)
@@ -26,7 +28,8 @@ gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 
 gsf::ComboBoxWidget::ComboBoxWidget(float width, float height, const sf::Font &font)
 : Widget{ width, height }
-, m_listBoxWidget{ nullptr }
+, m_listBoxWidgetUnique{ ListBoxWidget::create(width, 100.f, font) }
+, m_listBoxWidget{ m_listBoxWidgetUnique.get() }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
 , m_font(font)
@@ -39,6 +42,11 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
 {
     setOutlineThickness(4.f);
     m_outlineColor = sf::Color::Black;
+    
+    m_listBoxWidget->setOutlineThickness(getOutlineThickness());
+    m_listBoxWidget->setOutlineColor(getOutlineColor());
+    m_listBoxWidget->setHeight(120.f);
+    m_listBoxWidget->setIsVisible(false);
 
     TextWidget::Ptr currentText{ 
         TextWidget::create("", font) };
@@ -49,38 +57,48 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
 
 void gsf::ComboBoxWidget::addElement(std::wstring element)
 {
-    /*
-    m_elements.push_back(element);
-    // if we have only one element we select it
-    if (m_elements.size() == 1)
-    {
-        m_currentIndex = 0;
-        m_currentText->setText(m_elements[0]);
-    }
-    */
+    m_listBoxWidget->addElement(element);
 }
+
 std::wstring gsf::ComboBoxWidget::getElement(int index) const
 {
-    return L"";
-    //return m_elements[index];
+    return m_listBoxWidget->getElement(index);
 }
 
 std::wstring gsf::ComboBoxWidget::currentText() const
 {
     return m_currentText->getText();
-    //return m_elements.size() > 0 ? m_elements[m_currentIndex] : L"";
 
 }
 int gsf::ComboBoxWidget::currentIndex() const
 {
-    return -1;
+    m_listBoxWidget->currentIndex();
     //return m_currentIndex;
 }
 
 int gsf::ComboBoxWidget::count() const
 {
-    return 0;
+    m_listBoxWidget->count();
     //return m_elements.size();
+}
+
+void gsf::ComboBoxWidget::contextSet()
+{
+    m_listBoxWidget->setWidth(1000000.f);
+    m_listBoxWidget->setHeight(1000000.f);
+    m_listBoxWidget->setBackgroundColor(sf::Color::Green);
+    m_context->addWidget(std::move(m_listBoxWidgetUnique));
+    m_listBoxWidgetUnique = nullptr;
+    /*
+    VerticalLayout::Ptr layout{ VerticalLayout::create(10000.f, 10000.f) };
+    layout->setBackgroundColor(sf::Color::Red);
+    m_context->addWidget(std::move(layout));
+    */
+}
+
+void gsf::ComboBoxWidget::contextRemoved()
+{
+    
 }
 
 void gsf::ComboBoxWidget::boundsChanged()
@@ -90,21 +108,48 @@ void gsf::ComboBoxWidget::boundsChanged()
     {
         m_currentText->setCharacterSize(m_charSize);
     }
+    m_listBoxWidget->setWidth(getWidth());
 }
 
 bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event, 
         const sf::RenderTarget &target)
 {
     bool handled = Widget::handleEventCurrentAfterChildren(event, target);
-    if (event.type == sf::Event::MouseMoved)
+    if (event.type == sf::Event::MouseButtonPressed 
+            && event.mouseButton.button == sf::Mouse::Left)
     {
 
-        sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseMove.x, 
-            event.mouseMove.y }) };
-        bool intersects{ isIntersecting(mousePos) };
+        sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
+            event.mouseButton.y }) };
+        bool intersecting{ isIntersecting(mousePos) };
         bool isInShownArea{ getShownArea().contains(mousePos) };
+        if (intersecting && isInShownArea)
+        {
+            //m_listBoxWidget->setIsVisible(true);
+            m_listBoxWidget->setIsVisible(!m_listBoxWidget->isVisible());
+            // Calculate position of ListBox
+            if (m_listBoxWidget->isVisible())
+            {
+                std::cout << "Clicked\n";
+                sf::FloatRect gBounds{ getGlobalBoundsWithoutOutline() };
+                m_listBoxWidget->setPosition(gBounds.left, 
+                        gBounds.top + gBounds.height);
+                m_listBoxWidget->setWidth(gBounds.width);
+                m_listBoxWidget->setHeight(600.f);
+                m_listBoxWidget->setOutlineThickness(getOutlineThickness());
+                m_listBoxWidget->setOutlineColor(getOutlineColor());
+                m_listBoxWidget->setBackgroundColor(getBackgroundColor());
+                m_listBoxWidget->setMoveToForground(true);
+                std::cout << "Pos: " << m_listBoxWidget->getWorldPosition().x
+                    << " | " << m_listBoxWidget->getWorldPosition().y 
+                    << " Width: " << m_listBoxWidget->getWidth()
+                    << " Height: " << m_listBoxWidget->getHeight()
+                    << " Cnt: " << m_listBoxWidget->count()
+                    << std::endl;
+            }
+        }
     }
-    return handled;
+        return handled;
 }
 
 void gsf::ComboBoxWidget::updateCurrentAfterChildren(float dt)
