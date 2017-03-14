@@ -60,11 +60,13 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 void gsf::Widget::setContext(GUIEnvironment *context)
 {
     m_context = context;
+    contextSet();
 }
 
 void gsf::Widget::removeContext()
 {
     m_context = nullptr;
+    contextRemoved();
 }
 
 gsf::GUIEnvironment* gsf::Widget::getContext() const
@@ -142,6 +144,17 @@ gsf::Widget::Ptr gsf::Widget::detachChild(const Widget& node)
 
     return result;
 }
+        
+void gsf::Widget::contextSet()
+{
+    // Do nothing by default
+}
+        
+void gsf::Widget::contextRemoved()
+{
+    // Do nothing by default
+}
+
 sf::Color gsf::Widget::getOutlineColor() const
 {
     return m_outlineColor;

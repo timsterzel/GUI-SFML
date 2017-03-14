@@ -167,6 +167,11 @@ namespace gsf
         virtual void attachChild(Ptr child);
         virtual Widget::Ptr detachChild(const Widget& node);
         
+        // Called when a context was set
+        virtual void contextSet();
+        // Called when the context was removed
+        virtual void contextRemoved();
+
         sf::Vector2f convertToLocalPoint(sf::Vector2f globalPoint) const;
 
         sf::FloatRect getFullAreaRect() const;
