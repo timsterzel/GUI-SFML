@@ -14,6 +14,7 @@ gsf::GUIEnvironment::GUIEnvironment(const sf::RenderWindow &window)
 
 void gsf::GUIEnvironment::addWidget(Widget::Ptr widget)
 {
+    widget->setContext(this);
     m_widgets.push_back(std::move(widget));
 }
 
@@ -39,6 +40,7 @@ gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
 
     Widget::Ptr result = std::move(*found);
     m_widgets.erase(found);
+    result->removeContext();
     return result;
 }
 

@@ -62,6 +62,11 @@ void gsf::Widget::setContext(GUIEnvironment *context)
     m_context = context;
 }
 
+void gsf::Widget::removeContext()
+{
+    m_context = nullptr;
+}
+
 gsf::GUIEnvironment* gsf::Widget::getContext() const
 {
     return m_context;

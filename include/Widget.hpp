@@ -61,6 +61,7 @@ namespace gsf
         Widget(float width, float height, bool isWindowWidget = false);
 
         void setContext(GUIEnvironment *context);
+        void removeContext();
         gsf::GUIEnvironment* getContext() const;
         // Override some methods of sf::Transformable class, so there are accessible
         // from outside the class

@@ -3,9 +3,7 @@
 #define COMBOBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
-#include "ScrollableWidget.hpp"
-#include "TextWidget.hpp"
-#include "VerticalLayout.hpp"
+#include "ListBoxWidget.hpp"
 
 namespace gsf
 {
@@ -14,12 +12,11 @@ namespace gsf
     public:
         typedef std::unique_ptr<ComboBoxWidget> Ptr;
     private:
-        std::vector<std::wstring> m_elements;
-        int m_currentIndex;
+        ListBoxWidget *m_listBoxWidget;
         TextWidget *m_currentText;
-        ScrollableWidget::Ptr m_scrollableWidget;
         int m_charSize;
         const sf::Font &m_font;
+        
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
@@ -34,7 +31,6 @@ namespace gsf
 
     protected:
         virtual void boundsChanged() override;
-        void createScrollable();
 
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;

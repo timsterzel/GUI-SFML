@@ -16,8 +16,7 @@ gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(float width, float height,
 
 gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 : Widget{  }
-, m_currentIndex{ 0 }
-, m_scrollableWidget{ ScrollableWidget::create(getWidth(), getHeight()) }
+, m_listBoxWidget{ nullptr }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
 , m_font(font)
@@ -27,8 +26,7 @@ gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 
 gsf::ComboBoxWidget::ComboBoxWidget(float width, float height, const sf::Font &font)
 : Widget{ width, height }
-, m_currentIndex{ 0 }
-, m_scrollableWidget{ ScrollableWidget::create(getWidth(), getHeight()) }
+, m_listBoxWidget{ nullptr }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
 , m_font(font)
@@ -41,9 +39,6 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
 {
     setOutlineThickness(4.f);
     m_outlineColor = sf::Color::Black;
-    
-    m_scrollableWidget->setIsHorizontalScrollEnabled(false);
-    m_scrollableWidget->setIsVerticalScrollbarDrawn(false);
 
     TextWidget::Ptr currentText{ 
         TextWidget::create("", font) };
@@ -54,6 +49,7 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
 
 void gsf::ComboBoxWidget::addElement(std::wstring element)
 {
+    /*
     m_elements.push_back(element);
     // if we have only one element we select it
     if (m_elements.size() == 1)
@@ -61,26 +57,30 @@ void gsf::ComboBoxWidget::addElement(std::wstring element)
         m_currentIndex = 0;
         m_currentText->setText(m_elements[0]);
     }
-    createScrollable();
+    */
 }
 std::wstring gsf::ComboBoxWidget::getElement(int index) const
 {
-    return m_elements[index];
+    return L"";
+    //return m_elements[index];
 }
 
 std::wstring gsf::ComboBoxWidget::currentText() const
 {
-    return m_elements.size() > 0 ? m_elements[m_currentIndex] : L"";
+    return m_currentText->getText();
+    //return m_elements.size() > 0 ? m_elements[m_currentIndex] : L"";
 
 }
 int gsf::ComboBoxWidget::currentIndex() const
 {
-    return m_currentIndex;
+    return -1;
+    //return m_currentIndex;
 }
 
 int gsf::ComboBoxWidget::count() const
 {
-    return m_elements.size();
+    return 0;
+    //return m_elements.size();
 }
 
 void gsf::ComboBoxWidget::boundsChanged()
@@ -90,19 +90,6 @@ void gsf::ComboBoxWidget::boundsChanged()
     {
         m_currentText->setCharacterSize(m_charSize);
     }
-}
-
-void gsf::ComboBoxWidget::createScrollable()
-{
-    VerticalLayout::Ptr layout{ VerticalLayout::create() };
-    for (auto element : m_elements)
-    {
-        TextWidget::Ptr textWidget{ TextWidget::create(element, m_font) };
-        layout->attachChild(std::move(textWidget));
-    }
-    layout->setBackgroundColor(sf::Color::Red);
-    layout->setOutlineThickness(2.f);
-    m_scrollableWidget->attachChild(std::move(layout));
 }
 
 bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event, 
