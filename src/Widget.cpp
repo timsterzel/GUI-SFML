@@ -241,6 +241,7 @@ void gsf::Widget::setOnMiddleClickListener(std::function
 void gsf::Widget::setWidth(const float width)
 {
     m_contentArea.width = width;
+    m_fullArea.width = width;
     //m_width = width;
     boundsChanged();
 }
@@ -254,6 +255,7 @@ float gsf::Widget::getWidth() const
 void gsf::Widget::setHeight(const float height)
 {
     m_contentArea.height = height;
+    m_fullArea.height = height;
     //m_height = height;
     boundsChanged();
 }

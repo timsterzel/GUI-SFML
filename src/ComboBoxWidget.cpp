@@ -17,7 +17,7 @@ gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(float width, float height,
 
 gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 : Widget{  }
-, m_listBoxWidgetUnique{ ListBoxWidget::create(0.f, 100.f, font) }
+, m_listBoxWidgetUnique{ ListBoxWidget::create(0.f, 0.f, font) }
 , m_listBoxWidget{ m_listBoxWidgetUnique.get() }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
@@ -28,7 +28,7 @@ gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 
 gsf::ComboBoxWidget::ComboBoxWidget(float width, float height, const sf::Font &font)
 : Widget{ width, height }
-, m_listBoxWidgetUnique{ ListBoxWidget::create(width, 100.f, font) }
+, m_listBoxWidgetUnique{ ListBoxWidget::create(width, 0.f, font) }
 , m_listBoxWidget{ m_listBoxWidgetUnique.get() }
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
