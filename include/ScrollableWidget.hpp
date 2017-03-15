@@ -72,6 +72,7 @@ namespace gsf
         // ScrollableWidget only can handle one widget, so we have to 
         // implement the methods different
         virtual void attachChild(Widget::Ptr child) override;
+        Widget* getChild();
 
         float getScrollbarThickness() const;
         

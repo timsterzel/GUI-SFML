@@ -223,6 +223,15 @@ void gsf::ScrollableWidget::attachChild(Widget::Ptr child)
     Widget::attachChild(std::move(child));
 }
 
+gsf::Widget* gsf::ScrollableWidget::getChild()
+{
+    if (m_children.size() > 0)
+    {
+        return m_children[1].get();
+    }
+    return nullptr;
+}
+
 float gsf::ScrollableWidget::getScrollbarThickness() const
 {
     return m_scrollbarThickness;
