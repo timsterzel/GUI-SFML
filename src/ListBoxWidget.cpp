@@ -50,7 +50,7 @@ void gsf::ListBoxWidget::init(const sf::Font &font)
     attachChild(std::move(scrollableWidget));
     
     VerticalLayout::Ptr layout{ VerticalLayout::create(m_scrollableWidget->getWidth(),
-            m_scrollableWidget->getHeight()) };
+    m_scrollableWidget->getHeight()) };
     m_entryWidgetContainer = layout.get();
     m_scrollableWidget->attachChild(std::move(layout));
     
@@ -92,6 +92,15 @@ int gsf::ListBoxWidget::currentIndex() const
 int gsf::ListBoxWidget::count() const
 {
     return m_elements.size();
+}
+
+float gsf::ListBoxWidget::getContentHeight() const
+{
+    if (!m_entryWidgetContainer)
+    {
+        return 0.f;
+    }
+    return m_entryWidgetContainer->getLocalBounds().height;
 }
 
 void gsf::ListBoxWidget::setOnElementSelectedListener(std::function<void(Widget*, 

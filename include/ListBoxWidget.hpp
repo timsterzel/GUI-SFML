@@ -36,6 +36,7 @@ namespace gsf
         int currentIndex() const;
         int count() const;
 
+        float getContentHeight() const;
 
         void setOnElementSelectedListener(std::function<void(Widget*, int)> listener);
 

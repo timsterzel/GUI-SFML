@@ -152,14 +152,15 @@ void gsf::ComboBoxWidget::placeListBox()
         - getWorldBottom() };
     float distanceYTop{ getWorldTop() };
     sf::FloatRect gBounds{ getGlobalBoundsWithoutOutline() };
-    float listHeight{ m_listBoxWidget->getGlobalBounds().height };
+    float listContentHeight{ m_listBoxWidget->getContentHeight() };
     // Place under ComboBox
     if (distanceYBottom > distanceYTop)
     {
         // Total height should be the height of the lists content, and when its to 
         // large to show it, it should be the max possible showable height
         float totalHeight{ 
-            listHeight > distanceYBottom ? distanceYBottom : listHeight };
+            listContentHeight > distanceYBottom 
+                ? distanceYBottom : listContentHeight };
         m_listBoxWidget->setHeight(totalHeight);
         m_listBoxWidget->setPosition(gBounds.left, 
             gBounds.top + gBounds.height);
@@ -170,11 +171,10 @@ void gsf::ComboBoxWidget::placeListBox()
         // Total height should be the height of the lists content, and when its to 
         // large to show it, it should be the max possible showable height
         float totalHeight{ 
-            listHeight > distanceYTop ? distanceYTop : listHeight };
+            listContentHeight > distanceYTop ? distanceYTop : listContentHeight };
         m_listBoxWidget->setHeight(totalHeight);
         m_listBoxWidget->setPosition(gBounds.left, 
             gBounds.top - m_listBoxWidget->getHeight());
-
     }
     m_listBoxWidget->setWidth(gBounds.width);
     m_listBoxWidget->setOutlineThickness(getOutlineThickness());
@@ -186,6 +186,7 @@ void gsf::ComboBoxWidget::placeListBox()
             << " Width: " << m_listBoxWidget->getWidth()
             << " Height: " << m_listBoxWidget->getHeight()
             << " Cnt: " << m_listBoxWidget->count()
+            << " List height: " << listContentHeight
             << std::endl;
 }
 
