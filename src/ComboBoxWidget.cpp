@@ -47,6 +47,12 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
     m_listBoxWidget->setOutlineColor(getOutlineColor());
     m_listBoxWidget->setHeight(120.f);
     m_listBoxWidget->setIsVisible(false);
+    // Change shown Text when selection changes
+    m_listBoxWidget->setOnElementSelectedListener([this](Widget *widget, int index)
+    {
+        ListBoxWidget *listBox{ static_cast<ListBoxWidget*>(widget) };
+        m_currentText->setText(listBox->currentText());
+    });
 
     TextWidget::Ptr currentText{ 
         TextWidget::create("", font) };
@@ -58,6 +64,10 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
 void gsf::ComboBoxWidget::addElement(std::wstring element)
 {
     m_listBoxWidget->addElement(element);
+    if (m_listBoxWidget->count() == 1 && m_listBoxWidget)
+    {
+        m_currentText->setText(m_listBoxWidget->currentText());
+    }
 }
 
 std::wstring gsf::ComboBoxWidget::getElement(int index) const
