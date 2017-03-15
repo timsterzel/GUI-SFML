@@ -35,6 +35,8 @@ namespace gsf
         virtual void contextRemoved() override;
         virtual void boundsChanged() override;
         
+        void placeListBox();
+
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;

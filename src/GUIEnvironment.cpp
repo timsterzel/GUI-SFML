@@ -43,6 +43,11 @@ gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
     m_widgets.erase(found);
     return result;
 }
+
+sf::View gsf::GUIEnvironment::getCurrentView() const
+{
+    return m_window.getView();
+}
 /*
 void gsf::GUIEnvironment::addSpecialWidget(Widget *widget)
 {

@@ -32,6 +32,8 @@ namespace gsf
 
         void addWidget(Widget::Ptr widget);
         Widget::Ptr removeWidget(const Widget& widget);
+        
+        sf::View getCurrentView() const;
         /*
         void addSpecialWidget(Widget *widget);
         void removeSpecialWidget(const Widget *widget);

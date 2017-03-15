@@ -72,13 +72,13 @@ std::wstring gsf::ComboBoxWidget::currentText() const
 }
 int gsf::ComboBoxWidget::currentIndex() const
 {
-    m_listBoxWidget->currentIndex();
+    return m_listBoxWidget->currentIndex();
     //return m_currentIndex;
 }
 
 int gsf::ComboBoxWidget::count() const
 {
-    m_listBoxWidget->count();
+    return m_listBoxWidget->count();
     //return m_elements.size();
 }
 
@@ -131,25 +131,62 @@ bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
             if (m_listBoxWidget->isVisible())
             {
                 std::cout << "Clicked\n";
-                sf::FloatRect gBounds{ getGlobalBoundsWithoutOutline() };
-                m_listBoxWidget->setPosition(gBounds.left, 
-                        gBounds.top + gBounds.height);
-                m_listBoxWidget->setWidth(gBounds.width);
-                m_listBoxWidget->setHeight(600.f);
-                m_listBoxWidget->setOutlineThickness(getOutlineThickness());
-                m_listBoxWidget->setOutlineColor(getOutlineColor());
-                m_listBoxWidget->setBackgroundColor(getBackgroundColor());
-                m_listBoxWidget->setMoveToForground(true);
-                std::cout << "Pos: " << m_listBoxWidget->getWorldPosition().x
-                    << " | " << m_listBoxWidget->getWorldPosition().y 
-                    << " Width: " << m_listBoxWidget->getWidth()
-                    << " Height: " << m_listBoxWidget->getHeight()
-                    << " Cnt: " << m_listBoxWidget->count()
-                    << std::endl;
+                placeListBox();
             }
         }
     }
         return handled;
+}
+
+void gsf::ComboBoxWidget::placeListBox()
+{
+    if (!m_context)
+    {
+        return;
+    }
+    
+    const sf::View &windowView{ m_context->getCurrentView() };
+    float viewWidth{ windowView.getSize().x };
+    float viewHeight{ windowView.getSize().y };
+    float distanceYBottom{ viewHeight
+        - getWorldBottom() };
+    float distanceYTop{ getWorldTop() };
+    sf::FloatRect gBounds{ getGlobalBoundsWithoutOutline() };
+    float listHeight{ m_listBoxWidget->getGlobalBounds().height };
+    // Place under ComboBox
+    if (distanceYBottom > distanceYTop)
+    {
+        // Total height should be the height of the lists content, and when its to 
+        // large to show it, it should be the max possible showable height
+        float totalHeight{ 
+            listHeight > distanceYBottom ? distanceYBottom : listHeight };
+        m_listBoxWidget->setHeight(totalHeight);
+        m_listBoxWidget->setPosition(gBounds.left, 
+            gBounds.top + gBounds.height);
+    }
+    // Place on top of ComboBox
+    else
+    { 
+        // Total height should be the height of the lists content, and when its to 
+        // large to show it, it should be the max possible showable height
+        float totalHeight{ 
+            listHeight > distanceYTop ? distanceYTop : listHeight };
+        m_listBoxWidget->setHeight(totalHeight);
+        m_listBoxWidget->setPosition(gBounds.left, 
+            gBounds.top - m_listBoxWidget->getHeight());
+
+    }
+    m_listBoxWidget->setWidth(gBounds.width);
+    m_listBoxWidget->setOutlineThickness(getOutlineThickness());
+    m_listBoxWidget->setOutlineColor(getOutlineColor());
+    m_listBoxWidget->setBackgroundColor(getBackgroundColor());
+        m_listBoxWidget->setMoveToForground(true);
+        std::cout << "Pos: " << m_listBoxWidget->getWorldPosition().x
+            << " | " << m_listBoxWidget->getWorldPosition().y 
+            << " Width: " << m_listBoxWidget->getWidth()
+            << " Height: " << m_listBoxWidget->getHeight()
+            << " Cnt: " << m_listBoxWidget->count()
+            << std::endl;
 }
 
 void gsf::ComboBoxWidget::updateCurrentAfterChildren(float dt)
