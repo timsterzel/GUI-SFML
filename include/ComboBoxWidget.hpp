@@ -22,7 +22,9 @@ namespace gsf
         static Ptr create(float width, float height, const sf::Font &font);
         explicit ComboBoxWidget(const sf::Font &font);
         ComboBoxWidget(float width, float height, const sf::Font &font);
-    
+        
+        virtual ~ComboBoxWidget();
+
         void addElement(std::wstring element);
         std::wstring getElement(int index) const;
         std::wstring currentText() const;

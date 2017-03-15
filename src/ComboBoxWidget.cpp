@@ -37,7 +37,6 @@ gsf::ComboBoxWidget::ComboBoxWidget(float width, float height, const sf::Font &f
     init(font);
 }
 
-
 void gsf::ComboBoxWidget::init(const sf::Font &font)
 {
     setOutlineThickness(4.f);
@@ -59,6 +58,16 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
     m_currentText = currentText.get();
     attachChild(std::move(currentText));
     boundsChanged();
+}
+
+gsf::ComboBoxWidget::~ComboBoxWidget()
+{
+    if (m_context)
+    {
+        // We have added a listBoxWidget to the context, so we have now to remove it
+        // from the context, beacause its not longer needed
+        m_context->removeWidget(*m_listBoxWidget);
+    }
 }
 
 void gsf::ComboBoxWidget::addElement(std::wstring element)
@@ -136,13 +145,18 @@ bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
         bool isInShownArea{ getShownArea().contains(mousePos) };
         if (intersecting && isInShownArea)
         {
-            //m_listBoxWidget->setIsVisible(true);
             m_listBoxWidget->setIsVisible(!m_listBoxWidget->isVisible());
             // Calculate position of ListBox
             if (m_listBoxWidget->isVisible())
             {
                 placeListBox();
             }
+        }
+        // "Close" (make unvisble) listBox when clicking not in the Combobox or
+        // in listBoxWidget
+        else if(!m_listBoxWidget->getGlobalBounds().contains(mousePos))
+        {
+            m_listBoxWidget->setIsVisible(false);
         }
     }
         return handled;
@@ -156,7 +170,6 @@ void gsf::ComboBoxWidget::placeListBox()
     }
     
     const sf::View &windowView{ m_context->getCurrentView() };
-    float viewWidth{ windowView.getSize().x };
     float viewHeight{ windowView.getSize().y };
     float distanceYBottom{ viewHeight
         - getWorldBottom() };
