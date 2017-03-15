@@ -43,8 +43,7 @@ void gsf::ListBoxWidget::init(const sf::Font &font)
     m_outlineColor = sf::Color::Black;
     
     ScrollableWidget::Ptr scrollableWidget
-        { ScrollableWidget::create(getWidth() 
-                - ScrollableWidget::SCROLLBAR_THICKNESS, getHeight()) };
+        { ScrollableWidget::create(getWidth(), getHeight()) };
     m_scrollableWidget = scrollableWidget.get();
     scrollableWidget->setIsHorizontalScrollEnabled(false);
     attachChild(std::move(scrollableWidget));

@@ -130,7 +130,6 @@ bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
             // Calculate position of ListBox
             if (m_listBoxWidget->isVisible())
             {
-                std::cout << "Clicked\n";
                 placeListBox();
             }
         }
