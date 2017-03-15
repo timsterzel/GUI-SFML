@@ -22,6 +22,7 @@ namespace gsf
         VerticalLayout *m_entryWidgetContainer;
         int m_charSize;
         const sf::Font &m_font;
+        sf::Color m_selectioColor;
 
         std::function<void(Widget*, int)> m_onElementSelectedListener;
     public:
@@ -37,6 +38,8 @@ namespace gsf
         int count() const;
 
         float getContentHeight() const;
+        sf::Color getSelectionColor() const;
+        void setSelectionColor(sf::Color color);
 
         void setOnElementSelectedListener(std::function<void(Widget*, int)> listener);
 

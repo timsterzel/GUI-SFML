@@ -20,7 +20,8 @@ gsf::ListBoxWidget::ListBoxWidget(const sf::Font &font)
 , m_scrollableWidget{ nullptr }
 , m_entryWidgetContainer{ nullptr }
 , m_charSize{ 12 }
-, m_font(font)
+, m_font { font }
+, m_selectioColor{ sf::Color{ 192, 192, 192 } }
 {
     init(font);
 }
@@ -31,7 +32,8 @@ gsf::ListBoxWidget::ListBoxWidget(float width, float height, const sf::Font &fon
 , m_scrollableWidget{ nullptr }
 , m_entryWidgetContainer{ nullptr }
 , m_charSize{ 12 }
-, m_font(font)
+, m_font{ font }
+, m_selectioColor{ sf::Color{ 192, 192, 192 } }
 {
     init(font);
 }
@@ -70,7 +72,7 @@ void gsf::ListBoxWidget::addElement(std::wstring element)
     if (m_elements.size() == 1)
     {
         m_currentIndex = 0;
-        m_entryWidgets[0]->setBackgroundColor(sf::Color::Green);
+        m_entryWidgets[0]->setBackgroundColor(m_selectioColor);
     }
 }
 std::wstring gsf::ListBoxWidget::getElement(int index) const
@@ -100,6 +102,16 @@ float gsf::ListBoxWidget::getContentHeight() const
         return 0.f;
     }
     return m_entryWidgetContainer->getLocalBounds().height;
+}
+
+sf::Color gsf::ListBoxWidget::getSelectionColor() const
+{
+    return m_selectioColor;
+}
+
+void gsf::ListBoxWidget::setSelectionColor(sf::Color color)
+{
+    m_selectioColor = color;
 }
 
 void gsf::ListBoxWidget::setOnElementSelectedListener(std::function<void(Widget*, 
@@ -141,7 +153,7 @@ bool gsf::ListBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
                     // else it get selected
                     m_entryWidgets[m_currentIndex]->setBackgroundColor(
                             sf::Color::Transparent);
-                    entry->setBackgroundColor(sf::Color::Green);
+                    entry->setBackgroundColor(m_selectioColor);
                     m_currentIndex = i;
                     if (m_onElementSelectedListener)
                     {

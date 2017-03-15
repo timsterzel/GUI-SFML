@@ -92,18 +92,19 @@ int gsf::ComboBoxWidget::count() const
     //return m_elements.size();
 }
 
+sf::Color gsf::ComboBoxWidget::getSelectionColor() const
+{
+    return m_listBoxWidget->getSelectionColor();
+}
+
+void gsf::ComboBoxWidget::setSelectionColor(sf::Color color)
+{
+    m_listBoxWidget->setSelectionColor(color);
+}
 void gsf::ComboBoxWidget::contextSet()
 {
-    m_listBoxWidget->setWidth(1000000.f);
-    m_listBoxWidget->setHeight(1000000.f);
-    m_listBoxWidget->setBackgroundColor(sf::Color::Green);
     m_context->addWidget(std::move(m_listBoxWidgetUnique));
     m_listBoxWidgetUnique = nullptr;
-    /*
-    VerticalLayout::Ptr layout{ VerticalLayout::create(10000.f, 10000.f) };
-    layout->setBackgroundColor(sf::Color::Red);
-    m_context->addWidget(std::move(layout));
-    */
 }
 
 void gsf::ComboBoxWidget::contextRemoved()
@@ -190,13 +191,6 @@ void gsf::ComboBoxWidget::placeListBox()
     m_listBoxWidget->setOutlineColor(getOutlineColor());
     m_listBoxWidget->setBackgroundColor(getBackgroundColor());
         m_listBoxWidget->setMoveToForground(true);
-        std::cout << "Pos: " << m_listBoxWidget->getWorldPosition().x
-            << " | " << m_listBoxWidget->getWorldPosition().y 
-            << " Width: " << m_listBoxWidget->getWidth()
-            << " Height: " << m_listBoxWidget->getHeight()
-            << " Cnt: " << m_listBoxWidget->count()
-            << " List height: " << listContentHeight
-            << std::endl;
 }
 
 void gsf::ComboBoxWidget::updateCurrentAfterChildren(float dt)
@@ -207,11 +201,5 @@ void gsf::ComboBoxWidget::updateCurrentAfterChildren(float dt)
 void gsf::ComboBoxWidget::drawCurrentAfterChildren
     (sf::RenderTarget &target, sf::RenderStates states, sf::View defaultView) const
 {
-    /*
-    sf::View oldView{ target.getView() };
-    target.setView(defaultView);
-    m_scrollableWidget->draw(target, states, defaultView);
 
-    target.setView(oldView);
-    */    
 }

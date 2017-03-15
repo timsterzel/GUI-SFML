@@ -17,7 +17,6 @@ namespace gsf
         TextWidget *m_currentText;
         int m_charSize;
         const sf::Font &m_font;
-        
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
@@ -29,7 +28,9 @@ namespace gsf
         std::wstring currentText() const;
         int currentIndex() const;
         int count() const;
-
+        
+        sf::Color getSelectionColor() const;
+        void setSelectionColor(sf::Color color);
     protected:
         virtual void contextSet() override;
         virtual void contextRemoved() override;
