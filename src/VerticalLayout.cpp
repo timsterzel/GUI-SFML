@@ -49,6 +49,7 @@ void gsf::VerticalLayout::disableAutoDetermineWidth()
 
 void gsf::VerticalLayout::calculateSize()
 {
+    std::cout << "calculate size \n";
     float height{ 0.f };
     float width{ 0.f };
     for (const Widget::Ptr &child : m_children)
@@ -86,20 +87,6 @@ bool gsf::VerticalLayout::handleEventCurrentAfterChildren(sf::Event &event,
         const sf::RenderTarget &target)
 {
     bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
-    /*
-    sf::Vector2f mousePos{ target.mapPixelToCoords({ event.mouseButton.x, 
-            event.mouseButton.y }) };
-    // Is the mouse in the shown area of the widget
-    bool isMouseInShownArea{ getShownArea().contains(mousePos) };
-    if (event.type == sf::Event::MouseButtonPressed && isMouseInShownArea)
-    {
-        if (event.mouseButton.button == sf::Mouse::Left && 
-                isIntersecting(mousePos))
-        {
-            return true;
-        }
-    }
-    */
     return handled;
 }
 

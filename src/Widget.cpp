@@ -33,10 +33,8 @@ gsf::Widget::Widget(bool isWindowWidget)
 , m_isVisible{ true }
 , m_isWindowWidget{ isWindowWidget }
 {
-    if (m_context)
-        m_context->update(2.f);
-}
 
+}
 
 gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 //, m_width{ width }
@@ -53,8 +51,7 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 , m_isVisible{ true }
 , m_isWindowWidget{ isWindowWidget }
 {
-    if (m_context)
-        m_context->update(2.f);
+
 }
 
 void gsf::Widget::setContext(GUIEnvironment *context)
@@ -242,7 +239,6 @@ void gsf::Widget::setWidth(const float width)
 {
     m_contentArea.width = width;
     m_fullArea.width = width;
-    //m_width = width;
     boundsChanged();
 }
 
@@ -256,7 +252,6 @@ void gsf::Widget::setHeight(const float height)
 {
     m_contentArea.height = height;
     m_fullArea.height = height;
-    //m_height = height;
     boundsChanged();
 }
 
