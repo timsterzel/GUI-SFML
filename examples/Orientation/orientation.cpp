@@ -17,10 +17,10 @@ int main()
     
     // Create a Vertical layout. The "create" method create a unique_ptr with the
     // given parameters.
-    // The width and height of the layout is automatic calculated and depends
-    // of its child widgets
-    gsf::VerticalLayout::Ptr layout{ gsf::VerticalLayout::create() };
-    layout->setPosition(300.f, 300.f);
+    // The height of the layout is automatic calculated and depends
+    // of its child widgets.
+    gsf::VerticalLayout::Ptr layout{ gsf::VerticalLayout::create(200.f, 0.f) };
+    layout->setPosition(0.f, 0.f);
     // Make background gray
     layout->setBackgroundColor(sf::Color{ 192, 192, 192 });
     
@@ -54,5 +54,4 @@ int main()
         window.draw(environment);
         window.display();
     }
-
 }
