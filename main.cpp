@@ -4,18 +4,7 @@
 #include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "TextButtonWidget.hpp"
-#include "CheckBoxWidget.hpp"
-#include "ComboBoxWidget.hpp"
-#include "ConsoleWidget.hpp"
-#include "GUIEnvironment.hpp"
-#include "ProgressWidget.hpp"
-#include "TextWidget.hpp"
-#include "TextInputWidget.hpp"
-#include "VerticalLayout.hpp"
-#include "ScrollableWidget.hpp"
-#include "WindowWidget.hpp"
-#include "ListBoxWidget.hpp"
+#include "GUI-SFML.hpp"
 
 typedef std::chrono::high_resolution_clock CLOCK;
 
