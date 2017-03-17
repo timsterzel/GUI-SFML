@@ -262,7 +262,7 @@ int main()
     listBox->addElement(L"Entry Nine");
     listBox->addElement(L"Entry Ten");
     listBox->addElement(L"Entry Eleven");
-    //guiEnvironment.addWidget(std::move(listBox));
+    guiEnvironment.addWidget(std::move(listBox));
 
     while (window.isOpen())
     {
