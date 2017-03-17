@@ -1,5 +1,6 @@
 #include "Widget.hpp"
 #include "GUIEnvironment.hpp"
+#include "Orientation.hpp"
 #include <iostream>
 #include <cassert>
 
@@ -15,6 +16,7 @@ gsf::GUIEnvironment::GUIEnvironment(const sf::RenderWindow &window)
 void gsf::GUIEnvironment::addWidget(Widget::Ptr widget)
 {
     widget->setContext(this);
+    placeWidget(widget.get());
     m_widgets.push_back(std::move(widget));
 }
 
@@ -48,19 +50,23 @@ sf::View gsf::GUIEnvironment::getCurrentView() const
 {
     return m_window.getView();
 }
-/*
-void gsf::GUIEnvironment::addSpecialWidget(Widget *widget)
+
+void gsf::GUIEnvironment::placeWidget(Widget *widget)
 {
-    m_specialWidgets.push_back(widget);
+    int orientation { widget->getOrientation() };
+    // Orientation is None, so we have nothing to do
+    if (orientation & Orientation::None)
+    {
+        return;
+    }
+    if (orientation & Orientation::Left)
+    {
+        
+
+    }
+
 }
 
-void gsf::GUIEnvironment::removeSpecialWidget(const Widget *widget)
-{
-    m_specialWidgets.erase(std::remove(
-                m_specialWidgets.begin(), m_specialWidgets.end(), widget)
-            , m_specialWidgets.end());
-}
-*/
 void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 {
     /*
@@ -84,7 +90,6 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 
     // Dont handle mouse move events when mouse is not inside window or 
     // window is not focussed
-    
     if (event.type == sf::Event::MouseMoved && 
             (!m_isMouseInWindow || !m_isWindowFocused))
     {

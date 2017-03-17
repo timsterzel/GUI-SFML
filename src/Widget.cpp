@@ -1,5 +1,6 @@
 #include "Widget.hpp"
 #include "GUIEnvironment.hpp"
+#include "Orientation.hpp"
 #include <algorithm>
 #include <cassert>
 #include <iostream>
@@ -22,6 +23,7 @@ gsf::Widget::Widget(bool isWindowWidget)
 //, m_width{ 0.f }
 //, m_height{ 0.f }
 : m_context{ nullptr }
+, m_orientation{ Orientation::None }
 , m_contentArea{ 0.f, 0.f, 0.f, 0.f }
 , m_fullArea{ 0.f, 0.f, 0.f, 0.f }
 , m_outlineColor{ sf::Color::Black }
@@ -40,6 +42,7 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 //, m_width{ width }
 //, m_height{ height }
 : m_context{ nullptr }
+, m_orientation{ Orientation::None }
 , m_contentArea{ 0.f, 0.f, width, height }
 , m_fullArea{ 0.f, 0.f, width, height }
 , m_outlineColor{ sf::Color::Black }
@@ -85,6 +88,16 @@ void gsf::Widget::setPosition(const sf::Vector2f &position)
 const sf::Vector2f& gsf::Widget::getPosition() const
 {
     return sf::Transformable::getPosition();
+}
+
+void gsf::Widget::setOrientation(int orientation)
+{
+    m_orientation = orientation;
+}
+
+int gsf::Widget::getOrientation() const
+{
+    return m_orientation;
 }
 
 void gsf::Widget::setOrigin(float x, float y)

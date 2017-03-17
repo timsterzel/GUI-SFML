@@ -8,6 +8,7 @@
 #include "ConsoleWidget.hpp"
 #include "GUIEnvironment.hpp"
 #include "ListBoxWidget.hpp"
+#include "Orientation.hpp"
 #include "ProgressWidget.hpp"
 #include "ScrollableWidget.hpp"
 #include "TextButtonWidget.hpp"

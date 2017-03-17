@@ -1,3 +1,4 @@
+#pragma once
 #ifndef WIDGET_HPP
 #define WIDGET_HPP
 #include <SFML/Graphics.hpp>
@@ -18,16 +19,18 @@ namespace gsf
 
     protected:
         gsf::GUIEnvironment *m_context;
+        // The orientation of the Widget. If a Orientation is set, a given position
+        // is perhaps ignored. Not all orientations have an effect on all widgets and
+        // not all orientations can get combined. (E.g. Left and Right or 
+        // Top and Bottom are conflicting)
+        int m_orientation;
         // The area of the content. That is the area where child widgets are drawn too
         sf::FloatRect m_contentArea;
         // The full area of the widget without the outline. By default ist the same as
         // the contentArea but in some widgets it can differ (E.g. a WindowWidget has
         // a topbar, but child widgets are only drawn in the contentArea)
         sf::FloatRect m_fullArea;
-        //float m_width;
-        //float m_height;
-        // The width and height is the size of the "content" the real
-        // size can differ. (E.g. a window have a topbar or there can be a outline)
+
 
         std::vector<Ptr> m_children;
         
@@ -68,6 +71,14 @@ namespace gsf
         void setPosition(float x, float y);
         void setPosition(const sf::Vector2f &position);
         const sf::Vector2f& getPosition() const;
+        
+        // The orientation of the Widget. If a Orientation is set, a given position
+        // is perhaps ignored. Not all orientations have an effect on all widgets and
+        // not all orientations can get combined. (E.g. Left and Right or 
+        // Top and Bottom are conflicting)
+        void setOrientation(int orientation);
+        int getOrientation() const;
+        
         void setOrigin(float x, float y);
         void setOrigin(const sf::Vector2f &origin);
         const sf::Vector2f& getOrigin() const;

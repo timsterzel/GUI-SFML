@@ -44,6 +44,10 @@ namespace gsf
         void handleEvent(sf::Event &event);
         void update(float dt);
         void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    
+    private:
+        // Place the Widget depending on its Orientation
+        void placeWidget(Widget *widget);
     };
 }
 
