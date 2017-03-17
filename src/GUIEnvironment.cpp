@@ -61,10 +61,35 @@ void gsf::GUIEnvironment::placeWidget(Widget *widget)
     }
     if (orientation & Orientation::Left)
     {
-        
-
+        widget->setLeftPosition(0.f);
     }
-
+    if (orientation & Orientation::Right)
+    {
+        widget->setRightPosition(getCurrentView().getSize().x);
+    }
+    if (orientation & Orientation::Top)
+    {
+        widget->setTopPosition(0.f);
+    }
+    if (orientation & Orientation::Bottom)
+    {
+        widget->setBottomPosition(getCurrentView().getSize().y);
+    }
+    if (orientation & Orientation::Center)
+    {
+        sf::Vector2f size{ getCurrentView().getSize() };
+        widget->setCenterPosition(size.x / 2.f, size.y / 2.f);
+    }
+    if (orientation & Orientation::CenterHorizontal)
+    {
+        sf::Vector2f size{ getCurrentView().getSize() };
+        widget->setHorizontalCenterPosition(size.x / 2.f);
+    }
+    if (orientation & Orientation::CenterVertical)
+    {
+        sf::Vector2f size{ getCurrentView().getSize() };
+        widget->setVerticalCenterPosition(size.y /2.f);
+    }
 }
 
 void gsf::GUIEnvironment::handleEvent(sf::Event &event)

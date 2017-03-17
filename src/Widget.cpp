@@ -90,6 +90,54 @@ const sf::Vector2f& gsf::Widget::getPosition() const
     return sf::Transformable::getPosition();
 }
 
+void gsf::Widget::setLeftPosition(float pos)
+{
+    float left{ pos + (getOrigin().x + m_outlineThickness) };
+    setPosition(left, getPosition().y);
+}
+
+void gsf::Widget::setRightPosition(float pos)
+{
+    sf::FloatRect bounds{ getLocalBounds() };
+    float right{ pos + (getOrigin().x + m_outlineThickness) - bounds.width };
+    setPosition(right, getPosition().y);
+}
+
+void gsf::Widget::setTopPosition(float pos)
+{
+    float top{ pos + (getOrigin().y + m_outlineThickness) };
+    setPosition(getPosition().x, top);
+}
+
+void gsf::Widget::setBottomPosition(float pos)
+{
+    sf::FloatRect bounds{ getLocalBounds() };
+    float bottom{ pos + (getOrigin().y + m_outlineThickness) - bounds.height };
+    setPosition(getPosition().x, bottom);
+}
+
+void gsf::Widget::setHorizontalCenterPosition(float pos)
+{
+    sf::FloatRect bounds{ getLocalBounds() };
+    float localCenter{ (-m_outlineThickness + bounds.width) / 2.f };
+    float originOffset{ localCenter - getOrigin().x };
+    setPosition(pos - originOffset, getPosition().y);
+}
+
+void gsf::Widget::setVerticalCenterPosition(float pos)
+{
+    sf::FloatRect bounds{ getLocalBounds() };
+    float localCenter{ (-m_outlineThickness + bounds.height) / 2.f };
+    float originOffset{ localCenter - getOrigin().y };
+    setPosition(getPosition().x, pos - originOffset);
+}
+
+void gsf::Widget::setCenterPosition(float x, float y)
+{
+    setHorizontalCenterPosition(x);
+    setVerticalCenterPosition(y);
+}
+
 void gsf::Widget::setOrientation(int orientation)
 {
     m_orientation = orientation;

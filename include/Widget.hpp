@@ -69,9 +69,23 @@ namespace gsf
         // Override some methods of sf::Transformable class, so there are accessible
         // from outside the class
         void setPosition(float x, float y);
-        void setPosition(const sf::Vector2f &position);
+        void setPosition(const sf::Vector2f &position);    
         const sf::Vector2f& getPosition() const;
         
+        // Place the widget so that the left side is on the given pos
+        void setLeftPosition(float pos);
+        // Place the widget so that the right side is on the given pos
+        void setRightPosition(float pos);
+        // Place the widget so that the top side is on the given pos
+        void setTopPosition(float pos);
+        // Place the widget so that the bottomside is on the given pos
+        void setBottomPosition(float pos);
+        // Place the widget so that the horizontal center is on the given pos
+        void setHorizontalCenterPosition(float pos);
+        // Place the widget so that the vertical center is on the given pos
+        void setVerticalCenterPosition(float pos);
+        // Place the widget so that the center is on the given pos
+        void setCenterPosition(float x, float y);
         // The orientation of the Widget. If a Orientation is set, a given position
         // is perhaps ignored. Not all orientations have an effect on all widgets and
         // not all orientations can get combined. (E.g. Left and Right or 
