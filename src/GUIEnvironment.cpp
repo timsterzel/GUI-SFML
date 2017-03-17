@@ -54,11 +54,6 @@ sf::View gsf::GUIEnvironment::getCurrentView() const
 void gsf::GUIEnvironment::placeWidget(Widget *widget)
 {
     int orientation { widget->getOrientation() };
-    // Orientation is None, so we have nothing to do
-    if (orientation & Orientation::None)
-    {
-        return;
-    }
     if (orientation & Orientation::Left)
     {
         widget->setLeftPosition(0.f);
@@ -90,6 +85,7 @@ void gsf::GUIEnvironment::placeWidget(Widget *widget)
         sf::Vector2f size{ getCurrentView().getSize() };
         widget->setVerticalCenterPosition(size.y /2.f);
     }
+    widget->placeChildWidgets();
 }
 
 void gsf::GUIEnvironment::handleEvent(sf::Event &event)

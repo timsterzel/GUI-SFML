@@ -175,13 +175,15 @@ namespace gsf
         //void setIsActive(bool isActive);
 
         bool isIntersecting(sf::Vector2f pos) const;
+        // Place child widgets by there orientation
+        void placeChildWidgets();
 
         // Returns true if widget has handled the event and children dont 
         // have to handle it
         bool handleEvent(sf::Event &event, const sf::RenderTarget &target);
         // dt is the delta time
         virtual void update(float dt);
-        
+               
         //virtual void draw(sf::RenderTarget &target, 
         //        sf::RenderStates states) const final override;
         // The draw method needs the default view of the window, so we can
@@ -227,6 +229,8 @@ namespace gsf
         // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();
         
+        virtual void placeChildWidget(Widget *widget);
+
         virtual bool handleEventCurrentBeforeChildren(sf::Event &event, 
                 const sf::RenderTarget &target);
         virtual bool handleEventChildren(sf::Event &event, 

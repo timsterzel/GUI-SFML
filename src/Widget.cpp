@@ -644,6 +644,57 @@ bool gsf::Widget::isIntersecting(sf::Vector2f pos) const
     //    pos.y >= getWorldTop() && pos.y <= getWorldBottom();
 }
 
+void gsf::Widget::placeChildWidgets()
+{
+    for (const Ptr &child : m_children)
+    {
+        placeChildWidget(child.get());
+        child->placeChildWidgets();
+    }
+}
+
+void gsf::Widget::placeChildWidget(Widget *widget)
+{
+    
+    int orientation { widget->getOrientation() };
+    // Orientation is None, so we have nothing to do
+    if (orientation & Orientation::None)
+    {
+        return;
+    }
+    if (orientation & Orientation::Left)
+    {
+        widget->setLeftPosition(m_contentArea.left);
+    }
+    if (orientation & Orientation::Right)
+    {
+        widget->setRightPosition(m_contentArea.left + m_contentArea.width);
+    }
+    if (orientation & Orientation::Top)
+    {
+        widget->setTopPosition(m_contentArea.top);
+    }
+    if (orientation & Orientation::Bottom)
+    {
+        widget->setBottomPosition(m_contentArea.top + m_contentArea.height);
+    }
+    if (orientation & Orientation::Center)
+    {
+        widget->setCenterPosition( m_contentArea.left + (m_contentArea.width / 2.f),
+                m_contentArea.top + (m_contentArea.height / 2.f));
+    }
+    if (orientation & Orientation::CenterHorizontal)
+    {
+        widget->setHorizontalCenterPosition(
+                m_contentArea.left + (m_contentArea.width / 2.f));
+    }
+    if (orientation & Orientation::CenterVertical)
+    {
+        widget->setVerticalCenterPosition(
+                m_contentArea.top + (m_contentArea.height / 2.f));
+    }
+}
+
 void gsf::Widget::calculateSize()
 {
     // Do nothing by default

@@ -29,6 +29,7 @@ int main()
     
     // Create some TextWidgets
     gsf::TextWidget::Ptr text1{ gsf::TextWidget::create("Text One", font) };
+    text1->setOrientation(gsf::Orientation::Right);
     gsf::TextWidget::Ptr text2{ gsf::TextWidget::create("Text Two", font) };
     gsf::TextWidget::Ptr text3{ gsf::TextWidget::create("Text Three", font) };
     // Add TextWidgets to the Layout
