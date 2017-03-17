@@ -126,6 +126,7 @@ void gsf::TextButtonWidget::placeText()
 
 void gsf::TextButtonWidget::boundsChanged()
 {
+    Widget::boundsChanged();
     placeText();
 }
 

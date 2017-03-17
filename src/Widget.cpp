@@ -635,6 +635,7 @@ void gsf::Widget::boundsChanged()
 {
     m_fullArea.width = getWidth();
     m_fullArea.height = getHeight();
+    placeChildWidgets();
 }
 
 bool gsf::Widget::isIntersecting(sf::Vector2f pos) const

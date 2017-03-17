@@ -14,7 +14,8 @@ namespace gsf
     private:
         // If its true the widht is calculated by the layout and is the maximal
         // width of its children
-        bool m_autoDetermineWidth;    
+        bool m_autoDetermineWidth;
+        bool m_autoDetermineHeight;
     public:
         static Ptr create();
         static Ptr create(float width, float height);
@@ -26,6 +27,8 @@ namespace gsf
 
         void enableAutoDetermineWidth();
         void disableAutoDetermineWidth();
+        void enableAutoDetermineHeight();
+        void disableAutoDetermineHeight();
     private:
         // Calculate the size of the current View
         virtual void calculateSize() override;

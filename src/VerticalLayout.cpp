@@ -15,14 +15,16 @@ gsf::VerticalLayout::Ptr gsf::VerticalLayout::create(float width, float height)
 
 gsf::VerticalLayout::VerticalLayout()
 : Widget{  }
-, m_autoDetermineWidth{ false }
+, m_autoDetermineWidth{ true }
+, m_autoDetermineHeight{ true }
 {
 
 }
 
 gsf::VerticalLayout::VerticalLayout(float width, float height)
 : Widget{ width, height }
-, m_autoDetermineWidth{ false }
+, m_autoDetermineWidth{ true }
+, m_autoDetermineHeight{ true }
 {
 
 }
@@ -47,9 +49,22 @@ void gsf::VerticalLayout::disableAutoDetermineWidth()
     m_autoDetermineWidth = false;
 }
 
+void gsf::VerticalLayout::enableAutoDetermineHeight()
+{
+    m_autoDetermineHeight = true;
+}
+
+void gsf::VerticalLayout::disableAutoDetermineHeight()
+{
+    m_autoDetermineHeight = false;
+}
+
 void gsf::VerticalLayout::calculateSize()
 {
-    std::cout << "calculate size \n";
+    if (!m_autoDetermineHeight && !m_autoDetermineWidth)
+    {
+        return;
+    }
     float height{ 0.f };
     float width{ 0.f };
     for (const Widget::Ptr &child : m_children)
@@ -62,7 +77,10 @@ void gsf::VerticalLayout::calculateSize()
             width = childWidth;
         }
     }
-    setHeight(height);
+    if (m_autoDetermineHeight)
+    {
+        setHeight(height);
+    }
     if (m_autoDetermineWidth)
     {
         setWidth(width);

@@ -129,6 +129,7 @@ void gsf::ComboBoxWidget::boundsChanged()
         m_currentText->setCharacterSize(m_charSize);
     }
     m_listBoxWidget->setWidth(getWidth());
+    placeChildWidgets();
 }
 
 bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event, 

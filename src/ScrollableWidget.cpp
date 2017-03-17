@@ -404,6 +404,7 @@ void gsf::ScrollableWidget::childRemoved()
 void gsf::ScrollableWidget::boundsChanged()
 {
     createScrollbars();
+    placeChildWidgets();
 }
 
 void gsf::ScrollableWidget::correctChildWidgetPosition()

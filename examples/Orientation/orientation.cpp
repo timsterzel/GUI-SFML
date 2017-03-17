@@ -18,17 +18,16 @@ int main()
     // Create a Vertical layout. The "create" method create a unique_ptr with the
     // given parameters.
     // The height of the layout is automatic calculated and depends
-    // of its child widgets.
-    gsf::VerticalLayout::Ptr layout{ gsf::VerticalLayout::create(200.f, 0.f) };
-    layout->setPosition(200.f, 200.f);
+    // of its child widgets and height.
+    gsf::VerticalLayout::Ptr layout{ gsf::VerticalLayout::create() };
     layout->setOutlineThickness(6.f);
-    //layout->setOrientation(gsf::Orientation::Top | gsf::Orientation::Left);
     layout->setOrientation(gsf::Orientation::Center);
     // Make background gray
     layout->setBackgroundColor(sf::Color{ 192, 192, 192 });
-    
+
     // Create some TextWidgets
     gsf::TextWidget::Ptr text1{ gsf::TextWidget::create("Text One", font) };
+    // First text should by orientated right in the layout
     text1->setOrientation(gsf::Orientation::Right);
     gsf::TextWidget::Ptr text2{ gsf::TextWidget::create("Text Two", font) };
     gsf::TextWidget::Ptr text3{ gsf::TextWidget::create("Text Three", font) };

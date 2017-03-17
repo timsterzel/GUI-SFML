@@ -168,6 +168,8 @@ void gsf::WindowWidget::boundsChanged()
             m_btnClose.getLeft() + m_btnClose.getWidth() / 2.f,
             m_btnClose.getTop() + m_btnClose.getHeight() / 2.f);
     m_btnCloseSymbolB.setRotation(-45.f);
+    
+    placeChildWidgets();
 }
 
 void gsf::WindowWidget::childAdded(Widget &child)
