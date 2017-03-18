@@ -22,9 +22,9 @@ namespace gsf
         sf::Color m_cursorColor;
         ScrollableWidget *m_scrollable;            
         // The text which is stored in TextInput
-        std::wstring m_currentText;
+        sf::String m_currentText;
         // The text which is shown in the Widget
-        std::wstring m_shownText;
+        sf::String m_shownText;
         // If it is false, entered new lines by user are not accepted
         bool m_acceptNewLines;
         // True when Widget is focused
@@ -44,8 +44,8 @@ namespace gsf
         // The time since the cursor was last shown or invisble in secods
         float m_lastBlinkTime;
 
-        std::wstring m_whiteListChars;
-        std::wstring m_blackListChars;
+        sf::String m_whiteListChars;
+        sf::String m_blackListChars;
 
     protected:
         // The minimum amount if chars where a line breake was added
@@ -62,8 +62,8 @@ namespace gsf
         void setIsEditable(bool isEditable);
         bool isEditable() const;
 
-        void setText(const std::wstring &text);
-        std::wstring getText() const;
+        void setText(const sf::String &text);
+        sf::String getText() const;
 
         void setCharacterSize(const unsigned int size);
         unsigned int getCharacterSize() const;
@@ -86,10 +86,10 @@ namespace gsf
         
         // Note: Black and Whitelisted chars are only checked by mnauell TextInput.
         // There are ignored by addinf Text via setText method or constructor.
-        std::wstring getBlackListChars() const;
-        void setBlackListChars(std::wstring chars);
-        std::wstring getWhiteListChars() const;
-        void setWhiteListChars(std::wstring chars);
+        sf::String getBlackListChars() const;
+        void setBlackListChars(sf::String chars);
+        sf::String getWhiteListChars() const;
+        void setWhiteListChars(sf::String chars);
     protected:
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;

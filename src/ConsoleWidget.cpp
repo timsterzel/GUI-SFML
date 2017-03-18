@@ -113,7 +113,7 @@ bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const
     if (event.type == sf::Event::TextEntered)
     {
         //wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
-        char c{ static_cast<char>(event.text.unicode) };
+        sf::Uint32 c{ event.text.unicode };
         //sf::String c{ static_cast<sf::String>(event.text.unicode) };
         switch (c)
         {
@@ -130,7 +130,7 @@ bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const
                 // when going through history
                 m_inpHistoryCursPos = 0;
                 addTextToDisplay(">" + inputText);
-                m_textInput->setText(L"");
+                m_textInput->setText("");
                 if (m_onCommandEnteredListener)
                 {
                     m_onCommandEnteredListener(this, inputText);

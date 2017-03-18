@@ -120,12 +120,12 @@ bool gsf::TextInputWidget::isEditable() const
     return m_isEditable;
 }
 
-void gsf::TextInputWidget::setText(const std::wstring &text)
+void gsf::TextInputWidget::setText(const sf::String &text)
 {
     m_currentText = text;
     m_text->setText(m_currentText);
     // Move cursor to end of text
-    m_cursorPos = m_currentText.size();
+    m_cursorPos = m_currentText.getSize();
     // Adjust text so that it fits the scrollbar when horizontal scrolling is disabled
     adjustShownText();
     m_scrollable->recalculateScroll();
@@ -133,9 +133,8 @@ void gsf::TextInputWidget::setText(const std::wstring &text)
     m_scrollable->scrollToLeft();
 }
 
-std::wstring gsf::TextInputWidget::getText() const
+sf::String gsf::TextInputWidget::getText() const
 {
-    //return m_text->getText().toWideString();
     return m_currentText;
 }
 
@@ -206,29 +205,29 @@ void gsf::TextInputWidget::setIsHorizontalScrollbarDrawn(bool isDrawn)
     m_scrollable->setIsHorizontalScrollbarDrawn(isDrawn);
 }
 
-std::wstring gsf::TextInputWidget::getBlackListChars() const
+sf::String gsf::TextInputWidget::getBlackListChars() const
 {
     return m_blackListChars;
 }
 
-void gsf::TextInputWidget::setBlackListChars(std::wstring chars)
+void gsf::TextInputWidget::setBlackListChars(sf::String chars)
 {
     m_blackListChars = chars;
 }
 
-std::wstring gsf::TextInputWidget::getWhiteListChars() const
+sf::String gsf::TextInputWidget::getWhiteListChars() const
 {
     return m_whiteListChars;
 }
 
-void gsf::TextInputWidget::setWhiteListChars(std::wstring chars)
+void gsf::TextInputWidget::setWhiteListChars(sf::String chars)
 {
     m_whiteListChars = chars;
 }
 
 void gsf::TextInputWidget::adjustShownText()
 {
-    if (!m_scrollable->isHorizontalScrollEnabled() && m_currentText.size() > 0)
+    if (!m_scrollable->isHorizontalScrollEnabled() && m_currentText.getSize() > 0)
     {
         m_lBreaksBefCur = 0;
         m_lBreakIndexes.clear();
@@ -237,9 +236,9 @@ void gsf::TextInputWidget::adjustShownText()
         unsigned int charCntLine{ 0 };
         // The total width of all chars in the current line
         float lineWidth{ 0.f };
-        for (unsigned int i{ 0 }; i < m_currentText.size(); i++)
+        for (unsigned int i{ 0 }; i < m_currentText.getSize(); i++)
         {
-            wchar_t c{ m_currentText[i] };
+            sf::Uint32 c{ m_currentText[i] };
             // If we have a new line as char we can set the lineWidth and charCntLine
             // to 0 because there is no need to handle the chars in this line
             // (It is already handled by user width the new line char)
@@ -374,7 +373,7 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
             //    m_text->findCharacterPos(m_cursorPos + m_lBreaksBefCur));
             return true;
         case sf::Keyboard::Right: 
-            if (m_cursorPos < m_currentText.length())
+            if (m_cursorPos < m_currentText.getSize())
             {
                 m_cursorPos++;
             }
@@ -392,34 +391,37 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
         // To handle umlauts and other 'exotic' chars we use widestring
         // and wide char
         //std::wstring actualTxt{ m_text.getString().toWideString() };
-        wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
+        //wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
+        sf::Uint32 c{ event.text.unicode };
         std::cout << "Entered: " << c << std::endl;
         switch (c)
         {
         // Backspace
         case 8: 
-            if (m_currentText.length() > 0) 
+            if (m_currentText.getSize() > 0) 
             {
                 // Remove chars right of cursor when there are chars
-                if (m_cursorPos > 0 && m_cursorPos < m_currentText.length())
+                if (m_cursorPos > 0 && m_cursorPos < m_currentText.getSize())
                 {
                     m_currentText.erase(m_cursorPos - 1, 1);
                     m_cursorPos--;
                 }
                 // When cursos is at the end of the text, p
                 // place cursor behind char which we want to delete,
-                else if (m_cursorPos == m_currentText.length())
+                else if (m_cursorPos == m_currentText.getSize())
                 {
                     // Delete last char
-                    m_currentText.pop_back();
+                    std::wstring curTxt{ m_currentText.toWideString() };
+                    curTxt.pop_back();
+                    m_currentText = curTxt;
                     m_cursorPos--;
                 }
             }
             break;
         // Delete Pressed
         case 127: 
-            if (m_currentText.length() > 0 && 
-                    m_cursorPos < m_currentText.length())
+            if (m_currentText.getSize() > 0 && 
+                    m_cursorPos < m_currentText.getSize())
             {
                 m_currentText.erase(m_cursorPos, 1);
             }
@@ -437,7 +439,7 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
         default:
             // If there are white listed chars specified, check if char is in it.
             // If not return
-            if (m_whiteListChars.length() > 0 && 
+            if (m_whiteListChars.getSize() > 0 && 
                     m_whiteListChars.find(c) == std::wstring::npos)
             {
                 return false;
@@ -447,7 +449,7 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
             {
                 return false;
             }
-            m_currentText.insert(m_cursorPos, std::wstring() + c);
+            m_currentText.insert(m_cursorPos, c);
                  m_cursorPos++;
         }
         resetCursorStatus();
