@@ -3,23 +3,25 @@
 #include "Orientation.hpp"
 #include <algorithm>
 #include <cassert>
+#include <fstream>
 #include <iostream>
 
-gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget)
+gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget, std::string themePath)
 {
-    gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>(isWindowWidget) };
+    gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>
+        (isWindowWidget, themePath) };
     return std::move(widget);
 }
 
 gsf::Widget::Ptr gsf::Widget::create(float width, float height, 
-        bool isWindowWidget)
+        bool isWindowWidget, std::string themePath)
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>(width, height, 
-            isWindowWidget) };
+            isWindowWidget, themePath) };
     return std::move(widget);
 }
 
-gsf::Widget::Widget(bool isWindowWidget)
+gsf::Widget::Widget(bool isWindowWidget, std::string themePath)
 //, m_width{ 0.f }
 //, m_height{ 0.f }
 : m_context{ nullptr }
@@ -35,10 +37,11 @@ gsf::Widget::Widget(bool isWindowWidget)
 , m_isVisible{ true }
 , m_isWindowWidget{ isWindowWidget }
 {
-
+    init(themePath);
 }
 
-gsf::Widget::Widget(float width, float height, bool isWindowWidget)
+gsf::Widget::Widget(float width, float height, bool isWindowWidget, 
+        std::string themePath)
 //, m_width{ width }
 //, m_height{ height }
 : m_context{ nullptr }
@@ -54,7 +57,30 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget)
 , m_isVisible{ true }
 , m_isWindowWidget{ isWindowWidget }
 {
+    init(themePath);
+}
 
+void gsf::Widget::init(const std::string &themePath)
+{
+    loadTheme(themePath);
+}
+
+void gsf::Widget::loadTheme(const std::string &themePath)
+{
+    std::string path = themePath;
+    if (path == "")
+    {
+        // When no theme was set, load default theme
+        path = "assets/themes/BlackWhite.json";
+    }
+    std::ifstream is(path);
+    if (!is)
+    {
+        std::cout << "Error by loading theme. Path: " << path << std::endl;
+    }
+    is >> m_theme;
+    //m_theme["Widget"]["BackgroundColor"] = "TEST";
+    std::cout << "Loaded Theme:\n" << m_theme.dump() << std::endl;
 }
 
 void gsf::Widget::setContext(GUIEnvironment *context)

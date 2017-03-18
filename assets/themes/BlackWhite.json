@@ -1,0 +1,20 @@
+{
+  "Widget": {
+    "OutlineColor": "black",
+    "OutlineThickness": "0",
+    "BackgroundColor": "transparent"
+  },
+  "ButtonWidget": {
+    "HoverFillColor": "black",
+    "OutlineThickness": "0",
+    "BackgroundColor": "transparent"
+  },
+  "TextButtonWidget": {
+    "TextColor": "black",
+    "HoverTextColor": "white",
+    "CharacterSize": "12"
+  },
+  "CheckBoxWidget": {
+    "CheckedShapeColor": "black"
+  }
+}

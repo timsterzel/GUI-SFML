@@ -3,6 +3,7 @@
 #define WIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include "libs/json.hpp"
 
 namespace gsf
 {
@@ -19,6 +20,8 @@ namespace gsf
 
     protected:
         gsf::GUIEnvironment *m_context;
+        nlohmann::json m_theme;
+
         // The orientation of the Widget. If a Orientation is set, a given position
         // is perhaps ignored. Not all orientations have an effect on all widgets and
         // not all orientations can get combined. (E.g. Left and Right or 
@@ -57,11 +60,14 @@ namespace gsf
         // the widget is a window here
         bool m_isWindowWidget;
     public:
-        static Ptr create(bool isWindowWidget = false);
-        static Ptr create(float width, float height, bool isWindowWidget = false);
+        static Ptr create(bool isWindowWidget = false, 
+                std::string themePath = "");
+        static Ptr create(float width, float height, bool isWindowWidget = false, 
+                std::string themePath = "");
         
-        Widget(bool isWindowWidget = false);
-        Widget(float width, float height, bool isWindowWidget = false);
+        Widget(bool isWindowWidget = false, std::string themePath = "");
+        Widget(float width, float height, bool isWindowWidget = false, 
+                std::string themePath = "");
 
         void setContext(GUIEnvironment *context);
         void removeContext();
@@ -249,6 +255,8 @@ namespace gsf
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                 sf::RenderStates states, sf::View defaultView) const;
     private:  
+        void init(const std::string &themePath);
+        void loadTheme(const std::string &themePath);
         //virtual void draw(sf::RenderTarget &target, 
                // sf::RenderStates states) const final override;
 
