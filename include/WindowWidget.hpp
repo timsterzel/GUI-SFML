@@ -29,9 +29,9 @@ namespace gsf
         // The relative Mouse pos where the topbar is clicked by activating moving
         sf::Vector2f m_moveModeRelMousePos;
     public:
-        static Ptr create(float width, float height, std::wstring title, 
+        static Ptr create(float width, float height, sf::String title, 
                 sf::Font &font);
-        WindowWidget(float width, float height, std::wstring title, 
+        WindowWidget(float width, float height, sf::String title, 
                 sf::Font &font);
 
         virtual void attachChild(Widget::Ptr child) override;
@@ -46,8 +46,8 @@ namespace gsf
         sf::Color getCloseButtonSymbolFillColor() const;
         void setCloseButtonSymbolFillColor(const sf::Color color);
         
-        std::wstring getWindowTitle() const;
-        void setWindowTitle(const std::wstring &text);
+        sf::String getWindowTitle() const;
+        void setWindowTitle(const sf::String &text);
 
         sf::Font getWindowTitleFont() const;
         void setWindowTitleFont(sf::Font &font);

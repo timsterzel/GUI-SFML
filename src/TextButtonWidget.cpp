@@ -15,7 +15,7 @@ gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(float width, float heig
 }
 
 gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(float width, float height, 
-        const std::wstring &text, const sf::Font &font)
+        const sf::String &text, const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextButtonWidget>(width, height, text, font) };
     return std::move(widget);
@@ -44,7 +44,7 @@ gsf::TextButtonWidget::TextButtonWidget
     init();
 }
 gsf::TextButtonWidget::TextButtonWidget(float width,float height, 
-        const std::wstring &text, const sf::Font &font)
+        const sf::String &text, const sf::Font &font)
 : ButtonWidget{ width, height }
 , m_font{ font }
 , m_text{ text }
@@ -94,12 +94,12 @@ void gsf::TextButtonWidget::setHoverTextColor(sf::Color color)
     }
 }
 
-const std::wstring& gsf::TextButtonWidget::getText() const
+const sf::String& gsf::TextButtonWidget::getText() const
 {
     return m_text;
 }
 
-void gsf::TextButtonWidget::setText(const std::wstring& text)
+void gsf::TextButtonWidget::setText(const sf::String& text)
 {
     m_text = text;
     m_textWidget->setText(text);

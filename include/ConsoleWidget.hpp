@@ -19,12 +19,12 @@ namespace gsf
         TextInputWidget *m_textDisplay;
         TextInputWidget *m_textInput;
         // Store inputs in console here
-        std::vector<std::wstring> m_inputHistory;
+        std::vector<sf::String> m_inputHistory;
         // With the arrow keys, the user can select inputs from histroy
         // here we store the actual position in history
         std::size_t m_inpHistoryCursPos;
         // Is called when input was entered
-        std::function<void(Widget*, std::wstring)> 
+        std::function<void(Widget*, sf::String)> 
             m_onCommandEnteredListener;
     public:
         static Ptr create(sf::Font &font);
@@ -32,10 +32,10 @@ namespace gsf
         explicit ConsoleWidget(sf::Font &font);
         ConsoleWidget(float width, float height, sf::Font &font);
 
-        void addTextToDisplay(std::wstring text);
+        void addTextToDisplay(sf::String text);
             
         void setOnCommandEnteredListener(std::function
-                    <void(Widget*, std::wstring)> listener);
+                    <void(Widget*, sf::String)> listener);
     protected:
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;

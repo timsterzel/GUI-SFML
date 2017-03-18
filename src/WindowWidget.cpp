@@ -2,13 +2,13 @@
 #include <iostream>
 
 gsf::WindowWidget::Ptr gsf::WindowWidget::create(float width, float height, 
-        std::wstring title, sf::Font &font)
+        sf::String title, sf::Font &font)
 {
     Ptr widget{ std::make_unique<WindowWidget>(width, height, title, font) };
     return std::move(widget);
 }
 
-gsf::WindowWidget::WindowWidget(float width, float height, std::wstring title, 
+gsf::WindowWidget::WindowWidget(float width, float height, sf::String title, 
         sf::Font &font)
 : Widget{ width, height }
 //, m_topBar{ width, 20.f }
@@ -75,13 +75,12 @@ void gsf::WindowWidget::setCloseButtonSymbolFillColor(const sf::Color color)
     m_btnCloseSymbolB.setFillColor(color);
 }
 
-std::wstring gsf::WindowWidget::getWindowTitle() const
+sf::String gsf::WindowWidget::getWindowTitle() const
 {
-    return m_windowTitle.getString().toWideString();
-    //return m_windowTitle;
+    return m_windowTitle.getString();
 }
 
-void gsf::WindowWidget::setWindowTitle(const std::wstring &text)
+void gsf::WindowWidget::setWindowTitle(const sf::String &text)
 {
     m_windowTitle.setString(text);
     //m_windowTitle = text;

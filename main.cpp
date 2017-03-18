@@ -212,10 +212,10 @@ int main()
         std::make_unique<gsf::ConsoleWidget>(500.f, 200.f, font) };
     console1->setPosition(700.f, 200.f);
     console1->setOnCommandEnteredListener(
-            [] (gsf::Widget *widget, std::wstring inputText)
+            [] (gsf::Widget *widget, sf::String inputText)
             {
-                std::wcout << "CommandEnteredListener command: " << inputText 
-                    << std::endl;
+                std::wcout << "CommandEnteredListener command: " 
+                << inputText.toWideString() << std::endl;
                 gsf::ConsoleWidget *consoleWidget{ 
                     static_cast<gsf::ConsoleWidget*>(widget) };
                 consoleWidget->addTextToDisplay(L"OK");

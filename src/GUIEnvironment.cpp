@@ -168,7 +168,7 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 
 void gsf::GUIEnvironment::update(float dt)
 {
-    std::cout << "Widget cnt: " << m_widgets.size() << std::endl;
+    //std::cout << "Widget cnt: " << m_widgets.size() << std::endl;
     for (const Widget::Ptr &widget : m_widgets)
     {
         widget->update(dt);

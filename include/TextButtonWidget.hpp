@@ -14,7 +14,7 @@ namespace gsf
         typedef std::unique_ptr<TextButtonWidget> Ptr;
     private:
         const sf::Font &m_font;
-        std::wstring m_text;
+        sf::String m_text;
         sf::Color m_textColor;
         sf::Color m_hoverTextColor;
         unsigned int m_charSize;
@@ -22,15 +22,15 @@ namespace gsf
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
-        static Ptr create(float width, float height, const std::wstring &text, 
+        static Ptr create(float width, float height, const sf::String &text, 
                 const sf::Font &font);
         explicit TextButtonWidget(const sf::Font &font);
         TextButtonWidget(float width, float height, const sf::Font &font);
-        TextButtonWidget(float width, float height, const std::wstring &text, 
+        TextButtonWidget(float width, float height, const sf::String &text, 
                 const sf::Font &font);
 
-        const std::wstring& getText() const;
-        void setText(const std::wstring &text);
+        const sf::String& getText() const;
+        void setText(const sf::String &text);
 
         sf::Color getTextColor() const;
         void setTextColor(sf::Color color);

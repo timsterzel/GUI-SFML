@@ -59,18 +59,18 @@ void gsf::ConsoleWidget::init(sf::Font &font)
     attachChild(std::move(textInput));
 }
 
-void gsf::ConsoleWidget::addTextToDisplay(std::wstring text)
+void gsf::ConsoleWidget::addTextToDisplay(sf::String text)
 {
-    std::wstring actualStr{ m_textDisplay->getText() };
-    if (actualStr.size() > 0)
+    sf::String actualStr{ m_textDisplay->getText() };
+    if (actualStr.getSize() > 0)
     {
-        actualStr += L"\n";
+        actualStr += "\n";
     }
     m_textDisplay->setText(actualStr + text);
 }
 
 void gsf::ConsoleWidget::setOnCommandEnteredListener(std::function
-    <void(Widget*, std::wstring)> listener)
+    <void(Widget*, sf::String)> listener)
 {
     m_onCommandEnteredListener = listener;
 }
@@ -112,7 +112,9 @@ bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const
     }
     if (event.type == sf::Event::TextEntered)
     {
-        wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
+        //wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
+        char c{ static_cast<char>(event.text.unicode) };
+        //sf::String c{ static_cast<sf::String>(event.text.unicode) };
         switch (c)
         {
         // New line, enter key
@@ -121,13 +123,13 @@ bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const
             {
                 //std::cout << "entered 13" << std::endl;
                 // Add entered text to display
-                std::wstring inputText{ m_textInput->getText() };
+                sf::String inputText{ m_textInput->getText() };
                 // Store input in history
                 m_inputHistory.push_back(inputText);
                 // Set history cursor back to 0, so we start again at the beginning
                 // when going through history
                 m_inpHistoryCursPos = 0;
-                addTextToDisplay(L">" + inputText);
+                addTextToDisplay(">" + inputText);
                 m_textInput->setText(L"");
                 if (m_onCommandEnteredListener)
                 {
