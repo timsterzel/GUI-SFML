@@ -71,7 +71,7 @@ gsf::ComboBoxWidget::~ComboBoxWidget()
     }
 }
 
-void gsf::ComboBoxWidget::addElement(std::wstring element)
+void gsf::ComboBoxWidget::addElement(sf::String element)
 {
     m_listBoxWidget->addElement(element);
     if (m_listBoxWidget->count() == 1 && m_listBoxWidget)
@@ -80,12 +80,12 @@ void gsf::ComboBoxWidget::addElement(std::wstring element)
     }
 }
 
-std::wstring gsf::ComboBoxWidget::getElement(int index) const
+sf::String gsf::ComboBoxWidget::getElement(int index) const
 {
     return m_listBoxWidget->getElement(index);
 }
 
-std::wstring gsf::ComboBoxWidget::currentText() const
+sf::String gsf::ComboBoxWidget::currentText() const
 {
     return m_currentText->getText();
 

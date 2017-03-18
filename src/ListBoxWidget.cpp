@@ -58,7 +58,7 @@ void gsf::ListBoxWidget::init(const sf::Font &font)
     
 }
 
-void gsf::ListBoxWidget::addElement(std::wstring element)
+void gsf::ListBoxWidget::addElement(sf::String element)
 {
     m_elements.push_back(element);
     
@@ -77,12 +77,12 @@ void gsf::ListBoxWidget::addElement(std::wstring element)
         m_entryWidgets[0]->setBackgroundColor(m_selectioColor);
     }
 }
-std::wstring gsf::ListBoxWidget::getElement(int index) const
+sf::String gsf::ListBoxWidget::getElement(int index) const
 {
     return m_elements[index];
 }
 
-std::wstring gsf::ListBoxWidget::currentText() const
+sf::String gsf::ListBoxWidget::currentText() const
 {
     return m_elements.size() > 0 ? m_elements[m_currentIndex] : L"";
 

@@ -25,9 +25,9 @@ namespace gsf
         
         virtual ~ComboBoxWidget();
 
-        void addElement(std::wstring element);
-        std::wstring getElement(int index) const;
-        std::wstring currentText() const;
+        void addElement(sf::String element);
+        sf::String getElement(int index) const;
+        sf::String currentText() const;
         int currentIndex() const;
         int count() const;
         

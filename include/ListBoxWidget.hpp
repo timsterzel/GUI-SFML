@@ -14,7 +14,7 @@ namespace gsf
     public:
         typedef std::unique_ptr<ListBoxWidget> Ptr;
     private:
-        std::vector<std::wstring> m_elements;
+        std::vector<sf::String> m_elements;
         // The elements as TextWidgets
         std::vector<VerticalLayout*> m_entryWidgets;
         unsigned int m_currentIndex;
@@ -31,9 +31,9 @@ namespace gsf
         explicit ListBoxWidget(const sf::Font &font);
         ListBoxWidget(float width, float height, const sf::Font &font);
     
-        void addElement(std::wstring element);
-        std::wstring getElement(int index) const;
-        std::wstring currentText() const;
+        void addElement(sf::String element);
+        sf::String getElement(int index) const;
+        sf::String currentText() const;
         int currentIndex() const;
         int count() const;
 
