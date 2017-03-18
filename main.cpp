@@ -233,12 +233,12 @@ int main()
     gsf::ComboBoxWidget::Ptr comboBox{ 
         gsf::ComboBoxWidget::create(80.f, 20.f, font) };
     comboBox->setPosition(120.f, 620.f);
-    //comboBox->addElement(L"Entry One");
-    //comboBox->addElement(L"Entry Two");
-    //comboBox->addElement(L"Entry Three");
-    //comboBox->addElement(L"Entry Four");
-    //comboBox->addElement(L"Entry Five");
-    //comboBox->addElement(L"Entry LAST");
+    comboBox->addElement(L"Entry One");
+    comboBox->addElement(L"Entry Two");
+    comboBox->addElement(L"Entry Three");
+    comboBox->addElement(L"Entry Four");
+    comboBox->addElement(L"Entry Five");
+    comboBox->addElement(L"Entry LAST");
     guiEnvironment.addWidget(std::move(comboBox));
     // ListBoxWidget
     gsf::ListBoxWidget::Ptr listBox{ 

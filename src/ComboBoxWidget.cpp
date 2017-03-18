@@ -148,13 +148,18 @@ bool gsf::ComboBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
         if (intersecting && isInShownArea)
         {
             m_listBoxWidget->setIsVisible(!m_listBoxWidget->isVisible());
+            // When there are no entries, there is nothing to show
+            if (m_listBoxWidget->count() == 0)
+            {
+                m_listBoxWidget->setIsVisible(false);
+            }
             // Calculate position of ListBox
             if (m_listBoxWidget->isVisible())
             {
                 placeListBox();
             }
         }
-        // "Close" (make unvisble) listBox when clicking not in the Combobox or
+        // "Close" (make unvisible) listBox when clicking not in the Combobox or
         // in listBoxWidget
         else if(!m_listBoxWidget->getGlobalBounds().contains(mousePos))
         {
