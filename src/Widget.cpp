@@ -81,6 +81,49 @@ void gsf::Widget::loadTheme(const std::string &themePath)
     is >> m_theme;
     //m_theme["Widget"]["BackgroundColor"] = "TEST";
     std::cout << "Loaded Theme:\n" << m_theme.dump() << std::endl;
+    nlohmann::json attr = m_theme.value("Widget", nlohmann::json());
+    std::string bgColorStr{ attr.value("BackgroundColor", "Yellow") };
+    
+    if (bgColorStr == "Black")
+    {
+        setBackgroundColor(sf::Color::Black);
+    }
+    else if (bgColorStr == "White")
+    {
+        setBackgroundColor(sf::Color::White);
+    }
+    else if (bgColorStr == "Red")
+    {
+        setBackgroundColor(sf::Color::Red);
+    }
+    else if (bgColorStr == "Green")
+    {
+        setBackgroundColor(sf::Color::Green);
+    }
+    else if (bgColorStr == "Blue")
+    {
+        setBackgroundColor(sf::Color::Blue);
+    }
+    else if (bgColorStr == "Yellow")
+    {
+        setBackgroundColor(sf::Color::Yellow);
+    }
+    else if (bgColorStr == "Magenta")
+    {
+        setBackgroundColor(sf::Color::Magenta);
+    }
+    else if (bgColorStr == "Cyan")
+    {
+        setBackgroundColor(sf::Color::Cyan);
+    }
+    else if (bgColorStr == "Transparent")
+    {
+        setBackgroundColor(sf::Color::Transparent);
+    }
+    else if (bgColorStr == "Black")
+    {
+        setBackgroundColor(sf::Color::Black);
+    }
 }
 
 void gsf::Widget::setContext(GUIEnvironment *context)

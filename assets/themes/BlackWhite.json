@@ -2,7 +2,7 @@
   "Widget": {
     "OutlineColor": "black",
     "OutlineThickness": "0",
-    "BackgroundColor": "transparent"
+    "BackgroundColor": "Red"
   },
   "ButtonWidget": {
     "HoverFillColor": "black",
