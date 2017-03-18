@@ -14,28 +14,17 @@ namespace gsf
     private:
         sf::Text m_text;
     public:
-        static Ptr create();
-        static Ptr create(std::string text, const sf::Font &font);
-        static Ptr create(std::string text, const sf::Font &font, int characterSize);
-        static Ptr create(std::string text, const sf::Font &font, int characterSize, 
+        static Ptr create(sf::String text, const sf::Font &font);
+        static Ptr create(sf::String text, const sf::Font &font, int characterSize);
+        static Ptr create(sf::String text, const sf::Font &font, int characterSize, 
                 sf::Color color);
-        static Ptr create(std::wstring text, const sf::Font &font);
-        static Ptr create(std::wstring text, const sf::Font &font, 
-                int characterSize);
-        static Ptr create(std::wstring text, const sf::Font &font, 
-                int characterSize, sf::Color color);
         TextWidget();
-        TextWidget(std::string text, const sf::Font &font);
-        TextWidget(std::string text, const sf::Font &font, int characterSize);
-        TextWidget(std::string text, const sf::Font &font, int characterSize, 
-                sf::Color color);
-        TextWidget(std::wstring text, const sf::Font &font);
-        TextWidget(std::wstring text, const sf::Font &font, int characterSize);
-        TextWidget(std::wstring text, const sf::Font &font, int characterSize, 
+        TextWidget(sf::String text, const sf::Font &font);
+        TextWidget(sf::String text, const sf::Font &font, int characterSize);
+        TextWidget(sf::String text, const sf::Font &font, int characterSize, 
                 sf::Color color);
 
         void setText(const sf::String &text);
-        void setText(const std::wstring text);
         sf::String getText() const;
         // get text as wide string
         std::wstring getWideText() const;
@@ -69,7 +58,7 @@ namespace gsf
         virtual void drawCurrentAfterChildren(sf::RenderTarget &target, 
                 sf::RenderStates states, sf::View defaultView) const override;
     private:
-        void init(std::string text, const sf::Font &font, int characterSize, 
+        void init(sf::String text, const sf::Font &font, int characterSize, 
                 sf::Color color);
         // Calculate the size of the current widget
         virtual void calculateSize() override;

@@ -1,98 +1,46 @@
 #include "TextWidget.hpp"
 #include <iostream>
 
-gsf::TextWidget::Ptr gsf::TextWidget::create()
-{
-    Ptr widget{ std::make_unique<TextWidget>() };
-    return std::move(widget);
-}
-
-gsf::TextWidget::Ptr gsf::TextWidget::create(std::string text, const sf::Font &font)
+gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font) };
     return std::move(widget);
 }
 
-gsf::TextWidget::Ptr gsf::TextWidget::create(std::string text, const sf::Font &font, 
+gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font, 
         int characterSize)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize) };
     return std::move(widget);
 }
 
-gsf::TextWidget::Ptr gsf::TextWidget::create(std::string text, const sf::Font &font, 
+gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font, 
         int characterSize, sf::Color color)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize, color) };
     return std::move(widget);
 }
 
-gsf::TextWidget::Ptr gsf::TextWidget::create(std::wstring text, const sf::Font &font)
-{
-    Ptr widget{ std::make_unique<TextWidget>(text, font) };
-    return std::move(widget);
-}
-
-gsf::TextWidget::Ptr gsf::TextWidget::create(std::wstring text, 
-        const sf::Font &font, int characterSize)
-{
-    Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize) };
-    return std::move(widget);
-}
-
-gsf::TextWidget::Ptr gsf::TextWidget::create(std::wstring text, 
-        const sf::Font &font, int characterSize, sf::Color color)
-{
-    Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize, color) };
-    return std::move(widget);
-}
-
-gsf::TextWidget::TextWidget()
+gsf::TextWidget::TextWidget(sf::String text, const sf::Font &font)
 : Widget{  }
 {
-
+    init(text, font, 12, sf::Color::Black);
 }
 
-gsf::TextWidget::TextWidget(std::string text, const sf::Font &font)
-: Widget{  }
-{
-    init(sf::String(text), font, 12, sf::Color::Black);
-}
-
-gsf::TextWidget::TextWidget(std::string text, const sf::Font &font, 
+gsf::TextWidget::TextWidget(sf::String text, const sf::Font &font, 
         int characterSize)
 : Widget{  }
 {
-    init(sf::String(text), font, characterSize, sf::Color::Black);
+    init(text, font, characterSize, sf::Color::Black);
 }
 
-gsf::TextWidget::TextWidget(std::string text, const sf::Font &font, int characterSize, sf::Color color)
+gsf::TextWidget::TextWidget(sf::String text, const sf::Font &font, int characterSize, sf::Color color)
 : Widget{  }
 {
-    init(sf::String(text), font, characterSize, color);
+    init(text, font, characterSize, color);
 }
 
-gsf::TextWidget::TextWidget(std::wstring text, const sf::Font &font)
-: Widget{  }
-{
-    init(sf::String(text), font, 12, sf::Color::Black);
-}
-
-gsf::TextWidget::TextWidget(std::wstring text, const sf::Font &font, 
-        int characterSize)
-: Widget{  }
-{
-    init(sf::String(text), font, characterSize, sf::Color::Black);
-}
-
-gsf::TextWidget::TextWidget(std::wstring text, const sf::Font &font, 
-        int characterSize, sf::Color color)
-: Widget{  }
-{
-    init(sf::String(text), font, characterSize, color);
-}
-
-void gsf::TextWidget::init(std::string text, const sf::Font &font, 
+void gsf::TextWidget::init(sf::String text, const sf::Font &font, 
         int characterSize, sf::Color color)
 {
     m_text.setString(text);
@@ -110,12 +58,6 @@ void gsf::TextWidget::setText(const sf::String &text)
     //centerOrigin();
 }
 
-void gsf::TextWidget::setText(const std::wstring text)
-{
-    m_text.setString(text);
-    calculateSize();
-    //centerOrigin();
-}
 sf::String gsf::TextWidget::getText() const
 {
     return m_text.getString();
