@@ -29,6 +29,7 @@ namespace gsf
         //bool m_isWindowRoughOutEnabled;
     public:
         explicit GUIEnvironment(const sf::RenderWindow &m_window);
+        ~GUIEnvironment();
 
         void addWidget(Widget::Ptr widget);
         Widget::Ptr removeWidget(const Widget& widget);

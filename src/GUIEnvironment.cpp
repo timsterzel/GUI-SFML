@@ -13,6 +13,10 @@ gsf::GUIEnvironment::GUIEnvironment(const sf::RenderWindow &window)
 
 }
 
+gsf::GUIEnvironment::~GUIEnvironment()
+{
+}
+
 void gsf::GUIEnvironment::addWidget(Widget::Ptr widget)
 {
     widget->setContext(this);
@@ -34,12 +38,28 @@ bool gsf::GUIEnvironment::isWindowRoughOutEnabled() const
 
 gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
 {
+    /*
+    std::cout << "Size: " << m_widgets.size() << std::endl;
+    auto it = std::begin(m_widgets);
+    while(it != std::end(m_widgets))
+    {
+        std::cout << "Iterate" << std::endl;
+        Widget* widgetTmp{ (*it).get() };
+        if (widgetTmp == &widget)
+        {
+            std::cout << "Remove \n";
+            m_widgets.erase(it);
+        }
+        it++;
+    }
+
+    return nullptr;
+    */
     auto found = std::find_if(m_widgets.begin(), m_widgets.end(), 
-            [&] (Widget::Ptr &p) -> bool { return p.get() == &widget; });
+            [&] (Widget::Ptr &p) { return p.get() == &widget; });
     // There is an error when we try to detach a widget which does not exists, 
     // so stop execution in debug mode
     assert(found != m_widgets.end());
-
     Widget::Ptr result = std::move(*found);
     result->removeContext();
     m_widgets.erase(found);
@@ -148,6 +168,7 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 
 void gsf::GUIEnvironment::update(float dt)
 {
+    std::cout << "Widget cnt: " << m_widgets.size() << std::endl;
     for (const Widget::Ptr &widget : m_widgets)
     {
         widget->update(dt);

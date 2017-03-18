@@ -66,7 +66,8 @@ gsf::ComboBoxWidget::~ComboBoxWidget()
     {
         // We have added a listBoxWidget to the context, so we have now to remove it
         // from the context, beacause its not longer needed
-        m_context->removeWidget(*m_listBoxWidget);
+        //m_context->removeWidget(*m_listBoxWidget);
+        m_listBoxWidget->setIsRemoveable(true);
     }
 }
 
