@@ -49,4 +49,4 @@ bin/
 Makefile
 GUI_SFML_DOC_TMP.txt
 del_ext.sh
-libs/
+json.hpp
