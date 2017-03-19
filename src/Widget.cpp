@@ -6,6 +6,13 @@
 #include <fstream>
 #include <iostream>
 
+const std::map<std::string, std::string> gsf::Widget::ThemeAttributes = 
+{
+    { "outlineColor", "black" },
+    { "outlineThickness", "0" },
+    { "backgroundColor", "transparent" }
+};
+
 gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget, std::string themePath)
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>

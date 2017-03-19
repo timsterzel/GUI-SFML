@@ -3,6 +3,7 @@
 #define WIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include <map>
 #include "libs/tinyxml2.h"
 
 namespace gsf
@@ -20,6 +21,8 @@ namespace gsf
 
     protected:
         gsf::GUIEnvironment *m_context;
+        // All themes attributes (also the one of child classes) are stored here
+        std::map<std::string, std::string> m_themeAttributes;
         tinyxml2::XMLDocument m_theme;
         // The orientation of the Widget. If a Orientation is set, a given position
         // is perhaps ignored. Not all orientations have an effect on all widgets and
@@ -58,6 +61,7 @@ namespace gsf
         // Window Widgets are special, so we store the information if
         // the widget is a window here
         bool m_isWindowWidget;
+        static const std::map<std::string, std::string> ThemeAttributes;
     public:
         static Ptr create(bool isWindowWidget = false, 
                 std::string themePath = "");
