@@ -3,7 +3,7 @@
 #define WIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <functional>
-#include "libs/json.hpp"
+#include "libs/tinyxml2.h"
 
 namespace gsf
 {
@@ -20,8 +20,7 @@ namespace gsf
 
     protected:
         gsf::GUIEnvironment *m_context;
-        nlohmann::json m_theme;
-
+        tinyxml2::XMLDocument m_theme;
         // The orientation of the Widget. If a Orientation is set, a given position
         // is perhaps ignored. Not all orientations have an effect on all widgets and
         // not all orientations can get combined. (E.g. Left and Right or 

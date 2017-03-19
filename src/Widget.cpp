@@ -71,56 +71,71 @@ void gsf::Widget::loadTheme(const std::string &themePath)
     if (path == "")
     {
         // When no theme was set, load default theme
-        path = "assets/themes/BlackWhite.json";
+        path = "assets/themes/BlackWhite.xml";
     }
-    std::ifstream is(path);
-    if (!is)
+
+    if (m_theme.LoadFile(path.c_str()) != tinyxml2::XML_SUCCESS)
     {
         std::cout << "Error by loading theme. Path: " << path << std::endl;
+        return;
     }
-    is >> m_theme;
-    //m_theme["Widget"]["BackgroundColor"] = "TEST";
-    std::cout << "Loaded Theme:\n" << m_theme.dump() << std::endl;
-    nlohmann::json attr = m_theme.value("Widget", nlohmann::json());
-    std::string bgColorStr{ attr.value("BackgroundColor", "Yellow") };
+    tinyxml2::XMLElement *themeEl{ m_theme.FirstChildElement("Theme") };
+    if (!themeEl)
+    {
+        std::cout << "Error by loading theme: No valid theme file." << std::endl;
+        return;
+    }
+    tinyxml2::XMLElement *widgetEl{ themeEl->FirstChildElement("Widget") };
+    if (!widgetEl)
+    {
+        std::cout << "No Widget theme specified" << std::endl;
+        return;
+    }
     
-    if (bgColorStr == "Black")
+
+    std::string bgColorStr{ "yellow" };
+    if (widgetEl->Attribute("backgroundColor"))
+    {
+        bgColorStr = widgetEl->Attribute("backgroundColor");
+    }
+    std::cout << "BG Color: " << bgColorStr << std::endl;
+    if (bgColorStr == "black")
     {
         setBackgroundColor(sf::Color::Black);
     }
-    else if (bgColorStr == "White")
+    else if (bgColorStr == "white")
     {
         setBackgroundColor(sf::Color::White);
     }
-    else if (bgColorStr == "Red")
+    else if (bgColorStr == "red")
     {
         setBackgroundColor(sf::Color::Red);
     }
-    else if (bgColorStr == "Green")
+    else if (bgColorStr == "green")
     {
         setBackgroundColor(sf::Color::Green);
     }
-    else if (bgColorStr == "Blue")
+    else if (bgColorStr == "blue")
     {
         setBackgroundColor(sf::Color::Blue);
     }
-    else if (bgColorStr == "Yellow")
+    else if (bgColorStr == "yellow")
     {
         setBackgroundColor(sf::Color::Yellow);
     }
-    else if (bgColorStr == "Magenta")
+    else if (bgColorStr == "magenta")
     {
         setBackgroundColor(sf::Color::Magenta);
     }
-    else if (bgColorStr == "Cyan")
+    else if (bgColorStr == "cyan")
     {
         setBackgroundColor(sf::Color::Cyan);
     }
-    else if (bgColorStr == "Transparent")
+    else if (bgColorStr == "transparent")
     {
         setBackgroundColor(sf::Color::Transparent);
     }
-    else if (bgColorStr == "Black")
+    else if (bgColorStr == "black")
     {
         setBackgroundColor(sf::Color::Black);
     }

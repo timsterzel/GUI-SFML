@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Theme>
+    <Widget
+        outlineColor="black"
+        outlineThickness="0" 
+        backgroundColor="red" />
+    <ButtonWidget 
+        hoverFillColor="black"
+        outlineThickness="0"
+        backgroundColor="transparent" />
+    <TextButtonWidget
+        textColor="black"
+        hoverTextColor="white"
+        characterSize="12" />
+    <CheckBoxWidget
+        checkedShapeColor="black" />
+</Theme>
