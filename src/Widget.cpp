@@ -17,6 +17,7 @@ gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget, std::string themePath)
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>
         (isWindowWidget, themePath) };
+    //widget->applyTheme();
     return std::move(widget);
 }
 
@@ -25,6 +26,7 @@ gsf::Widget::Ptr gsf::Widget::create(float width, float height,
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>(width, height, 
             isWindowWidget, themePath) };
+    //widget->applyTheme();
     return std::move(widget);
 }
 
@@ -69,10 +71,11 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget,
 
 void gsf::Widget::init(const std::string &themePath)
 {
-    loadTheme(themePath);
+    loadThemeFile(themePath);
+    loadAttributes("Widget");
 }
 
-void gsf::Widget::loadTheme(const std::string &themePath)
+void gsf::Widget::loadThemeFile(const std::string &themePath)
 {
     std::string path = themePath;
     if (path == "")
@@ -86,20 +89,61 @@ void gsf::Widget::loadTheme(const std::string &themePath)
         std::cout << "Error by loading theme. Path: " << path << std::endl;
         return;
     }
+
+}
+
+void gsf::Widget::loadAttributes(const std::string &widgetName)
+{
     tinyxml2::XMLElement *themeEl{ m_theme.FirstChildElement("Theme") };
     if (!themeEl)
     {
         std::cout << "Error by loading theme: No valid theme file." << std::endl;
         return;
     }
-    tinyxml2::XMLElement *widgetEl{ themeEl->FirstChildElement("Widget") };
+    tinyxml2::XMLElement *widgetEl{ themeEl->FirstChildElement(
+            widgetName.c_str()) };
     if (!widgetEl)
     {
         std::cout << "No Widget theme specified" << std::endl;
         return;
     }
-    
+    // Loop over all Attributes
+    for (const tinyxml2::XMLAttribute *a{ widgetEl->FirstAttribute() }; a; 
+            a = a->Next())
+    {
+        std::string name{ a->Name() };
+        std::string value{ a->Value() };
+        //themeAttr.insert(std::make_pair(name, value));
+        // Important that we use [] operator here instead of insert or emplace, so
+        // that the key is created with the value if it not exists or override the
+        // value with the new one. This is important, because Theme Attributes, 
+        // defind in child class themes have a higher priorety
+        m_xmlAttributes[name] = value;
+        std::cout << "Attr: " << name << " : " << value << std::endl;
+    }
+}
 
+void gsf::Widget::applyTheme()
+{
+    applyAttributes();
+}
+
+void gsf::Widget::applyAttributes()
+{
+    std::cout << "--------------------------------------------\n";
+    for (auto const &attr : m_xmlAttributes)
+    {
+        std::string name{ attr.first };
+        std::string value{ attr.second };
+        if (name == "backgroundColor")
+        {
+
+        }
+        
+        std::cout << "Attr: " << name << " : " << value << std::endl;
+    }
+    std::cout << "--------------------------------------------\n";
+    /*
     std::string bgColorStr{ "yellow" };
     if (widgetEl->Attribute("backgroundColor"))
     {
@@ -146,6 +190,7 @@ void gsf::Widget::loadTheme(const std::string &themePath)
     {
         setBackgroundColor(sf::Color::Black);
     }
+    */
 }
 
 void gsf::Widget::setContext(GUIEnvironment *context)

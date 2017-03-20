@@ -18,11 +18,12 @@ namespace gsf
     public:
         typedef std::unique_ptr<Widget> Ptr;
         typedef std::pair<Widget*, Widget*> Pair;
-
     protected:
+
         gsf::GUIEnvironment *m_context;
-        // All themes attributes (also the one of child classes) are stored here
-        std::map<std::string, std::string> m_themeAttributes;
+        // All xml attributes (also the one of child classes) are stored here
+        std::map<std::string, std::string> m_xmlAttributes;
+        // The loaded theme as xml document
         tinyxml2::XMLDocument m_theme;
         // The orientation of the Widget. If a Orientation is set, a given position
         // is perhaps ignored. Not all orientations have an effect on all widgets and
@@ -233,7 +234,8 @@ namespace gsf
         // are shown
         sf::View getContentShownAreaView(sf::RenderTarget &target, 
                 sf::View defaultView) const;
-
+        // Load theme attributes and apply them
+        void applyTheme();
         // Is called when the bounds of the widget changes (e.g. width, height
         // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();
@@ -259,7 +261,16 @@ namespace gsf
                 sf::RenderStates states, sf::View defaultView) const;
     private:  
         void init(const std::string &themePath);
-        void loadTheme(const std::string &themePath);
+        // Load the theme file and store it in m_theme
+        void loadThemeFile(const std::string &themePath);
+        // Load the attributes of the given element from m_theme xml file and 
+        // store them in m_xmlAttributes
+        void loadAttributes(const std::string &widgetName);
+        // Apply the attribute data which are stored in m_xmlAttributes.
+        // Widgets which have own stylings should override this one and apply them.
+        // Its important to call its parent class method, when there is one, so all 
+        // styling stages where run through
+        virtual void applyAttributes();
         //virtual void draw(sf::RenderTarget &target, 
                // sf::RenderStates states) const final override;
 
