@@ -58,6 +58,7 @@ gsf::TextButtonWidget::TextButtonWidget(float width,float height,
 
 void gsf::TextButtonWidget::init()
 {
+    loadAttributes("TextButtonWidget");
     TextWidget::Ptr textWidget{ TextWidget::create
         (m_text, m_font, m_charSize, m_textColor) };
     m_textWidget = textWidget.get();

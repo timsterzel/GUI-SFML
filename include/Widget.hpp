@@ -236,6 +236,14 @@ namespace gsf
                 sf::View defaultView) const;
         // Load theme attributes and apply them
         void applyTheme();
+        // Load the attributes of the given element from m_theme xml file and 
+        // store them in m_xmlAttributes
+        void loadAttributes(const std::string &widgetName);
+        // Apply the attribute data which are stored in m_xmlAttributes.
+        // Widgets which have own stylings should override this one and apply them.
+        // Its important to call its parent class method, when there is one, so all 
+        // styling stages where run through
+        virtual void applyAttributes();
         // Is called when the bounds of the widget changes (e.g. width, height
         // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();
@@ -263,14 +271,6 @@ namespace gsf
         void init(const std::string &themePath);
         // Load the theme file and store it in m_theme
         void loadThemeFile(const std::string &themePath);
-        // Load the attributes of the given element from m_theme xml file and 
-        // store them in m_xmlAttributes
-        void loadAttributes(const std::string &widgetName);
-        // Apply the attribute data which are stored in m_xmlAttributes.
-        // Widgets which have own stylings should override this one and apply them.
-        // Its important to call its parent class method, when there is one, so all 
-        // styling stages where run through
-        virtual void applyAttributes();
         //virtual void draw(sf::RenderTarget &target, 
                // sf::RenderStates states) const final override;
 

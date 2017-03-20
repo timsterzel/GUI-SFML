@@ -31,6 +31,7 @@ gsf::CheckBoxWidget::CheckBoxWidget
 
 void gsf::CheckBoxWidget::init()
 {
+    loadAttributes("CheckBoxWidget");
     setHoverFillColor(sf::Color::White);
 }
 

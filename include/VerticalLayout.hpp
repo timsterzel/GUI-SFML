@@ -30,6 +30,7 @@ namespace gsf
         void enableAutoDetermineHeight();
         void disableAutoDetermineHeight();
     private:
+        void init();
         // Calculate the size of the current View
         virtual void calculateSize() override;
         virtual void arrangeChildren() override;

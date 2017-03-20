@@ -60,6 +60,7 @@ gsf::ScrollableWidget::ScrollableWidget(float width, float height)
 
 void gsf::ScrollableWidget::init()
 {
+    loadAttributes("ScrollableWidget");
     boundsChanged();
 }
 

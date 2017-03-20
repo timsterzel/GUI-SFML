@@ -39,6 +39,7 @@ gsf::ComboBoxWidget::ComboBoxWidget(float width, float height, const sf::Font &f
 
 void gsf::ComboBoxWidget::init(const sf::Font &font)
 {
+    loadAttributes("ComboBoxWidget");
     setOutlineThickness(4.f);
     m_outlineColor = sf::Color::Black;
     

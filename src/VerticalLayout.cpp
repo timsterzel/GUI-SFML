@@ -18,7 +18,7 @@ gsf::VerticalLayout::VerticalLayout()
 , m_autoDetermineWidth{ true }
 , m_autoDetermineHeight{ true }
 {
-
+    init();
 }
 
 gsf::VerticalLayout::VerticalLayout(float width, float height)
@@ -26,7 +26,12 @@ gsf::VerticalLayout::VerticalLayout(float width, float height)
 , m_autoDetermineWidth{ true }
 , m_autoDetermineHeight{ true }
 {
+    init();
+}
 
+void gsf::VerticalLayout::init()
+{
+    loadAttributes("VerticalLayout");
 }
 
 void gsf::VerticalLayout::attachChild(Widget::Ptr child)

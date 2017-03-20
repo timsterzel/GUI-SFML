@@ -34,6 +34,7 @@ gsf::ConsoleWidget::ConsoleWidget(float width, float height, sf::Font &font)
 
 void gsf::ConsoleWidget::init(sf::Font &font)
 {
+    loadAttributes("ConsoleWidget");
     std::unique_ptr<TextInputWidget> textDisplay{ 
         std::make_unique<TextInputWidget>(getWidth(), 
                 getHeight() - 20.f - 4.f, font) };
