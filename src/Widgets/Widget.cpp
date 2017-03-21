@@ -6,18 +6,19 @@
 #include <cassert>
 #include <fstream>
 #include <iostream>
-
+/*
 const std::map<std::string, std::string> gsf::Widget::ThemeAttributes = 
 {
     { "outlineColor", "black" },
     { "outlineThickness", "0" },
     { "backgroundColor", "transparent" }
 };
+*/
 
 gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget, std::string themePath)
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>
-        (isWindowWidget, themePath) };
+        (isWindowWidget, themePath) };    
     //widget->applyTheme(themePath);
     return std::move(widget);
 }
@@ -72,30 +73,42 @@ gsf::Widget::Widget(float width, float height, bool isWindowWidget,
 
 void gsf::Widget::init(const std::string &themePath)
 {
-    loadThemeFile(themePath);
-    loadAttributes("Widget");
+    //loadThemeFile(themePath);
+    //loadAttributes("Widget");
 }
 
-void gsf::Widget::loadThemeFile(const std::string &themePath)
+void gsf::Widget::applyTheme(const std::string &path)
 {
-    std::string path = themePath;
-    if (path == "")
-    {
-        // When no theme was set, load default theme
-        path = "assets/themes/BlackWhite.xml";
-    }
+    tinyxml2::XMLDocument document;
+    loadThemeFile(document, path);
+    std::map<std::string, std::string> attributes;
+    loadAttributes(document, attributes);
+    applyAttributes(attributes);
+    //applyAttributes();
+}
 
-    if (m_theme.LoadFile(path.c_str()) != tinyxml2::XML_SUCCESS)
+bool gsf::Widget::loadThemeFile(tinyxml2::XMLDocument &document, 
+        const std::string &path)
+{
+    if (document.LoadFile(path.c_str()) != tinyxml2::XML_SUCCESS)
     {
         std::cout << "Error by loading theme. Path: " << path << std::endl;
-        return;
+        return false;
     }
-
+    return true;
 }
 
-void gsf::Widget::loadAttributes(const std::string &widgetName)
+void gsf::Widget::loadAttributes(tinyxml2::XMLDocument &document, 
+    std::map<std::string, std::string> &attributes)
 {
-    tinyxml2::XMLElement *themeEl{ m_theme.FirstChildElement("Theme") };
+    loadAttributes(document, attributes, "Widget");
+}
+
+void gsf::Widget::loadAttributes(tinyxml2::XMLDocument &document, 
+        std::map<std::string, std::string> &attributes, 
+        const std::string &widgetName)
+{
+    tinyxml2::XMLElement *themeEl{ document.FirstChildElement("Theme") };
     if (!themeEl)
     {
         std::cout << "Error by loading theme: No valid theme file." << std::endl;
@@ -119,20 +132,16 @@ void gsf::Widget::loadAttributes(const std::string &widgetName)
         // that the key is created with the value if it not exists or override the
         // value with the new one. This is important, because Theme Attributes, 
         // defind in child class themes have a higher priorety
-        m_xmlAttributes[name] = value;
+        attributes[name] = value;
         std::cout << "Attr: " << name << " : " << value << std::endl;
     }
 }
 
-void gsf::Widget::applyTheme(const std::string &path)
-{
-    applyAttributes();
-}
 
-void gsf::Widget::applyAttributes()
+void gsf::Widget::applyAttributes(std::map<std::string, std::string> &attributes)
 {
     //std::cout << "--------------------------------------------\n";
-    for (auto const &attr : m_xmlAttributes)
+    for (auto const &attr : attributes)
     {
         std::string name{ attr.first };
         std::string value{ attr.second };

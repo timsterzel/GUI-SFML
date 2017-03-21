@@ -24,7 +24,6 @@ gsf::WindowWidget::WindowWidget(float width, float height, sf::String title,
 
 void gsf::WindowWidget::init()
 {
-    loadAttributes("WindowWidget");
     setOutlineThickness(4.f);
     m_windowTitle.setFillColor(m_windowTitleColor);
     m_windowTitle.setStyle(sf::Text::Bold);

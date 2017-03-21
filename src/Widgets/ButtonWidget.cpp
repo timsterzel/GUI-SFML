@@ -31,7 +31,6 @@ gsf::ButtonWidget::ButtonWidget(float width, float height)
 
 void gsf::ButtonWidget::init()
 {
-    loadAttributes("ButtonWidget");
     setOutlineThickness(4.f);
     m_outlineColor = sf::Color::Black;
 }

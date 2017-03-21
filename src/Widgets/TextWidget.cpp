@@ -43,7 +43,6 @@ gsf::TextWidget::TextWidget(sf::String text, const sf::Font &font, int character
 void gsf::TextWidget::init(sf::String text, const sf::Font &font, 
         int characterSize, sf::Color color)
 {
-    loadAttributes("TextWidget");
     m_text.setString(text);
     m_text.setFont(font);
 	m_text.setCharacterSize(characterSize);

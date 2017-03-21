@@ -41,7 +41,6 @@ gsf::ListBoxWidget::ListBoxWidget(float width, float height, const sf::Font &fon
 
 void gsf::ListBoxWidget::init(const sf::Font &font)
 {
-    loadAttributes("ListBoxWidget");
     setOutlineThickness(4.f);
     m_outlineColor = sf::Color::Black;
     

@@ -21,6 +21,7 @@ void gsf::GUIEnvironment::addWidget(Widget::Ptr widget)
 {
     widget->setContext(this);
     placeWidget(widget.get());
+    widget->applyTheme("assets/themes/BlackWhite.xml");
     m_widgets.push_back(std::move(widget));
 }
 

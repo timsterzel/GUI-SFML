@@ -64,7 +64,6 @@ gsf::TextInputWidget::TextInputWidget(float width, float height,
 
 void gsf::TextInputWidget::init()
 {
-    loadAttributes("TextInputWidget");
     std::unique_ptr<TextWidget> text{ 
         std::make_unique<TextWidget>("", m_font, m_charSize, sf::Color::Black) };
     std::unique_ptr<ScrollableWidget> scrollable{ 

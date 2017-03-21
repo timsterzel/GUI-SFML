@@ -33,7 +33,6 @@ gsf::ProgressWidget::ProgressWidget(float width, float height)
 
 void gsf::ProgressWidget::init()
 {
-    loadAttributes("ProgressWidget");
     setOutlineThickness(4.f);
 }
 

@@ -31,7 +31,7 @@ gsf::VerticalLayoutWidget::VerticalLayoutWidget(float width, float height)
 
 void gsf::VerticalLayoutWidget::init()
 {
-    loadAttributes("VerticalLayoutWidget");
+
 }
 
 void gsf::VerticalLayoutWidget::attachChild(Widget::Ptr child)
