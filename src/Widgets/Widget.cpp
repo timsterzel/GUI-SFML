@@ -1,6 +1,7 @@
 #include "Widgets/Widget.hpp"
 #include "GUIEnvironment.hpp"
 #include "Orientation.hpp"
+#include "Utility.hpp"
 #include <algorithm>
 #include <cassert>
 #include <fstream>
@@ -17,7 +18,7 @@ gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget, std::string themePath)
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>
         (isWindowWidget, themePath) };
-    widget->applyTheme();
+    //widget->applyTheme(themePath);
     return std::move(widget);
 }
 
@@ -26,7 +27,7 @@ gsf::Widget::Ptr gsf::Widget::create(float width, float height,
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>(width, height, 
             isWindowWidget, themePath) };
-    widget->applyTheme();
+    //widget->applyTheme(themePath);
     return std::move(widget);
 }
 
@@ -123,74 +124,28 @@ void gsf::Widget::loadAttributes(const std::string &widgetName)
     }
 }
 
-void gsf::Widget::applyTheme()
+void gsf::Widget::applyTheme(const std::string &path)
 {
     applyAttributes();
 }
 
 void gsf::Widget::applyAttributes()
 {
-    std::cout << "--------------------------------------------\n";
+    //std::cout << "--------------------------------------------\n";
     for (auto const &attr : m_xmlAttributes)
     {
         std::string name{ attr.first };
         std::string value{ attr.second };
         if (name == "backgroundColor")
         {
-
+            sf::Color color{ Utility::stringToColor(value) };
+            setBackgroundColor(color);
         }
         
-        std::cout << "Attr: " << name << " : " << value << std::endl;
+        
+        //std::cout << "Attr: " << name << " : " << value << std::endl;
     }
-    std::cout << "--------------------------------------------\n";
-    /*
-    std::string bgColorStr{ "yellow" };
-    if (widgetEl->Attribute("backgroundColor"))
-    {
-        bgColorStr = widgetEl->Attribute("backgroundColor");
-    }
-    std::cout << "BG Color: " << bgColorStr << std::endl;
-    if (bgColorStr == "black")
-    {
-        setBackgroundColor(sf::Color::Black);
-    }
-    else if (bgColorStr == "white")
-    {
-        setBackgroundColor(sf::Color::White);
-    }
-    else if (bgColorStr == "red")
-    {
-        setBackgroundColor(sf::Color::Red);
-    }
-    else if (bgColorStr == "green")
-    {
-        setBackgroundColor(sf::Color::Green);
-    }
-    else if (bgColorStr == "blue")
-    {
-        setBackgroundColor(sf::Color::Blue);
-    }
-    else if (bgColorStr == "yellow")
-    {
-        setBackgroundColor(sf::Color::Yellow);
-    }
-    else if (bgColorStr == "magenta")
-    {
-        setBackgroundColor(sf::Color::Magenta);
-    }
-    else if (bgColorStr == "cyan")
-    {
-        setBackgroundColor(sf::Color::Cyan);
-    }
-    else if (bgColorStr == "transparent")
-    {
-        setBackgroundColor(sf::Color::Transparent);
-    }
-    else if (bgColorStr == "black")
-    {
-        setBackgroundColor(sf::Color::Black);
-    }
-    */
+    //std::cout << "--------------------------------------------\n";
 }
 
 void gsf::Widget::setContext(GUIEnvironment *context)

@@ -189,7 +189,7 @@ namespace gsf
         void placeChildWidgets();
 
         // Load theme attributes and apply them
-        void applyTheme();
+        void applyTheme(const std::string &path);
         // Returns true if widget has handled the event and children dont 
         // have to handle it
         bool handleEvent(sf::Event &event, const sf::RenderTarget &target);

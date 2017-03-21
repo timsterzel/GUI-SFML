@@ -4,14 +4,12 @@
 gsf::VerticalLayoutWidget::Ptr gsf::VerticalLayoutWidget::create()
 {
     Ptr widget{ std::make_unique<VerticalLayoutWidget>() };
-    widget->applyTheme();
     return widget;
 }
 
 gsf::VerticalLayoutWidget::Ptr gsf::VerticalLayoutWidget::create(float width, float height)
 {
     Ptr widget{ std::make_unique<VerticalLayoutWidget>(width, height) };
-    widget->applyTheme();
     return widget;
 }
 

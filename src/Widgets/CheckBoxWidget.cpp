@@ -4,14 +4,12 @@
 gsf::CheckBoxWidget::Ptr gsf::CheckBoxWidget::create()
 {
     Ptr widget{ std::make_unique<CheckBoxWidget>() };
-    widget->applyTheme();
     return std::move(widget);
 }
 
 gsf::CheckBoxWidget::Ptr gsf::CheckBoxWidget::create(float width, float height)
 {
     Ptr widget{ std::make_unique<CheckBoxWidget>(width, height) };
-    widget->applyTheme();
     return std::move(widget);
 }
 

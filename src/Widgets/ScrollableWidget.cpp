@@ -6,14 +6,12 @@ const float gsf::ScrollableWidget::SCROLLBAR_THICKNESS{ 16.f };
 gsf::ScrollableWidget::Ptr gsf::ScrollableWidget::create()
 {
     Ptr widget{ std::make_unique<ScrollableWidget>() };
-    widget->applyTheme();
     return std::move(widget);
 }
 
 gsf::ScrollableWidget::Ptr gsf::ScrollableWidget::create(float width, float height)
 {
     Ptr widget{ std::make_unique<ScrollableWidget>(width, height) };
-    widget->applyTheme();
     return std::move(widget);
 }
 
