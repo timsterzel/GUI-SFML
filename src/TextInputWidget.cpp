@@ -4,6 +4,7 @@
 gsf::TextInputWidget::Ptr gsf::TextInputWidget::create(sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextInputWidget>(font) };
+    widget->applyTheme();
     return widget;
 }
 
@@ -11,6 +12,7 @@ gsf::TextInputWidget::Ptr gsf::TextInputWidget::create(float width, float height
         sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextInputWidget>(width, height, font) };
+    widget->applyTheme();
     return widget;
 }
 

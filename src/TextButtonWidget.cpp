@@ -4,6 +4,7 @@
 gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextButtonWidget>(font) };
+    widget->applyTheme();
     return std::move(widget);
 }
 
@@ -11,6 +12,7 @@ gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(float width, float heig
         const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextButtonWidget>(width, height, font) };
+    widget->applyTheme();
     return std::move(widget);
 }
 
@@ -18,6 +20,7 @@ gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(float width, float heig
         const sf::String &text, const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextButtonWidget>(width, height, text, font) };
+    widget->applyTheme();
     return std::move(widget);
 }
 

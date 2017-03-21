@@ -1,0 +1,12 @@
+#include <iostream>
+    
+template<typename T, typename... Args>
+gsf::Widget* gsf::GUIEnvironment::createWidget(Args... args)
+{
+    std::cout << "Create \n";
+    std::unique_ptr<Widget> widget{ std::make_unique<T>(args...) };
+    widget->applyTheme();
+    Widget *widgetPtr{ widget.get() };
+    addWidget(std::move(widget));
+    return widgetPtr;    
+}

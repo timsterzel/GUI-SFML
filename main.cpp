@@ -37,6 +37,8 @@ int main()
     CLOCK::time_point timePoint1{ CLOCK::now() };
 
     gsf::GUIEnvironment guiEnvironment{ window };
+
+
     gsf::TextWidget::Ptr textWidget{ 
         gsf::TextWidget::create("IM A TEXT\nTESTA\nTESTB\nTESTC\nS", font) };
     //textWidget->centerOrigin();

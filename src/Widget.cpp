@@ -17,7 +17,7 @@ gsf::Widget::Ptr gsf::Widget::create(bool isWindowWidget, std::string themePath)
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>
         (isWindowWidget, themePath) };
-    //widget->applyTheme();
+    widget->applyTheme();
     return std::move(widget);
 }
 
@@ -26,7 +26,7 @@ gsf::Widget::Ptr gsf::Widget::create(float width, float height,
 {
     gsf::Widget::Ptr widget{ std::make_unique<gsf::Widget>(width, height, 
             isWindowWidget, themePath) };
-    //widget->applyTheme();
+    widget->applyTheme();
     return std::move(widget);
 }
 

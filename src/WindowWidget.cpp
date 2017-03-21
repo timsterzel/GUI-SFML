@@ -5,6 +5,7 @@ gsf::WindowWidget::Ptr gsf::WindowWidget::create(float width, float height,
         sf::String title, sf::Font &font)
 {
     Ptr widget{ std::make_unique<WindowWidget>(width, height, title, font) };
+    widget->applyTheme();
     return std::move(widget);
 }
 

@@ -4,6 +4,7 @@
 gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font) };
+    widget->applyTheme();
     return std::move(widget);
 }
 
@@ -11,6 +12,7 @@ gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &fo
         int characterSize)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize) };
+    widget->applyTheme();
     return std::move(widget);
 }
 
@@ -18,6 +20,7 @@ gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &fo
         int characterSize, sf::Color color)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize, color) };
+    widget->applyTheme();
     return std::move(widget);
 }
 

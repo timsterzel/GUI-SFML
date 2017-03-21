@@ -4,12 +4,14 @@
 gsf::ButtonWidget::Ptr gsf::ButtonWidget::create()
 {
     Ptr widget{ std::make_unique<ButtonWidget>() };
+    widget->applyTheme();
     return std::move(widget);
 }
 
 gsf::ButtonWidget::Ptr gsf::ButtonWidget::create(float width, float height)
 {
     Ptr widget{ std::make_unique<ButtonWidget>(width, height) };
+    widget->applyTheme();
     return std::move(widget);
 }
 

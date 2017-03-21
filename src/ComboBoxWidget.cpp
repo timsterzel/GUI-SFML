@@ -5,6 +5,7 @@
 gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(const sf::Font &font)
 {
     Ptr widget{ std::make_unique<ComboBoxWidget>(font) };
+    widget->applyTheme();
     return std::move(widget);
 }
 
@@ -12,6 +13,7 @@ gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(float width, float height,
         const sf::Font &font)
 {
     Ptr widget{ std::make_unique<ComboBoxWidget>(width, height, font) };
+    widget->applyTheme();
     return std::move(widget);
 }
 

@@ -188,6 +188,8 @@ namespace gsf
         // Place child widgets by there orientation
         void placeChildWidgets();
 
+        // Load theme attributes and apply them
+        void applyTheme();
         // Returns true if widget has handled the event and children dont 
         // have to handle it
         bool handleEvent(sf::Event &event, const sf::RenderTarget &target);
@@ -234,8 +236,6 @@ namespace gsf
         // are shown
         sf::View getContentShownAreaView(sf::RenderTarget &target, 
                 sf::View defaultView) const;
-        // Load theme attributes and apply them
-        void applyTheme();
         // Load the attributes of the given element from m_theme xml file and 
         // store them in m_xmlAttributes
         void loadAttributes(const std::string &widgetName);
