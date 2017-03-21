@@ -1,4 +1,4 @@
-#include "Widget.hpp"
+#include "Widgets/Widget.hpp"
 #include "GUIEnvironment.hpp"
 #include "Orientation.hpp"
 #include <iostream>

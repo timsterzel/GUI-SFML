@@ -1,4 +1,4 @@
-#include "WindowWidget.hpp"
+#include "Widgets/WindowWidget.hpp"
 #include <iostream>
 
 gsf::WindowWidget::Ptr gsf::WindowWidget::create(float width, float height, 

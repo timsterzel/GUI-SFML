@@ -1,4 +1,4 @@
-#include "ScrollableWidget.hpp"
+#include "Widgets/ScrollableWidget.hpp"
 #include <iostream>
 
 const float gsf::ScrollableWidget::SCROLLBAR_THICKNESS{ 16.f };

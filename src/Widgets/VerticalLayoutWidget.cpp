@@ -1,4 +1,4 @@
-#include "VerticalLayoutWidget.hpp"
+#include "Widgets/VerticalLayoutWidget.hpp"
 #include <iostream>
 
 gsf::VerticalLayoutWidget::Ptr gsf::VerticalLayoutWidget::create()

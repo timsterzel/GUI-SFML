@@ -1,4 +1,4 @@
-#include "TextWidget.hpp"
+#include "Widgets/TextWidget.hpp"
 #include <iostream>
 
 gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font)

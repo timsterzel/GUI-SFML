@@ -1,5 +1,5 @@
-#include "ConsoleWidget.hpp"
-#include "TextInputWidget.hpp"
+#include "Widgets/ConsoleWidget.hpp"
+#include "Widgets/TextInputWidget.hpp"
 #include <iostream>
 
 gsf::ConsoleWidget::Ptr gsf::ConsoleWidget::create(sf::Font &font)

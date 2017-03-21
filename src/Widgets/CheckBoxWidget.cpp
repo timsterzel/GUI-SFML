@@ -1,4 +1,4 @@
-#include "CheckBoxWidget.hpp"
+#include "Widgets/CheckBoxWidget.hpp"
 #include <iostream>
 
 gsf::CheckBoxWidget::Ptr gsf::CheckBoxWidget::create()

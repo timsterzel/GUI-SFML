@@ -1,4 +1,4 @@
-#include "ProgressWidget.hpp"
+#include "Widgets/ProgressWidget.hpp"
 #include <iostream>
 
 gsf::ProgressWidget::Ptr gsf::ProgressWidget::create()

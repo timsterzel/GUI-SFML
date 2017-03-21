@@ -1,51 +1,44 @@
 #pragma once
-#ifndef LISTBOXWIDGET_HPP
-#define LISTBOXWIDGET_HPP
+#ifndef COMBOBOXWIDGET_HPP
+#define COMBOBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "Widget.hpp"
-#include "ScrollableWidget.hpp"
-#include "TextWidget.hpp"
-#include "VerticalLayoutWidget.hpp"
+#include "Widgets/Widget.hpp"
+#include "ListBoxWidget.hpp"
 
 namespace gsf
 {
-    class ListBoxWidget: public gsf::Widget
+    class ComboBoxWidget: public gsf::Widget
     {
     public:
-        typedef std::unique_ptr<ListBoxWidget> Ptr;
+        typedef std::unique_ptr<ComboBoxWidget> Ptr;
     private:
-        std::vector<sf::String> m_elements;
-        // The elements as TextWidgets
-        std::vector<VerticalLayoutWidget*> m_entryWidgets;
-        unsigned int m_currentIndex;
-        ScrollableWidget *m_scrollableWidget;
-        VerticalLayoutWidget *m_entryWidgetContainer;
+        ListBoxWidget::Ptr m_listBoxWidgetUnique;
+        ListBoxWidget *m_listBoxWidget;
+        TextWidget *m_currentText;
         int m_charSize;
         const sf::Font &m_font;
-        sf::Color m_selectioColor;
-
-        std::function<void(Widget*, int)> m_onElementSelectedListener;
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
-        explicit ListBoxWidget(const sf::Font &font);
-        ListBoxWidget(float width, float height, const sf::Font &font);
-    
+        explicit ComboBoxWidget(const sf::Font &font);
+        ComboBoxWidget(float width, float height, const sf::Font &font);
+        
+        virtual ~ComboBoxWidget();
+
         void addElement(sf::String element);
         sf::String getElement(int index) const;
         sf::String currentText() const;
         int currentIndex() const;
         int count() const;
-
-        float getContentHeight() const;
+        
         sf::Color getSelectionColor() const;
         void setSelectionColor(sf::Color color);
-
-        void setOnElementSelectedListener(std::function<void(Widget*, int)> listener);
-
     protected:
+        virtual void contextSet() override;
+        virtual void contextRemoved() override;
         virtual void boundsChanged() override;
-        void createScrollable();
+        
+        void placeListBox();
 
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
@@ -57,4 +50,4 @@ namespace gsf
     };
 }
 
-#endif // !LISTBOXWIDGET_HPP
+#endif // !COMBOBOXWIDGET_HPP

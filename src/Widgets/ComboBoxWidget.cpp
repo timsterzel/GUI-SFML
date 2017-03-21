@@ -1,4 +1,4 @@
-#include "ComboBoxWidget.hpp"
+#include "Widgets/ComboBoxWidget.hpp"
 #include "GUIEnvironment.hpp"
 #include <iostream>
 

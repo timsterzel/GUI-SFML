@@ -2,20 +2,20 @@
 #ifndef GUI_SFML_HPP
 #define GUI_SFML_HPP
 
-#include "ButtonWidget.hpp"
-#include "CheckBoxWidget.hpp"
-#include "ComboBoxWidget.hpp"
-#include "ConsoleWidget.hpp"
+#include "Widgets/ButtonWidget.hpp"
+#include "Widgets/CheckBoxWidget.hpp"
+#include "Widgets/ComboBoxWidget.hpp"
+#include "Widgets/ConsoleWidget.hpp"
 #include "GUIEnvironment.hpp"
-#include "ListBoxWidget.hpp"
+#include "Widgets/ListBoxWidget.hpp"
 #include "Orientation.hpp"
-#include "ProgressWidget.hpp"
-#include "ScrollableWidget.hpp"
-#include "TextButtonWidget.hpp"
-#include "TextInputWidget.hpp"
-#include "TextWidget.hpp"
-#include "VerticalLayoutWidget.hpp"
-#include "Widget.hpp"
-#include "WindowWidget.hpp"
+#include "Widgets/ProgressWidget.hpp"
+#include "Widgets/ScrollableWidget.hpp"
+#include "Widgets/TextButtonWidget.hpp"
+#include "Widgets/TextInputWidget.hpp"
+#include "Widgets/TextWidget.hpp"
+#include "Widgets/VerticalLayoutWidget.hpp"
+#include "Widgets/Widget.hpp"
+#include "Widgets/WindowWidget.hpp"
 
 #endif // GUI_SFML_HPP

@@ -1,4 +1,4 @@
-#include "TextButtonWidget.hpp"
+#include "Widgets/TextButtonWidget.hpp"
 #include <iostream>
 
 gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(const sf::Font &font)
