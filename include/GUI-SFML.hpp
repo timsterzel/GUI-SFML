@@ -14,7 +14,7 @@
 #include "TextButtonWidget.hpp"
 #include "TextInputWidget.hpp"
 #include "TextWidget.hpp"
-#include "VerticalLayout.hpp"
+#include "VerticalLayoutWidget.hpp"
 #include "Widget.hpp"
 #include "WindowWidget.hpp"
 

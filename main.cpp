@@ -61,8 +61,8 @@ int main()
         std::make_unique<gsf::ScrollableWidget>(300, 200) };
     scrollableWidget->setBackgroundColor(sf::Color{ 162, 162, 162 });
 
-    std::unique_ptr<gsf::VerticalLayout> layout{ 
-        std::make_unique<gsf::VerticalLayout>() };
+    std::unique_ptr<gsf::VerticalLayoutWidget> layout{ 
+        std::make_unique<gsf::VerticalLayoutWidget>() };
     layout->enableAutoDetermineWidth();
     layout->setOutlineThickness(8.f);
     layout->setOutlineColor(sf::Color::Yellow);
@@ -166,8 +166,8 @@ int main()
     scrollableWidget3->setPosition(820.f, 420.f);
     scrollableWidget3->setBackgroundColor(sf::Color{ 128,  128, 128 });
 
-    std::unique_ptr<gsf::VerticalLayout> layout4{ 
-        std::make_unique<gsf::VerticalLayout>() };
+    std::unique_ptr<gsf::VerticalLayoutWidget> layout4{ 
+        std::make_unique<gsf::VerticalLayoutWidget>() };
     layout4->enableAutoDetermineWidth();
     layout4->setBackgroundColor(sf::Color::Cyan);
 

@@ -1,21 +1,21 @@
-#include "VerticalLayout.hpp"
+#include "VerticalLayoutWidget.hpp"
 #include <iostream>
 
-gsf::VerticalLayout::Ptr gsf::VerticalLayout::create()
+gsf::VerticalLayoutWidget::Ptr gsf::VerticalLayoutWidget::create()
 {
-    Ptr widget{ std::make_unique<VerticalLayout>() };
+    Ptr widget{ std::make_unique<VerticalLayoutWidget>() };
     widget->applyTheme();
     return widget;
 }
 
-gsf::VerticalLayout::Ptr gsf::VerticalLayout::create(float width, float height)
+gsf::VerticalLayoutWidget::Ptr gsf::VerticalLayoutWidget::create(float width, float height)
 {
-    Ptr widget{ std::make_unique<VerticalLayout>(width, height) };
+    Ptr widget{ std::make_unique<VerticalLayoutWidget>(width, height) };
     widget->applyTheme();
     return widget;
 }
 
-gsf::VerticalLayout::VerticalLayout()
+gsf::VerticalLayoutWidget::VerticalLayoutWidget()
 : Widget{  }
 , m_autoDetermineWidth{ true }
 , m_autoDetermineHeight{ true }
@@ -23,7 +23,7 @@ gsf::VerticalLayout::VerticalLayout()
     init();
 }
 
-gsf::VerticalLayout::VerticalLayout(float width, float height)
+gsf::VerticalLayoutWidget::VerticalLayoutWidget(float width, float height)
 : Widget{ width, height }
 , m_autoDetermineWidth{ true }
 , m_autoDetermineHeight{ true }
@@ -31,42 +31,42 @@ gsf::VerticalLayout::VerticalLayout(float width, float height)
     init();
 }
 
-void gsf::VerticalLayout::init()
+void gsf::VerticalLayoutWidget::init()
 {
-    loadAttributes("VerticalLayout");
+    loadAttributes("VerticalLayoutWidget");
 }
 
-void gsf::VerticalLayout::attachChild(Widget::Ptr child)
+void gsf::VerticalLayoutWidget::attachChild(Widget::Ptr child)
 {
     Widget::attachChild(std::move(child));
 }
 
-gsf::Widget::Ptr gsf::VerticalLayout::detachChild(const Widget& node)
+gsf::Widget::Ptr gsf::VerticalLayoutWidget::detachChild(const Widget& node)
 {
     return Widget::detachChild(node);
 }
 
-void gsf::VerticalLayout::enableAutoDetermineWidth()
+void gsf::VerticalLayoutWidget::enableAutoDetermineWidth()
 {
     m_autoDetermineWidth = true;
 }
 
-void gsf::VerticalLayout::disableAutoDetermineWidth()
+void gsf::VerticalLayoutWidget::disableAutoDetermineWidth()
 {
     m_autoDetermineWidth = false;
 }
 
-void gsf::VerticalLayout::enableAutoDetermineHeight()
+void gsf::VerticalLayoutWidget::enableAutoDetermineHeight()
 {
     m_autoDetermineHeight = true;
 }
 
-void gsf::VerticalLayout::disableAutoDetermineHeight()
+void gsf::VerticalLayoutWidget::disableAutoDetermineHeight()
 {
     m_autoDetermineHeight = false;
 }
 
-void gsf::VerticalLayout::calculateSize()
+void gsf::VerticalLayoutWidget::calculateSize()
 {
     if (!m_autoDetermineHeight && !m_autoDetermineWidth)
     {
@@ -94,7 +94,7 @@ void gsf::VerticalLayout::calculateSize()
     }   
 }
 
-void gsf::VerticalLayout::arrangeChildren()
+void gsf::VerticalLayoutWidget::arrangeChildren()
 {
     float distance{ 0.f };
     for (const Widget::Ptr &child : m_children)
@@ -108,19 +108,19 @@ void gsf::VerticalLayout::arrangeChildren()
     calculateSize();
 }
 
-bool gsf::VerticalLayout::handleEventCurrentAfterChildren(sf::Event &event,
+bool gsf::VerticalLayoutWidget::handleEventCurrentAfterChildren(sf::Event &event,
         const sf::RenderTarget &target)
 {
     bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
     return handled;
 }
 
-void gsf::VerticalLayout::updateCurrentAfterChildren(float dt)
+void gsf::VerticalLayoutWidget::updateCurrentAfterChildren(float dt)
 {
     // Do nothing by default
 }
 
-void gsf::VerticalLayout::drawCurrentAfterChildren(sf::RenderTarget &target, 
+void gsf::VerticalLayoutWidget::drawCurrentAfterChildren(sf::RenderTarget &target, 
         sf::RenderStates states, sf::View defaultView) const
 {
     // Do nothing by default

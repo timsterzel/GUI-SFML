@@ -53,7 +53,7 @@ void gsf::ListBoxWidget::init(const sf::Font &font)
     scrollableWidget->setIsHorizontalScrollEnabled(false);
     attachChild(std::move(scrollableWidget));
     
-    VerticalLayout::Ptr layout{ VerticalLayout::create(m_scrollableWidget->getWidth(),
+    VerticalLayoutWidget::Ptr layout{ VerticalLayoutWidget::create(m_scrollableWidget->getWidth(),
     m_scrollableWidget->getHeight()) };
     
     m_entryWidgetContainer = layout.get();
@@ -66,7 +66,7 @@ void gsf::ListBoxWidget::addElement(sf::String element)
     m_elements.push_back(element);
     
     TextWidget::Ptr textWidget{ TextWidget::create(element, m_font) };
-    VerticalLayout::Ptr textContainer{ VerticalLayout::create(getWidth(), 
+    VerticalLayoutWidget::Ptr textContainer{ VerticalLayoutWidget::create(getWidth(), 
             textWidget->getLocalBounds().height ) };
     textContainer->disableAutoDetermineWidth();
     textContainer->attachChild(std::move(textWidget));

@@ -1,16 +1,16 @@
 #pragma once
-#ifndef VERTICALLAYOUT_HPP
-#define VERTICALLAYOUT_HPP
+#ifndef VERTICALLAYOUTWIDGET_HPP
+#define VERTICALLAYOUTWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Widget.hpp"
 
 namespace gsf
 {
-    class VerticalLayout: public gsf::Widget
+    class VerticalLayoutWidget: public gsf::Widget
     {
     public:
-        typedef std::unique_ptr<VerticalLayout> Ptr;
+        typedef std::unique_ptr<VerticalLayoutWidget> Ptr;
     private:
         // If its true the widht is calculated by the layout and is the maximal
         // width of its children
@@ -19,8 +19,8 @@ namespace gsf
     public:
         static Ptr create();
         static Ptr create(float width, float height);
-        VerticalLayout();
-        VerticalLayout(float width, float height);
+        VerticalLayoutWidget();
+        VerticalLayoutWidget(float width, float height);
 
         virtual void attachChild(Widget::Ptr child) override;
         virtual Widget::Ptr detachChild(const Widget& node);

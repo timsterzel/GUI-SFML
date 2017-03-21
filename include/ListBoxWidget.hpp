@@ -5,7 +5,7 @@
 #include "Widget.hpp"
 #include "ScrollableWidget.hpp"
 #include "TextWidget.hpp"
-#include "VerticalLayout.hpp"
+#include "VerticalLayoutWidget.hpp"
 
 namespace gsf
 {
@@ -16,10 +16,10 @@ namespace gsf
     private:
         std::vector<sf::String> m_elements;
         // The elements as TextWidgets
-        std::vector<VerticalLayout*> m_entryWidgets;
+        std::vector<VerticalLayoutWidget*> m_entryWidgets;
         unsigned int m_currentIndex;
         ScrollableWidget *m_scrollableWidget;
-        VerticalLayout *m_entryWidgetContainer;
+        VerticalLayoutWidget *m_entryWidgetContainer;
         int m_charSize;
         const sf::Font &m_font;
         sf::Color m_selectioColor;
