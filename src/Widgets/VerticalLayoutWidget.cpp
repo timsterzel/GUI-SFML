@@ -46,20 +46,15 @@ void gsf::VerticalLayoutWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "autoDetermineWidth")
     {
-        sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
+        bool val{ Utility::stringToBool(value) };
+        setAutoDetermineWidth(val);
     }
-    else if(name == "outlineColor")
+    else if(name == "autoDetermineHeight")
     {
-        sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
-    }
-    else if (name == "outlineThickness")
-    {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        bool val{ Utility::stringToBool(value) };
+        setAutoDetermineHeight(val);
     }
 }
 
@@ -71,6 +66,16 @@ void gsf::VerticalLayoutWidget::attachChild(Widget::Ptr child)
 gsf::Widget::Ptr gsf::VerticalLayoutWidget::detachChild(const Widget& node)
 {
     return Widget::detachChild(node);
+}
+
+void gsf::VerticalLayoutWidget::setAutoDetermineWidth(bool autoDetermine)
+{
+    m_autoDetermineWidth = autoDetermine;
+}
+
+void gsf::VerticalLayoutWidget::setAutoDetermineHeight(bool autoDetermine)
+{
+    m_autoDetermineHeight = autoDetermine;
 }
 
 void gsf::VerticalLayoutWidget::enableAutoDetermineWidth()

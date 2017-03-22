@@ -63,20 +63,19 @@ void gsf::TextWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "characterSize")
+    {
+        int charSize{ std::stoi(value) };
+        setCharacterSize(charSize);
+    }
+    else if (name == "textColor")
     {
         sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
+        setTextColor(color);
     }
-    else if(name == "outlineColor")
+    else if(name == "text")
     {
-        sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
-    }
-    else if (name == "outlineThickness")
-    {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        setText(value);
     }
 }
 

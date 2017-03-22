@@ -10,12 +10,11 @@ hoverFillColor="ColorString"
 checkedShapeColor="ColorString"
 
 #ComboBoxWidget
-characterSize="unsigned int"
+selectionColor="ColorString"
 
 #ConsoleWidget
 
 #ListBoxWidget
-characterSize="unsigned int"
 selectionColor="ColorString"
 
 #ProgressWidget
@@ -37,10 +36,24 @@ textColor="ColorString"
 hoverTextColor="ColorString"
 characterSize="unsigned int"
 
-#TextWidget
+#TextInputWidget
+characterSize="unsigned int"
+cursorColor="ColorString"
+isEditable="boolean"
+textColor="ColorString"
+isNewLineAccepted="boolean"
+isVerticalScrollEnabled="boolean"
+isHorizontalScrollEnabled="boolean"
+isVerticalScrollbarDrawn="boolean"
+isHorizontalScrollbarDrawn="boolean"
+blackListChars="string"
+whiteListChars="string"
 text="string"
+
+#TextWidget
 characterSize="unsigned int"
 textColor="ColorString"
+text="string"
 
 #VerticalLayoutWidget
 autoDetermineWidth="boolean"

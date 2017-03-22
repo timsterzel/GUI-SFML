@@ -71,21 +71,6 @@ void gsf::ConsoleWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
-    {
-        sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
-    }
-    else if(name == "outlineColor")
-    {
-        sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
-    }
-    else if (name == "outlineThickness")
-    {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
-    }
 }
 
 void gsf::ConsoleWidget::addTextToDisplay(sf::String text)

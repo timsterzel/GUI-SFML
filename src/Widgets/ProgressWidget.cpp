@@ -48,20 +48,20 @@ void gsf::ProgressWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "progressColor")
     {
         sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
+        setProgressColor(color);
     }
-    else if(name == "outlineColor")
+    else if(name == "progressMargin")
     {
-        sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
+        float margin{ std::stof(value) };
+        setProgressMargin(margin);
     }
-    else if (name == "outlineThickness")
+    else if (name == "progess")
     {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        int progress{ std::stoi(value) };
+        setProgress(progress);
     }
 }
 

@@ -84,20 +84,10 @@ void gsf::ComboBoxWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "selectionColor")
     {
         sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
-    }
-    else if(name == "outlineColor")
-    {
-        sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
-    }
-    else if (name == "outlineThickness")
-    {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        setSelectionColor(color);
     }
 }
 

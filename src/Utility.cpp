@@ -101,3 +101,13 @@ std::vector<std::string> gsf::Utility::splitString(const std::string &str,
     }
     return splittedStr;
 }
+
+bool gsf::Utility::stringToBool(const std::string &str)
+{
+    std::string strUpper{ toUpper(str) };
+    if (str == "TRUE" || str =="1")
+    {
+        return true;
+    }
+    return false;
+}

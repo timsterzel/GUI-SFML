@@ -19,6 +19,9 @@ namespace gsf
         sf::Color stringToColor(const std::string &str);
         std::string toUpper(std::string str);
         std::vector<std::string> splitString(const std::string &str, char delimiter);
+        // Retruns true if the string is "true"( Upper and Lower cases are ignored)
+        // or "1". Else the function return false
+        bool stringToBool(const std::string &str);
     }
 }
 

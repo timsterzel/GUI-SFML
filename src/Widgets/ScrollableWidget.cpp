@@ -75,20 +75,40 @@ void gsf::ScrollableWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "scrollbarColor")
     {
         sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
+        setScrollBarColor(color);
     }
-    else if(name == "outlineColor")
+    else if(name == "scrollButtonColor")
     {
         sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
+        setScrollBtnColor(color);
     }
-    else if (name == "outlineThickness")
+    else if(name == "scrollButtonSymbolColor")
     {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        sf::Color color { Utility::stringToColor(value) };
+        setScrollBtnSymbolColor(color);
+    }
+    else if(name == "isVerticalScrollEnabled")
+    {
+        bool val{ Utility::stringToBool(value) };
+        setIsVerticalScrollEnabled(val);
+    }
+    else if(name == "isHorizontalScrollEnabled")
+    {
+        bool val{ Utility::stringToBool(value) };
+        setIsHorizontalScrollEnabled(val);
+    }
+    else if(name == "isVerticalScrollbarDrawn")
+    {
+        bool val{ Utility::stringToBool(value) };
+        setIsVerticalScrollbarDrawn(val);
+    }
+    else if(name == "isHorizontalScrollbarDrawn")
+    {
+        bool val{ Utility::stringToBool(value) };
+        setIsHorizontalScrollbarDrawn(val);
     }
 }
 

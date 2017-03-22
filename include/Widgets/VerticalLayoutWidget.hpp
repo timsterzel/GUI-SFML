@@ -24,7 +24,9 @@ namespace gsf
 
         virtual void attachChild(Widget::Ptr child) override;
         virtual Widget::Ptr detachChild(const Widget& node);
-
+        
+        void setAutoDetermineWidth(bool autoDetermine);
+        void setAutoDetermineHeight(bool autoDetermine);
         void enableAutoDetermineWidth();
         void disableAutoDetermineWidth();
         void enableAutoDetermineHeight();

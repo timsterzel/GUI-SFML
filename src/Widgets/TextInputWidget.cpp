@@ -111,20 +111,67 @@ void gsf::TextInputWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "characterSize")
+    {
+        int charSize{ std::stoi(value) };
+        setCharacterSize(charSize);
+    }
+    else if (name == "cursorColor")
     {
         sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
+        setCursorColor(color);
     }
-    else if(name == "outlineColor")
+    else if (name == "isEditable")
+    {
+        bool val{ Utility::stringToBool(value) };
+        setIsEditable(val);
+    }
+    else if(name == "textColor")
     {
         sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
+        setTextColor(color);
     }
-    else if (name == "outlineThickness")
+    else if (name == "isNewLineAccepted")
     {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        bool val { Utility::stringToBool(value) };
+        setIsNewLineAccepted(val);
+    }
+    else if (name == "isNewLineAccepted")
+    {
+        bool val { Utility::stringToBool(value) };
+        setIsNewLineAccepted(val);
+    }
+    else if (name == "isVerticalScrollEnabled")
+    {
+        bool val { Utility::stringToBool(value) };
+        setIsVerticalScrollEnabled(val);
+    }
+    else if (name == "isHorizontalScrollEnabled")
+    {
+        bool val { Utility::stringToBool(value) };
+        setIsHorizontalScrollEnabled(val);
+    }
+    else if (name == "isVerticalScrollbarDrawn")
+    {
+        bool val { Utility::stringToBool(value) };
+        setIsVerticalScrollbarDrawn(val);
+    }
+    else if (name == "isHorizontalScrollbarDrawn")
+    {
+        bool val { Utility::stringToBool(value) };
+        setIsHorizontalScrollbarDrawn(val);
+    }
+    else if (name == "blackListChars")
+    {
+        setBlackListChars(value);
+    }
+    else if (name == "whiteListChars")
+    {
+        setWhiteListChars(value);
+    }
+    else if (name == "text")
+    {
+        setText(value);
     }
 }
 

@@ -78,20 +78,20 @@ void gsf::TextButtonWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     ButtonWidget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "textColor")
     {
         sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
+        setTextColor(color);
     }
-    else if(name == "outlineColor")
+    else if(name == "hoverTextColor")
     {
         sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
+        setHoverTextColor(color);
     }
-    else if (name == "outlineThickness")
+    else if (name == "characterSize")
     {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        int charSize{ std::stoi(value) };
+        setCharacterSize(charSize);
     }
 }
 

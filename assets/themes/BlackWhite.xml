@@ -19,7 +19,7 @@
 		backgroundColor="white"
 		outlineThickness="4"
 		outlineColor="black"
-		characterSize="0" />
+		selectionColor="(192,192,192)" />
 	<ConsoleWidget
 		backgroundColor="white"
 		outlineThickness="4"

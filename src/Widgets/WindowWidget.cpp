@@ -45,20 +45,29 @@ void gsf::WindowWidget::applyAttribute(const std::string &name,
         const std::string &value)
 {
     Widget::applyAttribute(name, value);
-    if (name == "backgroundColor")
+    if (name == "windowTitle")
     {
-        sf::Color color{ Utility::stringToColor(value) };
-        setBackgroundColor(color);
+        setWindowTitle(value);
     }
-    else if(name == "outlineColor")
+    else if(name == "topBarFillColor")
     {
         sf::Color color { Utility::stringToColor(value) };
-        setOutlineColor(color);
+        setTopBarFillColor(color);
     }
-    else if (name == "outlineThickness")
+    else if(name == "windowTitleColor")
     {
-        float thickness{ std::stof(value) };
-        setOutlineThickness(thickness);
+        sf::Color color { Utility::stringToColor(value) };
+        setWindowTitleColor(color);
+    }
+    else if(name == "closeButtonFillColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setCloseButtonFillColor(color);
+    }
+    else if(name == "closeButtonSymbolFillColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setCloseButtonSymbolFillColor(color);
     }
 }
 
