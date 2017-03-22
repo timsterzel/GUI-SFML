@@ -23,15 +23,13 @@
 	<ConsoleWidget
 		backgroundColor="white"
 		outlineThickness="4"
-		outlineColor="black"	
-        checkedShapeColor="black" />
+		outlineColor="black" />
 	<ListBoxWidget
 		backgroundColor="white"
 		outlineThickness="4"
 		outlineColor="black"
 		characterSize="12"
-		selectionColor="(192,192,192)"
-        checkedShapeColor="black" />
+		selectionColor="(192,192,192)" />
 	<ProgressWidget
 		backgroundColor="white"
 		outlineThickness="4"

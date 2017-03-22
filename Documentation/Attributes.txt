@@ -1,0 +1,54 @@
+#Widget
+outlineColor="ColorString"
+outlineThickness="float"
+backgroundColor="ColorString"
+
+#ButtonWidget
+hoverFillColor="ColorString"
+
+#CheckBoxWidget
+checkedShapeColor="ColorString"
+
+#ComboBoxWidget
+characterSize="unsigned int"
+
+#ConsoleWidget
+
+#ListBoxWidget
+characterSize="unsigned int"
+selectionColor="ColorString"
+
+#ProgressWidget
+progressColor="ColorString"
+progressMargin="float"
+progess="unsigned int"
+
+#ScrollableWidget
+scrollbarColor="ColorString"
+scrollButtonColor="ColorString"
+scrollButtonSymbolColor="ColorString"
+isVerticalScrollEnabled="boolean"
+isHorizontalScrollEnabled="boolean"
+isVerticalScrollbarDrawn="boolean"
+isHorizontalScrollbarDrawn="boolean"
+
+#TextButtonWidget
+textColor="ColorString"
+hoverTextColor="ColorString"
+characterSize="unsigned int"
+
+#TextWidget
+text="string"
+characterSize="unsigned int"
+textColor="ColorString"
+
+#VerticalLayoutWidget
+autoDetermineWidth="boolean"
+autoDetermineHeight="boolean"
+
+#WindowWidget
+windowTitle="string"
+topBarFillColor="ColorString"
+windowTitleColor="ColorString"
+closeButtonFillColor="ColorString"
+closeButtonSymbolFillColor="ColorString"
