@@ -1,3 +1,5 @@
+ColorString: sfml Color or rgb or rgba color in format: (r,g,b) (r,g,b,a)
+
 #Widget
 outlineColor="ColorString"
 outlineThickness="float"
