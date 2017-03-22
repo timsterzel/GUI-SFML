@@ -29,6 +29,10 @@ namespace gsf
         void disableAutoDetermineWidth();
         void enableAutoDetermineHeight();
         void disableAutoDetermineHeight();
+    protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
+    
     private:
         void init();
         // Calculate the size of the current View

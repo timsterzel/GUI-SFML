@@ -99,6 +99,13 @@ void gsf::TextInputWidget::init()
     setOutlineThickness(4.f);
 }
 
+void gsf::TextInputWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "TextInputWidget");
+}
+
 void gsf::TextInputWidget::setCursorColor(sf::Color color)
 {
     m_cursorColor = color;

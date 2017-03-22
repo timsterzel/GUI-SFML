@@ -44,6 +44,8 @@ namespace gsf
         void setOnElementSelectedListener(std::function<void(Widget*, int)> listener);
 
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
         virtual void boundsChanged() override;
         void createScrollable();
 

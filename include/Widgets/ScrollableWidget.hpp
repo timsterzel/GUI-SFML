@@ -128,6 +128,8 @@ namespace gsf
         virtual void childAdded(Widget &child) override;
         virtual void childRemoved() override;
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
         virtual void boundsChanged() override;
 
         // Special Events are Events like scrolling 

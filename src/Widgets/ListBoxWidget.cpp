@@ -58,6 +58,13 @@ void gsf::ListBoxWidget::init(const sf::Font &font)
     
 }
 
+void gsf::ListBoxWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "ListBoxWidget");
+}
+
 void gsf::ListBoxWidget::addElement(sf::String element)
 {
     m_elements.push_back(element);

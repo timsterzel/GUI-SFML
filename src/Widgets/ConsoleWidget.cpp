@@ -59,6 +59,13 @@ void gsf::ConsoleWidget::init(sf::Font &font)
     attachChild(std::move(textInput));
 }
 
+void gsf::ConsoleWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "ConsoleWidget");
+}
+
 void gsf::ConsoleWidget::addTextToDisplay(sf::String text)
 {
     sf::String actualStr{ m_textDisplay->getText() };

@@ -34,6 +34,13 @@ void gsf::VerticalLayoutWidget::init()
 
 }
 
+void gsf::VerticalLayoutWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "VerticalLayoutWidget");
+}
+
 void gsf::VerticalLayoutWidget::attachChild(Widget::Ptr child)
 {
     Widget::attachChild(std::move(child));

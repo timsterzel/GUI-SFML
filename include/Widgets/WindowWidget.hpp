@@ -56,6 +56,8 @@ namespace gsf
         void setWindowTitleColor(sf::Color color);
 
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
         // Override this so we can adjust the topbar whem outline thickness or
         // width changed
         virtual void boundsChanged() override;

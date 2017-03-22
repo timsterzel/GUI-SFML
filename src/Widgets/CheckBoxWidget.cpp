@@ -34,6 +34,13 @@ void gsf::CheckBoxWidget::init()
     setHoverFillColor(sf::Color::White);
 }
 
+void gsf::CheckBoxWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    ButtonWidget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "CheckBoxWidget");
+}
+
 bool gsf::CheckBoxWidget::isChecked() const
 {
     return m_isChecked;

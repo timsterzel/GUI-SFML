@@ -36,6 +36,13 @@ void gsf::ProgressWidget::init()
     setOutlineThickness(4.f);
 }
 
+void gsf::ProgressWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "ProgressWidget");
+}
+
 sf::Color gsf::ProgressWidget::getProgressColor() const
 {
     return m_progessColor;

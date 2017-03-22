@@ -49,6 +49,8 @@ namespace gsf
         // Returns -1 when there is no char on the given position
         int findIndexOfCharOnPos(sf::Vector2f localPos) const;
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
         int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
                 std::size_t r, std::size_t totalLength) const;
 

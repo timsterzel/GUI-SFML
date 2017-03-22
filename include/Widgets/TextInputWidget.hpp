@@ -91,6 +91,8 @@ namespace gsf
         sf::String getWhiteListChars() const;
         void setWhiteListChars(sf::String chars);
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;

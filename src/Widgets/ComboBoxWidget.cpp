@@ -71,6 +71,13 @@ gsf::ComboBoxWidget::~ComboBoxWidget()
     }
 }
 
+void gsf::ComboBoxWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "ComboBoxWidget");
+}
+
 void gsf::ComboBoxWidget::addElement(sf::String element)
 {
     m_listBoxWidget->addElement(element);

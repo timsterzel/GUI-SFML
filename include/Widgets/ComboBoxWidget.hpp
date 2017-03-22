@@ -39,6 +39,8 @@ namespace gsf
         virtual void boundsChanged() override;
         
         void placeListBox();
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
 
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;

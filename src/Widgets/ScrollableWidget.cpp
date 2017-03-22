@@ -63,6 +63,12 @@ void gsf::ScrollableWidget::init()
     boundsChanged();
 }
 
+void gsf::ScrollableWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "ScrollableWidget");
+}
 
 void gsf::ScrollableWidget::createScrollbars()
 {

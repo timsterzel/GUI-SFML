@@ -2,16 +2,98 @@
 <Theme>
     <Widget
         outlineColor="black"
-        outlineThickness="0" 
-        backgroundColor="red" />
-    <ButtonWidget 
-        hoverFillColor="black"
         outlineThickness="0"
         backgroundColor="transparent" />
+    <ButtonWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"
+        hoverFillColor="black" />
+	<CheckBoxWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"		
+		hoverFillColor="white"
+        checkedShapeColor="black" />
+	<ComboBoxWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"
+		characterSize="0" />
+	<ConsoleWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"	
+        checkedShapeColor="black" />
+	<ListBoxWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"
+		characterSize="12"
+		selectionColor="(192,192,192)"
+        checkedShapeColor="black" />
+	<ProgressWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"
+		progressColor="black"
+		progressMargin="5"
+		progess="0" />
+	<ScrollableWidget
+		backgroundColor="white"
+		outlineThickness="0"
+		outlineColor="black"
+		scrollbarColor="black"
+		scrollButtonColor="(192,192,192)"
+		scrollButtonSymbolColor="black"
+		isVerticalScrollEnabled="true"
+		isHorizontalScrollEnabled="true"
+		isVerticalScrollbarDrawn="true"
+		isHorizontalScrollbarDrawn="true" />
     <TextButtonWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"
         textColor="black"
         hoverTextColor="white"
         characterSize="12" />
-    <CheckBoxWidget
-        checkedShapeColor="black" />
-</Theme>
+	<TextInputWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"
+		characterSize="12"
+		cursorColor="black"
+		isEditable="true"
+		text=""
+		textColor="black"
+		isNewLineAccepted="true"
+		isVerticalScrollEnabled="true"
+		isHorizontalScrollEnabled="false"
+		isVerticalScrollbarDrawn="true"
+		isHorizontalScrollbarDrawn="true"
+		blackListChars=""
+		whiteListChars="0123456789" />
+	<TextWidget
+		backgroundColor="transparent"
+		outlineThickness="0"
+		outlineColor="black"
+		text=""
+		characterSize="12"
+        textColor="black" />
+	<VerticalLayoutWidget
+		backgroundColor="transparent"
+		outlineThickness="0"
+		outlineColor="black"
+        autoDetermineWidth="true"
+		autoDetermineHeight="true" />
+	<WindowWidget
+		backgroundColor="white"
+		outlineThickness="4"
+		outlineColor="black"
+		windowTitle=""
+		topBarFillColor="black"
+		windowTitleColor="white"
+		closeButtonFillColor="white"
+		closeButtonSymbolFillColor="black" />
+    
+</Theme>	

@@ -140,21 +140,31 @@ void gsf::Widget::loadAttributes(tinyxml2::XMLDocument &document,
 
 void gsf::Widget::applyAttributes(std::map<std::string, std::string> &attributes)
 {
-    //std::cout << "--------------------------------------------\n";
     for (auto const &attr : attributes)
     {
         std::string name{ attr.first };
         std::string value{ attr.second };
-        if (name == "backgroundColor")
-        {
-            sf::Color color{ Utility::stringToColor(value) };
-            setBackgroundColor(color);
-        }
-        
-        
-        //std::cout << "Attr: " << name << " : " << value << std::endl;
+        applyAttribute(name, value);       
     }
-    //std::cout << "--------------------------------------------\n";
+}
+
+void gsf::Widget::applyAttribute(std::string name, std::string value)
+{
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 void gsf::Widget::setContext(GUIEnvironment *context)

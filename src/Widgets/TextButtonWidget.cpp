@@ -66,6 +66,13 @@ void gsf::TextButtonWidget::init()
     placeText();
 }
 
+void gsf::TextButtonWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    ButtonWidget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "TextButtonWidget");
+}
+
 sf::Color gsf::TextButtonWidget::getTextColor() const
 {
     return m_textColor;

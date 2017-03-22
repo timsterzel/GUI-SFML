@@ -35,6 +35,13 @@ void gsf::ButtonWidget::init()
     m_outlineColor = sf::Color::Black;
 }
 
+void gsf::ButtonWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "ButtonWidget");
+}
+
 sf::Color gsf::ButtonWidget::getHoverFillColor() const
 {
     return m_hoverFillColor;

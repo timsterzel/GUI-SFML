@@ -29,6 +29,9 @@ namespace gsf
         sf::Color getHoverTextColor() const;
         void setHoverTextColor(sf::Color color);
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
+        
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;

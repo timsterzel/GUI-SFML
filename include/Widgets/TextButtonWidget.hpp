@@ -42,6 +42,8 @@ namespace gsf
         void setCharacterSize(unsigned int size);
 
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
         void placeText();
         virtual void boundsChanged() override;
 

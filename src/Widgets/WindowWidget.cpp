@@ -33,6 +33,13 @@ void gsf::WindowWidget::init()
     setCloseButtonFillColor(sf::Color::White);
 }
 
+void gsf::WindowWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "WindowWidget");
+}
+
 void gsf::WindowWidget::attachChild(Widget::Ptr child)
 {
     Widget::attachChild(std::move(child));

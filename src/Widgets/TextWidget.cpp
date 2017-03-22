@@ -51,6 +51,13 @@ void gsf::TextWidget::init(sf::String text, const sf::Font &font,
 	calculateSize();
 }
 
+void gsf::TextWidget::loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes)
+{
+    Widget::loadAttributes(document, attributes);
+    Widget::loadAttributes(document, attributes, "TextWidget");
+}
+
 void gsf::TextWidget::setText(const sf::String &text)
 {
     m_text.setString(text);

@@ -247,12 +247,11 @@ namespace gsf
         void loadAttributes(tinyxml2::XMLDocument &document, 
                 std::map<std::string, std::string> &attributes, 
                 const std::string &widgetName);
-        // Apply the attribute data which are stored in m_xmlAttributes.
-        // Widgets which have own stylings should override this one and apply them.
+        // Widgets should override and impllement this Method and apply ther own
+        // attributes.
         // Its important to call its parent class method, when there is one, so all 
         // styling stages where run through
-        virtual void applyAttributes(
-                std::map<std::string, std::string> &attributes); 
+        virtual void applyAttribute(std::string name, std::string value);
         // Is called when the bounds of the widget changes (e.g. width, height
         // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();
@@ -278,6 +277,8 @@ namespace gsf
                 sf::RenderStates states, sf::View defaultView) const;
     private:  
         void init(const std::string &themePath);
+        void applyAttributes(
+                std::map<std::string, std::string> &attributes); 
         // Load the theme file and store it in m_theme
         bool loadThemeFile(tinyxml2::XMLDocument &document, 
                 const std::string &path);
