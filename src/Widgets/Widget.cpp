@@ -148,7 +148,7 @@ void gsf::Widget::applyAttributes(std::map<std::string, std::string> &attributes
     }
 }
 
-void gsf::Widget::applyAttribute(std::string name, std::string value)
+void gsf::Widget::applyAttribute(const std::string &name, const std::string &value)
 {
     if (name == "backgroundColor")
     {

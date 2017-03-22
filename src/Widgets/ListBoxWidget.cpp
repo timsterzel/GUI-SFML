@@ -1,4 +1,5 @@
 #include "Widgets/ListBoxWidget.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 gsf::ListBoxWidget::Ptr gsf::ListBoxWidget::create(const sf::Font &font)
@@ -63,6 +64,27 @@ void gsf::ListBoxWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "ListBoxWidget");
+}
+
+void gsf::ListBoxWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 void gsf::ListBoxWidget::addElement(sf::String element)

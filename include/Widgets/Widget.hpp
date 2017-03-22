@@ -251,7 +251,8 @@ namespace gsf
         // attributes.
         // Its important to call its parent class method, when there is one, so all 
         // styling stages where run through
-        virtual void applyAttribute(std::string name, std::string value);
+        virtual void applyAttribute(const std::string &name, 
+                const std::string &value);
         // Is called when the bounds of the widget changes (e.g. width, height
         // outlineThickness) so necessary things can get changed
         virtual void boundsChanged();

@@ -1,4 +1,5 @@
 #include "Widgets/WindowWidget.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 gsf::WindowWidget::Ptr gsf::WindowWidget::create(float width, float height, 
@@ -38,6 +39,27 @@ void gsf::WindowWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "WindowWidget");
+}
+
+void gsf::WindowWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 void gsf::WindowWidget::attachChild(Widget::Ptr child)

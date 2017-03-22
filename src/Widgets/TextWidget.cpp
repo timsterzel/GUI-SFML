@@ -1,4 +1,5 @@
 #include "Widgets/TextWidget.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font)
@@ -56,6 +57,27 @@ void gsf::TextWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "TextWidget");
+}
+
+void gsf::TextWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 void gsf::TextWidget::setText(const sf::String &text)

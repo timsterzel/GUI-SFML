@@ -1,4 +1,5 @@
 #include "Widgets/TextButtonWidget.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(const sf::Font &font)
@@ -71,6 +72,27 @@ void gsf::TextButtonWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     ButtonWidget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "TextButtonWidget");
+}
+
+void gsf::TextButtonWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    ButtonWidget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 sf::Color gsf::TextButtonWidget::getTextColor() const

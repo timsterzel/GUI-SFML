@@ -1,5 +1,6 @@
 #include "Widgets/CheckBoxWidget.hpp"
 #include <iostream>
+#include "Utility.hpp"
 
 gsf::CheckBoxWidget::Ptr gsf::CheckBoxWidget::create()
 {
@@ -39,6 +40,27 @@ void gsf::CheckBoxWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     ButtonWidget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "CheckBoxWidget");
+}
+
+void gsf::CheckBoxWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    ButtonWidget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 bool gsf::CheckBoxWidget::isChecked() const

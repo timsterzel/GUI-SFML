@@ -34,13 +34,16 @@ namespace gsf
         sf::Color getSelectionColor() const;
         void setSelectionColor(sf::Color color);
     protected:
+        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
+                std::map<std::string, std::string> &attributes) override;
+        virtual void applyAttribute(const std::string &name, 
+                const std::string &value) override;
+        
         virtual void contextSet() override;
         virtual void contextRemoved() override;
         virtual void boundsChanged() override;
         
         void placeListBox();
-        virtual void loadAttributes(tinyxml2::XMLDocument &document, 
-                std::map<std::string, std::string> &attributes) override;
 
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;

@@ -1,6 +1,8 @@
 #include "Widgets/ComboBoxWidget.hpp"
 #include "GUIEnvironment.hpp"
+#include "Utility.hpp"
 #include <iostream>
+
 
 gsf::ComboBoxWidget::Ptr gsf::ComboBoxWidget::create(const sf::Font &font)
 {
@@ -76,6 +78,27 @@ void gsf::ComboBoxWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "ComboBoxWidget");
+}
+
+void gsf::ComboBoxWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 void gsf::ComboBoxWidget::addElement(sf::String element)

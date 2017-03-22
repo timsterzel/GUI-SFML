@@ -1,4 +1,5 @@
 #include "Widgets/ProgressWidget.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 gsf::ProgressWidget::Ptr gsf::ProgressWidget::create()
@@ -41,6 +42,27 @@ void gsf::ProgressWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "ProgressWidget");
+}
+
+void gsf::ProgressWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 sf::Color gsf::ProgressWidget::getProgressColor() const

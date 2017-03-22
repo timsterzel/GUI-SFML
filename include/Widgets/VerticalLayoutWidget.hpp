@@ -32,6 +32,8 @@ namespace gsf
     protected:
         virtual void loadAttributes(tinyxml2::XMLDocument &document, 
                 std::map<std::string, std::string> &attributes) override;
+        virtual void applyAttribute(const std::string &name, 
+                const std::string &value) override;
     
     private:
         void init();

@@ -51,6 +51,9 @@ namespace gsf
     protected:
         virtual void loadAttributes(tinyxml2::XMLDocument &document, 
                 std::map<std::string, std::string> &attributes) override;
+        virtual void applyAttribute(const std::string &name, 
+                const std::string &value) override;
+        
         int findCharOnPosBinary(sf::Vector2f localPos, std::size_t l, 
                 std::size_t r, std::size_t totalLength) const;
 

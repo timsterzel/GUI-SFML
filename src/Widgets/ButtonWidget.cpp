@@ -1,5 +1,6 @@
 #include "Widgets/ButtonWidget.hpp"
 #include <iostream>
+#include "Utility.hpp"
 
 gsf::ButtonWidget::Ptr gsf::ButtonWidget::create()
 {
@@ -40,6 +41,27 @@ void gsf::ButtonWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "ButtonWidget");
+}
+
+void gsf::ButtonWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 sf::Color gsf::ButtonWidget::getHoverFillColor() const

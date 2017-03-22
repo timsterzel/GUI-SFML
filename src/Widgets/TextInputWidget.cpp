@@ -1,4 +1,5 @@
 #include "Widgets/TextInputWidget.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 gsf::TextInputWidget::Ptr gsf::TextInputWidget::create(sf::Font &font)
@@ -104,6 +105,27 @@ void gsf::TextInputWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "TextInputWidget");
+}
+
+void gsf::TextInputWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 void gsf::TextInputWidget::setCursorColor(sf::Color color)

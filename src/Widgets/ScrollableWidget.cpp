@@ -1,4 +1,5 @@
 #include "Widgets/ScrollableWidget.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 const float gsf::ScrollableWidget::SCROLLBAR_THICKNESS{ 16.f };
@@ -68,6 +69,27 @@ void gsf::ScrollableWidget::loadAttributes(tinyxml2::XMLDocument &document,
 {
     Widget::loadAttributes(document, attributes);
     Widget::loadAttributes(document, attributes, "ScrollableWidget");
+}
+
+void gsf::ScrollableWidget::applyAttribute(const std::string &name, 
+        const std::string &value)
+{
+    Widget::applyAttribute(name, value);
+    if (name == "backgroundColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setBackgroundColor(color);
+    }
+    else if(name == "outlineColor")
+    {
+        sf::Color color { Utility::stringToColor(value) };
+        setOutlineColor(color);
+    }
+    else if (name == "outlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setOutlineThickness(thickness);
+    }
 }
 
 void gsf::ScrollableWidget::createScrollbars()
