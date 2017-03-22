@@ -171,6 +171,10 @@ void gsf::Widget::setContext(GUIEnvironment *context)
 {
     m_context = context;
     contextSet();
+    for (const auto &child : m_children)
+    {
+        child->setContext(context);
+    }
 }
 
 void gsf::Widget::removeContext()
