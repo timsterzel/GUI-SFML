@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "ResourceHolder.hpp"
 
 namespace gsf
 {
@@ -19,6 +20,7 @@ namespace gsf
     private:
         const sf::RenderWindow &m_window;
         std::vector<Widget::Ptr> m_widgets;
+        ResourceHolder<sf::Font> m_fonts;
         // Special Widgets are widgets which belongs to other widgets and are parts
         // of them (e.g. a ComboBoxWidget shows a ListBoxWidget when it was clicked)
         //std::vector<Widget*> m_specialWidgets;

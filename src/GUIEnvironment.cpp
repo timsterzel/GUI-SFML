@@ -67,6 +67,12 @@ gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
     return result;
 }
 
+void gsf::GUIEnvironment::createScene(const std::string &path)
+{
+
+
+}
+
 sf::View gsf::GUIEnvironment::getCurrentView() const
 {
     return m_window.getView();
