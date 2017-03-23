@@ -150,7 +150,99 @@ void gsf::Widget::applyAttributes(std::map<std::string, std::string> &attributes
 
 void gsf::Widget::applyAttribute(const std::string &name, const std::string &value)
 {
-    if (name == "backgroundColor")
+    if (name == "id")
+    {
+        setID(value);
+    }
+    else if (name == "width")
+    {
+        float val{ std::stof(value) };
+        setWidth(val);
+    }
+    else if (name == "height")
+    {
+        float val{ std::stof(value) };
+        setHeight(val);
+    }
+    else if (name == "positionX")
+    {
+        float val{ std::stof(value) };
+        setPosition(val, getPosition().y);
+    }
+    else if (name == "positionY")
+    {
+        float val{ std::stof(value) };
+        setPosition(getPosition().x, val);
+    }
+    else if (name == "originX")
+    {
+        float val{ std::stof(value) };
+        setOrigin(val, getOrigin().y);
+    }
+    else if (name == "originY")
+    {
+        float val{ std::stof(value) };
+        setOrigin(getOrigin().x, val);
+    }
+    else if (name == "left")
+    {
+        float val{ std::stof(value) };
+        setLeftPosition(val);
+    }
+    else if (name == "right")
+    {
+        float val{ std::stof(value) };
+        setRightPosition(val);
+    }
+    else if (name == "top")
+    {
+        float val{ std::stof(value) };
+        setTopPosition(val);
+    }
+    else if (name == "bottom")
+    {
+        float val{ std::stof(value) };
+        setBottomPosition(val);
+    }
+    else if (name == "orientation")
+    {
+        std::vector<std::string> 
+            orientationVals{ Utility::splitString(value, '|') };
+        for (const std::string &ori : orientationVals)
+        {
+            setOrientation(Orientation::None);
+            std::string strUp{ Utility::toUpper(ori) };
+            if(strUp == "CENTER")
+            {
+                setOrientation(getOrientation() | Orientation::Center);
+            }
+            else if(strUp == "CENTERHORIZONTAL")
+            {
+                setOrientation(getOrientation() | Orientation::CenterHorizontal);
+            }
+            else if(strUp == "CENTERVERTICAL")
+            {
+                setOrientation(getOrientation() | Orientation::CenterVertical);
+            }
+            else if(strUp == "LEFT")
+            {
+                setOrientation(getOrientation() | Orientation::Left);
+            }
+            else if(strUp == "RIGHT")
+            {
+                setOrientation(getOrientation() | Orientation::Right);
+            }
+            else if(strUp == "TOP")
+            {
+                setOrientation(getOrientation() | Orientation::Top);
+            }
+            else if(strUp == "BOTTOM")
+            {
+                setOrientation(getOrientation() | Orientation::Bottom);
+            }
+        }
+    }
+    else if (name == "backgroundColor")
     {
         sf::Color color{ Utility::stringToColor(value) };
         setBackgroundColor(color);
