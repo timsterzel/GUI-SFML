@@ -58,6 +58,7 @@ namespace gsf
         void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     
     private:
+        bool loadResources(tinyxml2::XMLElement *sceneEl);
         // Place the Widget depending on its Orientation
         void placeWidget(Widget *widget);
     };

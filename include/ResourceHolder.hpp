@@ -9,7 +9,6 @@
 
 namespace gsf
 {
-
     template <typename Resource>
     class ResourceHolder
     {

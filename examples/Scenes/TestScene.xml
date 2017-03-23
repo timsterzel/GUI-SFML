@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+	<!-- Resources are loaded before creating and placing the widgets. You can use Resources with the id, which can be set with the id attribute -->
+	<Resources>
+		<Font 
+			id="libSans"
+			src="../../assets/fonts/LiberationSans-Regular.ttf"
+		/>
+
+		<Font 
+			id="libSans2"
+			src="../../assets/fonts/LiberationSans-Regular.ttf"
+		/>
+
+		<Font 
+			id="libSans3"
+			src="../../assets/fonts/LiberationSans-Regular.ttf"
+		/>
+	</Resources>
+	<Widgets>
+		<TextWidget
+			id="textWidget_test"
+			backgroundColor="red"	
+			text="Test Text"
+			characterSize="12"
+        	textColor="black"
+			
+			font="libSans" />
+
+	</Widgets>
+</Scene>	

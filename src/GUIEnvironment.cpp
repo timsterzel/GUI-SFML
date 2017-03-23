@@ -69,8 +69,46 @@ gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
 
 void gsf::GUIEnvironment::createScene(const std::string &path)
 {
+    tinyxml2::XMLDocument document;
+    if (document.LoadFile(path.c_str()) != tinyxml2::XML_SUCCESS)
+    {
+        std::cout << "Error by loading scene. Path: " << path << std::endl;
+        return;
+    }
+    tinyxml2::XMLElement *sceneEl{ document.FirstChildElement("Scene") };
+    if (!sceneEl)
+    {
+        std::cout << "Error by loading scene: No valid scene file." << std::endl;
+        return;
+    }
+    if (!loadResources(sceneEl))
+    {
+        std::cout << "Error by loading scene resources. Path: " << path 
+            << std::endl;
+    }
 
+}
 
+bool gsf::GUIEnvironment::loadResources(tinyxml2::XMLElement *sceneEl)
+{
+    tinyxml2::XMLElement *resEl{ sceneEl->FirstChildElement("Resources") };
+    if (!resEl)
+    {
+        return false;
+    }
+    
+    for (const tinyxml2::XMLElement *a{ resEl->FirstChildElement("Font") }; a; 
+            a = a->NextSiblingElement("Font"))
+    {
+        // Load id and font path when both is there
+        if (a->Attribute("id") && a->Attribute("src"))
+        {
+            std::string id = a->Attribute("id");
+            std::string src = a->Attribute("src");
+            m_fonts.load(id, src);
+        }
+    }
+    return true;
 }
 
 sf::View gsf::GUIEnvironment::getCurrentView() const

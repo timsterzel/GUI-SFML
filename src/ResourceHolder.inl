@@ -1,3 +1,5 @@
+#include <cassert>
+
 template <typename Resource>
 void gsf::ResourceHolder<Resource>::load(const std::string &id, 
         const std::string &fileName)
