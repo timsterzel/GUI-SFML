@@ -34,7 +34,9 @@ namespace gsf
 
         void addWidget(Widget::Ptr widget);
         Widget::Ptr removeWidget(const Widget& widget);
-        
+        // Create a scene with the specified scene xml file
+        void createScene(const std::string &path);
+
         sf::View getCurrentView() const;
         
         // Return a pointer to the widget with the given id. If there are more then
