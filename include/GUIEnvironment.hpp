@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace gsf
 {
@@ -35,6 +36,12 @@ namespace gsf
         Widget::Ptr removeWidget(const Widget& widget);
         
         sf::View getCurrentView() const;
+        
+        // Return a pointer to the widget with the given id. If there are more then
+        // one Widget with the given id, the method return the first occurrence.
+        // When there is no occurrence nullptr is returned
+        Widget* getWidgetByID(const std::string &id) const;
+        
         /*
         void addSpecialWidget(Widget *widget);
         void removeSpecialWidget(const Widget *widget);

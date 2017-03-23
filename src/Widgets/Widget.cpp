@@ -167,6 +167,33 @@ void gsf::Widget::applyAttribute(const std::string &name, const std::string &val
     }
 }
 
+void gsf::Widget::setID(const std::string &id)
+{
+    m_id = id;
+}
+
+std::string gsf::Widget::getID() const
+{
+    return m_id;
+}
+
+gsf::Widget* gsf::Widget::getChildWidgetByID(const std::string id) const
+{    
+    for (const auto &child : m_children)
+    {
+        if (child->getID() == id)
+        {
+            return child.get();
+        }
+        Widget* childTmp{ child->getChildWidgetByID(id) };
+        if (childTmp != nullptr)
+        {
+            return childTmp;
+        }
+    }
+    return nullptr;
+}
+
 void gsf::Widget::setContext(GUIEnvironment *context)
 {
     m_context = context;

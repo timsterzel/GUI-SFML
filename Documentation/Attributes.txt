@@ -1,6 +1,21 @@
 ColorString: sfml Color or rgb or rgba color in format: (r,g,b) (r,g,b,a)
+OrientationString: None, Center, CenterHorizonal, CenterVertical, Left, Right, Top, Bottom. can be combined with '|' e.g.: "Left|Top"
 
 #Widget
+id="string"
+width="float"
+height="float"
+positionX="float"
+positionY="float"
+originX="float"
+originY="float"
+left="float"
+right="float"
+top="float"
+bottom="float"
+orientation="OrientationString";
+
+
 outlineColor="ColorString"
 outlineThickness="float"
 backgroundColor="ColorString"

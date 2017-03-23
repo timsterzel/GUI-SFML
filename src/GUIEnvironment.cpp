@@ -72,6 +72,23 @@ sf::View gsf::GUIEnvironment::getCurrentView() const
     return m_window.getView();
 }
 
+gsf::Widget* gsf::GUIEnvironment::getWidgetByID(const std::string &id) const
+{
+    for (const auto &widget : m_widgets)
+    {
+        if (widget->getID() == id)
+        {
+            return widget.get();
+        }
+        Widget* childTmp{ widget->getChildWidgetByID(id) };
+        if (childTmp != nullptr)
+        {
+            return childTmp;
+        }
+    }
+    return nullptr;
+}
+
 void gsf::GUIEnvironment::placeWidget(Widget *widget)
 {
     int orientation { widget->getOrientation() };

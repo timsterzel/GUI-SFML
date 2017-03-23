@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include <map>
+#include <string>
 #include "libs/tinyxml2.h"
 
 namespace gsf
@@ -36,9 +37,8 @@ namespace gsf
         // the contentArea but in some widgets it can differ (E.g. a WindowWidget has
         // a topbar, but child widgets are only drawn in the contentArea)
         sf::FloatRect m_fullArea;
-
-
-        std::vector<Ptr> m_children;
+        std::vector<Ptr> m_children;       
+        std::string m_id;
         
         sf::Color m_outlineColor;
         float m_outlineThickness;
@@ -72,6 +72,12 @@ namespace gsf
         Widget(bool isWindowWidget = false, std::string themePath = "");
         Widget(float width, float height, bool isWindowWidget = false, 
                 std::string themePath = "");
+        
+        void setID(const std::string &id);
+        std::string getID() const;
+        // Returns the first child widget where is a occurence with the given id.
+        // Else return nullptr
+        Widget* getChildWidgetByID(const std::string id) const;
 
         void setContext(GUIEnvironment *context);
         void removeContext();
