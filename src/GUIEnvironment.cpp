@@ -96,7 +96,7 @@ bool gsf::GUIEnvironment::loadResources(tinyxml2::XMLElement *sceneEl)
     {
         return false;
     }
-    
+    // Load fonts
     for (const tinyxml2::XMLElement *a{ resEl->FirstChildElement("Font") }; a; 
             a = a->NextSiblingElement("Font"))
     {
