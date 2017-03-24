@@ -16,10 +16,12 @@ namespace gsf
         std::map<std::string, std::unique_ptr<Resource>> m_resourceMap;
 
     public:
-        void load(const std::string &id, const std::string &fileName);
 
+        void load(const std::string &id, const std::string &fileName);
         Resource& get(const std::string &id);
         Resource& get(const std::string &id) const;
+    
+        void clear();
     };
 }
 

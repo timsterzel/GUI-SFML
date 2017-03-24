@@ -37,3 +37,9 @@ Resource& gsf::ResourceHolder<Resource>::get(const std::string &id) const
     assert(found != m_resourceMap.end());
     return *found->second;
 }
+
+template <typename Resource>
+void gsf::ResourceHolder<Resource>::clear()
+{
+    m_resourceMap.clear();
+}

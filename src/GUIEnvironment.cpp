@@ -86,7 +86,6 @@ void gsf::GUIEnvironment::createScene(const std::string &path)
         std::cout << "Error by loading scene resources. Path: " << path 
             << std::endl;
     }
-
 }
 
 bool gsf::GUIEnvironment::loadResources(tinyxml2::XMLElement *sceneEl)
@@ -97,6 +96,7 @@ bool gsf::GUIEnvironment::loadResources(tinyxml2::XMLElement *sceneEl)
         return false;
     }
     // Load fonts
+    m_fonts.clear();
     for (const tinyxml2::XMLElement *a{ resEl->FirstChildElement("Font") }; a; 
             a = a->NextSiblingElement("Font"))
     {
