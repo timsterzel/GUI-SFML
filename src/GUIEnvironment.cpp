@@ -72,19 +72,27 @@ void gsf::GUIEnvironment::createScene(const std::string &path)
     tinyxml2::XMLDocument document;
     if (document.LoadFile(path.c_str()) != tinyxml2::XML_SUCCESS)
     {
-        std::cout << "Error by loading scene. Path: " << path << std::endl;
+        std::cout << "Error by loading scene. Scene file path: " << path << std::endl;
         return;
     }
     tinyxml2::XMLElement *sceneEl{ document.FirstChildElement("Scene") };
     if (!sceneEl)
     {
-        std::cout << "Error by loading scene: No valid scene file." << std::endl;
+        std::cout << "Error by loading scene: No valid scene file. Scene file path: "
+           << path << std::endl;
         return;
     }
     if (!loadResources(sceneEl))
     {
-        std::cout << "Error by loading scene resources. Path: " << path 
+        std::cout << "Error by loading scene resources. Scene file path: " << path 
             << std::endl;
+        return;
+    }
+    if (!loadWidgets(sceneEl))
+    {
+        std::cout << "Error by loading widgets. Scene file path: " << path 
+            << std::endl;
+        return;
     }
 }
 
@@ -109,6 +117,25 @@ bool gsf::GUIEnvironment::loadResources(tinyxml2::XMLElement *sceneEl)
         }
     }
     return true;
+}
+
+bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
+{
+    tinyxml2::XMLElement *widgetsEl{ sceneEl->FirstChildElement("Widgets") };
+    if (!widgetsEl)
+    {
+        return false;
+    }
+    // Load Widgets
+    m_widgets.clear();
+    for (const tinyxml2::XMLElement *a{ widgetsEl->FirstChildElement() }; a; 
+            a = a->NextSiblingElement())
+    {
+        std::string name{ a->Name() };
+        std::cout << "Widget: " << name << std::endl;
+    }
+    return true;
+
 }
 
 sf::View gsf::GUIEnvironment::getCurrentView() const
