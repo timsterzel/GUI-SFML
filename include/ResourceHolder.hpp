@@ -16,12 +16,16 @@ namespace gsf
         std::map<std::string, std::unique_ptr<Resource>> m_resourceMap;
 
     public:
-
         void load(const std::string &id, const std::string &fileName);
-        Resource& get(const std::string &id);
+        //Resource& get(const std::string &id);
         Resource& get(const std::string &id) const;
-    
+        //Resource& get(std::size_t index);
+        Resource& getFirst() const;
+
+        std::size_t size() const;
         void clear();
+        // Return if a resource with the given id exists
+        bool exists(const std::string &id) const;
     };
 }
 

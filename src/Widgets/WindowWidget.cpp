@@ -2,11 +2,30 @@
 #include "Utility.hpp"
 #include <iostream>
 
+gsf::WindowWidget::Ptr gsf::WindowWidget::create(sf::Font &font)
+{
+    Ptr widget{ std::make_unique<WindowWidget>(font) };
+    return std::move(widget);
+}
+
 gsf::WindowWidget::Ptr gsf::WindowWidget::create(float width, float height, 
         sf::String title, sf::Font &font)
 {
     Ptr widget{ std::make_unique<WindowWidget>(width, height, title, font) };
     return std::move(widget);
+}
+
+gsf::WindowWidget::WindowWidget(sf::Font &font)
+: Widget{  }
+//, m_topBar{ width, 20.f }
+//, m_btnClose{ m_topBar.getHeight() - 6.f, m_topBar.getHeight() - 6.f }
+, m_topBarHeight{ 20.f }
+, m_windowTitle{ "", font }
+, m_windowTitleFont{ font }
+, m_windowTitleColor{ sf::Color::White }
+, m_moveModeActive{ false }
+{
+    init();
 }
 
 gsf::WindowWidget::WindowWidget(float width, float height, sf::String title, 

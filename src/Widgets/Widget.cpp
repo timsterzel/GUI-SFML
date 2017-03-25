@@ -133,7 +133,7 @@ void gsf::Widget::loadAttributes(tinyxml2::XMLDocument &document,
         // value with the new one. This is important, because Theme Attributes, 
         // defind in child class themes have a higher priorety
         attributes[name] = value;
-        std::cout << "Attr: " << name << " : " << value << std::endl;
+        //std::cout << "Attr: " << name << " : " << value << std::endl;
     }
 }
 

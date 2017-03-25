@@ -196,6 +196,8 @@ namespace gsf
 
         // Load theme attributes and apply them
         void applyTheme(const std::string &path);
+        void applyAttributes(
+                std::map<std::string, std::string> &attributes); 
         // Returns true if widget has handled the event and children dont 
         // have to handle it
         bool handleEvent(sf::Event &event, const sf::RenderTarget &target);
@@ -284,8 +286,6 @@ namespace gsf
                 sf::RenderStates states, sf::View defaultView) const;
     private:  
         void init(const std::string &themePath);
-        void applyAttributes(
-                std::map<std::string, std::string> &attributes); 
         // Load the theme file and store it in m_theme
         bool loadThemeFile(tinyxml2::XMLDocument &document, 
                 const std::string &path);

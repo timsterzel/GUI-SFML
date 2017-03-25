@@ -21,6 +21,10 @@ namespace gsf
         const sf::RenderWindow &m_window;
         std::vector<Widget::Ptr> m_widgets;
         ResourceHolder<sf::Font> m_fonts;
+        // A global theme which is aplied on all widgets which are added to
+        // the GUIEnvironment
+        std::string m_globalThemePath;
+        
         // Special Widgets are widgets which belongs to other widgets and are parts
         // of them (e.g. a ComboBoxWidget shows a ListBoxWidget when it was clicked)
         //std::vector<Widget*> m_specialWidgets;
@@ -34,7 +38,7 @@ namespace gsf
         explicit GUIEnvironment(const sf::RenderWindow &m_window);
         ~GUIEnvironment();
 
-        void addWidget(Widget::Ptr widget);
+        void addWidget(Widget::Ptr widget, bool applyGlobalTheme = true);
         Widget::Ptr removeWidget(const Widget& widget);
         // Create a scene with the specified scene xml file
         void createScene(const std::string &path);

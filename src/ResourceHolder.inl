@@ -18,6 +18,7 @@ void gsf::ResourceHolder<Resource>::load(const std::string &id,
     assert(inserted.second);
 }
 
+/*
 template <typename Resource>
 Resource& gsf::ResourceHolder<Resource>::get(const std::string &id)
 {
@@ -27,6 +28,7 @@ Resource& gsf::ResourceHolder<Resource>::get(const std::string &id)
     assert(found != m_resourceMap.end());
     return *found->second;
 }
+*/
 
 template <typename Resource>
 Resource& gsf::ResourceHolder<Resource>::get(const std::string &id) const
@@ -39,7 +41,30 @@ Resource& gsf::ResourceHolder<Resource>::get(const std::string &id) const
 }
 
 template <typename Resource>
+Resource& gsf::ResourceHolder<Resource>::getFirst() const
+{
+    return *m_resourceMap.begin()->second;
+}
+
+template <typename Resource>
+std::size_t gsf::ResourceHolder<Resource>::size() const
+{
+    return m_resourceMap.size();
+}
+
+template <typename Resource>
 void gsf::ResourceHolder<Resource>::clear()
 {
     m_resourceMap.clear();
+}
+
+template <typename Resource>
+bool gsf::ResourceHolder<Resource>::exists(const std::string &id) const
+{
+    auto found = m_resourceMap.find(id);
+    if (found != m_resourceMap.end())
+    {
+        return true;
+    }
+    return false;
 }

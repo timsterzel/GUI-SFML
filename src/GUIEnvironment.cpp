@@ -30,11 +30,14 @@ gsf::GUIEnvironment::~GUIEnvironment()
 {
 }
 
-void gsf::GUIEnvironment::addWidget(Widget::Ptr widget)
+void gsf::GUIEnvironment::addWidget(Widget::Ptr widget, bool applyGlobalTheme)
 {
     widget->setContext(this);
+    if (applyGlobalTheme && m_globalThemePath != "")
+    {
+        widget->applyTheme("assets/themes/BlackWhite.xml");
+    }
     placeWidget(widget.get());
-    widget->applyTheme("assets/themes/BlackWhite.xml");
     m_widgets.push_back(std::move(widget));
 }
 
@@ -141,10 +144,56 @@ bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
     }
     // Load Widgets
     m_widgets.clear();
-    for (const tinyxml2::XMLElement *a{ widgetsEl->FirstChildElement() }; a; 
-            a = a->NextSiblingElement())
+    /*
+    // Check if default font was laoded
+    if (!m_fonts.exists("default"))
     {
-        std::string widgetName{ a->Name() };
+        std::cout << "No default font loaded. You have to specify a default "
+                    << "font in scene file in resource group by adding a font "
+                    << " resource with id=\"default\"" <<  std::endl;
+        return false;
+    }
+    sf::Font& defaultFont{ m_fonts.get("default") };
+    */
+    for (const tinyxml2::XMLElement *el{ widgetsEl->FirstChildElement() }; el; 
+            el = el->NextSiblingElement())
+    {
+        // Load widgets attributes
+        std::map<std::string, std::string> attributes;
+        for (const tinyxml2::XMLAttribute *a{ el->FirstAttribute() }; a; 
+            a = a->Next())
+        {
+            std::string name{ a->Name() };
+            std::string value{ a->Value() };
+            attributes[name] = value;
+            std::cout << "Attr: " << name << " : " << value << std::endl;
+        }
+        // Load id, when available
+        std::string widgetId = "";
+        auto foundId = attributes.find("id");
+        bool isIdDefined{ foundId != attributes.end() };
+        if (isIdDefined)
+        {
+            widgetId = attributes["id"];
+        }
+        // Check if there is a font specified in attributes and if the specified
+        // font is loaded
+        auto foundFont = attributes.find("font");
+        bool isFontDefined{ foundFont != attributes.end() };
+        sf::Font *font{ nullptr };
+        std::string fontId = "";
+        if (isFontDefined)
+        {
+            fontId = attributes["font"];
+            if (m_fonts.exists(fontId))
+            {
+                font = &m_fonts.get(fontId);
+            }
+        }
+        // When a specified font was not loaded or no font specified, for widgets
+        // which need a font, the var get true and the user get notified later
+        bool tryToLoadWidgetWithoutFont{ false };
+        std::string widgetName{ el->Name() };
         std::cout << "Widget: " << widgetName << std::endl;
         Widget::Ptr widget{ nullptr };
         if (widgetName == "Widget")
@@ -159,40 +208,112 @@ bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
         {
             widget = CheckBoxWidget::create();
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "ComboBoxWidget")
         {
-            widget = ButtonWidget::create();
+            if (font != nullptr)
+            {
+                widget = ComboBoxWidget::create(*font);
+            } 
+            else
+            {
+                tryToLoadWidgetWithoutFont = true;
+            }
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "ConsoleWidget")
         {
-            widget = ButtonWidget::create();
+            if (font != nullptr)
+            {
+                widget = ConsoleWidget::create(*font);
+            }
+            else
+            {
+                tryToLoadWidgetWithoutFont = true;
+            }
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "ListBoxWidget")
         {
-            widget = ButtonWidget::create();
+            if (font != nullptr)
+            {
+                widget = ListBoxWidget::create(*font);
+            }
+            else
+            {
+                tryToLoadWidgetWithoutFont = true;
+            }
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "ProgressWidget")
         {
-            widget = ButtonWidget::create();
+            widget = ProgressWidget::create();
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "ScrollableWidget")
         {
-            widget = ButtonWidget::create();
+            widget = ScrollableWidget::create();
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "TextButtonWidget")
         {
-            widget = ButtonWidget::create();
+            if (font != nullptr)
+            {
+                widget = TextButtonWidget::create(*font);
+            }
+            else
+            {
+                tryToLoadWidgetWithoutFont = true;
+            }
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "TextInputWidget")
         {
-            widget = ButtonWidget::create();
+            if (font != nullptr)
+            {
+                widget = TextInputWidget::create(*font);
+            }
+            else
+            {
+                tryToLoadWidgetWithoutFont = true;
+            }
         }
-        else if (widgetName == "ButtonWidget")
+        else if (widgetName == "TextWidget")
         {
-            widget = ButtonWidget::create();
+            if (font != nullptr)
+            {
+                widget = TextWidget::create(*font);
+            }
+            else
+            {
+                tryToLoadWidgetWithoutFont = true;
+            }
         }
-
+        else if (widgetName == "VerticalLayoutWidget")
+        {
+            widget = VerticalLayoutWidget::create();
+        }
+        else if (widgetName == "WindowWidget")
+        {
+            if (font != nullptr)
+            {
+                widget = WindowWidget::create(*font);
+            }
+            else
+            {
+                tryToLoadWidgetWithoutFont = true;
+            }
+        }
+        if (tryToLoadWidgetWithoutFont)
+        {
+            std::cout <<  widgetName << " with id: \""<< widgetId << "\" was not "
+                << "created. The widget need a font, but there was no font specified,"
+                << " or specified font cant get loaded.\n";
+        }
+        else
+        {
+            Widget *widgetPtr{ widget.get() };
+            addWidget(std::move(widget));
+            widgetPtr->applyAttributes(attributes);
+            placeWidget(widgetPtr);
+            widgetPtr->setID(widgetId);
+            std::cout << "Widget with id: \"" << widgetId << "\" Added\n";
+        }
     }
+
     return true;
 
 }

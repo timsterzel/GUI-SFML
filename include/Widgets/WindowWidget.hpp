@@ -29,8 +29,11 @@ namespace gsf
         // The relative Mouse pos where the topbar is clicked by activating moving
         sf::Vector2f m_moveModeRelMousePos;
     public:
+        static Ptr create(sf::Font &font);
         static Ptr create(float width, float height, sf::String title, 
                 sf::Font &font);
+        
+        WindowWidget(sf::Font &font);
         WindowWidget(float width, float height, sf::String title, 
                 sf::Font &font);
 
