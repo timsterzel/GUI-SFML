@@ -14,11 +14,12 @@ namespace gsf
     private:
         sf::Text m_text;
     public:
+        static Ptr create(const sf::Font &font);
         static Ptr create(sf::String text, const sf::Font &font);
         static Ptr create(sf::String text, const sf::Font &font, int characterSize);
         static Ptr create(sf::String text, const sf::Font &font, int characterSize, 
                 sf::Color color);
-        TextWidget();
+        explicit TextWidget(const sf::Font &font);
         TextWidget(sf::String text, const sf::Font &font);
         TextWidget(sf::String text, const sf::Font &font, int characterSize);
         TextWidget(sf::String text, const sf::Font &font, int characterSize, 

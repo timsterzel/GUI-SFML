@@ -2,6 +2,12 @@
 #include "Utility.hpp"
 #include <iostream>
 
+gsf::TextWidget::Ptr gsf::TextWidget::create(const sf::Font &font)
+{
+    Ptr widget{ std::make_unique<TextWidget>(font) };
+    return std::move(widget);
+}
+
 gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font) };
@@ -20,6 +26,12 @@ gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &fo
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize, color) };
     return std::move(widget);
+}
+
+gsf::TextWidget::TextWidget(const sf::Font &font)
+: Widget{  }
+{
+    init("", font, 12, sf::Color::Black);
 }
 
 gsf::TextWidget::TextWidget(sf::String text, const sf::Font &font)

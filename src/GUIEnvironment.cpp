@@ -1,6 +1,19 @@
 #include "Widgets/Widget.hpp"
 #include "GUIEnvironment.hpp"
 #include "Orientation.hpp"
+#include "Widgets/ButtonWidget.hpp"
+#include "Widgets/CheckBoxWidget.hpp"
+#include "Widgets/ComboBoxWidget.hpp"
+#include "Widgets/ConsoleWidget.hpp"
+#include "Widgets/ListBoxWidget.hpp"
+#include "Widgets/ProgressWidget.hpp"
+#include "Widgets/ScrollableWidget.hpp"
+#include "Widgets/TextButtonWidget.hpp"
+#include "Widgets/TextInputWidget.hpp"
+#include "Widgets/TextWidget.hpp"
+#include "Widgets/VerticalLayoutWidget.hpp"
+#include "Widgets/Widget.hpp"
+#include "Widgets/WindowWidget.hpp"
 #include <iostream>
 #include <cassert>
 
@@ -131,8 +144,54 @@ bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
     for (const tinyxml2::XMLElement *a{ widgetsEl->FirstChildElement() }; a; 
             a = a->NextSiblingElement())
     {
-        std::string name{ a->Name() };
-        std::cout << "Widget: " << name << std::endl;
+        std::string widgetName{ a->Name() };
+        std::cout << "Widget: " << widgetName << std::endl;
+        Widget::Ptr widget{ nullptr };
+        if (widgetName == "Widget")
+        {
+            widget = Widget::create();           
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "CheckBoxWidget")
+        {
+            widget = CheckBoxWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+        else if (widgetName == "ButtonWidget")
+        {
+            widget = ButtonWidget::create();
+        }
+
     }
     return true;
 
