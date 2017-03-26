@@ -63,6 +63,7 @@ namespace gsf
     
     private:
         bool loadResources(tinyxml2::XMLElement *sceneEl);
+        void loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl, Widget* parentWidget);
         bool loadWidgets(tinyxml2::XMLElement *sceneEl);
         // Place the Widget depending on its Orientation
         void placeWidget(Widget *widget);

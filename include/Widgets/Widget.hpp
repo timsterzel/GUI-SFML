@@ -73,6 +73,9 @@ namespace gsf
         Widget(float width, float height, bool isWindowWidget = false, 
                 std::string themePath = "");
         
+        virtual void attachChild(Ptr child);
+        virtual Widget::Ptr detachChild(const Widget& node);
+        
         void setID(const std::string &id);
         std::string getID() const;
         // Returns the first child widget where is a occurence with the given id.
@@ -211,8 +214,6 @@ namespace gsf
         void draw(sf::RenderTarget &target, 
             sf::RenderStates states, sf::View defaultView) const;
     protected:
-        virtual void attachChild(Ptr child);
-        virtual Widget::Ptr detachChild(const Widget& node);
         
         // Called when a context was set
         virtual void contextSet();

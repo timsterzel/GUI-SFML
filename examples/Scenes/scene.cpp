@@ -30,7 +30,9 @@ int main()
             }
             environment.handleEvent(event);
         }
-        //environment.update(dt);
+        // 1.f is only a placeholder, this vlaue have to be replaced with the 
+        // delta time since the last update call
+        environment.update(1.f);
 
         window.clear(sf::Color::White);
         window.draw(environment);

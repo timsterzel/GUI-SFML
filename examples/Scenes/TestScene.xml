@@ -27,17 +27,59 @@
 			orientation="Bottom|Right"			
 
 			font="libSans" />
+		
+		<WindowWidget
+			id="windowWidget_window1"
+			width="160"
+			height="300"
+			windowTitle="Text Window"
+			font="libSans" >
+			<TextWidget
+				id="textWidget_w1"
+				backgroundColor="green"
+				text="TestW1"
+				characterSize="12"
+        		textColor="black"
+				font="libSans" />
 
-		<HorizontalLayoutWidget
+			<TextWidget
+				id="textWidget_w2"
+				backgroundColor="green"
+				text="TestW2"
+				positionX="30"
+				positionY="30"
+				characterSize="12"
+        		textColor="black"
+				font="libSans" />		
+
+		</WindowWidget>
+
+		<VerticalLayoutWidget
 			id="textWidget_test"
 			width="260"
 			height="200"
-			autoDetermineWidth="false"
-			autoDetermineHeight="false"
+			autoDetermineHeight="true"
+			autoDetermineWidth="true"
 			backgroundColor="yellow"	
-			orientation="Bottom|Left"
+			orientation="Top|Left" >
+			
+			<TextWidget
+				id="textWidget_hl1"
+				backgroundColor="green"
+				text="TestHl1"
+				characterSize="12"
+        		textColor="black"
+				font="libSans" />
 
-		/>
+			<TextWidget
+				id="textWidget_hl2"
+				backgroundColor="green		"
+				text="TestHl2"
+				characterSize="12"
+       			textColor="black"
+				font="libSans" />
+
+		</VerticalLayoutWidget>	
 
 	</Widgets>
 </Scene>	

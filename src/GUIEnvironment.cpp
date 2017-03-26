@@ -136,27 +136,10 @@ bool gsf::GUIEnvironment::loadResources(tinyxml2::XMLElement *sceneEl)
     return true;
 }
 
-bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
+void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl, 
+        gsf::Widget* parentWidget)
 {
-    tinyxml2::XMLElement *widgetsEl{ sceneEl->FirstChildElement("Widgets") };
-    if (!widgetsEl)
-    {
-        return false;
-    }
-    // Load Widgets
-    m_widgets.clear();
-    /*
-    // Check if default font was laoded
-    if (!m_fonts.exists("default"))
-    {
-        std::cout << "No default font loaded. You have to specify a default "
-                    << "font in scene file in resource group by adding a font "
-                    << " resource with id=\"default\"" <<  std::endl;
-        return false;
-    }
-    sf::Font& defaultFont{ m_fonts.get("default") };
-    */
-    for (const tinyxml2::XMLElement *el{ widgetsEl->FirstChildElement() }; el; 
+    for (tinyxml2::XMLElement *el{ widgetsEl->FirstChildElement() }; el; 
             el = el->NextSiblingElement())
     {
         // Load widgets attributes
@@ -311,15 +294,49 @@ bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
         else
         {
             Widget *widgetPtr{ widget.get() };
-            addWidget(std::move(widget));
+            if (!parentWidget)
+            {
+                addWidget(std::move(widget));
+            }
+            else
+            {
+                parentWidget->attachChild(std::move(widget));
+            }
             widgetPtr->applyAttributes(attributes);
-            placeWidget(widgetPtr);
             widgetPtr->setID(widgetId);
+            // Load child widgets
+            loadWidgetsRecur(el, widgetPtr);
+            if (!parentWidget)
+            {
+                placeWidget(widgetPtr);
+            }
         }
     }
+    
+}
 
+bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
+{
+    tinyxml2::XMLElement *widgetsEl{ sceneEl->FirstChildElement("Widgets") };
+    if (!widgetsEl)
+    {
+        return false;
+    }
+    // Load Widgets
+    m_widgets.clear();
+    loadWidgetsRecur(widgetsEl, nullptr);
+    /*
+    // Check if default font was laoded
+    if (!m_fonts.exists("default"))
+    {
+        std::cout << "No default font loaded. You have to specify a default "
+                    << "font in scene file in resource group by adding a font "
+                    << " resource with id=\"default\"" <<  std::endl;
+        return false;
+    }
+    sf::Font& defaultFont{ m_fonts.get("default") };
+    */
     return true;
-
 }
 
 sf::View gsf::GUIEnvironment::getCurrentView() const
@@ -361,7 +378,6 @@ void gsf::GUIEnvironment::placeWidget(Widget *widget)
     }
     if (orientation & Orientation::Bottom)
     {
-        std::cout << "Place Bottom \n";
         widget->setBottomPosition(getCurrentView().getSize().y);
     }
     if (orientation & Orientation::Center)
