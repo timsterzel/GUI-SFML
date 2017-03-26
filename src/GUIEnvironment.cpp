@@ -361,6 +361,7 @@ void gsf::GUIEnvironment::placeWidget(Widget *widget)
     }
     if (orientation & Orientation::Bottom)
     {
+        std::cout << "Place Bottom \n";
         widget->setBottomPosition(getCurrentView().getSize().y);
     }
     if (orientation & Orientation::Center)

@@ -35,7 +35,7 @@
 			autoDetermineWidth="false"
 			autoDetermineHeight="false"
 			backgroundColor="yellow"	
-			orientation="Bottom|left"
+			orientation="Bottom|Left"
 
 		/>
 

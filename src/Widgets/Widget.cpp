@@ -206,11 +206,11 @@ void gsf::Widget::applyAttribute(const std::string &name, const std::string &val
     }
     else if (name == "orientation")
     {
+        setOrientation(Orientation::None);
         std::vector<std::string> 
             orientationVals{ Utility::splitString(value, '|') };
         for (const std::string &ori : orientationVals)
         {
-            setOrientation(Orientation::None);
             std::string strUp{ Utility::toUpper(ori) };
             if(strUp == "CENTER")
             {
