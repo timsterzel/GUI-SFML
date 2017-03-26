@@ -310,7 +310,6 @@ bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
             widgetPtr->applyAttributes(attributes);
             placeWidget(widgetPtr);
             widgetPtr->setID(widgetId);
-            std::cout << "Widget with id: \"" << widgetId << "\" Added\n";
         }
     }
 

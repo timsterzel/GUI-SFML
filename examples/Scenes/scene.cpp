@@ -8,8 +8,16 @@ int main()
     // events of the widgets which are added to it
     // It needs the window as a parameter
     gsf::GUIEnvironment environment{ window };
-    
+
     environment.createScene("TestScene.xml");
+    // Get widget from environment by its id, which was defined in the scene xml file
+    // if there is now widget with the given id, the moethod return nullptr
+    gsf::Widget* widget{ environment.getWidgetByID("textWidget_test") };
+    // Add listener to widget
+    widget->setOnLeftClickListener([](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        std::cout << "Widget clicked \n";
+    });
     while (window.isOpen())
     {
         sf::Event event;
