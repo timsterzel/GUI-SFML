@@ -12,6 +12,7 @@
 #include "Widgets/TextInputWidget.hpp"
 #include "Widgets/TextWidget.hpp"
 #include "Widgets/VerticalLayoutWidget.hpp"
+#include "Widgets/HorizontalLayoutWidget.hpp"
 #include "Widgets/Widget.hpp"
 #include "Widgets/WindowWidget.hpp"
 #include <iostream>
@@ -285,6 +286,10 @@ bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
         else if (widgetName == "VerticalLayoutWidget")
         {
             widget = VerticalLayoutWidget::create();
+        }
+        else if (widgetName == "HorizontalLayoutWidget")
+        {
+            widget = HorizontalLayoutWidget::create();
         }
         else if (widgetName == "WindowWidget")
         {

@@ -28,5 +28,16 @@
 
 			font="libSans" />
 
+		<HorizontalLayoutWidget
+			id="textWidget_test"
+			width="260"
+			height="200"
+			autoDetermineWidth="false"
+			autoDetermineHeight="false"
+			backgroundColor="yellow"	
+			orientation="Bottom|left"
+
+		/>
+
 	</Widgets>
 </Scene>	

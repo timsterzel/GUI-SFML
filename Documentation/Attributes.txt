@@ -76,6 +76,10 @@ text="string"
 autoDetermineWidth="boolean"
 autoDetermineHeight="boolean"
 
+#HorizontalLayoutWidget
+autoDetermineWidth="boolean"
+autoDetermineHeight="boolean"
+
 #WindowWidget
 windowTitle="string"
 topBarFillColor="ColorString"
