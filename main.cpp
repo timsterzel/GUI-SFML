@@ -38,7 +38,6 @@ int main()
 
     gsf::GUIEnvironment guiEnvironment{ window };
 
-
     gsf::TextWidget::Ptr textWidget{ 
         gsf::TextWidget::create("IM A TEXT\nTESTA\nTESTB\nTESTC\nS", font) };
     //textWidget->centerOrigin();

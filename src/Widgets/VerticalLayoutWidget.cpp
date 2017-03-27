@@ -100,10 +100,14 @@ void gsf::VerticalLayoutWidget::disableAutoDetermineHeight()
 
 void gsf::VerticalLayoutWidget::calculateSize()
 {
+    std::cout << "calculateSize Vert beginn \n";
+    /*
     if (!m_autoDetermineHeight && !m_autoDetermineWidth)
     {
         return;
-    }
+    }*/
+
+    std::cout << "calculateSize After if \n";
     float height{ 0.f };
     float width{ 0.f };
     for (const Widget::Ptr &child : m_children)

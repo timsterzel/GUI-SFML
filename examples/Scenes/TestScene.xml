@@ -58,8 +58,8 @@
 			id="textWidget_test"
 			width="260"
 			height="200"
-			autoDetermineHeight="true"
-			autoDetermineWidth="true"
+			autoDetermineHeight="false"
+			autoDetermineWidth="false"
 			backgroundColor="yellow"	
 			orientation="Top|Left" >
 			

@@ -361,6 +361,11 @@ gsf::Widget* gsf::GUIEnvironment::getWidgetByID(const std::string &id) const
     return nullptr;
 }
 
+sf::Font& gsf::GUIEnvironment::getFont(const std::string &id) const
+{
+    return m_fonts.get(id);
+}
+
 void gsf::GUIEnvironment::placeWidget(Widget *widget)
 {
     int orientation { widget->getOrientation() };
