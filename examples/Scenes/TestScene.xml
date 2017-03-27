@@ -46,7 +46,7 @@
 				id="textWidget_w2"
 				backgroundColor="green"
 				text="TestW2"
-				positionX="30"
+				positionX="0"
 				positionY="30"
 				characterSize="12"
         		textColor="black"
