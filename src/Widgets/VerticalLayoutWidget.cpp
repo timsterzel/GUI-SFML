@@ -49,31 +49,13 @@ void gsf::VerticalLayoutWidget::applyAttribute(const std::string &name,
     if (name == "autoDetermineWidth")
     {
         bool val{ Utility::stringToBool(value) };
-        if (val)
-            std::cout << "YEEESSS\n";
-        else
-            std::cout << "NOOOOT \n";
         setAutoDetermineWidth(val);
     }
     else if(name == "autoDetermineHeight")
     {
         bool val{ Utility::stringToBool(value) };
-        if (val)
-            std::cout << "YEEESSS\n";
-        else
-            std::cout << "NOOOOT \n";
         setAutoDetermineHeight(val);
     }
-}
-
-void gsf::VerticalLayoutWidget::attachChild(Widget::Ptr child)
-{
-    Widget::attachChild(std::move(child));
-}
-
-gsf::Widget::Ptr gsf::VerticalLayoutWidget::detachChild(const Widget& node)
-{
-    return Widget::detachChild(node);
 }
 
 void gsf::VerticalLayoutWidget::setAutoDetermineWidth(bool autoDetermine)
