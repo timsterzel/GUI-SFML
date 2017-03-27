@@ -29,6 +29,7 @@ checkedShapeColor="ColorString"
 
 #ComboBoxWidget
 selectionColor="ColorString"
+listData="dataString"
 
 #ConsoleWidget
 
