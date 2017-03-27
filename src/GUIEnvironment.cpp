@@ -274,9 +274,9 @@ void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl,
         }
         else
         {
+            widget->applyAttributes(attributes);
+            widget->setID(widgetId);
             Widget *widgetPtr{ widget.get() };
-            widgetPtr->applyAttributes(attributes);
-            widgetPtr->setID(widgetId);
             // Load child widgets
             loadWidgetsRecur(el, widgetPtr);
             if (!parentWidget)
@@ -293,7 +293,6 @@ void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl,
             }
         }
     }
-    
 }
 
 bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)

@@ -5,26 +5,27 @@
 		<Font
 			id="libSans"
 			src="../../assets/fonts/LiberationSans-Regular.ttf"
-		/>		
+		/>
+
+		<Font 
+			id="libSans2"
+			src="../../assets/fonts/LiberationSans-Regular.ttf"
+		/>
+
+		<Font 
+			id="libSans3"
+			src="../../assets/fonts/LiberationSans-Regular.ttf"
+		/>
 	</Resources>
 	<Widgets>
-	
-		<ListBoxWidget
-			id="listBoxWidget_list1"			
-			font="libSans"
-			orientation="center"
-			width="160"
-			height="100"
-			listData="Test1|Test2|Test3"
-		/>	
-		<!--
 		<TextWidget
 			id="textWidget_test"
 			backgroundColor="red"	
 			text="Test Text"
 			characterSize="12"
         	textColor="black"
-			orientation="Bottom|Right"
+			orientation="Bottom|Right"			
+
 			font="libSans" />
 		
 		<WindowWidget
@@ -79,7 +80,6 @@
 				font="libSans" />
 
 		</VerticalLayoutWidget>	
-		-->
 
 	</Widgets>
 </Scene>	

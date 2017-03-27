@@ -10,31 +10,22 @@ int main()
     gsf::GUIEnvironment environment{ window };
 
     environment.createScene("TestScene.xml");
+    
     // Get widget from environment by its id, which was defined in the scene xml file
     // if there is now widget with the given id, the moethod return nullptr
+    /*
     gsf::Widget* widget{ environment.getWidgetByID("textWidget_test") };
     // Add listener to widget
     widget->setOnLeftClickListener([](gsf::Widget *widget, sf::Vector2f pos)
     {
         std::cout << "Widget clicked \n";
     });
-
-    gsf::VerticalLayoutWidget::Ptr vert{ gsf::VerticalLayoutWidget::create() };
-    vert->setAutoDetermineHeight(true);
-    vert->setAutoDetermineWidth(true);
-    vert->setBackgroundColor(sf::Color::Yellow);
-
-    gsf::TextWidget::Ptr txt1{ gsf::TextWidget::create("Test", 
-            environment.getFont("libSans")) };
-    txt1->setBackgroundColor(sf::Color::Green);
-    vert->attachChild(std::move(txt1));
-    gsf::TextWidget::Ptr txt2{ gsf::TextWidget::create("Test 2", 
-            environment.getFont("libSans")) };
-    txt2->setBackgroundColor(sf::Color::Green);
-    vert->attachChild(std::move(txt2));
+    */
+    gsf::ListBoxWidget* listBoxWidget{ static_cast<gsf::ListBoxWidget*>(
+            environment.getWidgetByID("listBoxWidget_list1")) };
+    listBoxWidget->addElement("HALLO");
+    std::cout << "Cnt: " << listBoxWidget->count() << std::endl;
     
-    environment.addWidget(std::move(vert));
-
     while (window.isOpen())
     {
         sf::Event event;

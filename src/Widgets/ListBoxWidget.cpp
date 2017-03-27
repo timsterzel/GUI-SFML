@@ -75,13 +75,21 @@ void gsf::ListBoxWidget::applyAttribute(const std::string &name,
         sf::Color color { Utility::stringToColor(value) };
         setSelectionColor(color);
     }
+    else if(name == "listData")
+    {
+        std::vector<std::string> data{ Utility::splitString(value, '|') };
+        for (const std::string &str : data)
+        {
+            addElement(str);
+        }
+    }
 }
 
 void gsf::ListBoxWidget::addElement(sf::String element)
 {
     m_elements.push_back(element);
     
-    TextWidget::Ptr textWidget{ TextWidget::create(element, m_font) };
+    TextWidget::Ptr textWidget{ TextWidget::create(element, m_font, m_charSize) };
     VerticalLayoutWidget::Ptr textContainer{ VerticalLayoutWidget::create(getWidth(), 
             textWidget->getLocalBounds().height ) };
     textContainer->disableAutoDetermineWidth();
@@ -147,6 +155,10 @@ void gsf::ListBoxWidget::boundsChanged()
     {
         m_scrollableWidget->setWidth(getWidth());
         m_scrollableWidget->setHeight(getHeight());
+    }
+    for (Widget *widget : m_entryWidgets)
+    {
+        widget->setWidth(getWidth());
     }
     placeChildWidgets();
 }
