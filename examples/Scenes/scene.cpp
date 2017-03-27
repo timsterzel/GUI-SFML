@@ -18,6 +18,23 @@ int main()
     {
         std::cout << "Widget clicked \n";
     });
+
+    gsf::VerticalLayoutWidget::Ptr vert{ gsf::VerticalLayoutWidget::create() };
+    vert->setAutoDetermineHeight(true);
+    vert->setAutoDetermineWidth(true);
+    vert->setBackgroundColor(sf::Color::Yellow);
+
+    gsf::TextWidget::Ptr txt1{ gsf::TextWidget::create("Test", 
+            environment.getFont("libSans")) };
+    txt1->setBackgroundColor(sf::Color::Green);
+    vert->attachChild(std::move(txt1));
+    gsf::TextWidget::Ptr txt2{ gsf::TextWidget::create("Test 2", 
+            environment.getFont("libSans")) };
+    txt2->setBackgroundColor(sf::Color::Green);
+    vert->attachChild(std::move(txt2));
+    
+    environment.addWidget(std::move(vert));
+
     while (window.isOpen())
     {
         sf::Event event;

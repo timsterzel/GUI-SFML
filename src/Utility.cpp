@@ -105,7 +105,7 @@ std::vector<std::string> gsf::Utility::splitString(const std::string &str,
 bool gsf::Utility::stringToBool(const std::string &str)
 {
     std::string strUpper{ toUpper(str) };
-    if (str == "TRUE" || str =="1")
+    if (strUpper == "TRUE" || strUpper =="1")
     {
         return true;
     }

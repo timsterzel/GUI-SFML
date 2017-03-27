@@ -58,10 +58,10 @@
 			id="textWidget_test"
 			width="260"
 			height="200"
-			autoDetermineHeight="false"
-			autoDetermineWidth="false"
+			autoDetermineHeight="true"
+			autoDetermineWidth="true"
 			backgroundColor="yellow"	
-			orientation="Top|Left" >
+			orientation="Top|Right" >
 			
 			<TextWidget
 				id="textWidget_hl1"
@@ -73,7 +73,7 @@
 
 			<TextWidget
 				id="textWidget_hl2"
-				backgroundColor="green		"
+				backgroundColor="green"
 				text="TestHl2"
 				characterSize="12"
        			textColor="black"
