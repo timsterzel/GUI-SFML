@@ -56,23 +56,6 @@ bool gsf::GUIEnvironment::isWindowRoughOutEnabled() const
 
 gsf::Widget::Ptr gsf::GUIEnvironment::removeWidget(const Widget& widget)
 {
-    /*
-    std::cout << "Size: " << m_widgets.size() << std::endl;
-    auto it = std::begin(m_widgets);
-    while(it != std::end(m_widgets))
-    {
-        std::cout << "Iterate" << std::endl;
-        Widget* widgetTmp{ (*it).get() };
-        if (widgetTmp == &widget)
-        {
-            std::cout << "Remove \n";
-            m_widgets.erase(it);
-        }
-        it++;
-    }
-
-    return nullptr;
-    */
     auto found = std::find_if(m_widgets.begin(), m_widgets.end(), 
             [&] (Widget::Ptr &p) { return p.get() == &widget; });
     // There is an error when we try to detach a widget which does not exists, 
@@ -150,7 +133,6 @@ void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl,
             std::string name{ a->Name() };
             std::string value{ a->Value() };
             attributes[name] = value;
-            std::cout << "Attr: " << name << " : " << value << std::endl;
         }
         // Load id, when available
         std::string widgetId = "";
@@ -178,7 +160,6 @@ void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl,
         // which need a font, the var get true and the user get notified later
         bool tryToLoadWidgetWithoutFont{ false };
         std::string widgetName{ el->Name() };
-        std::cout << "Widget: " << widgetName << std::endl;
         Widget::Ptr widget{ nullptr };
         if (widgetName == "Widget")
         {
@@ -305,7 +286,6 @@ void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl,
             else
             {
                 parentWidget->attachChild(std::move(widget));
-                std::cout << "############CHILD ADDED \n";
             }
             if (!parentWidget)
             {
@@ -326,17 +306,6 @@ bool gsf::GUIEnvironment::loadWidgets(tinyxml2::XMLElement *sceneEl)
     // Load Widgets
     m_widgets.clear();
     loadWidgetsRecur(widgetsEl, nullptr);
-    /*
-    // Check if default font was laoded
-    if (!m_fonts.exists("default"))
-    {
-        std::cout << "No default font loaded. You have to specify a default "
-                    << "font in scene file in resource group by adding a font "
-                    << " resource with id=\"default\"" <<  std::endl;
-        return false;
-    }
-    sf::Font& defaultFont{ m_fonts.get("default") };
-    */
     return true;
 }
 
@@ -432,19 +401,6 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
     {
         return;
     }
-    /*
-    // First check the special widgets, because there have a higher priorety
-    for (auto it = m_widgets.rbegin(); it != m_widgets.rend(); it++)
-    {
-        if ((*it)->handleEvent(event, m_window))
-        {
-
-            // If a Special Widget handled a event, there is no need to let the
-            // other Widgets handle it, so we can remove the method
-            return;
-        }
-    }
-    */
 
     // Iterate backwards, because the widgets which are shown at the front of 
     // the window have a higher priority forevent handling
@@ -464,7 +420,6 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
 
 void gsf::GUIEnvironment::update(float dt)
 {
-    //std::cout << "Widget cnt: " << m_widgets.size() << std::endl;
     for (const Widget::Ptr &widget : m_widgets)
     {
         widget->update(dt);

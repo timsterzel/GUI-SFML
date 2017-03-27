@@ -642,22 +642,6 @@ float gsf::Widget::getWorldRealBottom() const
 }
 sf::FloatRect gsf::Widget::getGlobalBounds() const
 {
-    /*
-    sf::FloatRect rect{ getGlobalBoundsWithoutOutline() };
-    rect.left -= m_outlineThickness;
-    rect.top -= m_outlineThickness;
-    rect.width += 2 * m_outlineThickness;
-    rect.height += 2 * m_outlineThickness;
-    return rect;
-    */
-
-    /*
-    sf::FloatRect rect{ getLocalBounds() };
-    rect.left += getWorldPosition().x;
-    rect.top += getWorldPosition().y;
-    return rect;
-    */
-
     float left{ getWorldLeft() - m_outlineThickness };
     float top{ getWorldTop() - m_outlineThickness };
     float width{ m_fullArea.width + 2 * m_outlineThickness };

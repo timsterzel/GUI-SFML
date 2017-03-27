@@ -469,7 +469,7 @@ bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event,
         //std::wstring actualTxt{ m_text.getString().toWideString() };
         //wchar_t c{ static_cast<wchar_t>(event.text.unicode) };
         sf::Uint32 c{ event.text.unicode };
-        std::cout << "Entered: " << c << std::endl;
+        //std::cout << "Entered: " << c << std::endl;
         switch (c)
         {
         // Backspace
