@@ -156,6 +156,10 @@ void gsf::ListBoxWidget::boundsChanged()
         m_scrollableWidget->setWidth(getWidth());
         m_scrollableWidget->setHeight(getHeight());
     }
+    if (m_entryWidgetContainer)
+    {
+        m_entryWidgetContainer->setWidth(getWidth());
+    }
     for (Widget *widget : m_entryWidgets)
     {
         widget->setWidth(getWidth());

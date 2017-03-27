@@ -43,7 +43,6 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
 {
     setOutlineThickness(4.f);
     m_outlineColor = sf::Color::Black;
-    
     m_listBoxWidget->setOutlineThickness(getOutlineThickness());
     m_listBoxWidget->setOutlineColor(getOutlineColor());
     m_listBoxWidget->setHeight(120.f);
@@ -88,6 +87,14 @@ void gsf::ComboBoxWidget::applyAttribute(const std::string &name,
     {
         sf::Color color{ Utility::stringToColor(value) };
         setSelectionColor(color);
+    }
+    else if(name == "listData")
+    {
+        std::vector<std::string> data{ Utility::splitString(value, '|') };
+        for (const std::string &str : data)
+        {
+            addElement(str);
+        }
     }
 }
 

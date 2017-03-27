@@ -24,7 +24,10 @@ int main()
     gsf::ListBoxWidget* listBoxWidget{ static_cast<gsf::ListBoxWidget*>(
             environment.getWidgetByID("listBoxWidget_list1")) };
     listBoxWidget->addElement("HALLO");
-    std::cout << "Cnt: " << listBoxWidget->count() << std::endl;
+    
+    gsf::ComboBoxWidget* comboBoxWidget{ static_cast<gsf::ComboBoxWidget*>(
+            environment.getWidgetByID("comboBoxWidget_cb1")) };
+    //comboBoxWidget->addElement("HALLO");
     
     while (window.isOpen())
     {

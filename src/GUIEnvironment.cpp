@@ -274,7 +274,6 @@ void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl,
         }
         else
         {
-            widget->applyAttributes(attributes);
             widget->setID(widgetId);
             Widget *widgetPtr{ widget.get() };
             // Load child widgets
@@ -287,6 +286,7 @@ void gsf::GUIEnvironment::loadWidgetsRecur(tinyxml2::XMLElement *widgetsEl,
             {
                 parentWidget->attachChild(std::move(widget));
             }
+            widgetPtr->applyAttributes(attributes);
             if (!parentWidget)
             {
                 placeWidget(widgetPtr);
