@@ -386,6 +386,12 @@ unsigned int gsf::TextInputWidget::getAddedLineBreaksUpToIndex
     return cnt;
 }
 
+void gsf::TextInputWidget::boundsChanged()
+{
+    m_scrollable->setWidth(getWidth());
+    m_scrollable->setHeight(getHeight());
+}
+
 bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event, 
         const sf::RenderTarget &target)
 {

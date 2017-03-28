@@ -96,6 +96,8 @@ namespace gsf
         virtual void applyAttribute(const std::string &name, 
                 const std::string &value) override;
         
+        virtual void boundsChanged() override;
+
         virtual bool handleEventCurrentAfterChildren(sf::Event &event, 
                 const sf::RenderTarget &target) override;
         virtual void updateCurrentAfterChildren(float dt) override;
