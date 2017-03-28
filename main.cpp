@@ -20,7 +20,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode{ windowWidth, windowHeight }, "GUI-SFML");
 
     sf::Font font;
-    if (!font.loadFromFile("assets/fonts/LiberationSans-Regular.ttf"))
+    if (!font.loadFromFile("examples/assets/fonts/LiberationSans-Regular.ttf"))
     {
         std::cout << "Error by loading Font" << std::endl;
     }
