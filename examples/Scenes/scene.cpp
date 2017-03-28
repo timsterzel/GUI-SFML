@@ -20,7 +20,7 @@ int main()
     {
         std::cout << "Widget clicked \n";
     });
-    */
+    
     gsf::ListBoxWidget* listBoxWidget{ static_cast<gsf::ListBoxWidget*>(
             environment.getWidgetByID("listBoxWidget_list1")) };
     listBoxWidget->addElement("HALLO");
@@ -28,7 +28,7 @@ int main()
     gsf::ComboBoxWidget* comboBoxWidget{ static_cast<gsf::ComboBoxWidget*>(
             environment.getWidgetByID("comboBoxWidget_cb1")) };
     //comboBoxWidget->addElement("HALLO");
-    
+    */
     while (window.isOpen())
     {
         sf::Event event;

@@ -93,6 +93,10 @@ void gsf::TextButtonWidget::applyAttribute(const std::string &name,
         int charSize{ std::stoi(value) };
         setCharacterSize(charSize);
     }
+    else if (name == "text")
+    {
+        setText(value);
+    }
 }
 
 sf::Color gsf::TextButtonWidget::getTextColor() const

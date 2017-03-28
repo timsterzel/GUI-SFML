@@ -4,10 +4,58 @@
 	<Resources>
 		<Font
 			id="libSans"
-			src="../../assets/fonts/LiberationSans-Regular.ttf"
+			src="../assets/fonts/LiberationSans-Regular.ttf"
 		/>		
 	</Resources>
-	<Widgets>
+    <Widgets>
+        
+		<WindowWidget
+			id="windowWidget_wd1"
+			width="160"
+			height="30"
+			windowTitle="Hello"
+            font="libSans" >
+
+			<TextWidget
+				id="textWidget_t1"
+				text="Hello this is a Window"
+				characterSize="12"
+                textColor="black"
+                orientation="center"
+				font="libSans" />
+
+        </WindowWidget>
+        
+        
+		<VerticalLayoutWidget
+			id="vertWidget_vl1"
+			autoDetermineHeight="true"
+			autoDetermineWidth="true"
+			backgroundColor="yellow"	
+			orientation="center" >
+            
+            <ListBoxWidget
+			    id="listBoxWidget_lb1"			
+			    width="160"
+			    height="100"
+			    orientation="center"
+			    listData="Entry1|Entry2|Entry3|Entry4|Entry5|Entry6|"
+			    font="libSans"
+		    />	
+			
+            <HorizontalLayoutWidget
+			    id="horWidget_hl1"			
+                autoDetermineHeight="true"
+			    autoDetermineWidth="true"
+                backgroundColor="yellow"
+
+            >
+
+            </HorizontalLayoutWidget>
+
+		</VerticalLayoutWidget>	
+
+
 		<ComboBoxWidget
 			id="comboBoxWidget_cb1"			
 			font="libSans"
@@ -18,14 +66,6 @@
 		/>	
 		
 		
-		<ListBoxWidget
-			id="listBoxWidget_list1"			
-			font="libSans"
-			orientation="center"
-			width="160"
-			height="100"
-			listData="Test1|Test2|Test3|Test4|Test5|Test6|Test7|Test8"
-		/>	
 		<!--
 		<TextWidget
 			id="textWidget_test"
