@@ -11,6 +11,26 @@ int main()
 
     environment.createScene("TestScene.xml");
     
+    gsf::ListBoxWidget* listBoxWidget{ static_cast<gsf::ListBoxWidget*>(
+            environment.getWidgetByID("listBoxWidget_lb1")) };
+    
+
+    gsf::TextInputWidget* textInputWidget{ static_cast<gsf::TextInputWidget*>(
+            environment.getWidgetByID("textInputWidget_ti1")) };
+    listBoxWidget->addElement("HALLO");
+
+    gsf::TextButtonWidget* textButtonWidget{ static_cast<gsf::TextButtonWidget*>(
+            environment.getWidgetByID("textButtonWidget_tb1")) };
+    textButtonWidget->setOnLeftClickListener(
+            [listBoxWidget, textInputWidget](gsf::Widget *widget, sf::Vector2f pos)
+    {
+        std::cout << "Pressed \n";
+        sf::String txt{ textInputWidget->getText() };
+        std::cout << "Text: " << txt.toAnsiString() << std::endl;
+        listBoxWidget->addElement(txt);
+
+    });
+
     // Get widget from environment by its id, which was defined in the scene xml file
     // if there is now widget with the given id, the moethod return nullptr
     /*

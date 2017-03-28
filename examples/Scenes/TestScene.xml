@@ -26,19 +26,20 @@
 
         </WindowWidget>
         
-                <TextInputWidget
-                    id="textInputWidget_ti1"
-                    width="100"
-                    height="300"
-                    positionX="60"
-                    positionY="60"
-                    font="libSans" />
+        <TextInputWidget
+            id="textInputWidget_ti2"
+            width="300"
+            height="100"
+            positionX="60"
+            positionY="60"
+            isHorizontalScrollEnabled="false"
+            font="libSans" />
 
         
 		<VerticalLayoutWidget
 			id="vertWidget_vl1"
 			autoDetermineHeight="true"
-			autoDetermineWidth="false"
+            autoDetermineWidth="true"
             height="600"
             backgroundColor="yellow"	
 			orientation="center" >
@@ -47,15 +48,16 @@
 			    id="listBoxWidget_lb1"			
 			    width="160"
 			    height="100"
-			    orientation="center"
 			    listData="Entry1|Entry2|Entry3|Entry4|Entry5|Entry6|"
-			    font="libSans"
-		    />	
+			    font="libSans" />
 			
                 <TextInputWidget
                     id="textInputWidget_ti1"
                     width="100"
-                    height="300"
+                    height="30"
+                    isNewLineAccepted="false"
+                    isVerticalScrollEnabled="false"
+                    isVerticalScrollbarDrawn="false"
                     font="libSans" />
 
                 <TextButtonWidget
@@ -71,34 +73,11 @@
                 height="40"
                 autoDetermineHeight="true"
 			    autoDetermineWidth="true"
-                backgroundColor="blue"
-            >
-            
-                <TextInputWidget
-                    id="textInputWidget_ti1"
-                    width="100"
-                    height="30"
-                    font="libSans" />
-
-                <TextButtonWidget
-                    id="textButtonWidget_tb1"
-                    width="60"
-                    height="30"
-                    text="Add"
-                    font="libSans" />
-
+                backgroundColor="blue" >
 
             </HorizontalLayoutWidget>
         -->
 		</VerticalLayoutWidget>	
-
-                <ConsoleWidget
-                    id="textInputWidget_ti1"
-                    width="400"
-                    height="300"
-                    positionY="300"
-                    orientation="centerHorizontal"
-                    font="libSans" />
 
 		<ComboBoxWidget
 			id="comboBoxWidget_cb1"			
