@@ -89,6 +89,15 @@ void gsf::ConsoleWidget::setOnCommandEnteredListener(std::function
     m_onCommandEnteredListener = listener;
 }
 
+void gsf::ConsoleWidget::boundsChanged()
+{
+    m_textDisplay->setWidth(getWidth());
+    m_textDisplay->setHeight(getHeight() - 20.f - 4.f);
+    m_textInput->setWidth(getWidth());
+    m_textInput->setHeight(20);
+    m_textInput->setPosition(0.f, getHeight() - 20.f);
+}
+
 bool gsf::ConsoleWidget::handleEventCurrentAfterChildren(sf::Event &event, const sf::RenderTarget &target)
 {
     bool handled{ Widget::handleEventCurrentAfterChildren(event, target) };
