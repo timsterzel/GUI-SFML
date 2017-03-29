@@ -55,7 +55,7 @@ isHorizontalScrollbarDrawn="boolean"
 textColor="ColorString"
 hoverTextColor="ColorString"
 characterSize="unsigned int"
-text="string"
+text="string"		
 
 #TextInputWidget
 characterSize="unsigned int"

@@ -99,7 +99,6 @@ void gsf::VerticalLayoutWidget::calculateSize()
     for (const Widget::Ptr &child : m_children)
     {
         height += child->getLocalBounds().height;
-        
         float childWidth{ child->getLocalBounds().width };
         if (childWidth > width)
         {
@@ -108,6 +107,9 @@ void gsf::VerticalLayoutWidget::calculateSize()
     }
     if (m_autoDetermineHeight)
     {
+        if (getID() == "vertWidget_vl1")
+            std::cout << "Auto Det height is true\n";
+        
         setHeight(height);
     }
     if (m_autoDetermineWidth)

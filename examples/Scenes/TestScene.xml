@@ -38,9 +38,8 @@
         
 		<VerticalLayoutWidget
 			id="vertWidget_vl1"
-			autoDetermineHeight="true"
+			autoDetermineHeight="false"
             autoDetermineWidth="true"
-            height="600"
             backgroundColor="yellow"	
 			orientation="center" >
             
