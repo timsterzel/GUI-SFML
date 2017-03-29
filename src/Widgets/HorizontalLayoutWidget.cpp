@@ -127,11 +127,8 @@ void gsf::HorizontalLayoutWidget::arrangeChildren()
     float distance{ 0.f };
     for (const Widget::Ptr &child : m_children)
     {
-        // Its important to add the outline thickness to the position so the whole
-        // widget is visible
-        child->setPosition(distance + child->getOrigin().x 
-                + child->getOutlineThickness(),
-                0.f + child->getOrigin().y + child->getOutlineThickness());
+        child->setTopPosition(0.f);
+        child->setLeftPosition(distance);
         distance += child->getLocalBounds().width;
     }
     calculateSize();

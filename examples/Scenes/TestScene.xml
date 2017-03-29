@@ -53,8 +53,6 @@
                 
             <HorizontalLayoutWidget
                 id="horWidget_hl1"
-                widht="160"
-                height="40"
                 autoDetermineHeight="true"
 			    autoDetermineWidth="true"
                 backgroundColor="blue" >
