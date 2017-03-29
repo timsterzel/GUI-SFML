@@ -21,9 +21,6 @@ namespace gsf
         static Ptr create(float width, float height);
         HorizontalLayoutWidget();
         HorizontalLayoutWidget(float width, float height);
-
-        virtual void attachChild(Widget::Ptr child) override;
-        virtual Widget::Ptr detachChild(const Widget& node);
         
         void setAutoDetermineWidth(bool autoDetermine);
         void setAutoDetermineHeight(bool autoDetermine);

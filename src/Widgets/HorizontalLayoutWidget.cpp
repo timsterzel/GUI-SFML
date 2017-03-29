@@ -58,16 +58,6 @@ void gsf::HorizontalLayoutWidget::applyAttribute(const std::string &name,
     }
 }
 
-void gsf::HorizontalLayoutWidget::attachChild(Widget::Ptr child)
-{
-    Widget::attachChild(std::move(child));
-}
-
-gsf::Widget::Ptr gsf::HorizontalLayoutWidget::detachChild(const Widget& node)
-{
-    return Widget::detachChild(node);
-}
-
 void gsf::HorizontalLayoutWidget::setAutoDetermineWidth(bool autoDetermine)
 {
     m_autoDetermineWidth = autoDetermine;
