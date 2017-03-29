@@ -54,18 +54,7 @@ void gsf::VerticalLayoutWidget::applyAttribute(const std::string &name,
     else if(name == "autoDetermineHeight")
     {
         bool val{ Utility::stringToBool(value) };
-        if (val)
-        {
-            std::cout << "TRUE \n";
-        }
-        else
-        {
-            std::cout << "FALSE \n";
-        }
         setAutoDetermineHeight(val);
-        if (m_autoDetermineHeight)
-            std::cout << "SET to TRUE \n";
-
     }
 }
 

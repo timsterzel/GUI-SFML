@@ -36,7 +36,7 @@
             font="libSans" />
 
         
-		<HorizontalLayoutWidget
+		<VerticalLayoutWidget
 			id="vertWidget_vl1"
 			autoDetermineHeight="true"
             autoDetermineWidth="true"
@@ -50,9 +50,18 @@
 			    listData="Entry1|Entry2|Entry3|Entry4|Entry5|Entry6|"
 			    font="libSans" />
 			
+                
+            <HorizontalLayoutWidget
+                id="horWidget_hl1"
+                widht="160"
+                height="40"
+                autoDetermineHeight="true"
+			    autoDetermineWidth="true"
+                backgroundColor="blue" >
+
                 <TextInputWidget
                     id="textInputWidget_ti1"
-                    width="100"
+                    width="96"
                     height="30"
                     isNewLineAccepted="false"
                     isVerticalScrollEnabled="false"
@@ -61,22 +70,14 @@
 
                 <TextButtonWidget
                     id="textButtonWidget_tb1"
-                    width="60"
+                    width="56"
                     height="30"
                     text="Add"
                     font="libSans" />
-                <!--
-                <HorizontalLayoutWidget
-                id="horWidget_hl1"
-                widht="160"
-                height="40"
-                autoDetermineHeight="true"
-			    autoDetermineWidth="true"
-                backgroundColor="blue" >
-
+            
             </HorizontalLayoutWidget>
-        -->
-		</HorizontalLayoutWidget>	
+        
+		</VerticalLayoutWidget>	
 
 		<ComboBoxWidget
 			id="comboBoxWidget_cb1"			
