@@ -71,31 +71,37 @@ gsf::Widget::Ptr gsf::HorizontalLayoutWidget::detachChild(const Widget& node)
 void gsf::HorizontalLayoutWidget::setAutoDetermineWidth(bool autoDetermine)
 {
     m_autoDetermineWidth = autoDetermine;
+    calculateSize();
 }
 
 void gsf::HorizontalLayoutWidget::setAutoDetermineHeight(bool autoDetermine)
 {
     m_autoDetermineHeight = autoDetermine;
+    calculateSize();
 }
 
 void gsf::HorizontalLayoutWidget::enableAutoDetermineWidth()
 {
     m_autoDetermineWidth = true;
+    calculateSize();
 }
 
 void gsf::HorizontalLayoutWidget::disableAutoDetermineWidth()
 {
     m_autoDetermineWidth = false;
+    calculateSize();
 }
 
 void gsf::HorizontalLayoutWidget::enableAutoDetermineHeight()
 {
     m_autoDetermineHeight = true;
+    calculateSize();
 }
 
 void gsf::HorizontalLayoutWidget::disableAutoDetermineHeight()
 {
     m_autoDetermineHeight = false;
+    calculateSize();
 }
 
 void gsf::HorizontalLayoutWidget::calculateSize()

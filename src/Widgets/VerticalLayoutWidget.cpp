@@ -54,38 +54,55 @@ void gsf::VerticalLayoutWidget::applyAttribute(const std::string &name,
     else if(name == "autoDetermineHeight")
     {
         bool val{ Utility::stringToBool(value) };
+        if (val)
+        {
+            std::cout << "TRUE \n";
+        }
+        else
+        {
+            std::cout << "FALSE \n";
+        }
         setAutoDetermineHeight(val);
+        if (m_autoDetermineHeight)
+            std::cout << "SET to TRUE \n";
+
     }
 }
 
 void gsf::VerticalLayoutWidget::setAutoDetermineWidth(bool autoDetermine)
 {
     m_autoDetermineWidth = autoDetermine;
+    calculateSize();
 }
 
 void gsf::VerticalLayoutWidget::setAutoDetermineHeight(bool autoDetermine)
 {
     m_autoDetermineHeight = autoDetermine;
+    calculateSize();
 }
 
 void gsf::VerticalLayoutWidget::enableAutoDetermineWidth()
 {
     m_autoDetermineWidth = true;
+    calculateSize();
 }
 
 void gsf::VerticalLayoutWidget::disableAutoDetermineWidth()
 {
     m_autoDetermineWidth = false;
+    calculateSize();
 }
 
 void gsf::VerticalLayoutWidget::enableAutoDetermineHeight()
 {
     m_autoDetermineHeight = true;
+    calculateSize();
 }
 
 void gsf::VerticalLayoutWidget::disableAutoDetermineHeight()
 {
     m_autoDetermineHeight = false;
+    calculateSize();
 }
 
 void gsf::VerticalLayoutWidget::calculateSize()
@@ -107,9 +124,6 @@ void gsf::VerticalLayoutWidget::calculateSize()
     }
     if (m_autoDetermineHeight)
     {
-        if (getID() == "vertWidget_vl1")
-            std::cout << "Auto Det height is true\n";
-        
         setHeight(height);
     }
     if (m_autoDetermineWidth)
