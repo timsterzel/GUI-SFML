@@ -104,12 +104,12 @@ void gsf::HorizontalLayoutWidget::calculateSize()
     float width{ 0.f };
     for (const Widget::Ptr &child : m_children)
     {
-        height += child->getLocalBounds().height;
+        width += child->getLocalBounds().width;
         
-        float childWidth{ child->getLocalBounds().width };
-        if (childWidth > width)
+        float childHeight{ child->getLocalBounds().height };
+        if (childHeight > height)
         {
-            width = childWidth;
+            height = childHeight;
         }
     }
     if (m_autoDetermineHeight)

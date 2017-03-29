@@ -36,7 +36,7 @@
             font="libSans" />
 
         
-		<VerticalLayoutWidget
+		<HorizontalLayoutWidget
 			id="vertWidget_vl1"
 			autoDetermineHeight="true"
             autoDetermineWidth="true"
@@ -76,7 +76,7 @@
 
             </HorizontalLayoutWidget>
         -->
-		</VerticalLayoutWidget>	
+		</HorizontalLayoutWidget>	
 
 		<ComboBoxWidget
 			id="comboBoxWidget_cb1"			
