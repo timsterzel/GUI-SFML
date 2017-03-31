@@ -990,6 +990,7 @@ bool gsf::Widget::handleEventCurrentAfterChildren(sf::Event &event,
                         m_onLeftClickListener(this, mousePos);
                         return true;
                     }
+                    //return true;
                     break;
                 case sf::Mouse::Right: 
                     if (m_onRightClickListener)
@@ -997,6 +998,7 @@ bool gsf::Widget::handleEventCurrentAfterChildren(sf::Event &event,
                         m_onRightClickListener(this, mousePos); 
                         return true;
                     }
+                    //return true;
                     break;
                 case sf::Mouse::Middle:
                     if (m_onMiddleClickListener)
@@ -1004,6 +1006,7 @@ bool gsf::Widget::handleEventCurrentAfterChildren(sf::Event &event,
                         m_onMiddleClickListener(this, mousePos);
                         return true;
                     }
+                    //return true;
                     break;
                 default: break;
             }
