@@ -19,7 +19,7 @@ int main()
     // given parameters.
     // The height of the layout is automatic calculated and depends
     // of its child widgets and height.
-    gsf::VerticalLayout::Ptr layout{ gsf::VerticalLayout::create() };
+    gsf::VerticalLayoutWidget::Ptr layout{ gsf::VerticalLayoutWidget::create() };
     layout->setOutlineThickness(6.f);
     layout->setOrientation(gsf::Orientation::Center);
     // Make background gray
