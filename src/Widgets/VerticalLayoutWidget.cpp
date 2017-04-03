@@ -1,5 +1,5 @@
-#include "Widgets/VerticalLayoutWidget.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/VerticalLayoutWidget.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 gsf::VerticalLayoutWidget::Ptr gsf::VerticalLayoutWidget::create()

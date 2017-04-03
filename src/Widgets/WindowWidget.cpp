@@ -1,5 +1,5 @@
-#include "Widgets/WindowWidget.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/WindowWidget.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 gsf::WindowWidget::Ptr gsf::WindowWidget::create(sf::Font &font)

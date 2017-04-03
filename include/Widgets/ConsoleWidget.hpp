@@ -2,12 +2,12 @@
 #ifndef CONSOLEWIDGET_HPP
 #define CONSOLEWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "Widgets/Widget.hpp"
-#include "Widgets/ScrollableWidget.hpp"
-#include "Widgets/TextWidget.hpp"
+#include "Widget.hpp"
+#include "ScrollableWidget.hpp"
+#include "TextWidget.hpp"
 #include <string>
 #include <vector>
-#include "Widgets/TextInputWidget.hpp"
+#include "TextInputWidget.hpp"
 
 namespace gsf
 {

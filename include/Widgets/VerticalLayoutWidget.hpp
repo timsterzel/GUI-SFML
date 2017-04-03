@@ -3,7 +3,7 @@
 #define VERTICALLAYOUTWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "Widgets/Widget.hpp"
+#include "Widget.hpp"
 
 namespace gsf
 {

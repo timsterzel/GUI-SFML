@@ -1,5 +1,5 @@
-#include "Widgets/HorizontalLayoutWidget.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/HorizontalLayoutWidget.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 gsf::HorizontalLayoutWidget::Ptr gsf::HorizontalLayoutWidget::create()

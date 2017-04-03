@@ -1,4 +1,4 @@
-#include "Components/MoveableBlock.hpp"
+#include "../../include/Components/MoveableBlock.hpp"
 #include <iostream>
 
 gsf::MoveableBlock::MoveableBlock()

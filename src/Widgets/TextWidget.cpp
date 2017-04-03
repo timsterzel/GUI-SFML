@@ -1,5 +1,5 @@
-#include "Widgets/TextWidget.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/TextWidget.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 gsf::TextWidget::Ptr gsf::TextWidget::create(const sf::Font &font)

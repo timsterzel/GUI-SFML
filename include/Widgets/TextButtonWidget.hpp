@@ -2,8 +2,8 @@
 #ifndef TEXTBUTTONWIDGET_HPP
 #define TEXTBUTTONWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "Widgets/ButtonWidget.hpp"
-#include "Widgets/TextWidget.hpp"
+#include "ButtonWidget.hpp"
+#include "TextWidget.hpp"
 #include <string>
 
 namespace gsf

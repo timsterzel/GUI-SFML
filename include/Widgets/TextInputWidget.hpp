@@ -2,9 +2,9 @@
 #ifndef TEXTINPUTWIDGET_HPP
 #define TEXTINPUTWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "Widgets/Widget.hpp"
-#include "Widgets/ScrollableWidget.hpp"
-#include "Widgets/TextWidget.hpp"
+#include "Widget.hpp"
+#include "ScrollableWidget.hpp"
+#include "TextWidget.hpp"
 #include <string>
 
 namespace gsf

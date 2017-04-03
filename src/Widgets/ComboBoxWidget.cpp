@@ -1,6 +1,6 @@
-#include "Widgets/ComboBoxWidget.hpp"
-#include "GUIEnvironment.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/ComboBoxWidget.hpp"
+#include "../../include/GUIEnvironment.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 

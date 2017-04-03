@@ -1,7 +1,7 @@
-#include "Widgets/Widget.hpp"
-#include "GUIEnvironment.hpp"
-#include "Orientation.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/Widget.hpp"
+#include "../../include/GUIEnvironment.hpp"
+#include "../../include/Orientation.hpp"
+#include "../../include/Utility.hpp"
 #include <algorithm>
 #include <cassert>
 #include <fstream>

@@ -2,7 +2,7 @@
 #ifndef TEXTWIDGET_HPP
 #define TEXTWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "Widgets/Widget.hpp"
+#include "Widget.hpp"
 #include <string>
 
 namespace gsf

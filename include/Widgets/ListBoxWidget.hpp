@@ -2,10 +2,10 @@
 #ifndef LISTBOXWIDGET_HPP
 #define LISTBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "Widgets/Widget.hpp"
-#include "Widgets/ScrollableWidget.hpp"
-#include "Widgets/TextWidget.hpp"
-#include "Widgets/VerticalLayoutWidget.hpp"
+#include "Widget.hpp"
+#include "ScrollableWidget.hpp"
+#include "TextWidget.hpp"
+#include "VerticalLayoutWidget.hpp"
 
 namespace gsf
 {

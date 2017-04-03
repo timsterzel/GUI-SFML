@@ -2,7 +2,7 @@
 #ifndef CHECKBOXWIDGET_HPP
 #define CHECKBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
-#include "Widgets/ButtonWidget.hpp"
+#include "ButtonWidget.hpp"
 #include <string>
 
 namespace gsf

@@ -1,5 +1,5 @@
-#include "Widgets/ProgressWidget.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/ProgressWidget.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 gsf::ProgressWidget::Ptr gsf::ProgressWidget::create()

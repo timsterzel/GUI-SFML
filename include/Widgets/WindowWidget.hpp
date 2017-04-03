@@ -2,8 +2,8 @@
 #define WINDOWWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "Widgets/Widget.hpp"
-#include "Components/MoveableBlock.hpp"
+#include "Widget.hpp"
+#include "../Components/MoveableBlock.hpp"
 
 namespace gsf
 {

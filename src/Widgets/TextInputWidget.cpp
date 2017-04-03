@@ -1,5 +1,5 @@
-#include "Widgets/TextInputWidget.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/TextInputWidget.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 gsf::TextInputWidget::Ptr gsf::TextInputWidget::create(sf::Font &font)

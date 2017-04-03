@@ -1,6 +1,6 @@
-#include "Widgets/ButtonWidget.hpp"
+#include "../../include/Widgets/ButtonWidget.hpp"
 #include <iostream>
-#include "Utility.hpp"
+#include "../../include/Utility.hpp"
 
 gsf::ButtonWidget::Ptr gsf::ButtonWidget::create()
 {

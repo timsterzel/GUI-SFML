@@ -5,7 +5,7 @@
 #include <functional>
 #include <map>
 #include <string>
-#include "libs/tinyxml2.h"
+#include "../../libs/tinyxml2.h"
 
 namespace gsf
 {

@@ -1,5 +1,5 @@
-#include "Widgets/ListBoxWidget.hpp"
-#include "Utility.hpp"
+#include "../../include/Widgets/ListBoxWidget.hpp"
+#include "../../include/Utility.hpp"
 #include <iostream>
 
 gsf::ListBoxWidget::Ptr gsf::ListBoxWidget::create(const sf::Font &font)
