@@ -57,7 +57,7 @@
 ##==========================================================================
 
 # The pre-processor and compiler options.
-MY_CFLAGS = -std=c++14 -I../../.
+MY_CFLAGS = -std=c++14 -I../../include/
 
 # The linker options.
 MY_LIBS   = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
