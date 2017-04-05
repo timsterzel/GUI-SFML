@@ -1,5 +1,5 @@
 # Scene XML Attributes
-A Widget can have specific attributes and have all attributes of its parents.
+A Widget can have specific attributes and have all attributes of its parent Widgets.[You can find a class hierarchy here](class_hierarchy.md)
 
 ## Special Types:
 ColorString: sfml Color or rgb or rgba color in format: "(r,g,b)", "(r,g,b,a)"
