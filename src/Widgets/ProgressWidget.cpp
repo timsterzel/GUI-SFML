@@ -58,7 +58,7 @@ void gsf::ProgressWidget::applyAttribute(const std::string &name,
         float margin{ std::stof(value) };
         setProgressMargin(margin);
     }
-    else if (name == "progess")
+    else if (name == "progress")
     {
         int progress{ std::stoi(value) };
         setProgress(progress);

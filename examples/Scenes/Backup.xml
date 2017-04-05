@@ -8,8 +8,7 @@
 		/>		
 	</Resources>
     <Widgets>
-
-        <!-- WindowWidget -->
+        
 		<WindowWidget
 			id="windowWidget_wd1"
 			width="160"
@@ -26,77 +25,17 @@
 				font="libSans" />
 
         </WindowWidget>
-
-        <!-- TextInput -->
+        
         <TextInputWidget
             id="textInputWidget_ti2"
             width="300"
             height="100"
-            positionX="10"
+            positionX="60"
             positionY="60"
             isHorizontalScrollEnabled="false"
             font="libSans" />
 
-        <!-- CheckBox -->
-        <HorizontalLayoutWidget
-            id="horWidget_hlcb1"
-            positionX="10"
-            positionY="300"
-            autoDetermineHeight="true"
-			autoDetermineWidth="true" >
-            
-            <CheckBoxWidget
-                id="checkBoxWidget_cb1"
-                width="20"
-                height="20" />
-
-            <TextWidget
-                id="textWidget_twcb1"
-                text="CheckBox"
-                font="libSans"
-                characterSize="20" />
-
-        </HorizontalLayoutWidget>
         
-        <!-- ComboBox -->
-		<ComboBoxWidget
-			id="comboBoxWidget_cb1"			
-			font="libSans"
-            positionX="10"
-            positionY="340"
-            width="160"
-			height="20"
-			listData="ComboBoxEntry1|ComboBoxEntry2|ComboBoxEntry3" />
-        
-        <!-- Progress -->
-        <ProgressWidget
-            id="progressWidget_p1"
-            positionX="10"
-            positionY="380"
-            width="160"
-            height="20"
-            progress="75" />
-
-        <!-- Console -->
-        <VerticalLayoutWidget
-            positionX="920"
-            positionY="20" >
-
-            <TextWidget
-                id="textWidget_twc1"
-                text="Console"
-                font="libSans"
-                characterSize="20" />        
-
-            <ConsoleWidget
-                id ="consoleWidget_c1"
-                width="300"
-                height="160"
-                font="libSans" />
-
-        </VerticalLayoutWidget>
-
-        <!-- ListBox, TextInput, TextButton -->
 		<VerticalLayoutWidget
 			id="vertWidget_vl1"
 			autoDetermineHeight="true"
@@ -138,6 +77,14 @@
         
 		</VerticalLayoutWidget>	
 
+		<ComboBoxWidget
+			id="comboBoxWidget_cb1"			
+			font="libSans"
+			orientation="centerVertical|right"
+			width="160"
+			height="20"
+			listData="Test1|Test2|Test3"
+		/>	
 		
 		
 		<!--
