@@ -1,6 +1,7 @@
 # Class hierarchy
 The Base class of all Widgets is the "Widget" class.
 
+```
 +Widget
 	+ButtonWidget
 		+CheckBoxWidget
@@ -15,3 +16,4 @@ The Base class of all Widgets is the "Widget" class.
 	+TextWidget
 	+VerticalLayoutWidget
 	+WindowWidget
+```
