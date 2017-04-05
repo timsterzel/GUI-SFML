@@ -1,10 +1,12 @@
-#Scene XML Attributes
+# Scene XML Attributes
+A Widget can have specific attributes and have all attributes of its parents.
 
-ColorString: sfml Color or rgb or rgba color in format: (r,g,b) (r,g,b,a)
+## Special Types:
+ColorString: sfml Color or rgb or rgba color in format: "(r,g,b)", "(r,g,b,a)"
 
-OrientationString: None, Center, CenterHorizonal, CenterVertical, Left, Right, Top, Bottom. can be combined with '|' e.g.: "Left|Top"
+OrientationString: "None", "Center", "CenterHorizonal", "CenterVertical", "Left", "Right", "Top", "Bottom" can be combined with '|' e.g.: "Left|Top"
 
-dataSttomg: Different string data, seperated by '|'. e.g.: "Text1|Text2|Text3" are 3 strings: Text1, Text2, Text3 which are added to the widget
+dataString: Different string data, seperated by '|'. e.g.: "Text1|Text2|Text3" are 3 strings: Text1, Text2, Text3 which are added to the widget
 
 ## Widget
 ```xml
