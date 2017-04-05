@@ -1,92 +1,147 @@
 #Scene XML Attributes
 
 ColorString: sfml Color or rgb or rgba color in format: (r,g,b) (r,g,b,a)
+
 OrientationString: None, Center, CenterHorizonal, CenterVertical, Left, Right, Top, Bottom. can be combined with '|' e.g.: "Left|Top"
+
 dataSttomg: Different string data, seperated by '|'. e.g.: "Text1|Text2|Text3" are 3 strings: Text1, Text2, Text3 which are added to the widget
 
 ## Widget
-id="string"
-width="float"
-height="float"
-positionX="float"
-positionY="float"
-originX="float"
-originY="float"
-left="float"
-right="float"
-top="float"
-bottom="float"
-orientation="OrientationString";
-outlineColor="ColorString"
-outlineThickness="float"
-backgroundColor="ColorString"
+```xml
+<Widget
+	id="string"
+	width="float"
+	height="float"
+	positionX="float"
+	positionY="float"
+	originX="float"
+	originY="float"
+	left="float"
+	right="float"
+	top="float"
+	bottom="float"
+	orientation="OrientationString";
+	outlineColor="ColorString"
+	outlineThickness="float"
+	backgroundColor="ColorString"
+/>
+```
 
 ## ButtonWidget
-hoverFillColor="ColorString"
+```xml
+<ButtonWidget
+	hoverFillColor="ColorString"
+/>
+```
 
 ## CheckBoxWidget
-checkedShapeColor="ColorString"
+```xml
+<CheckBoxWidget
+	checkedShapeColor="ColorString"
+/>
+```
 
 ## ComboBoxWidget
-selectionColor="ColorString"
-listData="dataString"
+```xml
+<ComboBoxWidget
+	selectionColor="ColorString"
+	listData="dataString"
+/>
+```
 
 ## ConsoleWidget
+No specific attributes
 
 ## ListBoxWidget
-selectionColor="ColorString"
-listData="dataString"
+```xml
+<ListBoxWidget
+	selectionColor="ColorString"
+	listData="dataString"
+/>
+```
 
 ## ProgressWidget
-progressColor="ColorString"
-progressMargin="float"
-progess="unsigned int"
+```xml
+<ProgressWidget
+	progressColor="ColorString"
+	progressMargin="float"
+	progess="unsigned int"
+/>
+```
 
 ## ScrollableWidget
-scrollbarColor="ColorString"
-scrollButtonColor="ColorString"
-scrollButtonSymbolColor="ColorString"
-isVerticalScrollEnabled="boolean"
-isHorizontalScrollEnabled="boolean"
-isVerticalScrollbarDrawn="boolean"
-isHorizontalScrollbarDrawn="boolean"
+```xml
+<ScrollableWidget
+	scrollbarColor="ColorString"
+	scrollButtonColor="ColorString"
+	scrollButtonSymbolColor="ColorString"
+	isVerticalScrollEnabled="boolean"
+	isHorizontalScrollEnabled="boolean"
+	isVerticalScrollbarDrawn="boolean"
+	isHorizontalScrollbarDrawn="boolean"
+/>
+```
 
 ## TextButtonWidget
-textColor="ColorString"
-hoverTextColor="ColorString"
-characterSize="unsigned int"
-text="string"		
+```xml
+<TextButtonWidget
+	textColor="ColorString"
+	hoverTextColor="ColorString"
+	characterSize="unsigned int"
+	text="string"
+/>
+```
 
 ## TextInputWidget
-characterSize="unsigned int"
-cursorColor="ColorString"
-isEditable="boolean"
-textColor="ColorString"
-isNewLineAccepted="boolean"
-isVerticalScrollEnabled="boolean"
-isHorizontalScrollEnabled="boolean"
-isVerticalScrollbarDrawn="boolean"
-isHorizontalScrollbarDrawn="boolean"
-blackListChars="string"
-whiteListChars="string"
-text="string"
+```xml
+<TextInputWidget
+	characterSize="unsigned int"
+	cursorColor="ColorString"
+	isEditable="boolean"
+	textColor="ColorString"
+	isNewLineAccepted="boolean"
+	isVerticalScrollEnabled="boolean"
+	isHorizontalScrollEnabled="boolean"
+	isVerticalScrollbarDrawn="boolean"
+	isHorizontalScrollbarDrawn="boolean"
+	blackListChars="string"
+	whiteListChars="string"
+	text="string"
+/>
+```
 
 ## TextWidget
-characterSize="unsigned int"
-textColor="ColorString"
-text="string"
+```xml
+<TextWidget
+	characterSize="unsigned int"
+	textColor="ColorString"
+	text="string"
+/>
+```
 
 ## VerticalLayoutWidget
-autoDetermineWidth="boolean"
-autoDetermineHeight="boolean"
+```xml
+<VerticalLayoutWidget
+	autoDetermineWidth="boolean"
+	autoDetermineHeight="boolean"
+/>
+```
 
 ## HorizontalLayoutWidget
-autoDetermineWidth="boolean"
-autoDetermineHeight="boolean"
+```xml
+<HorizontalLayoutWidget
+	autoDetermineWidth="boolean"
+	autoDetermineHeight="boolean"
+/>
+```
 
 ## WindowWidget
-windowTitle="string"
-topBarFillColor="ColorString"
-windowTitleColor="ColorString"
-closeButtonFillColor="ColorString"
-closeButtonSymbolFillColor="ColorString"
+```xml
+<WindowWidget
+	windowTitle="string"
+	topBarFillColor="ColorString"
+	windowTitleColor="ColorString"
+	closeButtonFillColor="ColorString"
+	closeButtonSymbolFillColor="ColorString"
+/>
+```
