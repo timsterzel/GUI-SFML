@@ -1,8 +1,10 @@
+#Scene XML Attributes
+
 ColorString: sfml Color or rgb or rgba color in format: (r,g,b) (r,g,b,a)
 OrientationString: None, Center, CenterHorizonal, CenterVertical, Left, Right, Top, Bottom. can be combined with '|' e.g.: "Left|Top"
 dataSttomg: Different string data, seperated by '|'. e.g.: "Text1|Text2|Text3" are 3 strings: Text1, Text2, Text3 which are added to the widget
 
-#Widget
+## Widget
 id="string"
 width="float"
 height="float"
@@ -15,34 +17,32 @@ right="float"
 top="float"
 bottom="float"
 orientation="OrientationString";
-
-
 outlineColor="ColorString"
 outlineThickness="float"
 backgroundColor="ColorString"
 
-#ButtonWidget
+## ButtonWidget
 hoverFillColor="ColorString"
 
-#CheckBoxWidget
+## CheckBoxWidget
 checkedShapeColor="ColorString"
 
-#ComboBoxWidget
+## ComboBoxWidget
 selectionColor="ColorString"
 listData="dataString"
 
-#ConsoleWidget
+## ConsoleWidget
 
-#ListBoxWidget
+## ListBoxWidget
 selectionColor="ColorString"
 listData="dataString"
 
-#ProgressWidget
+## ProgressWidget
 progressColor="ColorString"
 progressMargin="float"
 progess="unsigned int"
 
-#ScrollableWidget
+## ScrollableWidget
 scrollbarColor="ColorString"
 scrollButtonColor="ColorString"
 scrollButtonSymbolColor="ColorString"
@@ -51,13 +51,13 @@ isHorizontalScrollEnabled="boolean"
 isVerticalScrollbarDrawn="boolean"
 isHorizontalScrollbarDrawn="boolean"
 
-#TextButtonWidget
+## TextButtonWidget
 textColor="ColorString"
 hoverTextColor="ColorString"
 characterSize="unsigned int"
 text="string"		
 
-#TextInputWidget
+## TextInputWidget
 characterSize="unsigned int"
 cursorColor="ColorString"
 isEditable="boolean"
@@ -71,20 +71,20 @@ blackListChars="string"
 whiteListChars="string"
 text="string"
 
-#TextWidget
+## TextWidget
 characterSize="unsigned int"
 textColor="ColorString"
 text="string"
 
-#VerticalLayoutWidget
+## VerticalLayoutWidget
 autoDetermineWidth="boolean"
 autoDetermineHeight="boolean"
 
-#HorizontalLayoutWidget
+## HorizontalLayoutWidget
 autoDetermineWidth="boolean"
 autoDetermineHeight="boolean"
 
-#WindowWidget
+## WindowWidget
 windowTitle="string"
 topBarFillColor="ColorString"
 windowTitleColor="ColorString"
