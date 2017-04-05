@@ -68,7 +68,8 @@
             positionX="10"
             positionY="60"
             isHorizontalScrollEnabled="false"
-            font="libSans" />
+            font="libSans"
+            text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."/>
 
         <!-- CheckBox -->
         <HorizontalLayoutWidget
@@ -112,7 +113,7 @@
 
         <!-- Console -->
         <VerticalLayoutWidget
-            positionX="920"
+            positionX="460"
             positionY="20" >
 
             <TextWidget
@@ -170,72 +171,6 @@
             </HorizontalLayoutWidget>
         
 		</VerticalLayoutWidget>	
-
-		
-		
-		<!--
-		<TextWidget
-			id="textWidget_test"
-			backgroundColor="red"	
-			text="Test Text"
-			characterSize="12"
-        	textColor="black"
-			orientation="Bottom|Right"
-			font="libSans" />
-		
-		<WindowWidget
-			id="windowWidget_window1"
-			width="160"
-			height="300"
-			windowTitle="Text Window"
-			font="libSans" >
-			<TextWidget
-				id="textWidget_w1"
-				backgroundColor="green"
-				text="TestW1"
-				characterSize="12"
-        		textColor="black"
-				font="libSans" />
-
-			<TextWidget
-				id="textWidget_w2"
-				backgroundColor="green"
-				text="TestW2"
-				positionX="0"
-				positionY="30"
-				characterSize="12"
-        		textColor="black"
-				font="libSans" />		
-
-		</WindowWidget>
-
-		<VerticalLayoutWidget
-			id="textWidget_test"
-			width="260"
-			height="200"
-			autoDetermineHeight="true"
-			autoDetermineWidth="true"
-			backgroundColor="yellow"	
-			orientation="Top|Right" >
-			
-			<TextWidget
-				id="textWidget_hl1"
-				backgroundColor="green"
-				text="TestHl1"
-				characterSize="12"
-        		textColor="black"
-				font="libSans" />
-
-			<TextWidget
-				id="textWidget_hl2"
-				backgroundColor="green"
-				text="TestHl2"
-				characterSize="12"
-       			textColor="black"
-				font="libSans" />
-
-		</VerticalLayoutWidget>	
-		-->
 
 	</Widgets>
 </Scene>	

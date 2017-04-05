@@ -390,6 +390,10 @@ void gsf::TextInputWidget::boundsChanged()
 {
     m_scrollable->setWidth(getWidth());
     m_scrollable->setHeight(getHeight());
+    adjustShownText();
+    m_scrollable->recalculateScroll();
+    m_scrollable->scrollToBottom();
+    m_scrollable->scrollToLeft();
 }
 
 bool gsf::TextInputWidget::handleEventCurrentAfterChildren(sf::Event &event, 
