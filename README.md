@@ -1,4 +1,7 @@
 # GUI-SFML
+
+![alt tag](/images/gui_sfml_example.jpg "Example Screenshot")
+
 A small GUI System for SFML. Just for learning purpose and gather experience. It is useable but have some bugs and some strange behaviors at the moment. Scene can be created from xml files. There are some examples in the examples folder.
 
 ## Installtion and Libraries
