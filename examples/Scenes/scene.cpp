@@ -3,7 +3,7 @@
 
 int main()
 {
-    sf::RenderWindow window{ sf::VideoMode{ 1280, 720 }, "GUI-SFML Example Orientation" };
+    sf::RenderWindow window{ sf::VideoMode{ 1280, 720 }, "GUI-SFML Example" };
     // Create an instance of GUIEnvironment which handle the drawing, updating and 
     // events of the widgets which are added to it
     // It needs the window as a parameter

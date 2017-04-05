@@ -9,9 +9,11 @@
 	</Resources>
     <Widgets>
 
-        <!-- WindowWidget -->
+        <!-- Window -->
 		<WindowWidget
-			id="windowWidget_wd1"
+            id="windowWidget_wd1"
+            left="0"
+            top="0"
 			width="160"
 			height="30"
 			windowTitle="Hello"
@@ -24,6 +26,37 @@
                 textColor="black"
                 orientation="center"
 				font="libSans" />
+
+        </WindowWidget>
+        <!-- Window 2 -->
+		<WindowWidget
+			id="windowWidget_wd2"
+			width="300"
+			height="60"
+			windowTitle="A Window"
+            font="libSans" >
+
+            <VerticalLayoutWidget
+                autoDetermineWidth="false"
+                width="300"
+                orientation="center" >
+
+			    <TextWidget
+				    id="textWidget_tw2"
+				    text="Hello this is another Window with Text and a TextButton"
+				    characterSize="12"
+                    textColor="black"
+                    orientation="centerHorizontal"
+				    font="libSans" />
+
+                <TextButtonWidget
+                    id="textButtonWidget_tw2"
+                    width="56"
+                    height="30"
+                    orientation="centerHorizontal"
+                    text="Click me"
+                    font="libSans" />
+            </VerticalLayoutWidget>
 
         </WindowWidget>
 
