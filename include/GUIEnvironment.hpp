@@ -2,6 +2,7 @@
 #ifndef GUIENVIRONMENT_HPP
 #define GUIENVIRONMENT_HPP
 #include <SFML/Graphics.hpp>
+#include <chrono>
 #include <vector>
 #include <memory>
 #include <string>
@@ -18,6 +19,8 @@ namespace gsf
     class GUIEnvironment : public sf::Drawable
     {
     private:
+        typedef std::chrono::high_resolution_clock CLOCK;
+
         const sf::RenderWindow &m_window;
         std::vector<Widget::Ptr> m_widgets;
         ResourceHolder<sf::Font> m_fonts;
@@ -34,6 +37,11 @@ namespace gsf
         bool m_isWindowFocused;
         // If it is enabled window can rought out of the Render Window
         //bool m_isWindowRoughOutEnabled;
+        
+        // The time point of the last update 
+        // (is set when update was called without deltatime)
+        CLOCK::time_point m_lastUpdateTime;
+
     public:
         explicit GUIEnvironment(const sf::RenderWindow &m_window);
         ~GUIEnvironment();
@@ -60,6 +68,8 @@ namespace gsf
 
         void handleEvent(sf::Event &event);
         void update(float dt);
+        // Called without deltaTime, so let Environment determine the deltaTime
+        void update();
         void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     
     private:

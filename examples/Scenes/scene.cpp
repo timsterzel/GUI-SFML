@@ -61,9 +61,10 @@ int main()
             }
             environment.handleEvent(event);
         }
-        // 1.f is only a placeholder, this vlaue have to be replaced with the 
-        // delta time since the last update call
-        environment.update(1.f);
+        // Call update() method without deltaTime parameter, so the envitonment
+        // handle the deltaTime. If you determine the deltaTime by yourself you can
+        // call update with yout deltaTime as parameter.
+        environment.update();
 
         window.clear(sf::Color::White);
         window.draw(environment);

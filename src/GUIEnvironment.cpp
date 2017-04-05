@@ -22,6 +22,7 @@ gsf::GUIEnvironment::GUIEnvironment(const sf::RenderWindow &window)
 : m_window{ window } 
 , m_isMouseInWindow{ true }
 , m_isWindowFocused{ true }
+, m_lastUpdateTime{ CLOCK::now() }
 //, m_isWindowRoughOutEnabled{ false }
 {
 
@@ -448,6 +449,15 @@ void gsf::GUIEnvironment::update(float dt)
                     m_widgets.end());
 }
 
+void gsf::GUIEnvironment::update()
+{
+    std::chrono::duration<float> timeSpan{ CLOCK::now() - m_lastUpdateTime };
+    m_lastUpdateTime = CLOCK::now();
+    // Get deltaTime as float in seconds
+    float dt{ std::chrono::duration_cast<std::chrono::duration
+        <float, std::ratio<1>>>(timeSpan).count() };
+    update(dt);
+}
 
 void gsf::GUIEnvironment::draw(sf::RenderTarget &target, 
         sf::RenderStates states) const
