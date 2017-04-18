@@ -379,7 +379,7 @@ void gsf::GUIEnvironment::placeWidget(Widget *widget)
     widget->placeChildWidgets();
 }
 
-void gsf::GUIEnvironment::handleEvent(sf::Event &event)
+bool gsf::GUIEnvironment::handleEvent(sf::Event &event)
 {
     /*
     if (event.type == sf::Event::MouseLeft)
@@ -405,7 +405,7 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
     if (event.type == sf::Event::MouseMoved && 
             (!m_isMouseInWindow || !m_isWindowFocused))
     {
-        return;
+        return true;
     }
 
     // Iterate backwards, because the widgets which are shown at the front of 
@@ -418,10 +418,11 @@ void gsf::GUIEnvironment::handleEvent(sf::Event &event)
             // Event handled so we have nothing to handly anymore.
             // So we can ensure that a event is handled by the window in the front
             // and not affect a window behind it.
-            break;
+                   
+            return true;
         }
     }
-
+    return false;
 }
 
 void gsf::GUIEnvironment::update(float dt)

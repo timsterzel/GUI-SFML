@@ -67,7 +67,7 @@ namespace gsf
         //void setIsWindowRoughOutEnabled(bool isEnabled);
         //bool isWindowRoughOutEnabled() const;
 
-        void handleEvent(sf::Event &event);
+        bool handleEvent(sf::Event &event);
         void update(float dt);
         // Called without deltaTime, so let Environment determine the deltaTime
         void update();
