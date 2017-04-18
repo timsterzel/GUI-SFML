@@ -331,6 +331,12 @@ gsf::Widget* gsf::GUIEnvironment::getWidgetByID(const std::string &id) const
     return nullptr;
 }
 
+void gsf::GUIEnvironment::loadFont(const std::string &id, const std::string &path)
+{
+    m_fonts.load(id, path);
+
+}
+
 sf::Font& gsf::GUIEnvironment::getFont(const std::string &id) const
 {
     return m_fonts.get(id);

@@ -57,6 +57,7 @@ namespace gsf
         // one Widget with the given id, the method return the first occurrence.
         // When there is no occurrence nullptr is returned
         Widget* getWidgetByID(const std::string &id) const;
+        void loadFont(const std::string &id, const std::string &path);
         sf::Font& getFont(const std::string &id) const;
 
         /*
