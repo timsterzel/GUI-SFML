@@ -44,11 +44,11 @@ void gsf::ConsoleWidget::init(sf::Font &font)
     m_textInput = textInput.get();
 
     m_textDisplay->setIsHorizontalScrollEnabled(false);
-    m_textDisplay->setBackgroundColor(sf::Color::White);
+    m_textDisplay->setBackgroundColor(sf::Color::Transparent);
     m_textDisplay->setIsEditable(false);
 
     m_textInput->setIsVerticalScrollEnabled(false);
-    m_textInput->setBackgroundColor(sf::Color::White);
+    m_textInput->setBackgroundColor(sf::Color::Transparent);
     m_textInput->setPosition(0.f, getHeight() - 20.f);
     m_textInput->setIsNewLineAccepted(false);
     m_textInput->setIsHorizontalScrollbarDrawn(false);
