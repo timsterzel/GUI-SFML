@@ -1,5 +1,5 @@
-#ifndef WINDOWWIDGET_HPP
-#define WINDOWWIDGET_HPP
+#ifndef GSF_WINDOWWIDGET_HPP
+#define GSF_WINDOWWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Widget.hpp"
@@ -88,4 +88,4 @@ namespace gsf
     };
 }
 
-#endif // WINDOWWIDGET_HPP
+#endif // !GSF_WINDOWWIDGET_HPP

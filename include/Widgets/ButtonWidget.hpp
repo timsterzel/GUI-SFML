@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BUTTONWIDGET_HPP
-#define BUTTONWIDGET_HPP
+#ifndef GSF_BUTTONWIDGET_HPP
+#define GSF_BUTTONWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include <string>
@@ -44,4 +44,4 @@ namespace gsf
     };
 }
 
-#endif // !BUTTONWIDGET_HPP
+#endif // !GSF_BUTTONWIDGET_HPP

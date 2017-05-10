@@ -1,5 +1,5 @@
-#ifndef MOVEABLEBLOCK
-#define MOVEABLEBLOCK
+#ifndef GSF_MOVEABLEBLOCK
+#define GSF_MOVEABLEBLOCK
 #include <SFML/Graphics.hpp>
 
 namespace gsf
@@ -53,4 +53,4 @@ namespace gsf
 
 }
 
-#endif // MOVEABLEBLOCK
+#endif // !GSF_MOVEABLEBLOCK

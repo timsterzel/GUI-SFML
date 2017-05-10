@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TEXTINPUTWIDGET_HPP
-#define TEXTINPUTWIDGET_HPP
+#ifndef GSF_TEXTINPUTWIDGET_HPP
+#define GSF_TEXTINPUTWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include "ScrollableWidget.hpp"
@@ -116,4 +116,4 @@ namespace gsf
     };
 }
 
-#endif // TEXTINPUTWIDGET_HPP
+#endif // !GSF_TEXTINPUTWIDGET_HPP

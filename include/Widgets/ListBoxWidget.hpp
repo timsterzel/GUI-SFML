@@ -1,6 +1,6 @@
 #pragma once
-#ifndef LISTBOXWIDGET_HPP
-#define LISTBOXWIDGET_HPP
+#ifndef GSF_LISTBOXWIDGET_HPP
+#define GSF_LISTBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include "ScrollableWidget.hpp"
@@ -62,4 +62,4 @@ namespace gsf
     };
 }
 
-#endif // !LISTBOXWIDGET_HPP
+#endif // !GSF_LISTBOXWIDGET_HPP

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef VERTICALLAYOUTWIDGET_HPP
-#define VERTICALLAYOUTWIDGET_HPP
+#ifndef GSF_VERTICALLAYOUTWIDGET_HPP
+#define GSF_VERTICALLAYOUTWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Widget.hpp"
@@ -48,4 +48,4 @@ namespace gsf
     };
 }
 
-#endif // VERTICALLAYOUT_HPP
+#endif // !GSF_VERTICALLAYOUT_HPP

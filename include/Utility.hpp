@@ -1,6 +1,6 @@
 #pragma once
-#ifndef UTILITY_HPP
-#define UTILITY_HPP
+#ifndef GSF_UTILITY_HPP
+#define GSF_UTILITY_HPP
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
@@ -25,4 +25,4 @@ namespace gsf
     }
 }
 
-#endif // UTILITY_HPP
+#endif // !GSF_UTILITY_HPP

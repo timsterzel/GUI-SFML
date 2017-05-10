@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GUI_SFML_HPP
-#define GUI_SFML_HPP
+#ifndef GSF_GUI_SFML_HPP
+#define GSF_GUI_SFML_HPP
 
 #include "Widgets/ButtonWidget.hpp"
 #include "Widgets/CheckBoxWidget.hpp"
@@ -18,4 +18,4 @@
 #include "Widgets/Widget.hpp"
 #include "Widgets/WindowWidget.hpp"
 
-#endif // GUI_SFML_HPP
+#endif // !GSF_GUI_SFML_HPP
