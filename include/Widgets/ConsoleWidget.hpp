@@ -1,6 +1,6 @@
 #pragma once
-#ifndef CONSOLEWIDGET_HPP
-#define CONSOLEWIDGET_HPP
+#ifndef GSF_CONSOLEWIDGET_HPP
+#define GSF_CONSOLEWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include "ScrollableWidget.hpp"
@@ -55,4 +55,4 @@ namespace gsf
 
 }
 
-#endif // CONSOLEWIDGET_HPP
+#endif // !GSF_CONSOLEWIDGET_HPP

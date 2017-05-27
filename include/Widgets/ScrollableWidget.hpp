@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SCROLLABLEWIDGET_HPP
-#define SCROLLABLEWIDGET_HPP
+#ifndef GSF_SCROLLABLEWIDGET_HPP
+#define GSF_SCROLLABLEWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Widget.hpp"
@@ -149,4 +149,4 @@ namespace gsf
     };
 }
 
-#endif // SCROLLABLEWIDGET_HPP
+#endif // !GSF_SCROLLABLEWIDGET_HPP

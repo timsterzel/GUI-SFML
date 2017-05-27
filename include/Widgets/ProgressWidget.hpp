@@ -1,6 +1,6 @@
 #pragma once
-#ifndef PROGRESSWIDGET_HPP
-#define PROGRESSWIDGET_HPP
+#ifndef GSF_PROGRESSWIDGET_HPP
+#define GSF_PROGRESSWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include <string>
@@ -52,4 +52,4 @@ namespace gsf
     };
 }
 
-#endif // !PROGRESSWIDGET_HPP
+#endif // !GSF_PROGRESSWIDGET_HPP

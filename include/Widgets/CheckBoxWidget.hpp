@@ -1,6 +1,6 @@
 #pragma once
-#ifndef CHECKBOXWIDGET_HPP
-#define CHECKBOXWIDGET_HPP
+#ifndef GSF_CHECKBOXWIDGET_HPP
+#define GSF_CHECKBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "ButtonWidget.hpp"
 #include <string>
@@ -44,4 +44,4 @@ namespace gsf
     };
 }
 
-#endif // !CHECKBOXWIDGET_HPP
+#endif // !GSF_CHECKBOXWIDGET_HPP

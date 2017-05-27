@@ -1,6 +1,6 @@
 #pragma once
-#ifndef WIDGET_HPP
-#define WIDGET_HPP
+#ifndef GSF_WIDGET_HPP
+#define GSF_WIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include <map>
@@ -305,4 +305,4 @@ namespace gsf
     };
 }
 
-#endif // WIDGET_HPP
+#endif // !GSF_WIDGET_HPP

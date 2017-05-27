@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TEXTWIDGET_HPP
-#define TEXTWIDGET_HPP
+#ifndef GSF_TEXTWIDGET_HPP
+#define GSF_TEXTWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include <string>
@@ -71,4 +71,4 @@ namespace gsf
     };
 }
 
-#endif // TEXTWIDGET_HPP
+#endif // !GSF_TEXTWIDGET_HPP

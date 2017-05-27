@@ -1,6 +1,6 @@
 #pragma once
-#ifndef ORIENTATION_HPP
-#define ORIENTATION_HPP
+#ifndef GSF_ORIENTATION_HPP
+#define GSF_ORIENTATION_HPP
 
 namespace gsf
 {
@@ -17,4 +17,4 @@ namespace gsf
     };
 }
 
-#endif // ORIENTATION_HPP
+#endif // !GSF_ORIENTATION_HPP

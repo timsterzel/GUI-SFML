@@ -1,6 +1,6 @@
 #pragma once
-#ifndef GUIENVIRONMENT_HPP
-#define GUIENVIRONMENT_HPP
+#ifndef GSF_GUIENVIRONMENT_HPP
+#define GSF_GUIENVIRONMENT_HPP
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include <vector>
@@ -82,4 +82,4 @@ namespace gsf
     };
 }
 
-#endif // GUIENVIRONMENT_HPP
+#endif // !GSF_GUIENVIRONMENT_HPP

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef COMBOBOXWIDGET_HPP
-#define COMBOBOXWIDGET_HPP
+#ifndef GSF_COMBOBOXWIDGET_HPP
+#define GSF_COMBOBOXWIDGET_HPP
 #include <SFML/Graphics.hpp>
 #include "Widget.hpp"
 #include "ListBoxWidget.hpp"
@@ -55,4 +55,4 @@ namespace gsf
     };
 }
 
-#endif // !COMBOBOXWIDGET_HPP
+#endif // !GSF_COMBOBOXWIDGET_HPP

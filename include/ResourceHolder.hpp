@@ -1,6 +1,6 @@
 #pragma once
-#ifndef RESOURCEHOLDER_HPP
-#define RESOURCEHOLDER_HPP
+#ifndef GSF_RESOURCEHOLDER_HPP
+#define GSF_RESOURCEHOLDER_HPP
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
@@ -31,4 +31,4 @@ namespace gsf
 
 #include "../src/ResourceHolder.inl"
 
-#endif // RESOURCEHOLDER_HPP
+#endif // !GSF_RESOURCEHOLDER_HPP
