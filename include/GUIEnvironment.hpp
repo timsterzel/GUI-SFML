@@ -59,6 +59,8 @@ namespace gsf
         Widget* getWidgetByID(const std::string &id) const;
         void loadFont(const std::string &id, const std::string &path);
         sf::Font& getFont(const std::string &id) const;
+        
+        void replaceWidgets();
 
         /*
         void addSpecialWidget(Widget *widget);

@@ -379,6 +379,14 @@ void gsf::GUIEnvironment::placeWidget(Widget *widget)
     widget->placeChildWidgets();
 }
 
+void gsf::GUIEnvironment::replaceWidgets()
+{
+    for (const Widget::Ptr &widget : m_widgets)
+    {
+        placeWidget(widget.get());
+    }
+}
+
 bool gsf::GUIEnvironment::handleEvent(sf::Event &event)
 {
     /*
