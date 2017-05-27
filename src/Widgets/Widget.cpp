@@ -351,16 +351,28 @@ void gsf::Widget::setBottomPosition(float pos)
 
 void gsf::Widget::setHorizontalCenterPosition(float pos)
 {
+    /*
     sf::FloatRect bounds{ getLocalBounds() };
     float localCenter{ (-m_outlineThickness + bounds.width) / 2.f };
+    float originOffset{ localCenter - getOrigin().x };
+    setPosition(pos - originOffset, getPosition().y);
+    */
+    sf::FloatRect bounds{ getLocalBounds() };
+    float localCenter{ (-2 * m_outlineThickness + bounds.width) / 2.f };
     float originOffset{ localCenter - getOrigin().x };
     setPosition(pos - originOffset, getPosition().y);
 }
 
 void gsf::Widget::setVerticalCenterPosition(float pos)
 {
+    /*
     sf::FloatRect bounds{ getLocalBounds() };
     float localCenter{ (-m_outlineThickness + bounds.height) / 2.f };
+    float originOffset{ localCenter - getOrigin().y };
+    setPosition(getPosition().x, pos - originOffset);
+    */
+    sf::FloatRect bounds{ getLocalBounds() };
+    float localCenter{ (-2 * m_outlineThickness + bounds.height) / 2.f };
     float originOffset{ localCenter - getOrigin().y };
     setPosition(getPosition().x, pos - originOffset);
 }
