@@ -30,12 +30,18 @@ namespace gsf
         static Ptr create(float width, float height, const sf::Font &font);
         explicit ListBoxWidget(const sf::Font &font);
         ListBoxWidget(float width, float height, const sf::Font &font);
-    
+        
         void addElement(sf::String element);
         sf::String getElement(int index) const;
         sf::String currentText() const;
         int currentIndex() const;
         int count() const;
+        
+        // returns true when index was valid and element was successfully selected
+        bool selectElement(std::size_t index);
+        // Selects the first element with the given text. Returns true when text 
+        // was in listbox and element was successfully selected
+        bool selectElement(const sf::String &text);
 
         float getContentHeight() const;
         sf::Color getSelectionColor() const;

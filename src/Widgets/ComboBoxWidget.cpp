@@ -24,6 +24,7 @@ gsf::ComboBoxWidget::ComboBoxWidget(const sf::Font &font)
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
 , m_font(font)
+, m_onSelectionChangedListener{ nullptr }
 {
     init(font);
 }
@@ -35,6 +36,7 @@ gsf::ComboBoxWidget::ComboBoxWidget(float width, float height, const sf::Font &f
 , m_currentText{ nullptr }
 , m_charSize{ 0 }
 , m_font(font)
+, m_onSelectionChangedListener{ nullptr }
 {
     init(font);
 }
@@ -52,6 +54,10 @@ void gsf::ComboBoxWidget::init(const sf::Font &font)
     {
         ListBoxWidget *listBox{ static_cast<ListBoxWidget*>(widget) };
         m_currentText->setText(listBox->currentText());
+        if (m_onSelectionChangedListener)
+        {
+            m_onSelectionChangedListener(this, index);
+        }
     });
 
     TextWidget::Ptr currentText{ 
@@ -117,6 +123,7 @@ sf::String gsf::ComboBoxWidget::currentText() const
     return m_currentText->getText();
 
 }
+
 int gsf::ComboBoxWidget::currentIndex() const
 {
     return m_listBoxWidget->currentIndex();
@@ -129,6 +136,26 @@ int gsf::ComboBoxWidget::count() const
     //return m_elements.size();
 }
 
+bool gsf::ComboBoxWidget::selectElement(std::size_t index)
+{
+    if (!m_listBoxWidget->selectElement(index))
+    {
+        return false;
+    }
+    m_currentText->setText(m_listBoxWidget->currentText());
+    return true;
+}
+
+bool gsf::ComboBoxWidget::selectElement(const sf::String &text)
+{
+    if (!m_listBoxWidget->selectElement(text))
+    {
+        return false;
+    }
+    m_currentText->setText(m_listBoxWidget->currentText());
+    return true;
+}
+
 sf::Color gsf::ComboBoxWidget::getSelectionColor() const
 {
     return m_listBoxWidget->getSelectionColor();
@@ -138,6 +165,13 @@ void gsf::ComboBoxWidget::setSelectionColor(sf::Color color)
 {
     m_listBoxWidget->setSelectionColor(color);
 }
+
+void gsf::ComboBoxWidget::setOnSelectionChangedListener(
+        std::function<void(Widget*, int)> listener)
+{
+    m_onSelectionChangedListener = listener;
+}
+
 void gsf::ComboBoxWidget::contextSet()
 {
     m_context->addWidget(std::move(m_listBoxWidgetUnique));

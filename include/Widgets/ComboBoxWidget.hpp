@@ -17,6 +17,8 @@ namespace gsf
         TextWidget *m_currentText;
         int m_charSize;
         const sf::Font &m_font;
+        
+        std::function<void(Widget*, int)> m_onSelectionChangedListener;
     public:
         static Ptr create(const sf::Font &font);
         static Ptr create(float width, float height, const sf::Font &font);
@@ -30,9 +32,17 @@ namespace gsf
         sf::String currentText() const;
         int currentIndex() const;
         int count() const;
+        // returns true when index was valid and element was successfully selected
+        bool selectElement(std::size_t index);
+        // Selects the first element with the given text. Returns true when text 
+        // was in listbox and element was successfully selected
+        bool selectElement(const sf::String &text);
         
         sf::Color getSelectionColor() const;
         void setSelectionColor(sf::Color color);
+
+        void setOnSelectionChangedListener(std::function<void(Widget*, int)> 
+                listener);
     protected:
         virtual void loadAttributes(tinyxml2::XMLDocument &document, 
                 std::map<std::string, std::string> &attributes) override;

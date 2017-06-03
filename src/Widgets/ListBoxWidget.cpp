@@ -124,6 +124,46 @@ int gsf::ListBoxWidget::count() const
     return m_elements.size();
 }
 
+bool gsf::ListBoxWidget::selectElement(std::size_t index)
+{
+    
+    if (index < 0 || index > m_elements.size() - 1)
+    {
+        return false;
+    }
+    // First deselect actual selection
+    m_entryWidgets[m_currentIndex]->setBackgroundColor(
+        sf::Color::Transparent);
+    // Select new entry
+    m_entryWidgets[index]->setBackgroundColor(m_selectioColor);
+    m_currentIndex = index;
+    if (m_onElementSelectedListener)
+    {
+        m_onElementSelectedListener(this, index); 
+    }
+    return true;
+}
+
+bool gsf::ListBoxWidget::selectElement(const sf::String &text)
+{
+    int indexFound{ -1 };
+    for (std::size_t i{ 0 }; i != m_elements.size(); i++)
+    {
+        sf::String element{ m_elements[i] };
+        if (element == text)
+        {
+            indexFound = i;
+            break;
+        }
+    }
+    // text is not in element container
+    if (indexFound == -1)
+    {
+        return false;
+    }
+    return selectElement(indexFound);
+}
+
 float gsf::ListBoxWidget::getContentHeight() const
 {
     if (!m_entryWidgetContainer)
@@ -187,16 +227,7 @@ bool gsf::ListBoxWidget::handleEventCurrentAfterChildren(sf::Event &event,
                 auto entry{ m_entryWidgets[i] };
                 if (entry->isIntersecting(mousePos) && m_currentIndex != i)
                 {
-                    // If actual entry is already selected it gets deselected
-                    // else it get selected
-                    m_entryWidgets[m_currentIndex]->setBackgroundColor(
-                            sf::Color::Transparent);
-                    entry->setBackgroundColor(m_selectioColor);
-                    m_currentIndex = i;
-                    if (m_onElementSelectedListener)
-                    {
-                        m_onElementSelectedListener(this, m_currentIndex); 
-                    }
+                    selectElement(i);
                     return true;
                 }
             }
