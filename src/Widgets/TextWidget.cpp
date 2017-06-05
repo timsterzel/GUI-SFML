@@ -141,6 +141,27 @@ sf::Color gsf::TextWidget::getTextColor() const
     return m_text.getFillColor();
 }
 
+void gsf::TextWidget::setOutlineTextColor(const sf::Color color)
+{
+    m_text.setOutlineColor(color);
+}
+
+sf::Color gsf::TextWidget::getOutlineTextColor() const
+{
+    return m_text.getOutlineColor();
+}
+
+void gsf::TextWidget::setTextOutlineThickness(float thickness)
+{
+    m_text.setOutlineThickness(thickness);
+    calculateSize();
+}
+
+float gsf::TextWidget::getTextOutlineThickness() const
+{
+    return m_text.getOutlineThickness();
+}
+
 sf::Vector2f gsf::TextWidget::findGlobalCharacterPos(std::size_t index) const
 {
     sf::FloatRect bounds{ getGlobalBounds() };
@@ -195,12 +216,13 @@ sf::FloatRect gsf::TextWidget::getLocalBoundsOfChar(std::size_t i) const
 void gsf::TextWidget::calculateSize()
 {
     sf::FloatRect localBounds{ m_text.getLocalBounds() };
+    float textOutlineThickness{ m_text.getOutlineThickness() };
     // Top and left of the bounds are not allways 0, 
     // so we add the twice amound of this,
     // so the text is centered in the widget
-    setHeight(localBounds.height + localBounds.top * 2);
-    setWidth(localBounds.width + localBounds.left * 2);
-
+    setHeight(localBounds.height + localBounds.top * 2 + 2 * textOutlineThickness);
+    setWidth(localBounds.width + localBounds.left * 2 + 2 * textOutlineThickness);
+    m_text.move(textOutlineThickness / 2.f, textOutlineThickness / 2.f);
     // Without margin on top and left
     /*
     setHeight(localBounds.height); //+ localBounds.top * 2);

@@ -38,6 +38,12 @@ namespace gsf
 
         void setTextColor(const sf::Color color);
         sf::Color getTextColor() const;
+        
+        void setOutlineTextColor(const sf::Color color);
+        sf::Color getOutlineTextColor() const;
+        
+        void setTextOutlineThickness(float thickness);
+        float getTextOutlineThickness() const;
 
         sf::Vector2f findGlobalCharacterPos(std::size_t index) const;
         sf::Vector2f findLocalCharacterPos(std::size_t index) const;
