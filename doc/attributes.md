@@ -117,6 +117,8 @@ No specific attributes
 <TextWidget
 	characterSize="unsigned int"
 	textColor="ColorString"
+	outlineTextColor="ColorString"
+	textOutlineThickness="float"
 	text="string"
 />
 ```

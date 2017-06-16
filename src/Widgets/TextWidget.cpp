@@ -85,6 +85,16 @@ void gsf::TextWidget::applyAttribute(const std::string &name,
         sf::Color color{ Utility::stringToColor(value) };
         setTextColor(color);
     }
+    else if (name == "outlineTextColor")
+    {
+        sf::Color color{ Utility::stringToColor(value) };
+        setOutlineTextColor(color);
+    }
+    else if (name == "textOutlineThickness")
+    {
+        float thickness{ std::stof(value) };
+        setTextOutlineThickness(thickness);
+    }
     else if(name == "text")
     {
         setText(value);
