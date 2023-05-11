@@ -31,25 +31,7 @@ int main()
         listBoxWidget->addElement(txt);
 
     });
-
-    // Get widget from environment by its id, which was defined in the scene xml file
-    // if there is now widget with the given id, the moethod return nullptr
-    /*
-    gsf::Widget* widget{ environment.getWidgetByID("textWidget_test") };
-    // Add listener to widget
-    widget->setOnLeftClickListener([](gsf::Widget *widget, sf::Vector2f pos)
-    {
-        std::cout << "Widget clicked \n";
-    });
     
-    gsf::ListBoxWidget* listBoxWidget{ static_cast<gsf::ListBoxWidget*>(
-            environment.getWidgetByID("listBoxWidget_list1")) };
-    listBoxWidget->addElement("HALLO");
-    
-    gsf::ComboBoxWidget* comboBoxWidget{ static_cast<gsf::ComboBoxWidget*>(
-            environment.getWidgetByID("comboBoxWidget_cb1")) };
-    //comboBoxWidget->addElement("HALLO");
-    */
     while (window.isOpen())
     {
         sf::Event event;
