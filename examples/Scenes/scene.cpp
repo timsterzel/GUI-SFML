@@ -18,7 +18,7 @@ int main()
 
     gsf::TextInputWidget* textInputWidget{ static_cast<gsf::TextInputWidget*>(
             environment.getWidgetByID("textInputWidget_ti1")) };
-    listBoxWidget->addElement("HALLO");
+    listBoxWidget->addElement("Hello");
 
     gsf::TextButtonWidget* textButtonWidget{ static_cast<gsf::TextButtonWidget*>(
             environment.getWidgetByID("textButtonWidget_tb1")) };
