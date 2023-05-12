@@ -5,13 +5,13 @@
 gsf::ProgressWidget::Ptr gsf::ProgressWidget::create()
 {
     Ptr widget{ std::make_unique<ProgressWidget>() };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ProgressWidget::Ptr gsf::ProgressWidget::create(float width, float height)
 {
     Ptr widget{ std::make_unique<ProgressWidget>(width, height) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ProgressWidget::ProgressWidget()

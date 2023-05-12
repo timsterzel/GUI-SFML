@@ -5,21 +5,21 @@
 gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextButtonWidget>(font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(float width, float height, 
         const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextButtonWidget>(width, height, font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::TextButtonWidget::Ptr gsf::TextButtonWidget::create(float width, float height, 
         const sf::String &text, const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextButtonWidget>(width, height, text, font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::TextButtonWidget::TextButtonWidget(const sf::Font &font)

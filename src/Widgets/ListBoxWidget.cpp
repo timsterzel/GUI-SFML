@@ -5,14 +5,14 @@
 gsf::ListBoxWidget::Ptr gsf::ListBoxWidget::create(const sf::Font &font)
 {
     Ptr widget{ std::make_unique<ListBoxWidget>(font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ListBoxWidget::Ptr gsf::ListBoxWidget::create(float width, float height,
         const sf::Font &font)
 {
     Ptr widget{ std::make_unique<ListBoxWidget>(width, height, font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ListBoxWidget::ListBoxWidget(const sf::Font &font)

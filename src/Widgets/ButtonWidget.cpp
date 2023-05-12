@@ -5,13 +5,13 @@
 gsf::ButtonWidget::Ptr gsf::ButtonWidget::create()
 {
     Ptr widget{ std::make_unique<ButtonWidget>() };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ButtonWidget::Ptr gsf::ButtonWidget::create(float width, float height)
 {
     Ptr widget{ std::make_unique<ButtonWidget>(width, height) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ButtonWidget::ButtonWidget()

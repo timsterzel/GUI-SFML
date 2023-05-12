@@ -5,27 +5,27 @@
 gsf::TextWidget::Ptr gsf::TextWidget::create(const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextWidget>(font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font, 
         int characterSize)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::TextWidget::Ptr gsf::TextWidget::create(sf::String text, const sf::Font &font, 
         int characterSize, sf::Color color)
 {
     Ptr widget{ std::make_unique<TextWidget>(text, font, characterSize, color) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::TextWidget::TextWidget(const sf::Font &font)

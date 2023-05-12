@@ -6,14 +6,14 @@
 gsf::ConsoleWidget::Ptr gsf::ConsoleWidget::create(sf::Font &font)
 {
     Ptr widget{ std::make_unique<ConsoleWidget>(font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ConsoleWidget::Ptr gsf::ConsoleWidget::create(float width, float height, 
         sf::Font &font)
 {
     Ptr widget{ std::make_unique<ConsoleWidget>(width, height, font) };
-    return std::move(widget);
+    return widget;
 }
 
 gsf::ConsoleWidget::ConsoleWidget(sf::Font &font)
