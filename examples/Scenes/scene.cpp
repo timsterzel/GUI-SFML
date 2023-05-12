@@ -14,7 +14,6 @@ int main()
     
     gsf::ListBoxWidget* listBoxWidget{ static_cast<gsf::ListBoxWidget*>(
             environment.getWidgetByID("listBoxWidget_lb1")) };
-    
 
     gsf::TextInputWidget* textInputWidget{ static_cast<gsf::TextInputWidget*>(
             environment.getWidgetByID("textInputWidget_ti1")) };
@@ -31,7 +30,7 @@ int main()
         listBoxWidget->addElement(txt);
 
     });
-    
+
     while (window.isOpen())
     {
         sf::Event event;
